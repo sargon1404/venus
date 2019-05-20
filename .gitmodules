@@ -1,0 +1,3 @@
+[submodule "src/mars"]
+	path = src/mars
+	url = https://github.com/sargon1404/mars
