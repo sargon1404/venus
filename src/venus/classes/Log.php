@@ -28,8 +28,7 @@ class Log extends \Mars\Log
 			$text = $id . ' - ' . $text;
 		}
 
-		$insert_data =
-		[
+		$insert_data = [
 			'action' => $action,
 			'text' => $text,
 			'uid' => (int)$this->app->user->uid,

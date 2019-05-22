@@ -408,7 +408,7 @@ class Uri extends \Mars\Uri
 			return null;
 		}
 
-		if ($page instanceof \venus\Object\Page) {
+		if ($page instanceof \Venus\Object\Page) {
 			$page = $page->getData(['pid', 'category', 'seo_alias', 'seo_slug']);
 		}
 
@@ -467,7 +467,7 @@ class Uri extends \Mars\Uri
 			return null;
 		}
 
-		if ($category instanceof \venus\object\Category) {
+		if ($category instanceof \Venus\Object\Category) {
 			$category = $category->getData(['cid', 'seo_alias', 'seo_slug']);
 		}
 
@@ -519,7 +519,7 @@ class Uri extends \Mars\Uri
 			return null;
 		}
 
-		if ($tag instanceof \venus\object\Tag) {
+		if ($tag instanceof \Venus\Object\Tag) {
 			$tag = $tag->getData(['tid', 'seo_alias', 'seo_slug']);
 		}
 
@@ -594,7 +594,7 @@ class Uri extends \Mars\Uri
 			return null;
 		}
 
-		if ($user instanceof \venus\user\User) {
+		if ($user instanceof \Venus\User\User) {
 			$user = $user->getData(['uid', 'seo_alias']);
 		}
 

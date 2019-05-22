@@ -194,7 +194,7 @@ class App extends \Mars\App
 		'cache' => 'cache',
 		'images' => 'images',
 		'media' => 'media',
-		'uploads' => 'uploads'		
+		'uploads' => 'uploads'
 	];
 
 	/**
@@ -254,7 +254,7 @@ class App extends \Mars\App
 	*/
 	public const CATEGORIES = [
 		'homepage' => 1
-	];	
+	];
 
 	/**
 	* Instantiates the App object

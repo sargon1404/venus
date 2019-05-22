@@ -10,6 +10,6 @@ namespace Venus;
 * The Record Class
 * ORM functionality for objects built from database data
 */
-abstract class Entity extends \mars\Entity
+abstract class Entity extends \Mars\Entity
 {
 }

@@ -28,8 +28,7 @@ class Config extends \Mars\Config
 	*/
 	public function __construct(App $app)
 	{
-		$defaults =
-		[
+		$defaults = [
 			'admin_dir' => 'admin',
 			'session_table' => 'venus_sessions'
 		];

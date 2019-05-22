@@ -12,8 +12,7 @@ namespace Venus;
 */
 class Media
 {
-	public $types =
-	[
+	public $types = [
 		'menu' => ['image'],
 		'avatar' => ['image', 'thumb', 'small_thumb'],
 		'category' => ['image', 'thumb', 'small_thumb'],

@@ -87,7 +87,8 @@ class Ui extends \Mars\Ui
 	*/
 	public function buildEditor($name = '', $content = '', $webstorage_name = '', $webstorage_item_id = 0, $width = '100%', $height = '300px', $show_toolbar = true)
 	{
-		var_dump('build editor!!!');die;
+		var_dump('build editor!!!');
+		die;
 		if (!$name) {
 			$name = 'editor';
 		}
@@ -120,8 +121,7 @@ class Ui extends \Mars\Ui
 			$uploads_enabled = $block->isInstalled('uploads');
 		}
 
-		$editor_data =
-		[
+		$editor_data = [
 			'html' => $html,
 			'name' => $name,
 			'width' => $width,
@@ -161,7 +161,8 @@ class Ui extends \Mars\Ui
 	*/
 	public function buildBbcodeEditor($name = 'editor', $content = '', $keep_alive = false, $webstorage_name = '', $webstorage_item_id = 0, $width = '100%', $height = '300px', $class = '', $id = '')
 	{
-		var_dump('build bbcode editor!!!');die;
+		var_dump('build bbcode editor!!!');
+		die;
 		$this->app->plugins->run('html_build_bbcode_editor1', $name, $content, $keep_alive, $webstorage_name, $webstorage_item_id, $width, $height, $class, $id);
 
 		if (!$id) {
@@ -209,7 +210,8 @@ class Ui extends \Mars\Ui
 	*/
 	public function buildWysiwygEditor($name = 'venus_editor', $content = '', $keep_alive = false, $webstorage_name = '', $webstorage_item_id = 0, $width = '100%', $height = '300px', $class = '', $id = '', $css_array = [])
 	{
-		var_dump('build wysiwygeditor!!!');die;
+		var_dump('build wysiwygeditor!!!');
+		die;
 		
 		$this->app->plugins->run('html_build_wysiwyg_editor1', $name, $content, $keep_alive, $webstorage_name, $webstorage_item_id, $width, $height, $class, $id);
 
@@ -248,7 +250,8 @@ class Ui extends \Mars\Ui
 	*/
 	public function buildTextareaEditor($name = 'venus_editor', $content = '', $keep_alive = false, $webstorage_name = '', $webstorage_item_id = 0, $width = '100%', $height = '200px', $class = '', $id = '')
 	{
-		var_dump('build textarea editor!!!');die;
+		var_dump('build textarea editor!!!');
+		die;
 		$this->app->plugins->run('html_build_textarea_editor1', $name, $content, $keep_alive, $webstorage_name, $webstorage_item_id, $width, $height, $class, $id);
 
 		if (!$id) {
