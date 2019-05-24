@@ -65,7 +65,7 @@ class Screen extends \Mars\Document\Screen
 		}
 
 		if (!$title) {
-			$title = App::str('error');
+			$title = App::__('error');
 		}
 
 		$this->output($error, $title, $escape_html, 'error', 'error');
@@ -85,7 +85,7 @@ class Screen extends \Mars\Document\Screen
 		}
 
 		if (!$title) {
-			$title = App::str('message');
+			$title = App::__('message');
 		}
 
 		$this->output($message, $title, $escape_html, 'message', 'message');
@@ -119,8 +119,8 @@ class Screen extends \Mars\Document\Screen
 	public function permissionDenied()
 	{
 		$this->app->lang->loadPackage('messages');
-		$title = App::str('permission_denied');
-		$error = App::str('permission_denied_text');
+		$title = App::__('permission_denied');
+		$error = App::__('permission_denied_text');
 
 		if ($this->app->is_cli) {
 			parent::permissionDenied();
