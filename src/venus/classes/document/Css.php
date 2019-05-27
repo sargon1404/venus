@@ -14,7 +14,7 @@ use Venus\App;
 */
 class Css extends \Mars\Document\Css
 {
-	use CacheTrait;
+	use \Venus\Assets\CacheTrait;
 
 	/**
 	* @internal

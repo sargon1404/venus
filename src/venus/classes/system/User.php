@@ -290,7 +290,7 @@ class User extends \Venus\User
 
 	/**
 	* Do nothing if called, the usergroups are already loaded in prepare_usergroups
-	* @see \venus\User::loadUsergroups()
+	* @see \Venus\User::loadUsergroups()
 	* @param bool $include_primary_ugid
 	* @return $this
 	*/
@@ -442,10 +442,10 @@ class User extends \Venus\User
 
 	/**
 	* Logins the user by setting the session data and the user cookie, if $remember_me is true
-	* @param \venus\User $user The user to login
+	* @param \Venus\User $user The user to login
 	* @param bool $remember_me If true the login will remember the user
 	*/
-	protected function loginUser(\venus\User $user, bool $remember_me = false)
+	protected function loginUser(\Venus\User $user, bool $remember_me = false)
 	{
 		//reset the session id
 		$this->session->regenerateId();

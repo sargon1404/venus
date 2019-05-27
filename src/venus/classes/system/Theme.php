@@ -762,7 +762,7 @@ class Theme extends \Venus\Theme
 		global $venus;
 		$url = $this->app->uri->build($this->app->site_url_static . VENUS_ASSETS_NAME . 'css.php', ['theme' => $this->name, 'dateline' => $this->css_dateline]);
 
-		$this->app->plugins->run('system_theme_get_css_url', $this, $url);
+		$this->app->plugins->run('systemThemeGetCssUrl', $this, $url);
 
 		return $url;
 	}*/
@@ -776,7 +776,7 @@ class Theme extends \Venus\Theme
 		global $venus;
 		$url = $this->app->uri->build($this->app->site_url_static . VENUS_ASSETS_NAME . 'javascript.php', ['lang' => $this->app->lang->name, 'theme' => $this->name, 'dateline' => $this->js_dateline]);
 
-		$this->app->plugins->run('system_theme_get_js_url', $this, $url);
+		$this->app->plugins->run('systemThemeGetJsUrl', $this, $url);
 
 		return $url;
 	}*/

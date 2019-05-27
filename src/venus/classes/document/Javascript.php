@@ -14,7 +14,7 @@ use Venus\App;
 */
 class Javascript extends \Mars\Document\Javascript
 {
-	use CacheTrait;
+	use \Venus\Assets\CacheTrait;
 
 	/**
 	* @var array $dialogs The dialogs data
