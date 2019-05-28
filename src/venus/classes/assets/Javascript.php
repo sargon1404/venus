@@ -4,7 +4,7 @@
 * @package Venus
 */
 
-namespace Venus\Asset;
+namespace Venus\Assets;
 
 use Venus\App;
 use Venus\Themes;

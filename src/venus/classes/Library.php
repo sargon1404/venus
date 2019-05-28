@@ -166,6 +166,7 @@ class Library
 		$data = $this->available_libraries['javascript'][$name];
 
 		$url = $this->app->javascript->getLibraryUrl($name);
+		var_dump($url);die;
 
 		//$url = $this->app->cache->getJavascriptLibraryUrl($name);
 

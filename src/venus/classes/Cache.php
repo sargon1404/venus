@@ -117,27 +117,8 @@ class Cache extends \Mars\Cache
 		return $this->cache_url . 'javascript/' . $this->getThemeJavascriptFile($name, $device);
 	}
 
-	/**
-	* Returns the name under which a library's css/js code is cached
-	* @param string $name The name of the library
-	* @param string $extension The file's extension
-	* @return string
-	*/
-	public function getLibraryFile(string $name, string $extension) : string
-	{
-		return $this->getFile('library', $extension, '', [$name]);
-	}
 
-	/**
-	* Returns the name under which a library's dependency css/js code is cached
-	* @param string $name The name of the library
-	* @param string $extension The file's extension
-	* @return string
-	*/
-	public function getLibraryDependencyFile(string $name, string $extension) : string
-	{
-		return $this->getFile('library', $extension, '', [$name, 'dependencies']);
-	}
+
 
 	/**
 	* Returns the url of a css url

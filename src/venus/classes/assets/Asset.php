@@ -15,6 +15,7 @@ use Venus\App;
 abstract class Asset
 {
 	use \Venus\AppTrait;
+	use CacheTrait;
 
 	/**
 	* @var array $skip_dirs Array with the dirs to skip when reading files
@@ -52,13 +53,10 @@ abstract class Asset
 	protected $minify = true;
 
 	/**
-	* Returns the extension of the asset
-	* @return string The extension
+	* Returns the asset responsible for handling the dependencies for libraries of this type
+	* @return Asset The asset handling the dependencies
 	*/
-	/*public function getExtension() : string
-	{
-		return $this->extension;
-	}*/
+	abstract public function getDependenciesHandler() : Asset;
 
 	/**
 	* Reads content from a dir
@@ -286,9 +284,9 @@ abstract class Asset
 	public function cacheLibrary(string $name, array $files, array $dependencies_files = [])
 	{
 		$code = $this->mergeLibraryFiles($name, $files);
-		var_dump($name);
-		die;
-		$cache_file = $this->app->cache->getLibraryFile($name, $this->extension);
+
+		$cache_file = $this->getLibraryFile($name, $this->extension);
+
 		$this->store($cache_file, $code, null, false);
 
 		if ($dependencies_files) {
@@ -296,7 +294,8 @@ abstract class Asset
 
 			$obj = $this->getDependenciesHandler();
 
-			$cache_file = $this->app->cache->getLibraryDependencyFile($name, $obj->getExtension());
+			$cache_file = $obj->getLibraryDependencyFile($name);
+
 			$obj->store($cache_file, $dependencies_code, null, false);
 		}
 	}

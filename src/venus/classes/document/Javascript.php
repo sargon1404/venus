@@ -22,10 +22,15 @@ class Javascript extends \Mars\Document\Javascript
 	protected $dialogs = [];
 
 	/**
-	* @internal
+	* Builds the javascript object
 	*/
-	protected $extension = '.js';
+	public function __construct(App $app)
+	{
+		$this->app = $app;
 
+		$this->setCacheUrls();
+	}
+	
 	/**
 	* Loads the javascript code
 	* @param string $location The location of the url [head|footer]

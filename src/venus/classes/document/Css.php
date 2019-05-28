@@ -16,11 +16,17 @@ class Css extends \Mars\Document\Css
 {
 	use \Venus\Assets\CacheTrait;
 
-	/**
-	* @internal
-	*/
-	protected $extension = '.css';
 
+	/**
+	* Builds the css object
+	*/
+	public function __construct(App $app)
+	{
+		$this->app = $app;
+
+		$this->setCacheUrls();
+	}
+	
 	/**
 	* Returns the name of the file where a theme's css vars will be cached
 	* @param string $name The name of the theme

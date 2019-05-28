@@ -31,12 +31,10 @@ trait CacheTrait
 	protected $cache_url = '';
 
 	/**
-	* Builds the javascript/css cache object
+	* Sets the cache urls
 	*/
-	public function __construct(App $app)
+	public function setCacheUrls()
 	{
-		$this->app = $app;
-
 		$this->base_cache_url = $this->app->cache_url;
 		$this->cache_url = $this->base_cache_url;
 	}
@@ -56,17 +54,37 @@ trait CacheTrait
 	/**
 	* Returns the name under which a file will be cached
 	* @param string $name The name of the file
-	* @param string $device The device used
 	* @param array $params Extra params
+	* @param string $device The device used
 	* @return string
 	*/
-	public function getFile(string $name, string $device, array $params = []) : string
+	public function getFile(string $name, array $params = [], string $device = '') : string
 	{
 		$parts = array_merge([$name, $device], $params);
 
 		$parts = array_filter($parts);
 
-		return implode($parts, '-') . $this->extension;
+		return implode($parts, '-') . '.' . $this->extension;
+	}
+
+	/**
+	* Returns the name under which a library's code is cached
+	* @param string $name The name of the library
+	* @return string
+	*/
+	public function getLibraryFile(string $name) : string
+	{
+		return $this->getFile('library', [$name]);
+	}
+
+	/**
+	* Returns the name under which a library's dependency css/js code is cached
+	* @param string $name The name of the library
+	* @return string
+	*/
+	public function getLibraryDependencyFile(string $name) : string
+	{
+		return $this->getFile('library', [$name, 'dependencies']);
 	}
 
 	/**
@@ -77,6 +95,6 @@ trait CacheTrait
 	*/
 	public function getThemeFile(string $name, string $device) : string
 	{
-		return $this->getFile('theme', $device, [$name]);
+		return $this->getFile('theme', [$name], $device);
 	}
 }
