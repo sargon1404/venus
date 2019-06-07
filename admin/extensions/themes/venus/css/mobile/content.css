@@ -1,0 +1,72 @@
+aside
+{
+	float: none;
+	width: 100%;
+}
+
+aside.closed
+{
+	width: 100%;
+	height: 55px;
+}
+
+aside #sidebar-top
+{
+	min-width: 14px;
+	min-height: 20px;
+	background: url('../images/sidebar-opened.png') no-repeat right center;
+}
+
+aside.closed #sidebar-top
+{
+	background: url('../images/sidebar-closed.png') no-repeat right center;
+}
+
+aside #sidebar-content
+{
+	padding-top: 10px;
+}
+
+aside.closed h2
+{
+	display: block;
+}
+
+main
+{
+	float: none;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+main.full
+{
+	width: 100%;
+}
+
+article section
+{
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	margin-bottom: 20px;
+}
+
+article section:last-child
+{
+	margin-bottom: 0;
+}
+
+article section div:first-child
+{
+	display: block;
+	width: 100%;
+	margin: 15px 0;
+}
+
+article section div:last-child
+{
+	display: block;
+	width: 100%;
+	margin: 15px 0 0 0;
+}

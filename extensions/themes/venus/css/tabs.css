@@ -1,0 +1,42 @@
+div.tabs
+{
+	height: 30px;
+	border-bottom: 1px solid #DADADA; 
+	margin-bottom: 30px;
+}
+
+div.tabs a 
+{ 
+  color: #585858;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 25px;  
+  height: 20px;
+  float: left; 
+  font-size: 1.18em;
+  border-left: 1px solid #DADADA; 
+  border-top: 1px solid #DADADA;
+}
+
+div.tabs a.current, div.tabs a:hover
+{
+	background: #D20E0B;
+	color: #fff;
+}
+
+div.tabs a:focus
+{
+	outline: none;
+}
+
+div.tabs a:first-child 
+{
+  border-top-left-radius: 7px;
+  border-left: 1px solid #DADADA;
+}
+
+div.tabs a:last-child 
+{
+	border-right: 1px solid #DADADA;
+	border-top-right-radius: 7px;
+}

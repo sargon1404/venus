@@ -43,7 +43,31 @@ class Css extends Asset
 		$this->extension = App::FILE_EXTENSIONS['css'];
 		$this->base_cache_dir = $this->app->cache_dir . App::CACHE_DIRS['css'];
 		$this->cache_dir = $this->base_cache_dir;
-		$this->minify = $this->app->config->getFromScope('css_minify', 'site');
+		$this->minify = $this->app->config->getFromScope('css_minify', 'frontend');
+	}
+
+	/**
+	* Loads a css library. Alias for $app->library->loadCss()
+	* @param $name The name of the library. Eg: bootstrap
+	* @return $this
+	*/
+	public function loadLibrary(string $name)
+	{
+		$this->app->library->loadCss($name);
+
+		return $this;
+	}
+
+	/**
+	* Unloads a css library. Alias for $app->library->unloadCss()
+	* @param $name The name of the library. Eg: bootstrap
+	* @return $this
+	*/
+	public function unloadLibrary(string $name)
+	{
+		$this->app->library->unloadcss($name);
+
+		return $this;
 	}
 
 	/**
@@ -89,9 +113,20 @@ class Css extends Asset
 	}
 
 	/**
+	* Returns the name of the file where a theme's css vars will be cached
+	* @param string $name The name of the theme
+	* @param string $device The device
+	* @return string
+	*/
+	public function getThemeVarsFile(string $name, string $device) : string
+	{
+		return $this->getFile('theme', [$name], $device) . '.vars';
+	}
+
+	/**
 	* Combines & minifies & caches the javascript code
 	*/
-	public function cache()
+	public function buildCache()
 	{
 		$themes = new Themes;
 		$themes->load([], 'parent');
@@ -112,8 +147,10 @@ class Css extends Asset
 		$dir = $theme->dir . App::EXTENSIONS_DIRS['css'];
 		$main_code = $this->readFromDir($dir);
 
+		$devices = $this->app->device->getDevices();
+
 		$this->vars = [];
-		foreach ($this->app->device->devices as $device) {
+		foreach ($devices as $device) {
 			$code = $main_code;
 			if ($device != 'desktop') {
 				$code.= $this->readFromDeviceDir($dir, $device);
@@ -123,7 +160,7 @@ class Css extends Asset
 			$parent_vars = [];
 			if ($theme->parent) {
 				//read the parent theme's vars
-				$vars_file = $this->cache_dir . $this->app->css->getThemeVarsFile($theme->parent_name, $device);
+				$vars_file = $this->cache_dir . $this->getThemeVarsFile($theme->parent_name, $device);
 				if (is_file($vars_file)) {
 					$parent_vars = serialize(file_get_contents($vars_file));
 				}
@@ -131,14 +168,14 @@ class Css extends Asset
 
 			$this->parser->setVars($parent_vars);
 
-			$cache_file = $this->app->css->getThemeFile($theme->name, $device);
+			$cache_file = $this->getThemeFile($theme->name, $device);
 			$this->store($cache_file, $code);
 
 			//store the parsed vars so we can use it when parsing inline code
 			$this->vars[$device] = $this->parser->getVars();
 
 			//store the vars in a cache file for fast access
-			$vars_file = $this->cache_dir . $this->app->css->getThemeVarsFile($theme->name, $device);
+			$vars_file = $this->cache_dir . $this->getThemeVarsFile($theme->name, $device);
 			file_put_contents($vars_file, serialize($this->parser->getVars()));
 		}
 

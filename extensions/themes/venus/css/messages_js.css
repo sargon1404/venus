@@ -1,0 +1,126 @@
+#confirm-background-obj, #error-background-obj, #message-background-obj
+{
+	position: fixed;
+	display: table;
+	visibility: hidden;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   z-index: 50;
+   background: rgba(0,0,0,0.85);
+}
+
+#confirm-container-wrapper-obj, #error-container-wrapper-obj, #message-container-wrapper-obj
+{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#confirm-container-obj, #error-container-obj, #message-container-obj
+{
+	text-align: center;
+	border: 1px solid #959595;
+	border-radius: 8px;
+	display: none;
+	min-width: 600px;
+	max-width: 1000px;
+	width: 35%;
+	margin: 0 auto;
+}
+
+#confirm-container-obj
+{
+	background: #E2DEC7;
+	color: #0E0E0E;
+}
+
+#error-container-obj
+{
+	background: #EDD2D2;
+	color: #c0445e;
+}
+
+#message-container-obj
+{
+	background: #D7ECCE;
+	color: #2C612D;
+}
+
+/*
+#notification-container-obj
+{
+	background: #C7E5F3;
+	color: #3170B1;
+}
+
+#warning-container-obj
+{
+	background: #F9F0C5;
+	color: #8A6D3B;
+}
+
+
+*/
+#confirm-title-obj, #error-title-obj, #message-title-obj
+{
+	padding: 3px 7px;
+	text-align: left;
+	border-bottom:1px solid #646464;
+	min-height: 12px;
+}
+
+#confirm-title-obj h1, #error-title-obj h1, #message-title-obj h1
+{
+	color: #fff;
+	font-size: 1.15em;
+	font-weight: bold;
+	padding-top: 3px;
+	color: #0E0E0E;
+	margin: 2px 0;
+}
+
+#confirm-title-obj a, #error-title-obj a, #message-title-obj a
+{
+   float: right;
+   padding: 1px;
+   border-radius: 5px;
+   margin-top: 2px;
+}
+
+#confirm-content-container-obj, #error-content-container-obj, #message-content-container-obj
+{
+	display: table;
+}
+
+#confirm-icon-obj, #error-icon-obj, #message-icon-obj
+{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	width: 100px;
+}
+
+#confirm-text-obj, #error-text-obj, #message-text-obj
+{
+	padding: 10px 120px 0 20px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	min-width: 400px;
+}
+
+#confirm-content-obj, #error-content-obj, #message-content-obj
+{
+	margin-top: 25px;
+}
+
+#confirm-text-buttons, #error-text-buttons, #message-text-buttons
+{
+	margin: 20px 0 15px 0;
+}
+
+#confirm-text-buttons input:first-child
+{
+	margin-right: 20px;
+}

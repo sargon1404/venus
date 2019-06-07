@@ -1,0 +1,104 @@
+header
+{
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	font-family: Georgia;
+}
+
+header #header-logo
+{
+	float: left;
+	width: 55%;
+}
+
+header #header-logo h1
+{
+	margin: 30px 0 0 40px;
+}
+
+header #header-logo h1 a
+{
+	color: #000;
+	font-size: 2.1em;
+	font-weight: normal;	
+}
+
+header #header-logo h1 a:hover
+{
+	color: #202020;
+	text-decoration: none;
+}
+
+header #header-logo h3
+{
+	color: #D62305;	
+	font-size: 1.25em;
+	margin: 15px 0 25px 50px;
+}
+
+header #header-right
+{
+	float: right;
+	width: 45%;
+	text-align: right;
+}
+
+header #header-right ul
+{
+	margin: 0;
+	margin-right: 20px;
+}
+
+header #header-right ul li
+{
+	list-style: none;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+header #header-right ul li a
+{
+	color: #D62305;
+	font-size: 1.3em;	
+}
+
+
+header nav
+{
+	font-family: Verdana;
+	clear: both;
+}
+
+header nav ul
+{
+	margin: 0;
+}
+
+header nav li 
+{
+	float: left;
+	padding: 2px 0;
+	list-style: none; 	
+	border-right: 1px solid #ffffff;
+}
+
+header nav a 
+{	
+	font-size: 1.1em;
+	color: #fff; 
+	font-weight: bold;
+	padding: 10px 16px;
+	background: -webkit-linear-gradient(#383737, #232323);
+	background: -o-linear-gradient(#383737, #232323);
+	background: -moz-linear-gradient(#383737, #232323);
+	background: linear-gradient(#383737, #232323);
+	display: block;	
+}
+
+header nav a:hover 
+{
+	text-decoration: none; 
+	background: #D20E0B;	
+	color: #fff; 
+}

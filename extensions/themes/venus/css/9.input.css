@@ -1,0 +1,86 @@
+input, select, textarea
+{
+	font-size: 1.19em;
+	color: #5E5E5E;
+	background: #FFF;
+	border: 1px solid #C4C4C4;
+	padding: 5px 6px;	
+	border-radius: 4px;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=file]
+{
+	width: 300px;
+}
+
+input[type=submit], input[type=button], a.button
+{
+	background: #D20E0B;
+	border-radius: 6px;
+	padding: 6px 12px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 1.15em;	
+}
+
+input[type=button]
+{
+	border-radius: 4px;
+	padding: 4px 12px;	
+}
+
+input[type=submit]:hover, input[type=button]:hover, a.button:hover
+{
+	background: #323030;
+	text-decoration: none;
+}
+
+input.emphase
+{
+	background: #D20E0B;
+	color: #FFF;
+}
+
+input.small,select.small
+{
+	width: 65px;
+}
+
+select
+{
+	width: 312px;
+}
+
+input.date
+{
+	width: 85px;
+}
+
+textarea
+{
+	width: 312px;
+	height: 100px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+textarea.medium
+{
+	height: 40px;
+}
+
+textarea.big
+{
+	width: 508px;
+	height: 100px;
+}
+
+progress.upload
+{
+	display: block;
+	margin: 15px auto;
+	width: 100%;
+	height: 15px;
+	display: none;
+}

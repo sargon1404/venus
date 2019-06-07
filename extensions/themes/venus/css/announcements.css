@@ -1,0 +1,54 @@
+#announcements
+{
+	padding: 0 15px;
+	margin: 20px 0;
+	font-size: 1.1em;
+}
+
+#announcements .announcement
+{
+	clear: both;
+	border-bottom: 1px dashed #DADADA;
+	padding-bottom: 15px;
+	margin: 30px 0 10px 0;
+}
+
+#announcements .announcement:last-child
+{
+	border: 0;
+	padding: 0;
+}
+
+#announcements .image
+{
+	float: left;
+	margin-right: 15px;
+}
+
+#announcements .container
+{
+	margin-left: 280px;
+}
+
+#announcements h2 a
+{
+	font-size: 1.25em;
+}
+
+#announcements h2 a:hover
+{
+	text-decoration: none;
+}
+
+#announcements .content
+{
+	margin: 20px 0 10px 0;
+}
+
+#announcements .date
+{
+	float: right;
+	font-style: italic;
+	font-size: 0.9em;
+	margin: 5px 10px 0 5px;
+}

@@ -1,0 +1,53 @@
+#navbar.sticky
+{
+	position: fixed;
+	top: 0;
+	left: 1%;
+	z-index: 500;
+	transition: all 0.5s linear;
+	margin-top: 0;
+	border-radius: 0;
+	padding: 10px 20px;
+}
+
+#navbar.sticky ~ #container
+{
+	margin-top: 90px;
+}
+
+#navbar.sticky #navbar-title h1
+{
+	display: none;
+}
+
+#navbar.sticky #navbar-icon img
+{
+	height: 24px;
+}
+
+#navbar.sticky #navbar-links
+{
+	margin-top: 5px;
+}
+
+#navbar.sticky #navbar-buttons
+{
+	margin-top: 0;
+}
+
+#navbar.sticky #navbar-buttons-list a
+{
+	padding: 2px 15px;
+}
+
+#navbar.sticky #navbar-button-upload-list
+{
+	position: fixed;
+	top: 45px !important;
+}
+
+#navbar.sticky #history-list
+{
+	position: fixed;
+	top: 45px !important;
+}

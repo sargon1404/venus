@@ -1,0 +1,28 @@
+@media only screen 
+	and (max-width: 900px) 
+{
+	
+	#private-message .avatar 
+	{
+		display: none;
+	}
+	
+	#private-message .container
+	{
+		margin-left: 0 !important;
+	}
+	
+	#private-messages-inbox td
+	{
+		vertical-align: middle;
+	}
+	
+	#private-messages-inbox img,
+	#private-messages-inbox br,
+	#private-messages-outbox img,
+	#private-messages-outbox br
+	{
+		display: none;
+	}
+
+}

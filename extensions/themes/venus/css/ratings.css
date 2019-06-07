@@ -1,0 +1,79 @@
+.rating
+{
+	float: right;
+	margin: 0 0 10px 0;
+}
+
+.rating .message
+{
+	color: #3F6900;
+}
+
+.rating .error
+{
+	color: #D7472A;
+}
+
+.rating ul.stars
+{
+	list-style: none;	
+	height: 24px;
+	float: left;
+	margin: 0;
+}
+
+.rating ul.stars li 
+{
+	padding: 0;
+	float: left;
+}
+
+.rating ul.stars a,.rating ul.stars span
+{
+	background: url({{ $images_url }}ratings/stars.png);
+	background-position: -81px 0;
+	float: left;
+	width: 27px;
+	height: 24px;
+	display: inline-block;
+}
+
+.rating ul.stars a.full,.rating ul.stars span.full
+{
+	background-position: 0 0;
+}
+
+.rating ul.stars a.half,.rating ul.stars span.half
+{
+	background-position: -27px 0;
+}
+
+.rating ul.stars a.hover
+{
+	background-position: -54px 0;
+}
+
+.rating .count
+{
+	display: inline-block;
+	margin: 5px 0 0 10px;
+	float: left;
+	font-size: 0.9em;
+}
+
+.rating .numeric .count
+{
+	float: none;
+	margin: 0;
+}
+
+.rating .numeric .rate
+{
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.rating .numeric select
+{
+	max-width: 60px; 
+}

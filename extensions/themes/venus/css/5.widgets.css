@@ -1,0 +1,27 @@
+.widget
+{ 	
+	color: #141414;
+	margin: 0 0 20px 0;
+	padding: 15px 10px;
+}
+
+.widget .title h3
+{
+	font-size: 1.4em;
+	padding: 5px;
+	border: none;
+	margin: 0;
+	margin-bottom: 15px;
+	padding: 0 0 0 10px;
+	color: #323030;
+}	
+
+.widget .content
+{
+	padding-left: 3px;
+}
+
+.widget .content img
+{
+	max-width: 100%;
+}

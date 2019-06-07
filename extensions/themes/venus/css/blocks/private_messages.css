@@ -1,0 +1,25 @@
+#private-messages-inbox table tr.unread
+{
+	background: #E0F0D8;
+}
+
+#private-message .subject
+{
+	padding: 0 0 4px 0;
+}
+
+#private-message .toolbar-left a
+{
+	background: #D20E0B;
+	border-radius: 6px;
+	padding: 8px 12px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 1.2em;	
+}
+
+#private-messages-inbox table td:nth-child(2) a, #private-messages-outbox table td:nth-child(2) a
+{
+	display: inline-block;
+	text-align: center;
+}

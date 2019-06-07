@@ -1,0 +1,10 @@
+@media only screen 
+	and (max-width: 500px) 
+{
+	
+	#control-panel #tab-signature
+	{
+		display: none;
+	}
+
+}

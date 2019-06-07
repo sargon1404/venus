@@ -13,10 +13,8 @@ use Venus\Admin\Output\Menu;
 * The System's Admin Theme Class
 * The system's admin theme extension
 */
-class Theme extends \Venus\System\Theme
+class Theme extends \Venus\Admin\Theme
 {
-	use \Venus\Admin\Extensions\Body;
-
 	/**
 	* @var string $tab_id The tab id of the currently selected tab
 	*/
@@ -28,36 +26,9 @@ class Theme extends \Venus\System\Theme
 	*/
 	public function __construct(App $app)
 	{
-		$this->app = $app;
-
-		$name = $this->get();
-
-		$this->load($name);
+		parent::__construct($app);
 
 		$this->app->plugins->run('adminSystemThemeConstruct', $this);
-	}
-
-	/**
-	* Returns the name of the theme
-	* @return string
-	*/
-	protected function get() : string
-	{
-		return $this->app->config->theme;
-	}
-
-	/**
-	* Loads the theme
-	* @param string $name The name of the theme
-	*/
-	public function load($name) : bool
-	{
-		$this->name = $name;
-		$this->title = $name;
-
-		$this->prepare();
-
-		return true;
 	}
 
 	/**
@@ -84,81 +55,24 @@ class Theme extends \Venus\System\Theme
 	}
 
 	/**
-	* @see \Venus\Theme::preparePaths()
-	* {@inheritDoc}
-	*/
-	protected function preparePaths()
-	{
-		parent::preparePaths();
-
-		$this->cache_dir = $this->app->admin_cache_dir;
-		$this->cache_url = $this->app->admin_cache_url;
-		$this->templates_cache_dir = $this->cache_dir . App::CACHE_DIRS['templates'];
-	}
-
-	/**
-	* @see \Venus\Theme::prepareImagePaths()
-	* {@inheritDoc}
-	*/
-	protected function prepareImagePaths()
-	{
-		$this->has_images_dir = true;
-		$this->has_tablets_images_dir = is_dir($this->images_dir . $this->app->device->getSubdir('tablet'));
-		$this->has_smartphones_images_dir = is_dir($this->images_dir . $this->app->device->getSubdir('smartphone'));
-		$this->has_mobile_images_dir = is_dir($this->images_dir . $this->app->device->getSubdir('mobile'));
-
-		parent::prepareImagePaths();
-	}
-
-	/**
-	* @see \Mars\Theme::prepareProperties()
-	* {@inheritDoc}
-	*/
-	protected function prepareProperties()
-	{
-		parent::prepareProperties();
-
-		//output all css & js scripts in the head, on admin
-		$this->css_location = 'head';
-
-		$this->javascript_location = 'head';
-	}
-
-	/**
-	* @see \Venus\Theme::prepareTemplates()
-	* {@inheritDoc}
-	*/
-	protected function prepareTemplates()
-	{
-		$this->templates = $this->app->cache->get('theme_templates', true);
-
-		if ($this->templates) {
-			return;
-		}
-
-		$this->app->file->listDir($this->templates_dir, $dirs, $templates, false, true);
-
-		$this->templates = array_fill_keys($templates, '');
-
-		$this->app->cache->update('theme_templates', $this->templates, true, 'admin');
-	}
-
-	/**
 	* @see \Venus\System\Theme::prepareJquery()
 	* {@inheritDoc}
 	*/
 	protected function prepareJquery()
 	{
-	$this->app->javascript->load('//www.domain.com/script1.js', 'head');
-	$this->app->javascript->load('http://www.domain.com/script3.js', 'head');
-	$this->app->javascript->load('https://localhost/venus/admin/qqqq.js');
-	//$this->app->javascript->load('https://localhost/venus/admin/aaaa/qqqq.js', 'head');
-	$this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer');
+$this->app->javascript->load('//www.domain.com/script1.js', 'head');
+$this->app->javascript->load('http://www.domain.com/script3.js', 'head');
+$this->app->javascript->load('https://localhost/venus/admin/qqqq.js');
+//$this->app->javascript->load('https://localhost/venus/admin/aaaa/qqqq.js', 'head');
+$this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer');
+
+
 	//$this->app->javascript->load('https://localhost/venus/admin/qqqq_footer.js', 'footer');
 
 		$this->app->library->loadJavascript('jquery');
 		//$this->app->library->loadJavascript('jquery-ui-admin');
 		$this->app->library->loadJavascript('jquery-ui');
+		$this->app->library->unloadJavascript('jquery-ui');
 
 		$this->app->library->loadCss('bootstrap');
 		//$this->app->library->unloadJavascript('jquery-ui');
@@ -173,7 +87,7 @@ class Theme extends \Venus\System\Theme
 	{
 		//javascript
 		//var_dump($this->app->cache->getFrontendJavascriptUrl($this->app->device->type, $this->app->lang->name));die;
-
+var_dump($this->javascript_location, $this->javascript_priority);die;
 		//load the main js code
 		$this->app->javascript->loadMain($this->javascript_location, $this->javascript_priority);
 		//load the theme's js code

@@ -1,0 +1,27 @@
+.expand, .collapse, .expand-small, .collapse-small
+{
+	background: url('{{ $images_url }}expand.png');
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin: 0 7px 2px 7px;
+	vertical-align: middle;
+	border: 1px solid #DADADA;	
+}
+
+.collapse
+{
+	background: url('{{ $images_url }}collapse.png');
+}
+
+.expand-small, .collapse-small
+{
+	background: url('{{ $images_url }}expand_small.png');	
+	width: 12px;
+	height: 12px;
+}
+
+.collapse-small
+{
+	background: url('{{ $images_url }}collapse_small.png');
+}

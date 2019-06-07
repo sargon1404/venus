@@ -89,14 +89,14 @@ class Library
 
 		$data = $this->available_libraries['css'][$name];
 
-		$url = $this->app->cache->getCssLibraryUrl($name);
+		$url = $this->app->css->getLibraryUrl($name);
 
 		$this->app->plugins->run('libraryLoadCss1', $name, $url, $data);
 
 		$this->app->css->load($url, $data['location'], $data['priority']);
 
 		if ($data['dependencies']) {
-			$url = $this->app->cache->getCssLibraryDependenciesUrl($name);
+			$url = $this->app->javascript->getLibraryDependenciesUrl($name);
 
 			$this->app->plugins->run('libraryLoadCss2', $name, $url, $data);
 
@@ -121,11 +121,11 @@ class Library
 
 		$data = $this->available_libraries['css'][$name];
 
-		$url = $this->app->cache->getCssLibraryUrl($name);
+		$url = $this->app->css->getLibraryUrl($name);
 		$this->app->css->unload($url);
 
 		if ($data['dependencies']) {
-			$url = $this->app->cache->getCssLibraryDependenciesUrl($name);
+			$url = $this->app->javascript->getLibraryDependenciesUrl($name);
 			$this->app->javascript->unload($url);
 		}
 
@@ -166,16 +166,13 @@ class Library
 		$data = $this->available_libraries['javascript'][$name];
 
 		$url = $this->app->javascript->getLibraryUrl($name);
-		var_dump($url);die;
-
-		//$url = $this->app->cache->getJavascriptLibraryUrl($name);
 
 		$this->app->plugins->run('libraryLoadJavascript1', $name, $url, $data);
 
 		$this->app->javascript->load($url, $data['location'], $data['priority'], $data['async'], $data['defer']);
 
 		if ($data['dependencies']) {
-			$url = $this->app->cache->getJavascriptLibraryDependenciesUrl($name);
+			$url = $this->app->css->getLibraryDependenciesUrl($name);
 
 			$this->app->plugins->run('libraryLoadJavascript2', $name, $url, $data);
 
@@ -200,11 +197,11 @@ class Library
 
 		$data = $this->available_libraries['javascript'][$name];
 
-		$url = $this->app->cache->getJavascriptLibraryUrl($name);
+		$url = $this->app->javascript->getLibraryUrl($name);
 		$this->app->javascript->unload($url);
 
 		if ($data['dependencies']) {
-			$url = $this->app->cache->getJavascriptLibraryDependenciesUrl($name);
+			$url = $this->app->css->getLibraryDependenciesUrl($name);
 			$this->app->css->unload($url);
 		}
 

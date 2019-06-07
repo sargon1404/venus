@@ -32,12 +32,12 @@ class Bruteforce
 	/**
 	* @var int $user_block_seconds The number of seconds to block an user marked as blocked
 	*/
-	public $user_block_seconds	= 0;
+	public $user_block_seconds = 0;
 
 	/**
-	* @var string $scope The bruteforce scope. Eg: site,admin. Any string can be used as a custom scope
+	* @var string $scope The bruteforce scope. Eg: frontend,admin. Any string can be used as a custom scope
 	*/
-	protected $scope = 'site';
+	protected $scope = 'frontend';
 
 	/**
 	* @var object $data Stores data about the failed attempts

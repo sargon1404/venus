@@ -1,0 +1,10 @@
+.base-mobile
+{
+	color: red;
+	
+	background: url(':/img.jpg'); 
+	background: url('::/img.jpg'); 
+	
+	background: url('../images/mobile/img.jpg');
+	background: url('./images/img.jpg');
+}

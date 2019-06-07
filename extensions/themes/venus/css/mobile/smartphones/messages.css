@@ -1,0 +1,25 @@
+@media only screen 
+	and (max-width: 900px) 
+{
+	
+	#error-container .error .icon, #message-container .message .icon, #permission-denied-container .permission-denied .icon
+	{
+	   width: 20%;
+	}
+	
+	#error-container .error .text, #permission-denied-container .permission-denied .text, #message-container .message .text
+	{
+		padding-right: 15%;  
+	}
+	
+	#errors-container .icon, #messages-container .icon, #notifications-container .icon, #warnings-container .icon
+	{
+		width: 13%;
+	}
+	
+	#errors-container .errors, #messages-container .messages, #notifications-container .notifications, #warnings-container .warnings
+	{
+		margin: 3px 8% 0 13%;	
+	}
+
+}

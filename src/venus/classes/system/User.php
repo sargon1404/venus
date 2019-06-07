@@ -67,7 +67,7 @@ class User extends \Venus\User
 	/**
 	* @internal
 	*/
-	protected static $login_keys_scope = 'site';
+	protected static $login_keys_scope = 'frontend';
 
 	/**
 	* @internal

@@ -35,22 +35,13 @@ class Cache extends \Mars\Cache
 	/**
 	* @see \Venus\Cache\Javascript\merge()
 	*/
-	protected function mergeJavascript(string $file, string $device, string $language, array $libraries, array $library_dependencies, array $local_urls)
+	/*protected function mergeJavascript(string $file, string $device, string $language, array $libraries, array $library_dependencies, array $local_urls)
 	{
 		$javascript = new \Venus\Cache\Javascript($this->app);
 		$javascript->merge($file, $device, $language, $libraries, $library_dependencies, $local_urls);
-	}
+	}*/
 
-	/**
-	* Returns the name under which the main javascript code will be cached
-	* @param string $device The device
-	* @param string $language The language's name
-	* @return string
-	*/
-	public function getJavascriptFile(string $device, string $language = '') : string
-	{
-		return $this->getFile('main', 'js', $device, [$language]);
-	}
+
 
 	/**
 	* Returns the url under which the main javascript code will be cached
@@ -58,10 +49,10 @@ class Cache extends \Mars\Cache
 	* @param string $language The language's name
 	* @return string
 	*/
-	public function getJavascriptUrl(string $device, string $language = '') : string
+	/*public function getJavascriptUrl(string $device, string $language = '') : string
 	{
 		return $this->cache_url . 'javascript/' . $this->getJavascriptFile($device, $language);
-	}
+	}*/
 
 	/**
 	* Returns the name under which javascript files are merged
@@ -72,7 +63,7 @@ class Cache extends \Mars\Cache
 	* @param array $local_urls The local urls to include in the merge
 	* @return string
 	*/
-	public function getJavascriptMergedFile(string $device, string $language, array $libraries, array $library_dependencies, array $local_urls) : string
+	/*public function getJavascriptMergedFile(string $device, string $language, array $libraries, array $library_dependencies, array $local_urls) : string
 	{
 		static $javascript_merged = null;
 		if ($javascript_merged === null) {
@@ -93,7 +84,7 @@ class Cache extends \Mars\Cache
 		}
 
 		return $file;
-	}
+	}*/
 
 	/**
 	* Returns the name under a theme's javascript code will be cached
@@ -112,10 +103,10 @@ class Cache extends \Mars\Cache
 	* @param string $device The device
 	* @return string
 	*/
-	public function getThemeJavascriptUrl(string $name, string $device) : string
+	/*public function getThemeJavascriptUrl(string $name, string $device) : string
 	{
 		return $this->cache_url . 'javascript/' . $this->getThemeJavascriptFile($name, $device);
-	}
+	}*/
 
 
 
@@ -125,40 +116,32 @@ class Cache extends \Mars\Cache
 	* @param string $name The name of the library
 	* @return string
 	*/
-	public function getCssLibraryUrl(string $name) : string
+	/*public function getCssLibraryUrl(string $name) : string
 	{
 		return $this->base_cache_url . 'css/' . $this->getLibraryFile($name, 'css');
-	}
+	}*/
 
 	/**
 	* Returns the url of of the file containing the js dependencies of a css library
 	* @param string $name The name of the library
 	* @return string
 	*/
-	public function getCssLibraryDependenciesUrl(string $name) : string
+	/*public function getCssLibraryDependenciesUrl(string $name) : string
 	{
 		return $this->base_cache_url . 'javascript/' . $this->getLibraryDependencyFile($name, 'js');
-	}
+	}*/
 
 	/**
 	* Returns the url of a javascript library
 	* @param string $name The name of the library
 	* @return string
 	*/
-	public function getJavascriptLibraryUrl(string $name) : string
+	/*public function getJavascriptLibraryUrl(string $name) : string
 	{
 		return $this->base_cache_url . 'javascript/' . $this->getLibraryFile($name, 'js');
-	}
+	}*/
 
-	/**
-	* Returns the url of of the file containing the css dependencies of a javascript library
-	* @param string $name The name of the library
-	* @return string
-	*/
-	public function getJavascriptLibraryDependenciesUrl(string $name) : string
-	{
-		return $this->base_cache_url . 'css/' . $this->getLibraryDependencyFile($name, 'css');
-	}
+
 
 	/**
 	* Returns the cached categories

@@ -1,0 +1,53 @@
+@media only screen 
+	and (max-width: 900px) 
+{
+
+	#announcements .container
+	{
+		margin-left: 240px;
+	}
+	
+	#announcements .container .date
+	{
+		display: none;	
+	}
+	
+	#breadcrumbs li
+	{
+		padding: 0 2px;	
+	}
+	
+	.category .category-link
+	{
+		width: 25%;	
+	}
+	
+	.category .category-page .image, .tag .tag-page .image
+	{
+		display: none;
+	}
+	
+	.block .image, .page .image, .tag .image 
+	{
+		float: none;
+		margin: 0;
+		width: 100%;
+		margin-bottom: 10px;
+	}
+	
+	.block .image img, .page .image img, .tag .image img
+	{
+		width: 100%;
+	}
+	
+	.comment .avatar
+	{
+		display: none;
+	}
+	
+	.comment .container
+	{
+		margin-left: 0;
+	}
+
+}

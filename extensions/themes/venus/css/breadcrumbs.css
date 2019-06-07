@@ -1,0 +1,31 @@
+#breadcrumbs
+{
+	padding: 5px 15px;
+	margin: 0 0 20px 0;
+	font-size: 1.1em;
+}
+
+#breadcrumbs ul
+{
+	list-style: none;
+	margin:0;
+}
+
+#breadcrumbs li
+{
+	display: inline-block;
+	padding: 0 5px;
+}
+
+#breadcrumbs li.separator
+{
+	height: auto;
+	background: none;
+	margin: 0;
+	font-size: 0.7em;
+}
+
+#breadcrumbs li a
+{
+	font-size: 1em;
+}

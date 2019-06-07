@@ -1,0 +1,81 @@
+.block h1.heading a, .page h1.heading a, .category h1.heading a, .tag h1.heading a
+{
+	float: right;
+}
+
+.block .description, .category .description, .tag .description
+{
+	clear: both;
+	border-bottom: 1px solid #DADADA;	
+	padding: 10px 0;
+	margin: 10px 0 20px 0;
+}
+
+
+.block a.comments-count, .page a.comments-count
+{
+	float: left;
+	margin-bottom: 10px;
+}
+
+.block .content, .page .content, .category .content, .tag .content
+{
+	clear: both;
+}
+
+.block .content img, .page .content img, .category .content img, .tag .content img
+{
+	max-width: 100%;
+}
+
+.block .image, .page .image, .tag .image
+{
+	float: right;
+	margin-left: 10px
+}
+
+
+/*************************************/
+
+.page .meta-top
+{
+	background: #FFFFFF;
+	background: -webkit-linear-gradient(#FEFEFE, #F9F9F9);
+	background: -o-linear-gradient(#FEFEFE, #F9F9F9);
+	background: -moz-linear-gradient(#FEFEFE, #F9F9F9);
+	background: linear-gradient(#FEFEFE, #F9F9F9);
+	margin-bottom: 25px;
+	padding: 5px 20px;
+	border: 1px solid #DADADA;	
+	border-radius: 6px;
+}
+
+.page .meta-top span.author
+{
+	float: left;
+}
+
+.page .meta-top span.author img
+{
+	margin-right: 10px;
+	vertical-align: bottom;
+}
+
+.page .meta-top span.author a
+{
+	font-size: 1.2em;
+}
+
+.page .meta-top span.date
+{
+	font-style: italic;
+	float: right;
+	padding-top: 4px;
+}
+
+.page .meta-bottom
+{
+	font-style: italic;
+	text-align: right;
+	margin: 10px 10px 20px 0;
+}

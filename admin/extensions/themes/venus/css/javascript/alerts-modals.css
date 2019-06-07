@@ -1,0 +1,69 @@
+.message-modal
+{
+	@message-properties
+}
+
+.message-modal .modal-image
+{
+	background: url('../images/messages/message-big.png') no-repeat center;
+}
+
+.error-modal
+{
+	@error-properties
+}
+
+.error-modal .modal-title
+{
+	@error-title-properties
+}
+
+.error-modal .modal-image
+{
+	background: url('../images/messages/error-big.png') no-repeat center;
+}
+
+.warning-modal
+{
+	@warning-properties
+}
+
+.warning-modal .modal-title
+{
+	@warning-title-properties
+}
+
+.warning-modal .modal-image
+{
+	background: url('../images/messages/warning-big.png') no-repeat center;
+}
+
+.notification-modal
+{
+	@notification-properties
+}
+
+.notification-modal .modal-title
+{
+	@notification-title-properties
+}
+
+.notification-modal .modal-image
+{
+	background: url('../images/messages/notification-big.png') no-repeat center;
+}
+
+.confirm-modal
+{
+	@confirm-properties
+}
+
+.confirm-modal .modal-title
+{
+	@confirm-title-properties
+}
+
+.confirm-modal .modal-image
+{
+	background: url('../images/messages/confirm-big.png') no-repeat center;
+}

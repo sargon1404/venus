@@ -1,0 +1,9 @@
+[draggable="true"]
+{
+	cursor: move;
+}
+
+[data-drop="yes"]
+{
+	cursor: crosshair;
+}

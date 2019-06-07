@@ -1,0 +1,11 @@
+@media only screen 
+	and (max-width: 900px) 
+{
+	
+	#registration #social-login ul li, #login #social-login ul li
+	{
+		display: block;
+		padding: 6px 0;
+	}
+
+}

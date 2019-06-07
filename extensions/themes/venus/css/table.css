@@ -1,0 +1,137 @@
+table
+{
+ 	border-collapse: separate;
+	border-spacing: 0;	
+	width: 100%;
+}
+
+table th
+{
+	padding: 6px 10px;
+	background: #323030;
+	color: #fff;
+	font-weight:bold;
+	font-size: 1.19em;
+}
+
+table td
+{
+	padding: 4px 5px;
+	vertical-align: middle;
+}
+
+/*********************/
+
+table.form td:first-child
+{
+	width: 35%;
+	text-align: right;
+	padding: 5px 20px 5px 2px;
+}
+
+table.form td:last-child
+{
+	width: 65%;
+	text-align: left;
+	padding: 5px 2px 5px 20px;
+}
+
+/*********************/
+
+table.form-100 td:first-child
+{
+	width: 20%;
+	padding: 5px 20px 5px 5px;
+}
+
+table.form-100 td:last-child
+{
+	width: 80%;
+	padding: 5px 2px 5px 0px;
+}
+
+/*********************/
+
+table.list
+{
+	border-spacing: 0 7px;
+	table-layout: fixed;
+}
+
+table.list th a
+{
+	color: #fff;
+	font-weight: bold;
+	margin-bottom: 2px;
+	text-decoration: underline;
+}
+
+table.list tr:nth-child(odd)
+{
+	background: #F0F0F0;
+}
+
+table.list td
+{
+	border: 1px solid #DADADA;
+	border-left: 0;
+	border-right: 0;
+   padding: 12px 10px; 
+   vertical-align: middle; 
+}
+
+table.list td:first-child
+{
+  border-left: 1px solid #DADADA;
+  border-radius: 5px 0 0 5px;
+}
+
+table.list td:last-child
+{
+  border-right: 1px solid #DADADA;  	  
+  border-radius: 0 5px 5px 0;	
+}
+
+/*********************/
+
+table.grid
+{
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-radius: 5px;
+	padding: 10px;
+	text-align: center;	
+}
+
+table.grid th
+{
+	border:1px solid #DADADA;
+} 
+
+table.grid td
+{
+	 border:1px solid #DADADA;
+	 padding: 5px;
+}
+
+/*********************/
+
+table.data
+{
+	border-collapse: separate;
+	border-spacing: 0;	
+	text-align: center;
+	border: 1px solid #DADADA;
+	border-spacing: 0 10px;	
+}
+
+table.data td
+{		
+	padding: 4px 10px;
+	border-right: 1px solid #DADADA;
+}
+
+table.data td:last-child
+{
+	border-right: none;
+}

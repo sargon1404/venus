@@ -1,0 +1,1 @@
+var venus = new VenusInline;

@@ -1,0 +1,64 @@
+input[type="radio"], input[type="checkbox"]
+{
+	position: absolute;
+	left: -9999px;
+	vertical-align: middle;
+}
+
+/**
+* Preload the backgrounds for radio/checkboxes
+*/
+input[type="radio"]
+{
+	background: url('{{ $images_url }}input/radio_checked.png') 0 2px no-repeat; 
+}
+
+input[type="checkbox"]
+{
+	background: url('{{ $images_url }}input/checkbox_checked.png') 0 3px no-repeat;
+}
+
+
+
+input[type="radio"] + label, input[type="checkbox"] + label
+{
+	cursor: pointer;
+	font-weight: normal;  		
+	display: inline-block;			
+}
+
+input[type="radio"] + label
+{
+	background: url('{{ $images_url }}input/radio.png') 0 2px no-repeat; 	
+	height: 15px;
+	padding-left: 18px;        
+	margin-right: 8px;	
+}
+
+input[type='radio']:checked + label
+{
+	background: url('{{ $images_url }}input/radio_checked.png') 0 2px no-repeat; 
+}
+
+input[type="checkbox"] + label
+{	  
+   background: url('{{ $images_url }}input/checkbox.png') 0 3px no-repeat;
+   height: 20px;	
+	padding-left: 20px;	
+}
+
+input[type="checkbox"] + label:empty
+{
+	padding-left: 14px;
+	vertical-align: middle;
+}
+
+input[type="checkbox"]:checked + label
+{
+   background: url('{{ $images_url }}input/checkbox_checked.png') 0 3px no-repeat;
+}
+
+input[type="checkbox"]:checked:disabled + label
+{
+	background: url('{{ $images_url }}input/checkbox_disabled.png') 0 3px no-repeat;
+}

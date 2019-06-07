@@ -39,7 +39,7 @@ class Javascript extends Asset
 	/**
 	* @var string $scope The scope from where the config/properties are read
 	*/
-	protected $scope = 'site';
+	protected $scope = 'frontend';
 
 	/**
 	* @internal
@@ -68,7 +68,31 @@ class Javascript extends Asset
 		$this->base_cache_dir = $this->app->cache_dir . App::CACHE_DIRS['javascript'];
 		$this->cache_dir = $this->base_cache_dir;
 
-		$this->minify = $this->app->config->getFromScope('javascript_minify', 'site');
+		$this->minify = $this->app->config->getFromScope('javascript_minify', 'frontend');
+	}
+
+	/**
+	* Loads a javascript library. Alias for $app->library->loadJavascript()
+	* @param string $name The name of the library. Eg: jquery
+	* @return $this
+	*/
+	public function loadLibrary(string $name)
+	{
+		$this->app->library->loadJavascript($name);
+
+		return $this;
+	}
+
+	/**
+	* Unloads a javascript library. Alias for $app->library->unloadJavascript()
+	* @param string $name The name of the library. Eg: jquery
+	* @return $this
+	*/
+	public function unloadLibrary(string $name)
+	{
+		$this->app->library->unloadJavascript($name);
+
+		return $this;
 	}
 
 	/**
@@ -100,9 +124,20 @@ class Javascript extends Asset
 	}
 
 	/**
+	* Returns the name under which the main javascript code will be cached
+	* @param string $device The device
+	* @param string $language The language's name
+	* @return string
+	*/
+	public function getMainFile(string $device, string $language = '') : string
+	{
+		return $this->getFile('main', [$language], $device);
+	}
+
+	/**
 	* Combines & minifies & caches the javascript code
 	*/
-	public function cache()
+	public function buildCache()
 	{
 		$this->cacheMain();
 		$this->cacheThemes();
@@ -142,7 +177,7 @@ class Javascript extends Asset
 			$code.= $path_code;
 
 			//cache the js code, without any strings. We'll need it in the admin
-			$cache_file = $this->app->cache->getJavascriptFile($device);
+			$cache_file = $this->getMainFile($device);
 			$this->store($cache_file, $code);
 
 			foreach ($strings as $lang => $strings_code) {
@@ -150,7 +185,7 @@ class Javascript extends Asset
 				$cache_code.= $strings_code;
 				$cache_code.= $init_code;
 
-				$cache_file = $this->app->cache->getJavascriptFile($device, $lang);
+				$cache_file = $this->getMainFile($device, $lang);
 				$this->store($cache_file, $cache_code);
 			}
 		}
@@ -177,7 +212,6 @@ class Javascript extends Asset
 	{
 		//use the javascript_minify theme param, if set
 		$minify = $theme->params->javascript_minify ?? null;
-
 		if (!$theme->has_javascript_dir) {
 			$theme->updateInlineJs();
 			return;
@@ -198,7 +232,7 @@ class Javascript extends Asset
 				$code.= $this->readFromDeviceDir($dir, $device);
 			}
 
-			$cache_file = $this->app->cache->getThemeJavascriptFile($theme->name, $device);
+			$cache_file = $this->getThemeFile($theme->name, $device);
 			$this->store($cache_file, $code, $minify);
 		}
 
@@ -299,7 +333,7 @@ class Javascript extends Asset
 	*/
 	protected function getTheme(Theme $theme, string $device, bool $add_params = true) : string
 	{
-		$image_paths = $theme->getImagePaths($theme, $device);
+		$image_paths = $theme->getImagePaths($device);
 
 		$code = "venus.theme.name = '" . App::ejs($theme->name) . "';\n";
 		$code.= "venus.theme.dir_url = '" . App::ejs($theme->dir_url_static) . "';\n";
@@ -399,6 +433,6 @@ class Javascript extends Asset
 	*/
 	protected function getMainMerge(string $device, string $language) : string
 	{
-		return file_get_contents($this->cache_dir . $this->app->cache->getJavascriptFile($device, $language)) . "\n\n";
+		return file_get_contents($this->cache_dir . $this->app->cache->getMainFile($device, $language)) . "\n\n";
 	}
 }

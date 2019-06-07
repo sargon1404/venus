@@ -1,0 +1,15 @@
+@media only screen 
+	and (max-width: 900px) 
+{
+	
+	#search-results .result .image 
+	{
+		display: none;
+	}
+	
+	#search-results .result .container
+	{
+		margin-left: 0 !important;
+	}
+
+}

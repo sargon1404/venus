@@ -1,0 +1,30 @@
+@media only screen 
+	and (max-width: 500px) 
+{
+	
+	input[type=text], input[type=password], input[type=email], input[type=file]
+	{
+		width: 85%;
+	}
+	
+	input.small,select.small
+	{
+		width: 45px;
+	}
+	
+	select
+	{
+		width: 90%;
+	}
+	
+	textarea
+	{
+		width: 90%;
+	}
+	
+	input.date
+	{
+		width: 65px;
+	}
+
+}

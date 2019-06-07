@@ -1,0 +1,159 @@
+@background = '../images/background.jpg';
+
+.venus-inline
+{
+	color: red;
+		
+	background: url('::/img.jpg');
+	background: url(':/img.jpg');  
+	
+	background: url('../images/mobile/img.jpg');
+	background: url('./images/img.jpg');
+}
+
+*
+{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body
+{
+	font-family: helvetica,arial,​sans-serif;
+	font-size: 12px;
+	line-height: 17px;
+	background: #252525 url(@background);
+	color: #030305;	
+}
+
+/******************************************************************/
+
+#container
+{
+	margin: 0 auto 60px auto;
+	padding: 20px;	
+	width: 98%;
+	box-sizing: border-box;
+	border-radius: 7px;
+	background: #eaeaea linear-gradient(#eaeaea, #efefef);
+}
+
+#content-inner
+{
+	clear: both;
+}
+
+#content-inner main
+{
+	border-top-left-radius: 0;
+}
+
+main
+{
+	background: #fff;
+	border: 1px solid #b7b7b7;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	float: left;
+	width: 80%;
+	box-sizing: border-box;
+	padding: 25px 20px;
+}
+
+main.open
+{
+	width: calc(100% - 80px);
+	box-sizing: border-box;
+}
+
+main.full
+{
+	width: 100%;
+}
+
+aside
+{
+	float: right;
+	width: calc(20% - 20px);
+	box-sizing: border-box;
+	padding: 20px 20px;
+	background: #fff;
+	border: 1px solid #b7b7b7;
+	border-radius: 5px;
+}
+
+aside.closed
+{
+	width: 60px;
+}
+
+/******************************************************************/
+
+article
+{
+	margin-bottom: 10px;
+}
+
+article section
+{
+	display: table;
+	table-layout: fixed;
+	width: calc(100% + 20px);
+	margin: 0 -10px 15px -10px;
+	padding-top: 10px;
+	border-spacing: 10px 0;
+}
+
+article section div
+{
+	border: 1px solid #b7b7b7;
+	padding-bottom: 20px;
+}
+
+article section div:first-child
+{
+	display: table-cell;
+	width: 50%;
+	vertical-align: top;
+}
+
+article section div:last-child
+{
+	display: table-cell;
+	width: 50%;
+	vertical-align: top;
+}
+
+article section h3
+{
+	font-size: 1.15em;
+	border-bottom: 1px solid #b7b7b7;
+	margin: 0;
+	padding: 8px 20px;
+	text-align: left;
+	background: #efefef linear-gradient(#efefef, #e1e1e1);
+	color: #030305;
+}
+
+article section div.empty
+{
+	border: 0;
+}
+
+article section div.block
+{
+	width: 100%;
+	padding: 0 0 15px 0;
+}
+
+article section div.block > div
+{
+	padding: 0 20px;
+}
+
+article section div.block h3
+{
+	margin-left: 0;
+	margin-right: 0;
+}

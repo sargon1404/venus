@@ -1,0 +1,15 @@
+#tooltip
+{
+	position: absolute;
+	display: none;
+	z-index: 101;
+}
+
+.tooltip
+{
+	border-radius: 5px;
+	margin: 5px 0px;
+	padding: 5px 10px;
+	background: #323030;
+	color: #fff;
+}

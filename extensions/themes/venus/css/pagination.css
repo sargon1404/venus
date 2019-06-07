@@ -1,0 +1,23 @@
+.pagination
+{
+	text-align: right;	
+	margin-top: 15px;
+	margin-bottom: 5px;	
+}
+
+.pagination a
+{	
+	color: #323030;	
+	background: #fff;
+	border: 1px solid #dadada;
+	padding: 5px 10px;
+	margin-left: 5px;	
+	border-radius: 5px;
+}
+
+.pagination a.current
+{
+   color: #fff;
+   background: #d20e0b;
+	font-weight: bold;	
+}

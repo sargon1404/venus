@@ -1,0 +1,58 @@
+.alert-inline, .message-inline, .error-inline, .warning-inline, .notification-inline
+{
+	padding: 5px 10px;
+	margin: 10px 0;
+	@alert-properties
+}
+
+.message-inline
+{
+	@message-properties
+}
+
+.error-inline
+{
+	@error-properties
+}
+
+.warning-inline
+{
+	@warning-properties
+}
+
+.notification-inline
+{
+	@notification-properties
+}
+
+.alert-inline-icon
+{
+	float: left;
+	width: 16px;
+	height: 16px;
+}
+
+.message-inline .alert-inline-icon
+{
+	background: url('../images/messages/message-small.png');
+}
+
+.error-inline .alert-inline-icon
+{
+	background: url('../images/messages/error-small.png');
+}
+
+.warning-inline .alert-inline-icon
+{
+	background: url('../images/messages/warning-small.png');
+}
+
+.notification-inline .alert-inline-icon
+{
+	background: url('../images/messages/notification-small.png');
+}
+
+.alert-inline-text
+{
+	margin-left: 26px;
+}

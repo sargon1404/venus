@@ -31,27 +31,6 @@ trait CacheTrait
 	protected $cache_url = '';
 
 	/**
-	* Sets the cache urls
-	*/
-	public function setCacheUrls()
-	{
-		$this->base_cache_url = $this->app->cache_url;
-		$this->cache_url = $this->base_cache_url;
-	}
-
-	/**
-	* Returns the url of a library from the cache folder
-	* @param string $name The name of the library
-	* @return string The url
-	*/
-	public function getLibraryUrl()
-	{
-		return $this->base_cache_url . 'javascript/' . $this->getLibraryFile($name, 'js');
-		var_dump($this);
-		die;
-	}
-
-	/**
 	* Returns the name under which a file will be cached
 	* @param string $name The name of the file
 	* @param array $params Extra params
@@ -65,6 +44,26 @@ trait CacheTrait
 		$parts = array_filter($parts);
 
 		return implode($parts, '-') . '.' . $this->extension;
+	}
+
+	/**
+	* Returns the url of a library from the cache folder
+	* @param string $name The name of the library
+	* @return string The url
+	*/
+	public function getLibraryUrl(string $name)
+	{
+		return $this->base_cache_url . $this->getLibraryFile($name);
+	}
+
+	/**
+	* Returns the url of of the file containing the css dependencies of a javascript library
+	* @param string $name The name of the library
+	* @return string
+	*/
+	public function getLibraryDependenciesUrl(string $name) : string
+	{
+		return $this->base_cache_url . $this->getLibraryDependencyFile($name);
 	}
 
 	/**
@@ -88,7 +87,7 @@ trait CacheTrait
 	}
 
 	/**
-	* Returns the name of the file where a theme's css code will be cached
+	* Returns the name of the file where a theme's css/js code will be cached
 	* @param string $name The name of the theme
 	* @param string $device The device
 	* @return string

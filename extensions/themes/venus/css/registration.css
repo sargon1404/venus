@@ -1,0 +1,15 @@
+#registration-agreement-submit
+{
+	margin-top: 20px;
+	text-align: center;
+}
+
+#registration #social-login, #login #social-login
+{
+	margin-top: 20px;
+}
+
+#registration #social-login ul, #login #social-login ul
+{
+	display: inline;
+}

@@ -28,9 +28,11 @@ class Javascript extends \Mars\Document\Javascript
 	{
 		$this->app = $app;
 
-		$this->setCacheUrls();
+		$this->extension = App::FILE_EXTENSIONS['javascript'];
+		$this->base_cache_url = $this->app->cache_url . App::CACHE_DIRS['javascript'];
+		$this->cache_url = $this->base_cache_url;
 	}
-	
+
 	/**
 	* Loads the javascript code
 	* @param string $location The location of the url [head|footer]

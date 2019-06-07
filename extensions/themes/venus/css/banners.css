@@ -1,0 +1,36 @@
+.banner_container
+{
+	position: relative;
+}
+
+.banner_container object
+{
+	width: 100%;
+}
+
+.banner_container a
+{
+	display: block;
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   z-index: 5;
+   top: 0px;
+   left: 0px;
+}
+
+.banners
+{
+	margin: 40px 0 0 0;
+}
+
+.banners object
+{
+	height: 200px;	
+}
+
+.banners img
+{
+	width: 100%;
+	max-width: 100%;
+}

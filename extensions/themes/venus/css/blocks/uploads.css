@@ -1,0 +1,10 @@
+#uploads table.grid a.label 
+{
+	color: #141414;
+}
+
+#uploads table.grid td 
+{
+	 border:1px solid #DADADA;
+	 padding: 10px 5px;
+}

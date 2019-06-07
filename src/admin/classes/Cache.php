@@ -33,26 +33,6 @@ class Cache extends \Venus\Cache
 	}*/
 
 	/**
-	* Returns the url under which the main javascript code will be cached, in the frontend
-	* @param string $device The device
-	* @param string $language The language's name
-	* @return string
-	*/
-	public function getFrontendJavascriptUrl(string $device, string $language = '') : string
-	{
-		return $this->app->cache_url . 'javascript/' . $this->getJavascriptFile($device, $language);
-	}
-
-	/**
-	* @see \Venus\Cache\Javascript\merge()
-	*/
-	protected function mergeJavascript(string $file, string $device, string $language, array $libraries, array $library_dependencies, array $local_urls)
-	{
-		$javascript = new \venus\admin\cache\Javascript($this->app);
-		$javascript->merge($file, $device, $language, $libraries, $library_dependencies, $local_urls);
-	}
-
-	/**
 	* Clears a folder and copies the empty index.htm file
 	* @param string $dir The folder's name
 	*/
@@ -64,14 +44,36 @@ class Cache extends \Venus\Cache
 	}
 
 	/**
+	* Returns the url under which the main javascript code will be cached, in the frontend
+	* @param string $device The device
+	* @param string $language The language's name
+	* @return string
+	*/
+	/*public function getFrontendJavascriptUrl(string $device, string $language = '') : string
+	{
+		return $this->app->cache_url . 'javascript/' . $this->getJavascriptFile($device, $language);
+	}*/
+
+	/**
+	* @see \Venus\Cache\Javascript\merge()
+	*/
+	/*protected function mergeJavascript(string $file, string $device, string $language, array $libraries, array $library_dependencies, array $local_urls)
+	{
+		$javascript = new \venus\admin\cache\Javascript($this->app);
+		$javascript->merge($file, $device, $language, $libraries, $library_dependencies, $local_urls);
+	}*/
+
+
+
+	/**
 	* Builds the css cache
 	* @return $this
 	*/
-	public function css()
+	public function buildCss()
 	{
-		$this->cssFrontend();
-		$this->cssAdmin();
-
+		//$this->buildCssFrontend();
+		$this->buildCssAdmin();
+die("jjjj");
 		return $this;
 	}
 
@@ -79,17 +81,17 @@ class Cache extends \Venus\Cache
 	* Builds the css frontend cache
 	* @return $this
 	*/
-	public function cssFrontend()
+	public function buildCssFrontend()
 	{
 		$this->clearDir($this->app->cache_dir . 'css/');
 
-		$css = new \venus\cache\Css($this->app);
-		$css->cache();
+		$css = new \Venus\Assets\Css($this->app);
+		$css->buildCache();
 
 		$this->cacheThemeDefault();
 
 		//clear the list of merged files
-		$this->update('css_merged', '', false, 'site');
+		$this->update('css_merged', '', false, 'frontend');
 
 		$this->update('css_dateline', time());
 
@@ -100,12 +102,12 @@ class Cache extends \Venus\Cache
 	* Builds the css admin cache
 	* @return $this
 	*/
-	public function cssAdmin()
+	public function buildCssAdmin()
 	{
 		$this->clearDir($this->app->admin_cache_dir . 'css/');
 
-		$css = new \venus\admin\cache\Css($this->app);
-		$css->cache();
+		$css = new \Venus\Admin\Assets\Css($this->app);
+		$css->buildCache();
 
 		//clear the list of merged files
 		$this->update('css_merged', '', false, 'admin');
@@ -117,26 +119,26 @@ class Cache extends \Venus\Cache
 	* Builds the javascript cache
 	* @return $this
 	*/
-	public function javascript()
+	public function buildJavascript()
 	{
-		$this->javascriptFrontend();
-		$this->javascriptAdmin();
+		$this->buildJavascriptFrontend();
+		$this->buildJavascriptAdmin();
 	}
 
 	/**
 	* Builds the javascript frontend cache
 	*/
-	public function javascriptFrontend()
+	public function buildJavascriptFrontend()
 	{
 		$this->clearDir($this->app->cache_dir . 'javascript/');
 
-		$javascript = new \venus\cache\Javascript($this->app);
-		$javascript->cache();
+		$javascript = new \Venus\Assets\Javascript($this->app);
+		$javascript->buildCache();
 
 		$this->cacheThemeDefault();
 
 		//clear the list of merged files
-		$this->update('javascript_merged', '', false, 'admin');
+		$this->update('javascript_merged', '', false, 'frontend');
 
 		$this->update('javascript_dateline', time());
 
@@ -146,18 +148,27 @@ class Cache extends \Venus\Cache
 	/**
 	* Builds the javascript admin cache
 	*/
-	public function javascriptAdmin()
+	public function buildJavascriptAdmin()
 	{
 		$this->clearDir($this->app->admin_cache_dir . 'javascript/');
 
-		$javascript = new \venus\admin\cache\Javascript($this->app);
-		$javascript->cache();
+		$javascript = new \Venus\Admin\Assets\Javascript($this->app);
+		$javascript->buildCache();
 
 		//clear the list of merged files
 		$this->update('javascript_merged', '', false, 'admin');
 
 		return $this;
 	}
+
+
+
+
+
+
+
+
+
 
 	/**
 	* Builds the libraries cache
@@ -184,14 +195,14 @@ class Cache extends \Venus\Cache
 			//does this js library have css files?
 			$libraries['javascript'][$name] = $this->getLibraryData($data);
 		}
-var_dump($libraries);die;
+
 		$this->update('libraries', $libraries, true);
 
 		//clear the list of merged files
-		$this->update('css_merged', '', false, 'site');
+		$this->update('css_merged', '', false, 'frontend');
 		$this->update('css_merged', '', false, 'admin');
 
-		$this->update('javascript_merged', '', false, 'site');
+		$this->update('javascript_merged', '', false, 'frontend');
 		$this->update('javascript_merged', '', false, 'admin');
 
 		return $this;

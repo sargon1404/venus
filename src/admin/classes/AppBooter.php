@@ -65,7 +65,7 @@ class AppBooter extends \Venus\AppBooter
 	*/
 	public function config()
 	{
-		$this->app->config->load('site', true);
+		$this->app->config->load('frontend', true);
 		$this->app->config->load('admin', true);
 	}
 
@@ -158,8 +158,7 @@ class AppBooter extends \Venus\AppBooter
 		$this->app->lang = new system\Language($this->app);
 
 		$this->app->controls = new Controls($this->app);
-var_dump($this->app->cache->buildLibraries());
-die;
+$this->app->cache->buildCss();die;
 		$this->app->theme = new system\Theme($this->app);
 
 		return $this;

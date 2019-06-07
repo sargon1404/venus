@@ -1,0 +1,41 @@
+#admin-navbar
+{
+	text-align: center;
+}
+
+#admin-navbar-title
+{
+	float: none;
+}
+
+#admin-navbar-links
+{
+  margin-top: 25px;
+}
+
+#admin-navbar-links #history
+{
+	display: none;
+}
+
+#admin-navbar-buttons-action
+{
+	float: none;
+}
+
+#admin-navbar-buttons
+{
+	float: none;
+	text-align: center;
+	margin-top: 20px;
+}
+
+#admin-navbar-buttons ul
+{
+	display: inline-block;
+}
+
+#admin-navbar-buttons a
+{
+	margin-bottom: 5px;
+}

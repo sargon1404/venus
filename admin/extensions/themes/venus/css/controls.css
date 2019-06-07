@@ -1,0 +1,64 @@
+#controls-filters .controls-filter-field,
+#controls-order .controls-order-field
+{
+	margin-bottom: 15px;
+}
+
+#controls-filters .reset,
+#controls-order .reset
+{
+	margin-left: 20px;
+}
+
+#controls-bottom #controls-items-per-page
+{
+	float: left;
+	margin-top: 15px;
+}
+
+#controls-bottom #controls-pagination
+{
+	float: right;
+}
+
+#controls-bottom #controls-items-per-page input[type="text"]
+{
+	margin-right: 2px;
+}
+
+#controls-filters-action, #controls-order-action
+{
+	float: left;
+}
+
+#controls-filters .loading-small, #controls-order .loading-small
+{
+	margin: 3px 0 0 10px;
+	float: right;
+}
+
+#controls-items-per-page-action
+{
+	float: left;
+}
+
+#controls-items-per-page .loading-small
+{
+	margin: 5px 0 0 10px;
+	float: right;
+}
+
+
+
+
+
+
+
+
+
+#dialog-container #controls-filters
+{
+	float: left;
+	width: 75%;
+	margin-bottom: 5px;
+}

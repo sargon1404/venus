@@ -1,0 +1,35 @@
+#alerts-box
+{
+	position: fixed;
+	right: 40px;
+	bottom: 50px;
+	width: 330px;
+	z-index: 2000;
+}
+
+.alert-box, .message-box, .error-box, .warning-box, .notification-box
+{
+	margin-bottom: 15px;
+	padding: 15px 15px;
+	@alert-properties 
+}
+
+.message-box
+{
+	@message-properties
+}
+
+.error-box
+{
+	@error-properties
+}
+
+.warning-box
+{
+	@warning-properties
+}
+
+.notification-box
+{
+	@notification-properties
+}

@@ -1,0 +1,31 @@
+ul, ol
+{
+	margin: 10px 10px 0 20px;
+}
+
+li 
+{
+	padding: 3px 0;
+}
+
+ul.no-list
+{
+	list-style: none;
+}
+
+ul.list
+{
+	margin: 0;
+}
+
+ul.list li 
+{
+	list-style: none;
+	display: inline;
+	padding: 0 6px;
+}
+
+ul.list li:first-child
+{
+	padding-left: 0;
+}

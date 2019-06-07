@@ -1,0 +1,33 @@
+#tags
+{
+	margin-top: 30px;
+	padding: 20px 0 0 0;
+}
+
+#tags h4
+{
+	font-size: 1.25em;
+	margin: 10px 0 10px 10px;
+}
+
+#tags ul
+{
+	list-style: none;
+}
+
+#tags ul li
+{
+	display: inline-block;
+	margin-right: 15px;
+	text-align: center;
+}
+
+#tags ul li a span
+{
+	display: block;
+}
+
+#tags ul li a img
+{
+	margin-right: 5px;
+}

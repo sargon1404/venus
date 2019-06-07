@@ -24,17 +24,8 @@ class Css extends \Mars\Document\Css
 	{
 		$this->app = $app;
 
-		$this->setCacheUrls();
-	}
-	
-	/**
-	* Returns the name of the file where a theme's css vars will be cached
-	* @param string $name The name of the theme
-	* @param string $device The device
-	* @return string
-	*/
-	public function getThemeVarsFile(string $name, string $device) : string
-	{
-		return $this->getFile('theme', $device, [$name]) . '.vars';
+		$this->extension = App::FILE_EXTENSIONS['css'];
+		$this->base_cache_url = $this->app->cache_url . App::CACHE_DIRS['css'];
+		$this->cache_url = $this->base_cache_url;
 	}
 }

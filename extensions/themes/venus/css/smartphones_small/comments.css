@@ -1,0 +1,25 @@
+@media only screen 
+	and (max-width: 500px) 
+{
+
+	#comments-moderator-form select
+	{
+		width: 70%;	
+	}
+
+	#comments .comment .moderator-toolbar
+	{
+		text-align: center;
+	}
+	
+	#comments .comment .moderator-toolbar label
+	{
+		float: none;
+	}
+	
+	#comments .comment .moderator-toolbar ul
+	{
+		margin: 10px 0 0 0;
+	}
+
+}

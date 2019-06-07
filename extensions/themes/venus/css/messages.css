@@ -1,0 +1,116 @@
+#error-container, #permission-denied-container, #message-container, #redirect-container
+{
+	font-size: 1.19em;	
+	text-align: center;	
+	margin: 40px 0;
+}
+
+#error-container .title, #permission-denied-container .title, #message-container .title
+{
+	background: #323030;
+	border: 1px solid #323030;
+	border-bottom: 0;
+   color: #FFF;
+	padding: 5px 0px;
+	text-align: center;
+	font-weight: bold; 	 
+	width: 100%;
+}
+
+#redirect-container
+{
+	margin: 0;
+}
+
+#error-container .error, #permission-denied-container .permission-denied, #message-container .message, #redirect-container .redirect
+{
+	display: table;
+	width: 100%;
+	padding: 30px 0;	
+}
+
+#error-container .error .icon, #message-container .message .icon, #permission-denied-container .permission-denied .icon
+{
+	display: table-cell;
+	vertical-align: middle;	  
+   text-align: center;   
+   width: 15%;
+}
+
+#error-container .error .text, #permission-denied-container .permission-denied .text, #message-container .message .text
+{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	padding-right: 15%;  
+}
+
+#redirect-container .redirect
+{
+	padding: 30px 0;	
+}
+
+/***********************************/
+
+#errors-container, #messages-container, #notifications-container, #warnings-container
+{    	
+	border-radius: 5px;
+	font-size: 1.19em;
+   padding: 10px 0;
+   margin: 30px 30px 10px 30px;
+}
+
+#errors-container .close, #messages-container .close, #notifications-container .close, #warnings-container .close
+{
+   float: right;
+   margin: 5px 15px 2px 10px;    
+}
+
+#errors-container .icon, #messages-container .icon, #notifications-container .icon, #warnings-container .icon
+{
+	float: left;
+	width: 10%;
+	text-align: center;
+	margin-top: 5px;
+}
+
+#errors-container .errors, #messages-container .messages, #notifications-container .notifications, #warnings-container .warnings
+{
+	text-align: left;  
+	padding: 5px 0;
+	margin: 3px 5% 0 10%;	
+}
+
+#errors-container .errors ul, #notifications-container .notifications ul, #warnings-container .warnings ul
+{
+	list-style: none;	
+	margin: 0;
+}
+
+#errors-container, #error-container .error, #permission-denied-container .permission-denied
+{
+	background: #EDD2D2;
+	border: 1px solid #DCA7A7;
+	color: #c0445e;
+}
+
+#messages-container, #message-container .message
+{
+	background: #D7ECCE;
+	border: 1px solid #B2DBA1;
+	color: #2C612D;
+}
+
+#notifications-container
+{
+	background: #C7E5F3;
+	border: 1px solid #9ACFEA;
+	color: #3170B1;
+}
+
+#warnings-container
+{
+	background: #F9F0C5;
+	border: 1px solid #F5E79E;
+	color: #8A6D3B;
+}

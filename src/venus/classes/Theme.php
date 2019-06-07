@@ -276,43 +276,42 @@ class Theme extends \Venus\Extensions\Extension
 		$this->root_images_dir = $this->images_dir;
 		$this->root_images_url = $this->images_url;
 
-		[$this->images_dir, $this->images_url] = $this->getImagePaths($this, $this->app->device->type);
+		[$this->images_dir, $this->images_url] = $this->getImagePaths($this->app->device->type);
 	}
 
 	/**
-	* Returns the image paths of a theme and a device
-	* @param object $theme The theme's data
+	* Returns the image paths of a device
 	* @param string $device the device type
 	* @return array The images path & url
 	*/
-	public function getImagePaths(object $theme, string $device = '') : array
+	public function getImagePaths(string $device = '') : array
 	{
 		$images_dir = '';
 		$images_url = '';
 		$parent_images_dir = '';
 		$parent_images_url = '';
 
-		if ($theme->parent) {
-			$parent_images_dir = $this->getDir($theme->parent_name) . App::EXTENSIONS_DIRS['images'];
-			$parent_images_url = $this->getDirUrlStatic($theme->parent_name) . App::EXTENSIONS_DIRS['images'];
+		if ($this->parent) {
+			$parent_images_dir = $this->getDir($this->parent_name) . App::EXTENSIONS_DIRS['images'];
+			$parent_images_url = $this->getDirUrlStatic($this->parent_name) . App::EXTENSIONS_DIRS['images'];
 		}
 
 		if ($device != 'desktop') {
 			$device_dir = $this->app->device->getSubdir($device);
 
 			if ($device == 'tablet') {
-				if ($theme->has_tablets_images_dir) {
-					$images_dir = $theme->images_dir . $device_dir;
-					$images_url = $theme->images_url . $device_dir;
-				} elseif ($theme->parent && $theme->parent_has_tablets_images_dir) {
+				if ($this->has_tablets_images_dir) {
+					$images_dir = $this->images_dir . $device_dir;
+					$images_url = $this->images_url . $device_dir;
+				} elseif ($this->parent && $this->parent_has_tablets_images_dir) {
 					$images_dir = $parent_images_dir . $device_dir;
 					$images_url = $parent_images_url . $device_dir;
 				}
 			} elseif ($device == 'smartphone') {
-				if ($theme->has_smartphones_images_dir) {
+				if ($this->has_smartphones_images_dir) {
 					$images_dir = $theme->images_dir . $device_dir;
 					$images_url = $theme->images_url . $device_dir;
-				} elseif ($theme->parent && $theme->parent_has_smartphones_images_dir) {
+				} elseif ($this->parent && $this->parent_has_smartphones_images_dir) {
 					$images_dir = $parent_images_dir . $device_dir;
 					$images_url = $parent_images_url . $device_dir;
 				}
@@ -322,10 +321,10 @@ class Theme extends \Venus\Extensions\Extension
 				//load the images from the mobile folder
 				$device_dir = $this->app->device->getSubdir('mobile');
 
-				if ($theme->has_mobile_images_dir) {
-					$images_dir = $theme->images_dir . $device_dir;
-					$images_url = $theme->images_url . $device_dir;
-				} elseif ($theme->parent && $theme->parent_has_mobile_images_dir) {
+				if ($this->has_mobile_images_dir) {
+					$images_dir = $this->images_dir . $device_dir;
+					$images_url = $this->images_url . $device_dir;
+				} elseif ($this->parent && $this->parent_has_mobile_images_dir) {
 					$images_dir = $parent_images_dir . $device_dir;
 					$images_url = $parent_images_url . $device_dir;
 				}
@@ -333,10 +332,10 @@ class Theme extends \Venus\Extensions\Extension
 		}
 
 		if (!$images_dir) {
-			if ($theme->has_images_dir) {
-				$images_dir = $theme->images_dir;
-				$images_url = $theme->images_url;
-			} elseif ($theme->parent && $theme->parent_has_images_dir) {
+			if ($this->has_images_dir) {
+				$images_dir = $this->images_dir;
+				$images_url = $this->images_url;
+			} elseif ($this->parent && $theme->parent_has_images_dir) {
 				$images_dir = $parent_images_dir;
 				$images_url = $parent_images_url;
 			}

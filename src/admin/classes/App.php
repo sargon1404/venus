@@ -95,7 +95,7 @@ class App extends \Venus\App
 		$this->admin_url_rel = $this->site_url_rel . $this->config->admin_dir;
 
 		$this->assignDirs(static::ADMIN_DIRS, $this->admin_dir, 'admin');
-		$this->assignUrls(static::ADMIN_URLS, '', 'admin');
+		$this->assignUrls(static::ADMIN_URLS, $this->admin_url, 'admin');
 		$this->assignUrls(static::ADMIN_URLS_STATIC, $this->admin_url_static, 'admin');
 	}
 

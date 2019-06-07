@@ -1,0 +1,19 @@
+@media only screen 
+	and (max-width: 500px) 
+{
+	
+	#private-messages-inbox table th:nth-child(4),
+	#private-messages-inbox table td:nth-child(4),
+	#private-messages-outbox table th:nth-child(4),
+	#private-messages-outbox table td:nth-child(4)
+	{
+		display: none;
+	}
+	
+	#private-messages-new input[type="button"],
+	#email-new input[type="button"]
+	{
+		display: none;	
+	}
+
+}

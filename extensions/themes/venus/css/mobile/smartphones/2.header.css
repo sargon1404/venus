@@ -1,0 +1,47 @@
+@media only screen 
+	and (max-width: 900px) 
+{
+	
+	header #header-logo
+	{
+		float: none;
+		width: 100%;
+		text-align: center;
+	}
+	
+	header #header-logo h1
+	{
+		margin: 10px 0 0 0;	
+	}
+	
+	header #header-logo h3
+	{
+		margin: 10px 0 10px 0;
+	}
+	
+	header #header-right
+	{
+		float: none;
+		width: 100%;
+		text-align: center;
+		margin: 25px 0;
+	}
+	
+	header nav
+	{
+		margin-bottom: 15px;
+	}
+	
+	header nav #menu-mobile img
+	{
+		margin: 3px 10px 0 0;
+		vertical-align: top;
+	}
+	
+	header nav li
+	{
+		float: none;
+		margin-left: 10%;
+	}
+
+}

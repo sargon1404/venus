@@ -1,0 +1,22 @@
+#login-widget .fields p
+{
+	padding: 0;
+	margin: 10px 0;
+}
+
+#login-widget .fields input[type="text"], #login-widget .fields input[type="password"]
+{
+	max-width: 95%;
+}
+
+#login-widget .fields .captcha
+{
+	max-width: 100%; 
+}
+
+#login-widget-social-login li
+{
+	display: inline-block;
+	padding: 0;
+	margin-bottom: 5px;
+}

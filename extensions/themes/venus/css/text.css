@@ -1,0 +1,12 @@
+.emphase
+{
+	font-weight: bold;
+	color: #D02D26;
+}
+
+.required:after
+{
+	content: '*';
+	color: #C62626;
+	padding: 0 6px;
+}
