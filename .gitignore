@@ -17,8 +17,8 @@ admin/cache/javascript/*
 admin/cache/templates/*
 !admin/cache/templates/index.htm
 
-logs/*
-!logs/index.htm
+log/*
+!log/index.htm
 
 temp/*
 !temp/index.htm
