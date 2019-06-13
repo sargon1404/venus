@@ -47,30 +47,6 @@ class Css extends Asset
 	}
 
 	/**
-	* Loads a css library. Alias for $app->library->loadCss()
-	* @param $name The name of the library. Eg: bootstrap
-	* @return $this
-	*/
-	public function loadLibrary(string $name)
-	{
-		$this->app->library->loadCss($name);
-
-		return $this;
-	}
-
-	/**
-	* Unloads a css library. Alias for $app->library->unloadCss()
-	* @param $name The name of the library. Eg: bootstrap
-	* @return $this
-	*/
-	public function unloadLibrary(string $name)
-	{
-		$this->app->library->unloadcss($name);
-
-		return $this;
-	}
-
-	/**
 	* Returns the asset responsible for handling the dependencies for libraries of this type
 	* @return Asset The asset handling the dependencies
 	*/

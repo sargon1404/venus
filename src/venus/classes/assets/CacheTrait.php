@@ -45,15 +45,15 @@ trait CacheTrait
 
 		return implode($parts, '-') . '.' . $this->extension;
 	}
-
+	
 	/**
 	* Returns the url of a library from the cache folder
 	* @param string $name The name of the library
 	* @return string The url
 	*/
-	public function getLibraryUrl(string $name)
+	public function getLibraryUrl(string $name) : string
 	{
-		return $this->base_cache_url . $this->getLibraryFile($name);
+		return $this->app->cache_url . App::CACHE_DIRS['libraries'] . $this->getLibraryFile($name);
 	}
 
 	/**
@@ -63,7 +63,7 @@ trait CacheTrait
 	*/
 	public function getLibraryDependenciesUrl(string $name) : string
 	{
-		return $this->base_cache_url . $this->getLibraryDependencyFile($name);
+		return $this->app->cache_url . App::CACHE_DIRS['libraries'] . $this->getLibraryDependencyFile($name);
 	}
 
 	/**

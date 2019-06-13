@@ -72,30 +72,6 @@ class Javascript extends Asset
 	}
 
 	/**
-	* Loads a javascript library. Alias for $app->library->loadJavascript()
-	* @param string $name The name of the library. Eg: jquery
-	* @return $this
-	*/
-	public function loadLibrary(string $name)
-	{
-		$this->app->library->loadJavascript($name);
-
-		return $this;
-	}
-
-	/**
-	* Unloads a javascript library. Alias for $app->library->unloadJavascript()
-	* @param string $name The name of the library. Eg: jquery
-	* @return $this
-	*/
-	public function unloadLibrary(string $name)
-	{
-		$this->app->library->unloadJavascript($name);
-
-		return $this;
-	}
-
-	/**
 	* Returns the asset responsible for handling the dependencies for libraries of this type
 	* @return Asset The asset handling the dependencies
 	*/

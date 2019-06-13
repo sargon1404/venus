@@ -106,7 +106,7 @@ class App extends \Mars\App
 	* @var string $utils_url The url of the utils folder
 	*/
 	public $utils_url = '';
-	
+
 	/**
 	* @var string $admin_url The url of the admin area
 	*/
@@ -226,6 +226,7 @@ class App extends \Mars\App
 		'templates' => 'templates/',
 		'css' => 'css/',
 		'javascript' => 'javascript/',
+		'libraries' => 'libraries/',
 		'rss' => 'rss/'
 	];
 
@@ -295,7 +296,7 @@ class App extends \Mars\App
 		$this->boot->env();
 		$this->boot->document();
 		$this->boot->system();
-		die("kkkk");
+
 		$this->checkOffline();
 	}
 
@@ -400,6 +401,7 @@ class App extends \Mars\App
 	*/
 	public function checkOffline()
 	{
+		var_dump("check offline");die;
 		$this->config->offline = true;
 		if (!$this->config->offline) {
 			return;

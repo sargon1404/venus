@@ -4,6 +4,8 @@ cache/css/*
 !cache/css/index.htm
 cache/javascript/*
 !cache/javascript/index.htm
+cache/libraries/*
+!cache/libraries/index.htm
 cache/rss/*
 !cache/rss/index.htm
 cache/templates/*

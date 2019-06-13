@@ -71,9 +71,9 @@ class Cache extends \Venus\Cache
 	*/
 	public function buildCss()
 	{
-		//$this->buildCssFrontend();
+		$this->buildCssFrontend();
 		$this->buildCssAdmin();
-die("jjjj");
+
 		return $this;
 	}
 
@@ -83,7 +83,7 @@ die("jjjj");
 	*/
 	public function buildCssFrontend()
 	{
-		$this->clearDir($this->app->cache_dir . 'css/');
+		$this->clearDir($this->app->cache_dir . App::CACHE_DIRS['css']);
 
 		$css = new \Venus\Assets\Css($this->app);
 		$css->buildCache();
@@ -104,7 +104,7 @@ die("jjjj");
 	*/
 	public function buildCssAdmin()
 	{
-		$this->clearDir($this->app->admin_cache_dir . 'css/');
+		$this->clearDir($this->app->admin_cache_dir . App::CACHE_DIRS['css']);
 
 		$css = new \Venus\Admin\Assets\Css($this->app);
 		$css->buildCache();
@@ -130,7 +130,7 @@ die("jjjj");
 	*/
 	public function buildJavascriptFrontend()
 	{
-		$this->clearDir($this->app->cache_dir . 'javascript/');
+		$this->clearDir($this->app->cache_dir . App::CACHE_DIRS['javascript']);
 
 		$javascript = new \Venus\Assets\Javascript($this->app);
 		$javascript->buildCache();
@@ -150,7 +150,7 @@ die("jjjj");
 	*/
 	public function buildJavascriptAdmin()
 	{
-		$this->clearDir($this->app->admin_cache_dir . 'javascript/');
+		$this->clearDir($this->app->admin_cache_dir . App::CACHE_DIRS['javascript']);
 
 		$javascript = new \Venus\Admin\Assets\Javascript($this->app);
 		$javascript->buildCache();
@@ -161,21 +161,14 @@ die("jjjj");
 		return $this;
 	}
 
-
-
-
-
-
-
-
-
-
 	/**
 	* Builds the libraries cache
 	* @return $this
 	*/
 	public function buildLibraries()
 	{
+		$this->clearDir($this->app->cache_dir . App::CACHE_DIRS['libraries']);
+		
 		$libraries = ['css' => [], 'javascript' => []];
 
 		$this->app->file->listDir($this->app->libraries_dir . 'css', $css_dirs, $files);

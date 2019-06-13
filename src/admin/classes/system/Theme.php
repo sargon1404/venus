@@ -40,12 +40,11 @@ class Theme extends \Venus\Admin\Theme
 		$this->preparePaths();
 		$this->prepareDevelopment();
 		$this->prepareProperties();
+		$this->prepareForDialog();
 		$this->prepareVars();
 		$this->prepareLibraries();
 		$this->prepareMainUrls();
-		die("oooo");
 		$this->prepareTemplates();
-		$this->prepareForDialog();
 		$this->prepareTab();
 
 		//include the init.php file if one exists
@@ -69,36 +68,13 @@ $this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer'
 
 	//$this->app->javascript->load('https://localhost/venus/admin/qqqq_footer.js', 'footer');
 
-		$this->app->library->loadJavascript('jquery');
+		$this->app->javascript->loadLibrary('jquery');
 		//$this->app->library->loadJavascript('jquery-ui-admin');
-		$this->app->library->loadJavascript('jquery-ui');
-		$this->app->library->unloadJavascript('jquery-ui');
+		$this->app->javascript->loadLibrary('jquery-ui');
+		$this->app->javascript->unloadLibrary('jquery-ui');
 
-		$this->app->library->loadCss('bootstrap');
-		//$this->app->library->unloadJavascript('jquery-ui');
-		$this->app->library->unloadCss('bootstrap');
-	}
-
-	/**
-	* @see \Venus\System\Theme::prepareMainUrls()
-	* {@inheritDoc}
-	*/
-	protected function prepareMainUrls()
-	{
-		//javascript
-		//var_dump($this->app->cache->getFrontendJavascriptUrl($this->app->device->type, $this->app->lang->name));die;
-var_dump($this->javascript_location, $this->javascript_priority);die;
-		//load the main js code
-		$this->app->javascript->loadMain($this->javascript_location, $this->javascript_priority);
-		//load the theme's js code
-		$this->app->javascript->load($this->app->cache->getThemeJavascriptUrl($this->name, $this->app->device->type), $this->theme_javascript_location, $this->theme_javascript_priority);
-
-
-		//$this->app->javascript->load($this->app->cache->getJavascriptUrl($this->app->device->type, $this->app->lang->name), $this->javascript_location, $this->javascript_priority);
-		//$this->app->javascript->load($this->app->cache->getThemeJavascriptUrl($this->name, $this->app->device->type), $this->theme_javascript_location, $this->theme_javascript_priority);
-
-		App::pp($this->app->javascript);
-		die;
+		$this->app->css->loadLibrary('bootstrap');
+		//$this->app->css->unloadLibrary('bootstrap');
 	}
 
 	/**

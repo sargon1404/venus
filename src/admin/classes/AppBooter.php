@@ -158,7 +158,7 @@ class AppBooter extends \Venus\AppBooter
 		$this->app->lang = new system\Language($this->app);
 
 		$this->app->controls = new Controls($this->app);
-$this->app->cache->buildCss();die;
+
 		$this->app->theme = new system\Theme($this->app);
 
 		return $this;

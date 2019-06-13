@@ -34,13 +34,73 @@ class Javascript extends \Mars\Document\Javascript
 	}
 
 	/**
-	* Loads the javascript code
+	* Loads a javascript library. Alias for $app->library->loadJavascript()
+	* @param string $name The name of the library. Eg: jquery
+	* @return $this
+	*/
+	public function loadLibrary(string $name)
+	{
+		$this->app->library->loadJavascript($name);
+
+		return $this;
+	}
+
+	/**
+	* Unloads a javascript library. Alias for $app->library->unloadJavascript()
+	* @param string $name The name of the library. Eg: jquery
+	* @return $this
+	*/
+	public function unloadLibrary(string $name)
+	{
+		$this->app->library->unloadJavascript($name);
+
+		return $this;
+	}
+
+	/**
+	* Returns the name under which the main javascript code will be cached
+	* @param string $device The device
+	* @param string $language The language's name
+	* @return string
+	*/
+	public function getMainFile(string $device, string $language = '') : string
+	{
+		return $this->getFile('main', [$language], $device);
+	}
+
+	/**
+	* Loads the 'main' javascript code (code found in the /javascript folder)
 	* @param string $location The location of the url [head|footer]
 	* @param int $priority The url's output priority. The higher, the better
 	* @return $this
 	*/
-	public function loadMain(string $location = 'head', int $priority = 100)
+	public function loadMain(string $location = 'head', int $priority = 50000)
 	{
+		$async = false;
+		$defer = false;
+
+		$url = $this->cache_url . $this->getMainFile($this->app->device->get(), $this->app->lang->name);
+
+		$this->app->plugins->run('documentJavascriptLoadMain', $url, $location, $priority, $async, $defer);
+
+		$this->load($url, $location, $priority, $async, $defer);
+
+		return $this;
+	}
+
+	/**
+	* Loads the theme's javascript code
+	* @oaram string $name The name of the heme
+	* @param string $location The location of the url [head|footer]
+	* @param int $priority The url's output priority. The higher, the better
+	* @return $this
+	*/
+	public function loadTheme(string $name, string $location = 'head', int $priority = 5000)
+	{
+		$url = $this->cache_url . $this->getThemeFile($name, $this->app->device->get());
+
+		$this->load($url, $location, $priority);
+
 		return $this;
 	}
 

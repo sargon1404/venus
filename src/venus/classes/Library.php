@@ -14,12 +14,6 @@ class Library
 {
 	use AppTrait;
 
-
-	/**
-	* @param array Array listing the loaded libraries
-	*/
-	//protected	$libraries = ['css' => [], 'javascript' => []];
-
 	/**
 	* @param array Array listing the available libraries
 	*/
@@ -35,46 +29,6 @@ class Library
 
 		$this->available_libraries = $this->app->cache->getLibraries();
 	}
-
-	/**
-	* Returns the list of loaded javascript libraries
-	* @return array
-	*/
-	/*public function getCss() : array
-	{
-		return $this->get('css');
-	}*/
-
-	/**
-	* Returns the css dependencies of the javascript libraries
-	* @return array
-	*/
-	/*public function getCssDependencies() : array
-	{
-		return $this->getDependencies('javascript');
-	}*/
-
-	/**
-	* Returns the libraries which have dependencies of a certain type
-	* @param string $type The type of libraries to return the dependencies for [css|javascript]
-	* @return array
-	*/
-	/*public function getDependencies(string $type) : array
-	{
-		$dependencies = [];
-		$libraries = $this->get($type);
-
-		foreach($libraries as $library => $data)
-		{
-			if(isset($this->available_libraries[$type][$library]))
-			{
-				if($this->available_libraries[$type][$library]['dependencies'])
-					$dependencies[$library] = $data;
-			}
-		}
-
-		return $dependencies;
-	}*/
 
 	/**
 	* Loads a css library
@@ -133,24 +87,6 @@ class Library
 
 		return $this;
 	}
-
-	/**
-	* Returns the list of loaded javascript libraries
-	* @return array
-	*/
-	/*public function getJavascript() : array
-	{
-		return $this->get('javascript');
-	}*/
-
-	/**
-	* Returns the javascript dependencies of the css libraries
-	* @return array
-	*/
-	/*public function getJavascriptDependencies() : array
-	{
-		return $this->getDependencies('css');
-	}*/
 
 	/**
 	* Loads a javascript library

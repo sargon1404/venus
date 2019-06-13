@@ -41,6 +41,10 @@ class Theme extends \Venus\Theme
 	* @var string $css_location The location where the merged css stylesheets will be outputted in the document [head|footer]
 	*/
 	public $css_location = '';
+	/**
+	* @var int $css_priority The priority of the main css file or the merged file, if css_merge = true
+	*/
+	public $css_priority = 50000;
 
 	/**
 	* @var bool $javascript_merge If true, the js scripts will be merged into one file
@@ -53,7 +57,7 @@ class Theme extends \Venus\Theme
 	public $javascript_location = '';
 
 	/**
-	* @var string $javascript_priority The priority of the main js file or the merged file, if javascript_merge = true
+	* @var int $javascript_priority The priority of the main js file or the merged file, if javascript_merge = true
 	*/
 	public $javascript_priority = 50000;
 
@@ -166,7 +170,6 @@ class Theme extends \Venus\Theme
 
 		$this->prepareProperties();
 		$this->prepareForDialog();
-
 		$this->prepareVars();
 		$this->prepareLibraries();
 		$this->prepareMainUrls();
@@ -199,10 +202,12 @@ class Theme extends \Venus\Theme
 		$this->css_dateline = $this->app->cache->css_dateline;
 		$this->css_merge = $this->params->css_merge ?? $this->app->config->css_merge;
 		$this->css_location = $this->params->css_location ?? $this->app->config->css_location;
+		$this->css_priority = $this->params->css_priority ?? $this->css_priority;
 
 		$this->javascript_dateline = $this->app->cache->javascript_dateline;
 		$this->javascript_merge = $this->params->javascript_merge ?? $this->app->config->javascript_merge;
 		$this->javascript_location = $this->params->javascript_location ?? $this->app->config->javascript_location;
+		$this->javascript_priority = $this->params->javascript_priority ?? $this->css_priority;
 
 		//don't merge css/js files in development mode
 		$this->development = false;
@@ -259,7 +264,7 @@ class Theme extends \Venus\Theme
 		$this->libraries = App::unserialize($this->libraries);
 
 		foreach ($this->libraries as $library) {
-			$this->app->library->loadJavascript($library);
+			$this->app->javascript->loadLibrary($library);
 		}
 	}
 
@@ -268,7 +273,7 @@ class Theme extends \Venus\Theme
 	*/
 	protected function prepareJquery()
 	{
-		$this->app->library->loadJavascript('jquery');
+		$this->app->javascript->loadLibrary('jquery');
 	}
 
 	/**
@@ -276,9 +281,12 @@ class Theme extends \Venus\Theme
 	*/
 	protected function prepareMainUrls()
 	{
-		//javascript
-		$this->app->javascript->load($this->app->cache->getJavascriptUrl($this->app->device->type, $this->app->lang->name), $this->javascript_location, $this->javascript_priority);
-		$this->app->javascript->load($this->app->cache->getThemeJavascriptUrl($this->name, $this->app->device->type), $this->theme_javascript_location, $this->theme_javascript_priority);
+		//load the main and theme's js code
+		$this->app->javascript->loadMain($this->javascript_location, $this->javascript_priority);
+		$this->app->javascript->loadTheme($this->name, $this->theme_javascript_location, $this->theme_javascript_priority);
+
+		//load the theme's css code
+		$this->app->css->loadMain($this->name);
 	}
 
 	/**************TEMPLATES METHODS**************************/

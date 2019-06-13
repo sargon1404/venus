@@ -188,6 +188,26 @@ abstract class Asset
 
 		return file_put_contents($this->cache_dir . $file, $content);
 	}
+	
+	/**
+	* Stores content in the cache folder
+	* @param string $file The name of the file
+	* @param string $content The content to store
+	* @param bool $minify If true, will minify the content. If null, $this->minify is used
+	* @param bool $parse If true, will parse the content
+	* @return bool
+	*/
+	public function storeLibrary(string $file, string $content, ?bool $minify = null)
+	{
+		if ($minify === null) {
+			$minify = $this->minify;
+		}
+		if ($minify) {
+			$content = $this->minify($content);
+		}
+
+		return file_put_contents($this->app->cache_dir . App::CACHE_DIRS['libraries'] . $file, $content);
+	}
 
 	/**
 	* Minifes the content
@@ -287,7 +307,7 @@ abstract class Asset
 
 		$cache_file = $this->getLibraryFile($name, $this->extension);
 
-		$this->store($cache_file, $code, null, false);
+		$this->storeLibrary($cache_file, $code);
 
 		if ($dependencies_files) {
 			$dependencies_code = $this->mergeLibraryFiles($name, $dependencies_files);
@@ -296,7 +316,7 @@ abstract class Asset
 
 			$cache_file = $obj->getLibraryDependencyFile($name);
 
-			$obj->store($cache_file, $dependencies_code, null, false);
+			$obj->storeLibrary($cache_file, $dependencies_code);
 		}
 	}
 

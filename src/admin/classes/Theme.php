@@ -102,7 +102,6 @@ class Theme extends \Venus\System\Theme
 
 		//output all css & js scripts in the head, on admin
 		$this->css_location = 'head';
-
 		$this->javascript_location = 'head';
 	}
 
