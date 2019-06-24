@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="{{ $this.output_lang_code() }}">
+<html lang="{{ $this.outputLangCode() }}">
 <head>
-	{{ $this.output_head() }}
+	{{ $this.outputHead() }}
 </head>
 
 <body>

@@ -1,15 +1,15 @@
 <div>
-	{{ $this.output_widgets('top') }}
+	{{ $this.outputWidgets('top') }}
 	
 	<article id="content">		
-		{{ $this.output_content() }} 
+		{{ $this.outputContent() }} 
 	</article>
 	
 	<aside>
-		{{ $this.output_widgets('right') }}
+		{{ $this.outputWidgets('right') }}
 	</aside>
 	
 	<div class="clear"></div>
 	
-	{{ $this.output_widgets('bottom') }}
+	{{ $this.outputWidgets('bottom') }}
 </div>

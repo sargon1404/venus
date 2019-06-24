@@ -1,8 +1,8 @@
-{{ $navbar.output_form_start() }}
+{{ $navbar.outputFormStart() }}
 
 <div id="content">
-	{{ $this.output_content() }}
+	{{ $this.outputContent() }}
 </div>
 <div class="clear"></div>
 
-{{ $navbar.output_form_end() }}
+{{ $navbar.outputFormEnd() }}

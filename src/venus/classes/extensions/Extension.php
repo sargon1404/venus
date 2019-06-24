@@ -30,8 +30,8 @@ abstract class Extension extends \Mars\Extensions\Extension
 	protected function prepare()
 	{
 		$this->preparePaths();
-		$this->prepareDevelopment();
 		$this->prepareParams();
+		$this->prepareDevelopment();
 	}
 
 	/**

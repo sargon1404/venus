@@ -51,6 +51,8 @@ class Theme extends \Venus\Admin\Theme
 		if (is_file($this->dir . $this->init_file)) {
 			include($this->dir . $this->init_file);
 		}
+
+		$this->cleanup();
 	}
 
 	/**
@@ -153,36 +155,8 @@ $this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer'
 
 	/**************** CSS & JAVASCRIPT *************************************/
 
-	/**
-	* @see \Venus\System\Theme::buildCssCache()
-	* {@inheritDoc}
-	*/
-	protected function buildCssCache()
-	{
-		$this->app->cache->css();
-	}
 
-	/**
-	* @see \Venus\System\Theme::buildJavascriptCache()
-	* {@inheritDoc}
-	*/
-	protected function buildJavascriptCache()
-	{
-		$this->app->cache->javascript();
-	}
 
-	/**
-	* @see \venus\Theme::getCssUrl()
-	* {@inheritDoc}
-	*/
-	public function getCssUrl() : string
-	{
-		$url = $this->app->uri->build($this->app->admin_url_static . VENUS_ASSETS_NAME . 'css.php', ['dateline' => $this->css_dateline]);
-
-		$this->app->plugins->run('adminSystemThemeGetCssUrl', $this, $url);
-
-		return $url;
-	}
 
 	/**
 	* @see \Mars\Theme::outputHead()
@@ -194,22 +168,10 @@ $this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer'
 		$this->outputEncoding();
 		$this->outputFavicon($this->app->admin_url_rel . 'favicon.png');
 
-		$this->app->plugins->run('adminSystemThemeOutputHead1', $this);
-
-		//output the css files
-
-
-		$this->app->plugins->run('adminSystemThemeOutputHead2', $this);
-
-		//output the js files
-		if ($this->javascript_location == 'head') {
-			$this->outputJavascriptUrl();
-		}
-
+		//$this->outputCssUrls('head');
 		$this->outputJavascriptUrls('head');
-		die('vcbvc');
-
-		$this->app->plugins->run('adminSystemThemeOutputHead3', $this);
+die("xcvcx");
+		$this->app->plugins->run('adminSystemThemeOutputHead', $this);
 
 		$this->outputHeadExtra();
 	}
@@ -218,14 +180,14 @@ $this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer'
 	* Outputs the javascript urls loaded in a position
 	* @param string $location The location
 	*/
-	public function outputJavascriptUrls(string $location)
+	/*public function outputJavascriptUrls(string $location)
 	{
 		if ($this->javascript_merge) {
 			$this->app->javascript->outputUrls($this->getJavascriptExternalUrls($location));
 		} else {
 			$this->app->javascript->output($location);
 		}
-	}
+	}*/
 
 	/**
 	* Outputs the inline javascript code. It will output it only if the javascript_location is not set to 'head'!

@@ -401,8 +401,6 @@ class App extends \Mars\App
 	*/
 	public function checkOffline()
 	{
-		var_dump("check offline");die;
-		$this->config->offline = true;
 		if (!$this->config->offline) {
 			return;
 		}

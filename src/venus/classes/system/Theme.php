@@ -77,16 +77,6 @@ class Theme extends \Venus\Theme
 	protected $libraries = [];
 
 	/**
-	* @var array $css_urls The list of local/external css stylesheets to be loaded, if css_merge is true
-	*/
-	protected $css_urls = null;
-
-	/**
-	* @var array $javascript_urls The list of local/external js scripts to be loaded, if javascript_merge is true
-	*/
-	protected $javascript_urls = null;
-
-	/**
 	* @var bool $init Will include the theme's init file if $init is set to true
 	*/
 	protected $init = false;
@@ -178,19 +168,22 @@ class Theme extends \Venus\Theme
 		if ($this->init) {
 			include($this->dir . $this->init_file);
 		}
+
+		$this->cleanup();
 	}
 
 	/**
-	* @see \Venus\Theme::prepareParams()
+	* @see \Mars\Extensions\Body::prepareDevelopment()
 	* {@inheritDoc}
 	*/
-	protected function prepareParams()
+	protected function prepareDevelopment()
 	{
-		parent::prepareParams();
+		parent::prepareDevelopment();
 
-		//unset the params_data and parent_params_data arrays to free some ram
-		unset($this->params_data);
-		unset($this->parent_params_data);
+		if ($this->development) {
+			//rebuild the theme's css and js cache
+			$this->app->cache->buildForTheme($this);
+		}
 	}
 
 	/**
@@ -199,25 +192,22 @@ class Theme extends \Venus\Theme
 	*/
 	protected function prepareProperties()
 	{
-		$this->css_dateline = $this->app->cache->css_dateline;
 		$this->css_merge = $this->params->css_merge ?? $this->app->config->css_merge;
 		$this->css_location = $this->params->css_location ?? $this->app->config->css_location;
 		$this->css_priority = $this->params->css_priority ?? $this->css_priority;
 
-		$this->javascript_dateline = $this->app->cache->javascript_dateline;
 		$this->javascript_merge = $this->params->javascript_merge ?? $this->app->config->javascript_merge;
 		$this->javascript_location = $this->params->javascript_location ?? $this->app->config->javascript_location;
 		$this->javascript_priority = $this->params->javascript_priority ?? $this->css_priority;
 
+$this->development = false;
+$this->javascript_merge = true;
+var_dump("remove development");
+
 		//don't merge css/js files in development mode
-		$this->development = false;
-		$this->javascript_merge = false;
-		var_dump("remove development");
 		if ($this->development) {
-			$this->css_dateline = time();
 			$this->css_merge = false;
 
-			$this->javascript_dateline = time();
 			$this->javascript_merge = false;
 		}
 	}
@@ -273,7 +263,24 @@ class Theme extends \Venus\Theme
 	*/
 	protected function prepareJquery()
 	{
+		//$this->app->javascript->loadLibrary('jquery');
+
+		$this->app->javascript->load('//www.domain.com/script1.js', 'head');
+$this->app->javascript->load('http://www.domain.com/script3.js', 'head');
+$this->app->javascript->load('https://localhost/venus/admin/qqqq.js');
+$this->app->javascript->load('https://localhost/qqqq.js');
+$this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer');
+
+
+	//$this->app->javascript->load('https://localhost/venus/admin/qqqq_footer.js', 'footer');
+
 		$this->app->javascript->loadLibrary('jquery');
+		//$this->app->library->loadJavascript('jquery-ui-admin');
+		$this->app->javascript->loadLibrary('jquery-ui');
+		$this->app->javascript->unloadLibrary('jquery-ui');
+
+		$this->app->css->loadLibrary('bootstrap');
+		//$this->app->css->unloadLibrary('bootstrap');
 	}
 
 	/**
@@ -283,10 +290,20 @@ class Theme extends \Venus\Theme
 	{
 		//load the main and theme's js code
 		$this->app->javascript->loadMain($this->javascript_location, $this->javascript_priority);
-		$this->app->javascript->loadTheme($this->name, $this->theme_javascript_location, $this->theme_javascript_priority);
+		$this->app->javascript->loadTheme($this->name, $this->theme_javascript_location, $this->theme_javascript_priority, $this->development ? time() : true);
 
 		//load the theme's css code
 		$this->app->css->loadMain($this->name);
+	}
+
+	/**
+	* Cleans some unused properties
+	*/
+	protected function cleanup()
+	{
+		//unset the params_data and parent_params_data arrays to free some ram
+		unset($this->params_data);
+		unset($this->parent_params_data);
 	}
 
 	/**************TEMPLATES METHODS**************************/
@@ -515,6 +532,7 @@ class Theme extends \Venus\Theme
 	*/
 	public function outputWidgets(string $position)
 	{
+return;
 		var_dump("output widgets");
 		die;
 		if (!$this->app->show_widgets ||  !$this->app->config->widgets_enable || defined('DISABLE_WIDGETS') || !$this->app->cache->widgets_count) {
@@ -634,100 +652,56 @@ class Theme extends \Venus\Theme
 		echo App::e($this->app->uri->getProfile());
 	}
 
-	/**************** CSS & JAVASCRIPT *************************************/
+	/**************** OUTPUT *************************************/
 
 	/**
-	* Returns the list of local css urls
-	* @param string $location The location to return the urls for. If empty all urls are returned
-	* @return array
+	* @see \Mars\Theme::outputHead()
+	* {@inheritDoc}
 	*/
-	protected function getCssLocalUrls(string $location = '') : array
+	public function outputHead()
 	{
-		if ($this->css_urls === null) {
-			$this->css_urls = $this->app->css->getSplitUrls();
-		}
+		$this->outputTitle();
+		$this->outputEncoding();
+		$this->outputMeta();
+		$this->outputRss();
 
-		return $this->getUrls($this->css_urls, 'local', $location);
-	}
+		//$this->outputCssUrls('head');
+		$this->outputJavascriptUrls('head');
 
-	/**
-	* Returns the list of css javascript urls
-	* @param string $location The location to return the urls for. If empty all urls are returned
-	* @return array
-	*/
-	protected function getCssExternalUrls(string $location = '') : array
-	{
-		if ($this->css_urls === null) {
-			$this->css_urls = $this->app->css->getSplitUrls();
-		}
-
-		return $this->getUrls($this->css_urls, 'external', $location);
-	}
-
-	/**
-	* Returns the list of local javascript urls
-	* @param string $location The location to return the urls for. If empty all urls are returned
-	* @return array
-	*/
-	protected function getJavascriptLocalUrls(string $location = '') : array
-	{
-		if ($this->javascript_urls === null) {
-			$this->javascript_urls = $this->app->javascript->getSplitUrls();
-		}
-
-		return $this->getUrls($this->javascript_urls, 'local', $location);
-	}
-
-	/**
-	* Returns the list of external javascript urls
-	* @param string $location The location to return the urls for. If empty all urls are returned
-	* @return array
-	*/
-	protected function getJavascriptExternalUrls(string $location = '') : array
-	{
-		if ($this->javascript_urls === null) {
-			$this->javascript_urls = $this->app->javascript->getSplitUrls();
-		}
-
-		return $this->getUrls($this->javascript_urls, 'external', $location);
-	}
-
-	/**
-	* Returns urls of a certain type, from a certain location
-	* @param array $urls The urls
-	* @param string $type The urls type
-	* @param string $location The location to return the urls for. If empty all urls are returned
-	* @return array
-	*/
-	protected function getUrls(array $urls, string $type, string $location = '') : array
-	{
-		if ($location) {
-			return $urls[$type][$location];
+		if ($this->app->device->isTablet()) {
+			$this->outputTabletsExtra();
+		} elseif ($this->app->device->isSmartphone()) {
+			$this->outputSmartphonesExtra();
 		} else {
-			return $urls[$type];
+			$this->outputDesktopExtra();
 		}
+
+		$this->app->plugins->run('systemThemeOutputHead', $this);
+
+		$this->outputHeadExtra();
 	}
 
 	/**
-	* Builds the css caches files, if in development mode
+	* Outputs the javascript urls loaded in a position
+	* @param string $location The location
 	*/
-	protected function buildCssCache()
+	public function outputJavascriptUrls(string $location)
 	{
-		$this->app->cache->cssFrontend();
+		//App::var_dump($this->app->javascript);
+		if ($this->javascript_merge && $location == $this->javascript_location) {
+			$splitter = new \Venus\Assets\Splitter($this->app->javascript->getUrls($location));
+
+			//$this->app->javascript->outputUrls($splitter->getExternalUrls());
+			$this->app->javascript->outputMergedUrls($splitter->getLocalUrls());
+		} else {
+			$this->app->javascript->output($location);
+		}
+
+		die;
 	}
 
-	/**
-	* Builds the javascript caches files, if in development mode
-	*/
-	protected function buildJavascriptCache()
-	{
-		$this->app->cache->javascriptFrontend();
-	}
 
-	/**
-	* Returns the url of the main javascript file
-	* @return string
-	*/
+	/*
 	public function outputJavascriptUrl()
 	{
 		//rebuild the javascript cache in development mode
@@ -751,129 +725,10 @@ class Theme extends \Venus\Theme
 
 		$this->app->javascript->outputUrl($url);
 	}
-
-	/**
-	* @see \Mars\Theme::outputCssMain()
-	* {@inheritDoc}
 	*/
-	/*public function outputCssMain()
-	{
-		$this->outputCssUrl($this->getCssUrl());
-	}*/
 
-	/**
-	* @see \Mars\Theme::getCssUrl()
-	* {@inheritDoc}
-	*/
-	/*function getCssUrl() : string
-	{
-		global $venus;
-		$url = $this->app->uri->build($this->app->site_url_static . VENUS_ASSETS_NAME . 'css.php', ['theme' => $this->name, 'dateline' => $this->css_dateline]);
 
-		$this->app->plugins->run('systemThemeGetCssUrl', $this, $url);
 
-		return $url;
-	}*/
-
-	/**
-	* @see \Mars\Theme::getJavascriptUrl()
-	* {@inheritDoc}
-	*/
-	/*protected function getJavascriptUrl() : string
-	{
-		global $venus;
-		$url = $this->app->uri->build($this->app->site_url_static . VENUS_ASSETS_NAME . 'javascript.php', ['lang' => $this->app->lang->name, 'theme' => $this->name, 'dateline' => $this->js_dateline]);
-
-		$this->app->plugins->run('systemThemeGetJsUrl', $this, $url);
-
-		return $url;
-	}*/
-
-	/**************** OUTPUT *************************************/
-
-	/**
-	* @see \Mars\Theme::outputHead()
-	* {@inheritDoc}
-	*/
-	public function outputHead()
-	{
-		$this->outputTitle();
-		$this->outputEncoding();
-
-		$this->app->plugins->run('systemThemeOutputHead1', $this);
-
-		$this->outputCssMain();
-		$this->outputCssUrls('head');
-
-		$this->outputJavascriptMain();
-
-		$this->outputJavascriptLibraries('head');
-		$this->outputJavascriptUrls('head');
-
-		$this->outputMeta();
-		$this->outputRss();
-
-		if ($this->app->device->isTablet()) {
-			$this->outputTabletsExtra();
-		} elseif ($this->app->device->isSmartphone()) {
-			$this->outputSmartphonesExtra();
-		} else {
-			$this->outputDesktopExtra();
-		}
-
-		$this->app->plugins->run('systemThemeOutputHead2', $this);
-
-		$this->outputHeadExtra();
-	}
-
-	/**
-	* @see \Mars\Theme::outputFooter()
-	* {@inheritDoc}
-	*/
-	public function outputFooter()
-	{
-		$this->outputCssUrls('footer');
-
-		$this->outputJavascriptLibraries('footer_first');
-		$this->outputJavascriptUrls('footer_first');
-
-		$this->outputJavascriptLibraries('footer');
-		$this->outputJavascriptUrls('footer');
-	}
-
-	/**
-	* Outputs the loaded css libraries
-	* @param string $location The location of the urls: first|head|footer
-	*/
-	/*public function outputCssLibraries(string $location = 'head')
-	{
-		global $venus;
-		$libraries = $this->app->library->css->getLibraries($location);
-		$dependencies = $this->app->library->javascript->getDependencies($location);
-		if(!$libraries && !$dependencies)
-			return;
-
-		$url = $this->app->uri->build($this->app->site_url_static . VENUS_ASSETS_NAME . 'css.php', ['type' => 'libraries', 'names' => $libraries, 'dependencies' => $dependencies , 'dateline' => $this->css_dateline]);
-
-		$this->app->css->outputUrl($url);
-	}*/
-
-	/**
-	* Outputs the loaded javascript libraries
-	* @param string $location The location of the urls: first|head|footer
-	*/
-	/*public function outputJavascriptLibraries(string $location = 'head')
-	{
-		global $venus;
-		$libraries = $this->app->library->javascript->getLibraries($location);
-		$dependencies = $this->app->library->css->getDependencies($location);
-		if(!$libraries && !$dependencies)
-			return;
-
-		$url = $this->app->uri->build($this->app->site_url_static . VENUS_ASSETS_NAME . 'javascript.php', ['type' => 'libraries', 'names' => $libraries, 'dependencies' => $dependencies , 'dateline' => $this->js_dateline]);
-
-		$this->app->javascript->outputUrl($url);
-	}*/
 
 	/**
 	* Outputs extra code in the head, for desktop devices
@@ -912,9 +767,11 @@ class Theme extends \Venus\Theme
 			return;
 		}
 
-		echo '<meta name="viewport" content="width=' . App::e($this->params->viewport_width) . ', initial-scale=' . App::e($this->params->viewport_initial_scale) . '">' . "\n";
+		$meta = '<meta name="viewport" content="width=' . App::e($this->params->viewport_width) . ', initial-scale=' . App::e($this->params->viewport_initial_scale) . '">' . "\n";
 
-		$this->app->plugins->run('systemThemeOutputViewport', $this);
+		$meta = $this->app->plugins->filter('systemThemeOutputViewport', $meta, $this);
+
+		echo $meta;
 	}
 
 	/**

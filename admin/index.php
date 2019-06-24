@@ -4,7 +4,18 @@ define('VENUS_ADMIN', 1);
 
 chdir('..');
 require('src/admin/boot/system.php');
-die("cxvcxvxc");
+
+try {
+	$app->start();
+	echo 'Some content';
+	$app->end();
+} catch (\Exception $e) {
+	$app->fatalError($e->getMessage());
+}
+
+$app->output();
+die;
+
 try {
 	if (!$venus->session->get('admin')) {
 		$venus->session->set('admin_referrer', $venus->full_url);

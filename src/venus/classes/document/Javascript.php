@@ -31,6 +31,11 @@ class Javascript extends \Mars\Document\Javascript
 		$this->extension = App::FILE_EXTENSIONS['javascript'];
 		$this->base_cache_url = $this->app->cache_url . App::CACHE_DIRS['javascript'];
 		$this->cache_url = $this->base_cache_url;
+
+		$this->version = $this->app->cache->javascript_version;
+		if ($this->app->development) {
+			$this->version = time();
+		}
 	}
 
 	/**
@@ -89,17 +94,29 @@ class Javascript extends \Mars\Document\Javascript
 	}
 
 	/**
+	* Merges and outputs the merged urls
+	* @param array $urls The urls to merge. Must be local
+	* @return $this
+	*/
+	public function outputMergedUrls(array $urls)
+	{
+		var_dump($urls);die;
+		return $this;
+	}
+
+	/**
 	* Loads the theme's javascript code
 	* @oaram string $name The name of the heme
 	* @param string $location The location of the url [head|footer]
 	* @param int $priority The url's output priority. The higher, the better
+	* @param mixed $version If string, will add the specified version. If true, will add the configured version param to the url
 	* @return $this
 	*/
-	public function loadTheme(string $name, string $location = 'head', int $priority = 5000)
+	public function loadTheme(string $name, string $location = 'head', int $priority = 5000, $version = true)
 	{
 		$url = $this->cache_url . $this->getThemeFile($name, $this->app->device->get());
 
-		$this->load($url, $location, $priority);
+		$this->load($url, $location, $priority, $version);
 
 		return $this;
 	}
@@ -141,7 +158,7 @@ class Javascript extends \Mars\Document\Javascript
 			$title = App::ejs($dialog['title']);
 			$content = App::ejs($dialog['content'], false);
 
-			$code.= "venus.dialog.load_inline('{$name}', '{$alias}', '{$title}', '{$content}');\n";
+			$code.= "venus.dialog.loadInline('{$name}', '{$alias}', '{$title}', '{$content}');\n";
 		}
 
 		$code.= "\n";

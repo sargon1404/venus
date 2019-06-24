@@ -24,6 +24,9 @@ class Screen extends \Mars\Document\Screen
 	protected function getTemplateFilename(string $template) : string
 	{
 		if (isset($this->app->theme)) {
+			if ($this->app->theme->hasTemplate('offline')) {
+				return $this->app->theme->getTemplateFilename($template);
+			}
 		}
 
 		return $this->app->extensions_dir . Theme::getBaseDir() . '/' . $template . '.tpl';
@@ -43,7 +46,12 @@ class Screen extends \Mars\Document\Screen
 			$error = App::e($error);
 		}
 
-		echo '<h1>Fatal Error</h1><p>' . nl2br($error) . '</p>';
+		$template = $this->getTemplateFilename('fatal-error');
+
+		$content = file_get_contents($template);
+		$content = str_replace('{{ $error }}', nl2br($error), $content);
+
+		echo $content;
 		die;
 	}
 
@@ -135,16 +143,10 @@ class Screen extends \Mars\Document\Screen
 	}
 
 	/**
-	* Displays the site offline screen
+	* Displays the site's offline screen
 	*/
 	public function offline()
 	{
-		if ($this->app->theme->hasTemplate('offline')) {
-			die("da");
-		} else {
-			die("nu");
-		}
-
 		$template = $this->getTemplateFilename('offline');
 
 		$content = file_get_contents($template);

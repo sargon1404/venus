@@ -27,6 +27,11 @@ class Css extends \Mars\Document\Css
 		$this->extension = App::FILE_EXTENSIONS['css'];
 		$this->base_cache_url = $this->app->cache_url . App::CACHE_DIRS['css'];
 		$this->cache_url = $this->base_cache_url;
+
+		$this->version = $this->app->cache->css_version;
+		if ($this->app->development) {
+			$this->version = time();
+		}
 	}
 
 	/**

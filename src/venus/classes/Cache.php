@@ -23,13 +23,16 @@ class Cache extends \Mars\Cache
 	protected $key = 'venus_cache';
 
 	/**
-	* Builds a hash from the files
-	* @param array $files The files to return the hash for
-	* @return string The hash
+	* Builds the css & javascript cache for a theme
+	* @param Theme $theme The theme to build the css cache for
 	*/
-	protected function getHash(array $files) : string
+	public function buildForTheme(Theme $theme)
 	{
-		return hash('sha1', serialize($files));
+		$css = new \Venus\Assets\Css($this->app);
+		$css->cacheTheme($theme);
+
+		$javascript = new \Venus\Assets\Javascript($this->app);
+		$javascript->cacheTheme($theme);
 	}
 
 	/**
@@ -112,38 +115,6 @@ class Cache extends \Mars\Cache
 
 
 	/**
-	* Returns the url of a css url
-	* @param string $name The name of the library
-	* @return string
-	*/
-	/*public function getCssLibraryUrl(string $name) : string
-	{
-		return $this->base_cache_url . 'css/' . $this->getLibraryFile($name, 'css');
-	}*/
-
-	/**
-	* Returns the url of of the file containing the js dependencies of a css library
-	* @param string $name The name of the library
-	* @return string
-	*/
-	/*public function getCssLibraryDependenciesUrl(string $name) : string
-	{
-		return $this->base_cache_url . 'javascript/' . $this->getLibraryDependencyFile($name, 'js');
-	}*/
-
-	/**
-	* Returns the url of a javascript library
-	* @param string $name The name of the library
-	* @return string
-	*/
-	/*public function getJavascriptLibraryUrl(string $name) : string
-	{
-		return $this->base_cache_url . 'javascript/' . $this->getLibraryFile($name, 'js');
-	}*/
-
-
-
-	/**
 	* Returns the cached categories
 	* @return array The categories
 	*/
@@ -178,6 +149,16 @@ class Cache extends \Mars\Cache
 	{
 		return $this->get('libraries', true);
 	}
+
+
+
+
+
+
+
+
+
+
 
 	/**
 	* Clears the cached sitemap

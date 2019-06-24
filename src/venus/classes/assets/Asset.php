@@ -188,7 +188,7 @@ abstract class Asset
 
 		return file_put_contents($this->cache_dir . $file, $content);
 	}
-	
+
 	/**
 	* Stores content in the cache folder
 	* @param string $file The name of the file
@@ -373,7 +373,7 @@ abstract class Asset
 	* @param array $local_urls The local urls to merge
 	* @return string The merged code
 	*/
-	protected function getLocalUrlsMerge(array $local_urls) : string
+	/*protected function getLocalUrlsMerge(array $local_urls) : string
 	{
 		$code = '';
 		foreach ($local_urls as $url) {
@@ -386,5 +386,5 @@ abstract class Asset
 		}
 
 		return $code;
-	}
+	}*/
 }

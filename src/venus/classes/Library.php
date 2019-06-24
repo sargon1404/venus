@@ -15,9 +15,14 @@ class Library
 	use AppTrait;
 
 	/**
-	* @param array Array listing the available libraries
+	* @var array $available_librarie Array listing the available libraries
 	*/
 	protected $available_libraries = [];
+
+	/**
+	* @var string $version The version to be applied to the css/js urls
+	*/
+	protected $version = '';
 
 	/**
 	* Builds the library object
@@ -28,6 +33,11 @@ class Library
 		$this->app = $app;
 
 		$this->available_libraries = $this->app->cache->getLibraries();
+		$this->version = $this->app->cache->libraries_version;
+
+		if ($this->app->development) {
+			$this->version = time();
+		}
 	}
 
 	/**
@@ -47,14 +57,14 @@ class Library
 
 		$this->app->plugins->run('libraryLoadCss1', $name, $url, $data);
 
-		$this->app->css->load($url, $data['location'], $data['priority']);
+		$this->app->css->load($url, $data['location'], $data['priority'], $this->version);
 
 		if ($data['dependencies']) {
 			$url = $this->app->javascript->getLibraryDependenciesUrl($name);
 
 			$this->app->plugins->run('libraryLoadCss2', $name, $url, $data);
 
-			$this->app->javascript->load($url, $data['dependencies']['location'], $data['dependencies']['priority'], $data['dependencies']['async'], $data['dependencies']['defer']);
+			$this->app->javascript->load($url, $data['dependencies']['location'], $data['dependencies']['priority'], $this->version, $data['dependencies']['async'], $data['dependencies']['defer']);
 		}
 
 		$this->app->plugins->run('libraryLoadCss3', $name, $data);
@@ -105,14 +115,14 @@ class Library
 
 		$this->app->plugins->run('libraryLoadJavascript1', $name, $url, $data);
 
-		$this->app->javascript->load($url, $data['location'], $data['priority'], $data['async'], $data['defer']);
+		$this->app->javascript->load($url, $data['location'], $data['priority'], $this->version, $data['async'], $data['defer']);
 
 		if ($data['dependencies']) {
 			$url = $this->app->css->getLibraryDependenciesUrl($name);
 
 			$this->app->plugins->run('libraryLoadJavascript2', $name, $url, $data);
 
-			$this->app->css->load($url, $data['dependencies']['location'], $data['dependencies']['priority']);
+			$this->app->css->load($url, $data['dependencies']['location'], $data['dependencies']['priority'], $this->version);
 		}
 
 		$this->app->plugins->run('libraryLoadJavascript3', $name);

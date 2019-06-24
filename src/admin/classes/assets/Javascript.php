@@ -8,6 +8,7 @@ namespace Venus\Admin\Assets;
 
 use Venus\Admin\App;
 use Venus\Admin\Languages;
+use Venus\Theme;
 
 /**
 * The Javascript Admin Assets Class
@@ -63,9 +64,18 @@ class Javascript extends \Venus\Assets\Javascript
 	*/
 	public function cacheThemes()
 	{
-		$devices = $this->app->device->getDevices();
-
 		$theme = new \Venus\Admin\Theme($this->app);
+
+		$this->cacheTheme($theme);
+	}
+
+	/**
+	* @see \Venus\Assets\Javascript::cacheTheme()
+	* @inheritDocs
+	*/
+	public function cacheTheme(Theme $theme)
+	{
+		$devices = $this->app->device->getDevices();
 
 		$javascript_dir = $theme->dir . App::EXTENSIONS_DIRS['javascript'];
 		$has_javascript_dir = is_dir($javascript_dir);

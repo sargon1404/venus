@@ -5,7 +5,15 @@ define('VENUS', 1);
 
 require('src/venus/boot/system.php');
 
-die("boot complete");
+try {
+	$app->start();
+	echo 'Some content';
+	$app->end();
+} catch (\Exception $e) {
+	$app->fatalError($e->getMessage());
+}
+
+$app->output();
 
 /*
 try {

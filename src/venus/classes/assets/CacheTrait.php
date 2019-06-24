@@ -1,7 +1,7 @@
 <?php
 /**
 * The Cache trait
-* @package Mars
+* @package Venus
 */
 
 namespace Venus\Assets;
@@ -45,26 +45,6 @@ trait CacheTrait
 
 		return implode($parts, '-') . '.' . $this->extension;
 	}
-	
-	/**
-	* Returns the url of a library from the cache folder
-	* @param string $name The name of the library
-	* @return string The url
-	*/
-	public function getLibraryUrl(string $name) : string
-	{
-		return $this->app->cache_url . App::CACHE_DIRS['libraries'] . $this->getLibraryFile($name);
-	}
-
-	/**
-	* Returns the url of of the file containing the css dependencies of a javascript library
-	* @param string $name The name of the library
-	* @return string
-	*/
-	public function getLibraryDependenciesUrl(string $name) : string
-	{
-		return $this->app->cache_url . App::CACHE_DIRS['libraries'] . $this->getLibraryDependencyFile($name);
-	}
 
 	/**
 	* Returns the name under which a library's code is cached
@@ -84,6 +64,26 @@ trait CacheTrait
 	public function getLibraryDependencyFile(string $name) : string
 	{
 		return $this->getFile('library', [$name, 'dependencies']);
+	}
+
+	/**
+	* Returns the url of a library from the cache folder
+	* @param string $name The name of the library
+	* @return string The url
+	*/
+	public function getLibraryUrl(string $name) : string
+	{
+		return $this->app->cache_url . App::CACHE_DIRS['libraries'] . $this->getLibraryFile($name);
+	}
+
+	/**
+	* Returns the url of of the file containing the css dependencies of a javascript library
+	* @param string $name The name of the library
+	* @return string
+	*/
+	public function getLibraryDependenciesUrl(string $name) : string
+	{
+		return $this->app->cache_url . App::CACHE_DIRS['libraries'] . $this->getLibraryDependencyFile($name);
 	}
 
 	/**

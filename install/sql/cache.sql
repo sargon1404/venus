@@ -6,19 +6,19 @@ INSERT INTO venus_cache VALUES ('plugins_extensions_skip','','admin');
 
 INSERT INTO venus_cache VALUES ('theme_templates','','admin');
 
-INSERT INTO venus_cache VALUES ('css_dateline', UNIX_TIMESTAMP(),'frontend');
+INSERT INTO venus_cache VALUES ('css_version', UNIX_TIMESTAMP(),'frontend');
 INSERT INTO venus_cache VALUES ('css_merged', '','frontend');
 INSERT INTO venus_cache VALUES ('css_merged', '','admin');
 INSERT INTO venus_cache VALUES ('css_inline', '','admin');
 
-INSERT INTO venus_cache VALUES ('javascript_dateline', UNIX_TIMESTAMP(),'frontend');
+INSERT INTO venus_cache VALUES ('javascript_version', UNIX_TIMESTAMP(),'frontend');
 INSERT INTO venus_cache VALUES ('javascript_merged', '','frontend');
 INSERT INTO venus_cache VALUES ('javascript_merged', '','admin');
 INSERT INTO venus_cache VALUES ('javascript_inline', '','frontend');
 INSERT INTO venus_cache VALUES ('javascript_inline', '','admin');
 
-
 INSERT INTO venus_cache VALUES ('libraries', '','frontend');
+INSERT INTO venus_cache VALUES ('libraries_version', '','frontend');
 
 INSERT INTO venus_cache VALUES ('language_default','','frontend');
 INSERT INTO venus_cache VALUES ('theme_default','','frontend');
