@@ -409,7 +409,7 @@ class Navbar
 	*/
 	public function outputButtons()
 	{
-		$this->buttons = $this->app->plugins->filter('adminNavbarOutputButtons1', $this->buttons, $this);
+		$this->buttons = $this->app->plugins->filter('adminNavbarOutputButtonsButtons', $this->buttons, $this);
 
 		if (!$this->buttons) {
 			return;
@@ -493,7 +493,7 @@ class Navbar
 			$html = '';
 		}
 
-		$html = $this->app->plugins->filter('adminNavbarOutputButtons2', $html, $this->buttons, $this);
+		$html = $this->app->plugins->filter('adminNavbarOutputButtonsHtml', $html, $this->buttons, $this);
 
 		echo $html;
 
@@ -532,7 +532,7 @@ class Navbar
 	*/
 	public function outputLinks()
 	{
-		$this->links = $this->app->plugins->filter('adminNavbarOutputLinks1', $this->links, $this);
+		$this->links = $this->app->plugins->filter('adminNavbarOutputLinksLinks', $this->links, $this);
 
 		echo '<ul>' . "\n";
 		echo '<li>' . "\n";
@@ -556,7 +556,7 @@ class Navbar
 				$html.= '<li>' . $this->app->html->a($link['url'], $link['text'], $link['class']) . '</li>';
 			}
 
-			$html = $this->app->plugins->filter('adminNavbarOutputLinks2', $html, $this->links, $this);
+			$html = $this->app->plugins->filter('adminNavbarOutputLinksHtml', $html, $this->links, $this);
 
 			echo $html;
 		}
@@ -574,7 +574,7 @@ class Navbar
 	{
 		$history = $this->app->session->get('history');
 
-		$history = $this->app->plugins->filter('adminNavbaroutputHistoryLinks1', $history, $this);
+		$history = $this->app->plugins->filter('adminNavbaroutputHistoryLinksUrls', $history, $this);
 
 		$html = '<div id="history-list" class="hidden">';
 
@@ -588,7 +588,7 @@ class Navbar
 
 		$html.= '</div>';
 
-		$html = $this->app->plugins->filter('adminNavbaroutputHistoryLinks2', $html, $history, $this);
+		$html = $this->app->plugins->filter('adminNavbaroutputHistoryLinksHtml', $html, $history, $this);
 
 		echo $html;
 	}

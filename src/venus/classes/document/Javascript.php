@@ -7,6 +7,7 @@
 namespace Venus\Document;
 
 use Venus\App;
+use Venus\Assets\Asset;
 
 /**
 * The Document's Javascript Urls Class
@@ -15,6 +16,7 @@ use Venus\App;
 class Javascript extends \Mars\Document\Javascript
 {
 	use \Venus\Assets\CacheTrait;
+	use \Venus\Assets\MergeTrait;
 
 	/**
 	* @var array $dialogs The dialogs data
@@ -31,11 +33,21 @@ class Javascript extends \Mars\Document\Javascript
 		$this->extension = App::FILE_EXTENSIONS['javascript'];
 		$this->base_cache_url = $this->app->cache_url . App::CACHE_DIRS['javascript'];
 		$this->cache_url = $this->base_cache_url;
+		$this->merge_key = 'javascript_merged';
 
 		$this->version = $this->app->cache->javascript_version;
 		if ($this->app->development) {
 			$this->version = time();
 		}
+	}
+
+	/**
+	* Returns the javascript assets class
+	* @return Asset The assets class
+	*/
+	protected function getAssetsObj() : Asset
+	{
+		return new \Venus\Assets\Javascript($this->app);
 	}
 
 	/**
@@ -100,7 +112,10 @@ class Javascript extends \Mars\Document\Javascript
 	*/
 	public function outputMergedUrls(array $urls)
 	{
-		var_dump($urls);die;
+		$url = $this->cache_url . $this->getMergedFile($urls);
+
+		$this->outputUrl($url);
+
 		return $this;
 	}
 

@@ -42,7 +42,7 @@ class Email
 	*/
 	public function __construct(User $user)
 	{
-		$this->app = App::getApp();		
+		$this->app = App::getApp();
 		$this->user = $user;
 
 		$this->buildSearchReplace();

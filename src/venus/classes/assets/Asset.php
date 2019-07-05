@@ -175,18 +175,7 @@ abstract class Asset
 	*/
 	public function store(string $file, string $content, ?bool $minify = null, bool $parse = true) : bool
 	{
-		if ($parse) {
-			$content = $this->parse($content);
-		}
-
-		if ($minify === null) {
-			$minify = $this->minify;
-		}
-		if ($minify) {
-			$content = $this->minify($content);
-		}
-
-		return file_put_contents($this->cache_dir . $file, $content);
+		return $this->storeFile($this->cache_dir, $file, $content, false, $minify, $parse);
 	}
 
 	/**
@@ -199,6 +188,55 @@ abstract class Asset
 	*/
 	public function storeLibrary(string $file, string $content, ?bool $minify = null)
 	{
+		return $this->storeFile($this->app->cache_dir . App::CACHE_DIRS['libraries'], $file, $content, false, $minify, false);
+	}
+
+	/**
+	* Stores multiple files
+	* @param string $file The name of the file where the content of the files will be stored
+	* @param array $files The files to store
+	* @param bool $minify If true, will minify the content. If null, $this->minify is used
+	* @param bool $parse If true, will parse the content
+	*/
+	public function storeFiles(string $file, array $files, ?bool $minify = null, bool $parse = true)
+	{
+		$filename = $this->cache_dir . $file;
+		if (is_file($filename)) {
+			unlink($filename);
+		}
+
+		foreach ($files as $file_data) {
+			$content = file_get_contents($file_data['file']) . "\n";
+
+			$file_minify = $minify;
+			$file_parse = $parse;
+			
+			//don't minify & parse the files from cache; these files should already be minified & parsed
+			if ($file_data['cached']) {
+				$file_minify = false;
+				$file_parse = false;
+			}
+
+			$this->storeFile($this->cache_dir, $file, $content, true, $file_minify, $file_parse);
+		}
+	}
+
+	/**
+	* Stores a file
+	* @param string $dir The folder where the file will be created
+	* @param string $file The name of the file
+	* @param string $content The content to store
+	* @param bool $append If true, will append the content
+	* @param bool $minify If true, will minify the content. If null, $this->minify is used
+	* @param bool $parse If true, will parse the content
+	* @return bool
+	*/
+	protected function storeFile(string $dir, string $file, string $content, bool $append = false, ?bool $minify = null, bool $parse = true) : bool
+	{
+		if ($parse) {
+			$content = $this->parse($content);
+		}
+
 		if ($minify === null) {
 			$minify = $this->minify;
 		}
@@ -206,7 +244,16 @@ abstract class Asset
 			$content = $this->minify($content);
 		}
 
-		return file_put_contents($this->app->cache_dir . App::CACHE_DIRS['libraries'] . $file, $content);
+		$flags = 0;
+		if ($append) {
+			$flags = FILE_APPEND;
+		}
+
+		$filename = $dir . $file;
+
+		$content = $this->app->plugins->filter('assetsMergeTraitStoreFile', $content, $filename, $append, $minify, $parse, $flags);
+
+		return file_put_contents($filename, $content, $flags);
 	}
 
 	/**
@@ -367,24 +414,4 @@ abstract class Asset
 
 		return $code;
 	}
-
-	/**
-	* Merges libraries
-	* @param array $local_urls The local urls to merge
-	* @return string The merged code
-	*/
-	/*protected function getLocalUrlsMerge(array $local_urls) : string
-	{
-		$code = '';
-		foreach ($local_urls as $url) {
-			$code.= file_get_contents($this->app->file->getFromUrl($url)) . "\n\n";
-		}
-
-		//minify the code
-		if ($this->minify) {
-			$code = $this->minify($code);
-		}
-
-		return $code;
-	}*/
 }

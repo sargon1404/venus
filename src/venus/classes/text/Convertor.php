@@ -6,7 +6,6 @@
 
 namespace Venus\Text;
 
-
 /**
 * The Text Convertor Class
 * Converts html tags to special system tags.
@@ -14,9 +13,7 @@ namespace Venus\Text;
 */
 class Convertor
 {
-
 	use \Venus\AppTrait;
-
 
 	/**
 	* Converts the videos to the appropiate tags
@@ -33,7 +30,7 @@ class Convertor
 	* @param array $match The match
 	* @return string
 	*/
-	protected function convertVideosCallback($array match) : string
+	protected function convertVideosCallback(array $match) : string
 	{
 		$type = $match[1];
 		$url = $match[2];
@@ -41,10 +38,13 @@ class Convertor
 		$height = $match[4];
 		$dimensions = '';
 
-		if($width)
-			$dimensions.= ' width='. (int)$width;
-		if($height)
-			$dimensions.= ' height='. (int)$height;
+		if ($width) {
+			$dimensions.= ' width=' . (int)$width;
+		}
+
+		if ($height) {
+			$dimensions.= ' height=' . (int)$height;
+		}
 
 		return "[video={$type}{$dimensions}]{$url}[/video]";
 	}
@@ -74,5 +74,4 @@ class Convertor
 
 		return str_replace($search, $replace, $text);
 	}
-
 }

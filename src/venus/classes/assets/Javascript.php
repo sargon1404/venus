@@ -378,37 +378,4 @@ class Javascript extends Asset
 
 		return $code;
 	}
-
-	/**
-	* Merges multiple javascript files into one
-	* @param string $file The name of the file under which the files will be merged
-	* @param string $device The name of the device for which to build the merge
-	* @param string $language The name of the language for which to build the merge
-	* @param array $libraries The libraries to include in the merge
-	* @param array $library_dependencies The javascript dependencies of non-javascript libraries
-	* @param array $local_urls The local urls to include in the merge
-	* @return $this
-	*/
-	public function merge(string $file, string $device, string $language, array $libraries, array $library_dependencies, array $local_urls)
-	{
-		$code = $this->getLibrariesMerge($libraries);
-		$code.= $this->getLibraryDependenciesMerge($library_dependencies);
-		$code.= $this->getMainMerge($device, $language);
-		$code.= $this->getLocalUrlsMerge($local_urls);
-
-		$this->store($file, $code, false, false);
-
-		return $this;
-	}
-
-	/**
-	* Returns the merged code of the main javascript file
-	* @param string $device The name of the device for which to build the merge
-	* @param string $language The name of the language for which to build the merge
-	* @return string The merged code
-	*/
-	protected function getMainMerge(string $device, string $language) : string
-	{
-		return file_get_contents($this->cache_dir . $this->app->cache->getMainFile($device, $language)) . "\n\n";
-	}
 }

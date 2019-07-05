@@ -458,7 +458,7 @@ class App extends \Mars\App
 			return false;
 		}
 
-		$this->plugins->run('appMail1', $to, $subject, $message, $from, $from_name, $reply_to, $reply_to_name, $is_html, $attachments, $this);
+		$this->plugins->run('appMailParams', $to, $subject, $message, $from, $from_name, $reply_to, $reply_to_name, $is_html, $attachments, $this);
 
 		if (!$from) {
 			$from = $this->config->mail_from;
@@ -474,7 +474,7 @@ class App extends \Mars\App
 			$mailer->isSmtp($this->config->mail_smtp_server, $this->config->mail_smtp_port, $this->config->mail_smtp_secure, $this->config->mail_smtp_auth_username, $this->config->mail_smtp_auth_password);
 		}
 
-		$this->plugins->run('appMail2', $mailer, $this);
+		$this->plugins->run('appMailMailer', $mailer, $this);
 
 		$result = $mailer->send();
 		if (!$result) {

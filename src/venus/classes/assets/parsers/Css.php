@@ -21,9 +21,21 @@ class Css
 	protected $vars = [];
 
 	/**
-	* @var Theme $theme The current theme
+	* @var string $current_url The url corresponding to the ./ entry
 	*/
-	protected $theme = null;
+	protected $current_url = '';
+	/**
+	* @var string $up_url The url corresponding to the ../ entry
+	*/
+	protected $up_url = '';
+	/**
+	* @var string $images_url The url corresponding to the theme's images url
+	*/
+	protected $images_url = '';
+	/**
+	* @var string $root_images_url The url corresponding to theme's root images url
+	*/
+	protected $root_images_url = '';
 
 	/**
 	* Returns the vars
@@ -37,19 +49,42 @@ class Css
 	/**
 	* Sets the vars
 	* @param array $vars The vars to set
+	* @return $this
 	*/
 	public function setVars(array $vars)
 	{
 		$this->vars = $vars;
+
+		return $this;
 	}
 
 	/**
 	* Sets the current theme
 	* @param Theme $theme The theme
+	* @return $this
 	*/
 	public function setTheme(Theme $theme)
 	{
-		$this->theme = $theme;
+		$this->current_url = $this->theme->dir_url_static . App::EXTENSIONS_DIRS['css'];
+		$this->up_url = $this->theme->dir_url_static;
+		$this->images_url = $this->theme->images_url;
+		$this->root_images_url = $this->theme->root_images_url;
+
+		return $this;
+	}
+
+	/**
+	* Sets the current and up urls
+	* @param string $current_url The current url
+	* @param string $up_url The up url
+	* @return $this
+	*/
+	public function setUrls(string $current_url, string $up_url)
+	{
+		$this->current_url = $current_url;
+		$this->up_url = $up_url;
+
+		return $this;
 	}
 
 	/**
@@ -68,6 +103,7 @@ class Css
 	/**
 	* Reads the vars from content
 	* @param string $content The content from where the vars are read
+	* @return $this
 	*/
 	public function read(string $content)
 	{
@@ -93,6 +129,8 @@ class Css
 				$this->vars[$name] = $val;
 			}
 		}
+
+		return $this;
 	}
 
 	/**
@@ -103,7 +141,7 @@ class Css
 	protected function parsePaths(string $content) : string
 	{
 		$search = ['../', './', '::/', ':/'];
-		$replace = [$this->theme->dir_url_static, $this->theme->dir_url_static . App::EXTENSIONS_DIRS['css'], $this->theme->root_images_url,  $this->theme->images_url];
+		$replace = [$this->up_url, $this->current_url, $this->root_images_url,  $this->images_url];
 
 		return str_replace($search, $replace, $content);
 	}

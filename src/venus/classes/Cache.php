@@ -33,86 +33,9 @@ class Cache extends \Mars\Cache
 
 		$javascript = new \Venus\Assets\Javascript($this->app);
 		$javascript->cacheTheme($theme);
+
+		$this->app->plugins->run('cacheBuildForTheme', $theme, $css, $javascript, $this);
 	}
-
-	/**
-	* @see \Venus\Cache\Javascript\merge()
-	*/
-	/*protected function mergeJavascript(string $file, string $device, string $language, array $libraries, array $library_dependencies, array $local_urls)
-	{
-		$javascript = new \Venus\Cache\Javascript($this->app);
-		$javascript->merge($file, $device, $language, $libraries, $library_dependencies, $local_urls);
-	}*/
-
-
-
-	/**
-	* Returns the url under which the main javascript code will be cached
-	* @param string $device The device
-	* @param string $language The language's name
-	* @return string
-	*/
-	/*public function getJavascriptUrl(string $device, string $language = '') : string
-	{
-		return $this->cache_url . 'javascript/' . $this->getJavascriptFile($device, $language);
-	}*/
-
-	/**
-	* Returns the name under which javascript files are merged
-	* @param string $device The name of the device for which to build the merge
-	* @param string $language The name of the language for which to build the merge
-	* @param array $libraries The libraries to include in the merge
-	* @param array $library_dependencies The javascript dependencies of non-javascript libraries
-	* @param array $local_urls The local urls to include in the merge
-	* @return string
-	*/
-	/*public function getJavascriptMergedFile(string $device, string $language, array $libraries, array $library_dependencies, array $local_urls) : string
-	{
-		static $javascript_merged = null;
-		if ($javascript_merged === null) {
-			$javascript_merged = $this->get('javascript_merged', true);
-		}
-		//var_dump($this->scope);die;
-		$files = ['device' => $device, 'language' => $language, 'libraries' => $libraries, 'library_dependencies' => $library_dependencies, 'urls' => $local_urls];
-		$hash = $this->getHash($files);
-		$file = $hash . '.js';
-
-		//check if we have the hash file cached
-		if (!isset($javascript_merged[$hash])) {
-			$this->mergeJavascript($file, $device, $language, $libraries, $library_dependencies, $local_urls);
-
-			$javascript_merged[$hash] = true;
-
-			$this->update('javascript_merged', $javascript_merged, true, null);
-		}
-
-		return $file;
-	}*/
-
-	/**
-	* Returns the name under a theme's javascript code will be cached
-	* @param string $name The name of the theme
-	* @param string $device The device
-	* @return string
-	*/
-	/*public function getThemeJavascriptFile(string $name, string $device) : string
-	{
-		return $this->getFile('theme', 'js', $device, [$name]);
-	}*/
-
-	/**
-	* Returns the url under a theme's javascript code will be cached
-	* @param string $name The name of the theme
-	* @param string $device The device
-	* @return string
-	*/
-	/*public function getThemeJavascriptUrl(string $name, string $device) : string
-	{
-		return $this->cache_url . 'javascript/' . $this->getThemeJavascriptFile($name, $device);
-	}*/
-
-
-
 
 	/**
 	* Returns the cached categories
@@ -149,16 +72,6 @@ class Cache extends \Mars\Cache
 	{
 		return $this->get('libraries', true);
 	}
-
-
-
-
-
-
-
-
-
-
 
 	/**
 	* Clears the cached sitemap

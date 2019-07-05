@@ -151,13 +151,15 @@ class Plugins extends \Venus\Plugins
 		$table = $this->getTable();
 		$extensions_table = $this->getExtensionsTable();
 
-		$this->app->db->readQuery("
+		$this->app->db->readQuery(
+			"
 			SELECT p.*
 			FROM {$extensions_table} AS pe
 			LEFT JOIN {$table} AS p USING(pid)
 			WHERE pe.name_crc = CRC32(:name) AND type = :type AND pe.name = :name AND p.status = 1 AND p.global = 0
 			ORDER BY p.`order` DESC",
-			['type' => $type, 'name' => $name]);
+			['type' => $type, 'name' => $name]
+		);
 
 		$plugins = $this->app->db->get();
 		if (!$plugins) {

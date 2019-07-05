@@ -7,6 +7,7 @@
 namespace Venus\Admin\Document;
 
 use Venus\Admin\App;
+use Venus\Assets\Asset;
 
 /**
 * The Document's Javascript Urls Class
@@ -22,6 +23,15 @@ class Javascript extends \Venus\Document\Javascript
 		parent::__construct($app);
 
 		$this->cache_url = $this->app->admin_cache_url . App::CACHE_DIRS['javascript'];
+	}
+
+	/**
+	* Returns the javascript assets class
+	* @return Asset The assets class
+	*/
+	protected function getAssetsObj() : Asset
+	{
+		return new \Venus\Admin\Assets\Javascript($this->app);
 	}
 
 	/**

@@ -55,19 +55,19 @@ class Library
 
 		$url = $this->app->css->getLibraryUrl($name);
 
-		$this->app->plugins->run('libraryLoadCss1', $name, $url, $data);
+		$this->app->plugins->run('libraryLoadCssUrl', $name, $url, $data, $this);
 
 		$this->app->css->load($url, $data['location'], $data['priority'], $this->version);
 
 		if ($data['dependencies']) {
 			$url = $this->app->javascript->getLibraryDependenciesUrl($name);
 
-			$this->app->plugins->run('libraryLoadCss2', $name, $url, $data);
+			$this->app->plugins->run('libraryLoadCssDependenciesUrl', $name, $url, $data, $this);
 
 			$this->app->javascript->load($url, $data['dependencies']['location'], $data['dependencies']['priority'], $this->version, $data['dependencies']['async'], $data['dependencies']['defer']);
 		}
 
-		$this->app->plugins->run('libraryLoadCss3', $name, $data);
+		$this->app->plugins->run('libraryLoadCss', $name, $data, $this);
 
 		return $this;
 	}
@@ -93,7 +93,7 @@ class Library
 			$this->app->javascript->unload($url);
 		}
 
-		$this->app->plugins->run('libraryUnloadCss', $name);
+		$this->app->plugins->run('libraryUnloadCss', $name, $this);
 
 		return $this;
 	}
@@ -113,19 +113,19 @@ class Library
 
 		$url = $this->app->javascript->getLibraryUrl($name);
 
-		$this->app->plugins->run('libraryLoadJavascript1', $name, $url, $data);
+		$this->app->plugins->run('libraryLoadJavascriptUrl', $name, $url, $data, $this);
 
 		$this->app->javascript->load($url, $data['location'], $data['priority'], $this->version, $data['async'], $data['defer']);
 
 		if ($data['dependencies']) {
 			$url = $this->app->css->getLibraryDependenciesUrl($name);
 
-			$this->app->plugins->run('libraryLoadJavascript2', $name, $url, $data);
+			$this->app->plugins->run('libraryLoadJavascriptDependenciesUrl', $name, $url, $data, $this);
 
 			$this->app->css->load($url, $data['dependencies']['location'], $data['dependencies']['priority'], $this->version);
 		}
 
-		$this->app->plugins->run('libraryLoadJavascript3', $name);
+		$this->app->plugins->run('libraryLoadJavascript', $name, $this);
 
 		return $this;
 	}
@@ -151,7 +151,7 @@ class Library
 			$this->app->css->unload($url);
 		}
 
-		$this->app->plugins->run('libraryUnloadJavascript', $name);
+		$this->app->plugins->run('libraryUnloadJavascript', $name, $this);
 
 		return $this;
 	}

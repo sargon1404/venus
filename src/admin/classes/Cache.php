@@ -32,17 +32,6 @@ class Cache extends \Venus\Cache
 	}
 
 	/**
-	* @see \Venus\Cache\Javascript\merge()
-	*/
-	/*protected function mergeJavascript(string $file, string $device, string $language, array $libraries, array $library_dependencies, array $local_urls)
-	{
-		$javascript = new \venus\admin\cache\Javascript($this->app);
-		$javascript->merge($file, $device, $language, $libraries, $library_dependencies, $local_urls);
-	}*/
-
-
-
-	/**
 	* Builds the css cache
 	* @return $this
 	*/
@@ -50,6 +39,8 @@ class Cache extends \Venus\Cache
 	{
 		$this->buildCssFrontend();
 		$this->buildCssAdmin();
+
+		$this->app->plugins->run('adminCacheBuildCss', $this);
 
 		return $this;
 	}
@@ -72,6 +63,8 @@ class Cache extends \Venus\Cache
 
 		$this->update('css_version', time(), false, 'frontend');
 
+		$this->app->plugins->run('adminCacheBuildCssFrontend', $css, $this);
+
 		return $this;
 	}
 
@@ -89,6 +82,8 @@ class Cache extends \Venus\Cache
 		//clear the list of merged files
 		$this->update('css_merged', '', false, 'admin');
 
+		$this->app->plugins->run('adminCacheBuildCssAdmin', $css, $this);
+
 		return $this;
 	}
 
@@ -100,6 +95,8 @@ class Cache extends \Venus\Cache
 	{
 		$this->buildJavascriptFrontend();
 		$this->buildJavascriptAdmin();
+
+		$this->app->plugins->run('adminCacheBuildJavascript', $this);
 	}
 
 	/**
@@ -119,6 +116,8 @@ class Cache extends \Venus\Cache
 
 		$this->update('javascript_version', time(), false, 'frontend');
 
+		$this->app->plugins->run('adminCacheBuildJavascriptFrontend', $javascript, $this);
+
 		return $this;
 	}
 
@@ -135,6 +134,8 @@ class Cache extends \Venus\Cache
 		//clear the list of merged files
 		$this->update('javascript_merged', '', false, 'admin');
 
+		$this->app->plugins->run('adminCacheBuildJavascriptAdmin', $javascript, $this);
+
 		return $this;
 	}
 
@@ -149,6 +150,8 @@ class Cache extends \Venus\Cache
 
 		$javascript = new \Venus\Admin\Assets\Javascript($this->app);
 		$javascript->cacheTheme($theme);
+
+		$this->app->plugins->run('adminCacheBuildForTheme', $theme, $css, $javascript, $this);
 	}
 
 	/**
@@ -188,6 +191,8 @@ class Cache extends \Venus\Cache
 
 		$this->update('javascript_merged', '', false, 'frontend');
 		$this->update('javascript_merged', '', false, 'admin');
+
+		$this->app->plugins->run('adminCacheBuildLibraries', $libraries, $this);
 
 		return $this;
 	}
@@ -251,6 +256,8 @@ class Cache extends \Venus\Cache
 		$css = new \Venus\Assets\Css($this->app);
 		$css->cacheLibrary($name, $css_files, $js_files);
 
+		$this->app->plugins->run('adminCacheBuildCssLibrary', $name, $data, $css, $this);
+
 		return $this;
 	}
 
@@ -273,6 +280,8 @@ class Cache extends \Venus\Cache
 		$javascript = new \Venus\Assets\Javascript($this->app);
 		$javascript->cacheLibrary($name, $js_files, $css_files);
 
+		$this->app->plugins->run('adminCacheBuildJavascriptLibrary', $name, $data, $javascript, $this);
+
 		return $this;
 	}
 
@@ -292,6 +301,8 @@ class Cache extends \Venus\Cache
 		}
 
 		$this->cacheThemeDefault();
+
+		$this->app->plugins->run('adminCacheBuildThemes', $themes, $this);
 
 		return $this;
 	}
@@ -322,6 +333,8 @@ class Cache extends \Venus\Cache
 
 		$this->cacheLanguageDefault();
 
+		$this->app->plugins->run('adminCacheBuildLanguages', $languages, $this);
+
 		return $this;
 	}
 
@@ -333,14 +346,6 @@ class Cache extends \Venus\Cache
 		$language = new Language;
 		$this->update('language_default', $language->getRow($this->app->config->language_default), true);
 	}
-
-
-
-
-
-
-
-
 
 	/**
 	* Builds the usergroups data cache

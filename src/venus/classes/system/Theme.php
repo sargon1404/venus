@@ -41,6 +41,7 @@ class Theme extends \Venus\Theme
 	* @var string $css_location The location where the merged css stylesheets will be outputted in the document [head|footer]
 	*/
 	public $css_location = '';
+
 	/**
 	* @var int $css_priority The priority of the main css file or the merged file, if css_merge = true
 	*/
@@ -200,9 +201,9 @@ class Theme extends \Venus\Theme
 		$this->javascript_location = $this->params->javascript_location ?? $this->app->config->javascript_location;
 		$this->javascript_priority = $this->params->javascript_priority ?? $this->css_priority;
 
-$this->development = false;
-$this->javascript_merge = true;
-var_dump("remove development");
+		$this->development = false;
+		$this->javascript_merge = true;
+		var_dump("remove development");
 
 		//don't merge css/js files in development mode
 		if ($this->development) {
@@ -266,13 +267,13 @@ var_dump("remove development");
 		//$this->app->javascript->loadLibrary('jquery');
 
 		$this->app->javascript->load('//www.domain.com/script1.js', 'head');
-$this->app->javascript->load('http://www.domain.com/script3.js', 'head');
-$this->app->javascript->load('https://localhost/venus/admin/qqqq.js');
-$this->app->javascript->load('https://localhost/qqqq.js');
-$this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer');
+		$this->app->javascript->load('http://www.domain.com/script3.js', 'head');
+		$this->app->javascript->load('https://localhost/venus/admin/qqqq.js');
+		$this->app->javascript->load('https://localhost/qqqq.js');
+		$this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer');
 
 
-	//$this->app->javascript->load('https://localhost/venus/admin/qqqq_footer.js', 'footer');
+		//$this->app->javascript->load('https://localhost/venus/admin/qqqq_footer.js', 'footer');
 
 		$this->app->javascript->loadLibrary('jquery');
 		//$this->app->library->loadJavascript('jquery-ui-admin');
@@ -532,7 +533,7 @@ $this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer'
 	*/
 	public function outputWidgets(string $position)
 	{
-return;
+		return;
 		var_dump("output widgets");
 		die;
 		if (!$this->app->show_widgets ||  !$this->app->config->widgets_enable || defined('DISABLE_WIDGETS') || !$this->app->cache->widgets_count) {
@@ -691,7 +692,7 @@ return;
 		if ($this->javascript_merge && $location == $this->javascript_location) {
 			$splitter = new \Venus\Assets\Splitter($this->app->javascript->getUrls($location));
 
-			//$this->app->javascript->outputUrls($splitter->getExternalUrls());
+			$this->app->javascript->outputUrls($splitter->getExternalUrls());
 			$this->app->javascript->outputMergedUrls($splitter->getLocalUrls());
 		} else {
 			$this->app->javascript->output($location);
@@ -699,7 +700,6 @@ return;
 
 		die;
 	}
-
 
 	/*
 	public function outputJavascriptUrl()
@@ -726,9 +726,6 @@ return;
 		$this->app->javascript->outputUrl($url);
 	}
 	*/
-
-
-
 
 	/**
 	* Outputs extra code in the head, for desktop devices

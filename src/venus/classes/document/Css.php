@@ -7,6 +7,7 @@
 namespace Venus\Document;
 
 use Venus\App;
+use Venus\Assets\Asset;
 
 /**
 * The Document's Css Urls Class
@@ -15,7 +16,7 @@ use Venus\App;
 class Css extends \Mars\Document\Css
 {
 	use \Venus\Assets\CacheTrait;
-
+	use \Venus\Assets\MergeTrait;
 
 	/**
 	* Builds the css object
@@ -27,11 +28,21 @@ class Css extends \Mars\Document\Css
 		$this->extension = App::FILE_EXTENSIONS['css'];
 		$this->base_cache_url = $this->app->cache_url . App::CACHE_DIRS['css'];
 		$this->cache_url = $this->base_cache_url;
+		$this->merge_key = 'javascript_merged';
 
 		$this->version = $this->app->cache->css_version;
 		if ($this->app->development) {
 			$this->version = time();
 		}
+	}
+
+	/**
+	* Returns the javascript assets class
+	* @return Asset The assets class
+	*/
+	protected function getAssetsObj() : Asset
+	{
+		return new \Venus\Assets\Css($this->app);
 	}
 
 	/**

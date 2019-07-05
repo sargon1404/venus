@@ -7,6 +7,7 @@
 namespace Venus\Admin\Document;
 
 use Venus\Admin\App;
+use Venus\Assets\Asset;
 
 /**
 * The Document's Css Urls Class
@@ -22,6 +23,15 @@ class Css extends \Venus\Document\Css
 		parent::__construct($app);
 
 		$this->cache_url = $this->app->admin_cache_url . App::CACHE_DIRS['css'];
+	}
+
+	/**
+	* Returns the javascript assets class
+	* @return Asset The assets class
+	*/
+	protected function getAssetsObj() : Asset
+	{
+		return new \Venus\Admin\Assets\Css($this->app);
 	}
 
 	/**
