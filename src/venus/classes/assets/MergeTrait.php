@@ -56,7 +56,7 @@ trait MergeTrait
 				$cached = true;
 			}
 
-			$files[] = ['url' => $url, 'file' => $this->app->file->getFromUrl($url), 'cached' => $in_cache];
+			$files[] = ['url' => $url, 'file' => $this->app->file->getFromUrl($url), 'cached' => $cached];
 		}
 
 		$asset = $this->getAssetsObj();

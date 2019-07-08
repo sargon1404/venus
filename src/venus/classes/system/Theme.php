@@ -264,24 +264,7 @@ class Theme extends \Venus\Theme
 	*/
 	protected function prepareJquery()
 	{
-		//$this->app->javascript->loadLibrary('jquery');
-
-		$this->app->javascript->load('//www.domain.com/script1.js', 'head');
-		$this->app->javascript->load('http://www.domain.com/script3.js', 'head');
-		$this->app->javascript->load('https://localhost/venus/admin/qqqq.js');
-		$this->app->javascript->load('https://localhost/qqqq.js');
-		$this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer');
-
-
-		//$this->app->javascript->load('https://localhost/venus/admin/qqqq_footer.js', 'footer');
-
 		$this->app->javascript->loadLibrary('jquery');
-		//$this->app->library->loadJavascript('jquery-ui-admin');
-		$this->app->javascript->loadLibrary('jquery-ui');
-		$this->app->javascript->unloadLibrary('jquery-ui');
-
-		$this->app->css->loadLibrary('bootstrap');
-		//$this->app->css->unloadLibrary('bootstrap');
 	}
 
 	/**
@@ -666,7 +649,7 @@ class Theme extends \Venus\Theme
 		$this->outputMeta();
 		$this->outputRss();
 
-		//$this->outputCssUrls('head');
+		$this->outputCssUrls('head');
 		$this->outputJavascriptUrls('head');
 
 		if ($this->app->device->isTablet()) {
@@ -683,12 +666,27 @@ class Theme extends \Venus\Theme
 	}
 
 	/**
-	* Outputs the javascript urls loaded in a position
+	* Outputs the javascript urls loaded in a certain location
+	* @param string $location The location
+	*/
+	public function outputCssUrls(string $location)
+	{
+		if ($this->css_merge && $location == $this->css_location) {
+			$splitter = new \Venus\Assets\Splitter($this->app->css->getUrls($location));
+
+			$this->app->css->outputUrls($splitter->getExternalUrls());
+			$this->app->css->outputMergedUrls($splitter->getLocalUrls());
+		} else {
+			$this->app->css->output($location);
+		}
+	}
+
+	/**
+	* Outputs the javascript urls loaded in a certain location
 	* @param string $location The location
 	*/
 	public function outputJavascriptUrls(string $location)
 	{
-		//App::var_dump($this->app->javascript);
 		if ($this->javascript_merge && $location == $this->javascript_location) {
 			$splitter = new \Venus\Assets\Splitter($this->app->javascript->getUrls($location));
 
@@ -697,35 +695,7 @@ class Theme extends \Venus\Theme
 		} else {
 			$this->app->javascript->output($location);
 		}
-
-		die;
 	}
-
-	/*
-	public function outputJavascriptUrl()
-	{
-		//rebuild the javascript cache in development mode
-		if ($this->development) {
-			$this->buildJavascriptCache();
-		}
-		var_dump($this->javascript_merge);
-		die;
-		$file = '';
-		if ($this->javascript_merge) {
-			$libraries = array_keys($this->app->library->getJavascript());
-			$library_dependencies = array_keys($this->app->library->getJavascriptDependencies());
-			$local_urls = array_keys(App::arrayMerge($this->getJavascriptLocalUrls()));
-
-			$file = $this->app->cache->getJavascriptMergedFile($this->app->device->type, $this->app->lang->name, $libraries, $library_dependencies, $local_urls);
-		} else {
-			$file = $this->app->cache->getJavascriptFile($this->app->device->type, $this->app->lang->name);
-		}
-
-		$url = $this->app->uri->build($this->cache_url . 'javascript/' . $file, ['dateline' => $this->javascript_dateline]);
-
-		$this->app->javascript->outputUrl($url);
-	}
-	*/
 
 	/**
 	* Outputs extra code in the head, for desktop devices

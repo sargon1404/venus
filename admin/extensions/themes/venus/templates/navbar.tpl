@@ -4,20 +4,20 @@
 		<img src="{{ $navbar.icon }}" alt="navbar-icon" />
 		{% endif %}
 	</div>
-	
+
 	<div id="navbar-nav">
 		<div id="navbar-title">
-			<h1>{{ $navbar.output_title() }}</h1>
+			<h1>{{ $navbar.outputTitle() }}</h1>
 		</div>
 		<div id="navbar-links">
-			{{ $navbar.output_links() }}
+			{{ $navbar.outputLinks() }}
 		</div>
 	</div>
-	
+
 	<div id="navbar-buttons">
-		{{ $navbar.output_outer_form() }}
-		{{ $navbar.output_buttons() }}
+		{{ $navbar.outputOuterForm() }}
+		{{ $navbar.outputButtons() }}
 	</div>
-	
+
 	<div class="clear"></div>
 </div>

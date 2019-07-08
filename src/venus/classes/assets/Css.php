@@ -33,12 +33,17 @@ class Css extends Asset
 	protected $vars = [];
 
 	/**
+	* @var string $merge_separator The separator between merged files
+	*/
+	protected $merge_separator = "\n";
+
+	/**
 	* Builds the css cache object
 	*/
 	public function __construct(App $app)
 	{
 		$this->app = $app;
-		$this->parser = new Parsers\Css;
+		$this->parser = new Parsers\Css($this->app);
 
 		$this->extension = App::FILE_EXTENSIONS['css'];
 		$this->base_cache_dir = $this->app->cache_dir . App::CACHE_DIRS['css'];
@@ -70,11 +75,11 @@ class Css extends Asset
 	* @see \Venus\Assets\Asset::parse()
 	* {@inheritDoc}
 	*/
-	public function parse(string $content) : string
+	public function parse(string $content, array $params = []) : string
 	{
-		$content = $this->parser->parse($content);
+		$content = $this->parser->parse($content, $params);
 
-		return $this->app->plugins->filter('assetCssOarse', $content);
+		return $this->app->plugins->filter('assetCssParse', $content, $params, $this);
 	}
 
 	/**
@@ -123,14 +128,16 @@ class Css extends Asset
 		$dir = $theme->dir . App::EXTENSIONS_DIRS['css'];
 		$main_code = $this->readFromDir($dir);
 
-		$devices = $this->app->device->getDevices();
-
 		$this->vars = [];
+
+		$devices = $this->app->device->getDevices();
 		foreach ($devices as $device) {
 			$code = $main_code;
 			if ($device != 'desktop') {
 				$code.= $this->readFromDeviceDir($dir, $device);
 			}
+
+			$code.= $this->getExtra($theme, $device);
 
 			//read the parent's theme vars
 			$parent_vars = [];
@@ -169,5 +176,18 @@ class Css extends Asset
 		$inline_code = $this->getInline($theme->dir . App::EXTENSIONS_DIRS['css'], $minify);
 
 		$theme->updateInlineCss($inline_code);
+	}
+
+	/**
+	* Returns extra code, if any
+	* @param Theme The theme
+	* @param string $device The device
+	* @return string
+	*/
+	protected function getExtra(Theme $theme, string $device) : string
+	{
+		$code = '';
+
+		return $this->app->plugins->filter('assetsCssGetExtra', $code, $this);
 	}
 }

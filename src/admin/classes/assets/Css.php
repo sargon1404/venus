@@ -53,4 +53,14 @@ class Css extends \Venus\Assets\Css
 
 		$this->app->cache->update('css_inline', $inline_code, true, 'admin');
 	}
+
+	/**
+	* @see \Venus\Assets\Css::getExtra()
+	*/
+	protected function getExtra(Theme $theme, string $device) : string
+	{
+		$code = '';
+
+		return $this->app->plugins->filter('adminAssetsCssGetExtra', $code, $this);
+	}
 }

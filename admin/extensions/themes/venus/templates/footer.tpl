@@ -7,20 +7,20 @@
 			<li><a href="{{ $venus.site_index }}">{{ footer_homepage }}</a></li>
 		</ul>
 	</div>
-	
+
 	<div class="footer-stats"></div>
 	<div class="footer-copyright">
 	{{ powered_by }} <a href="https://www.venus-cms.org">Venus CMS</a> {{ $venus.version }}
 	</div>
-	
-	{{ $this.output_footer_extra() }}
+
+	{{ $this.outputFooterExtra() }}
 </footer>
 
 <script type="text/javascript">
 venus.tooltips.enable();
 </script>
 
-{{ $this.output_dialogs() }}
+{{ $this.outputDialogs() }}
 
 </body>
 </html>

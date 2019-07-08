@@ -75,8 +75,6 @@ class Javascript extends \Venus\Assets\Javascript
 	*/
 	public function cacheTheme(Theme $theme)
 	{
-		$devices = $this->app->device->getDevices();
-
 		$javascript_dir = $theme->dir . App::EXTENSIONS_DIRS['javascript'];
 		$has_javascript_dir = is_dir($javascript_dir);
 		$main_code = '';
@@ -87,6 +85,7 @@ class Javascript extends \Venus\Assets\Javascript
 		}
 
 		//generate the theme's javascript code for each device
+		$devices = $this->app->device->getDevices();
 		foreach ($devices as $device) {
 			$code = $this->getTheme($theme, $device, false);
 			$code.= $main_code;
@@ -97,6 +96,8 @@ class Javascript extends \Venus\Assets\Javascript
 					$code.= $this->readFromDeviceDir($javascript_dir, $device);
 				}
 			}
+
+			$code.= $this->getExtra($device);
 
 			$cache_file = $this->getThemeFile($theme->name, $device);
 			$this->store($cache_file, $code);
@@ -125,15 +126,12 @@ class Javascript extends \Venus\Assets\Javascript
 	}
 
 	/**
-	* @see \Venus\Assets\Javascript::getMainMerge()
-	* {@inheritDoc}
+	* @see \Venus\Assets\Javascript::getExtra()
 	*/
-	protected function getMainMerge(string $device, string $language) : string
+	protected function getExtra(string $device) : string
 	{
-		//merge the main/frontend javascript and the admin javascript
-		$code = file_get_contents($this->base_cache_dir . $this->app->cache->getJavascriptFile($device, $language)) . "\n\n";
-		$code.= file_get_contents($this->cache_dir . $this->app->cache->getJavascriptFile($device, $language)) . "\n\n";
+		$code = '';
 
-		return $code;
+		return $this->app->plugins->filter('adminAssetsJavascriptGetExtra', $code, $device, $this);
 	}
 }

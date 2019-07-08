@@ -206,18 +206,21 @@ abstract class Asset
 		}
 
 		foreach ($files as $file_data) {
-			$content = file_get_contents($file_data['file']) . "\n";
+			$content = file_get_contents($file_data['file']) . $this->merge_separator;
 
 			$file_minify = $minify;
 			$file_parse = $parse;
-			
+			$file_parse_params = [];
+
 			//don't minify & parse the files from cache; these files should already be minified & parsed
 			if ($file_data['cached']) {
 				$file_minify = false;
 				$file_parse = false;
+			} else {
+				$file_parse_params = ['url' => $file_data['url']];
 			}
 
-			$this->storeFile($this->cache_dir, $file, $content, true, $file_minify, $file_parse);
+			$this->storeFile($this->cache_dir, $file, $content, true, $file_minify, $file_parse, $file_parse_params);
 		}
 	}
 
@@ -229,12 +232,13 @@ abstract class Asset
 	* @param bool $append If true, will append the content
 	* @param bool $minify If true, will minify the content. If null, $this->minify is used
 	* @param bool $parse If true, will parse the content
+	* @param array $parse_params Parse params, if any
 	* @return bool
 	*/
-	protected function storeFile(string $dir, string $file, string $content, bool $append = false, ?bool $minify = null, bool $parse = true) : bool
+	protected function storeFile(string $dir, string $file, string $content, bool $append = false, ?bool $minify = null, bool $parse = true, array $parse_params = []) : bool
 	{
 		if ($parse) {
-			$content = $this->parse($content);
+			$content = $this->parse($content, $parse_params);
 		}
 
 		if ($minify === null) {
@@ -269,9 +273,10 @@ abstract class Asset
 	/**
 	* Parses the content
 	* @param string $content The content to parse
+	* @param array $params Parse params, if any
 	* @return string The parsed content
 	*/
-	public function parse(string $content) : string
+	public function parse(string $content, array $params = []) : string
 	{
 		return $content;
 	}

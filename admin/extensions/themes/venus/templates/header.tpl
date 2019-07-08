@@ -5,17 +5,17 @@
 </head>
 
 <body>
-{{ $this.output_body_extra() }}
+{{ $this.outputBodyExtra() }}
 
 <header>
 	<div id="topbar">
 		<nav>
-			{{ $this.output_menu() }}
+			{{ $this.outputMenu() }}
 		</nav>
 		<div id="topbar-right">
-			{{ $this.output_config_link() }}
-			{{ $this.output_help_link() }}
-			{{ $this.output_logout_link() }}
+			{{ $this.outputConfigLink() }}
+			{{ $this.outputHelpLink() }}
+			{{ $this.outputLogoutLink() }}
 		</div>
 	</div>
 </header>
@@ -26,5 +26,5 @@
 
 <div id="container">
 	<div id="alerts">
-		{{ $this.output_alerts() }}
+		{{ $this.outputAlerts() }}
 	</div>

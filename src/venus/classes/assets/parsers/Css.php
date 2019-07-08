@@ -15,6 +15,8 @@ use Venus\Theme;
 */
 class Css
 {
+	use \Venus\AppTrait;
+
 	/**
 	* @var array $vars The parsed vars
 	*/
@@ -65,24 +67,28 @@ class Css
 	*/
 	public function setTheme(Theme $theme)
 	{
-		$this->current_url = $this->theme->dir_url_static . App::EXTENSIONS_DIRS['css'];
-		$this->up_url = $this->theme->dir_url_static;
-		$this->images_url = $this->theme->images_url;
-		$this->root_images_url = $this->theme->root_images_url;
+		$this->current_url = $theme->dir_url_static . App::EXTENSIONS_DIRS['css'];
+		$this->up_url = $theme->dir_url_static;
+		$this->images_url = $theme->images_url;
+		$this->root_images_url = $theme->root_images_url;
 
 		return $this;
 	}
 
 	/**
-	* Sets the current and up urls
-	* @param string $current_url The current url
-	* @param string $up_url The up url
+	* Sets the parse params
+	* @param array $params The params
 	* @return $this
 	*/
-	public function setUrls(string $current_url, string $up_url)
+	public function setParams(array $params)
 	{
-		$this->current_url = $current_url;
-		$this->up_url = $up_url;
+		if (isset($params['url'])) {
+			$url = $params['url'];
+			$parts = explode('/', $url);
+
+			$this->current_url = implode('/', array_slice($parts, 0, count($parts) - 1)) . '/';
+			$this->up_url = implode('/', array_slice($parts, 0, count($parts) - 2)) . '/';
+		}
 
 		return $this;
 	}
@@ -90,14 +96,19 @@ class Css
 	/**
 	* Parses the content
 	* @param string $content The content to parse
+	* @param array $params Parse params, if any
 	* @return string The parsed content
 	*/
-	public function parse(string $content) : string
+	public function parse(string $content, array $params = []) : string
 	{
+		if ($params) {
+			$this->setParams($params);
+		}
+
 		$content = $this->parsePaths($content);
 		$content = $this->parseVars($content);
 
-		return $content;
+		return $this->app->plugins->filter('assetsParsersCssParse', $content, $params, $this);
 	}
 
 	/**

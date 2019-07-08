@@ -86,4 +86,18 @@ class Css extends \Mars\Document\Css
 
 		return $this;
 	}
+
+	/**
+	* Merges and outputs the merged urls
+	* @param array $urls The urls to merge. Must be local
+	* @return $this
+	*/
+	public function outputMergedUrls(array $urls)
+	{
+		$url = $this->cache_url . $this->getMergedFile($urls);
+
+		$this->outputUrl($url);
+
+		return $this;
+	}
 }

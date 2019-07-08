@@ -61,22 +61,8 @@ class Theme extends \Venus\Admin\Theme
 	*/
 	protected function prepareJquery()
 	{
-		$this->app->javascript->load('//www.domain.com/script1.js', 'head');
-		$this->app->javascript->load('http://www.domain.com/script3.js', 'head');
-		$this->app->javascript->load('https://localhost/venus/admin/qqqq.js');
-		//$this->app->javascript->load('https://localhost/venus/admin/aaaa/qqqq.js', 'head');
-		$this->app->javascript->load('http://www.domain.com/script3_footer.js', 'footer');
-
-
-		//$this->app->javascript->load('https://localhost/venus/admin/qqqq_footer.js', 'footer');
-
 		$this->app->javascript->loadLibrary('jquery');
-		//$this->app->library->loadJavascript('jquery-ui-admin');
-		$this->app->javascript->loadLibrary('jquery-ui');
-		$this->app->javascript->unloadLibrary('jquery-ui');
-
-		$this->app->css->loadLibrary('bootstrap');
-		//$this->app->css->unloadLibrary('bootstrap');
+		//$this->app->javascript->loadLibrary('jquery-ui-admin');
 	}
 
 	/**
@@ -165,9 +151,9 @@ class Theme extends \Venus\Admin\Theme
 		$this->outputEncoding();
 		$this->outputFavicon($this->app->admin_url_rel . 'favicon.png');
 
-		//$this->outputCssUrls('head');
+		$this->outputCssUrls('head');
 		$this->outputJavascriptUrls('head');
-		die("xcvcx");
+
 		$this->app->plugins->run('adminSystemThemeOutputHead', $this);
 
 		$this->outputHeadExtra();

@@ -57,6 +57,11 @@ class Javascript extends Asset
 	protected $libraries_dir = 'javascript';
 
 	/**
+	* @var string $merge_separator The separator between merged files
+	*/
+	protected $merge_separator = ";\n";
+
+	/**
 	* Builds the javascript cache object
 	*/
 	public function __construct(App $app)
@@ -94,9 +99,9 @@ class Javascript extends Asset
 	* @see \Venus\Assets\Asset::parse()
 	* {@inheritDoc}
 	*/
-	public function parse(string $content) : string
+	public function parse(string $content, array $params = []) : string
 	{
-		return $this->app->plugins->filter('assetJavascriptParse', $content);
+		return $this->app->plugins->filter('assetJavascriptParse', $content, $params, $this);
 	}
 
 	/**
@@ -134,7 +139,8 @@ class Javascript extends Asset
 		$strings = $this->getStrings();
 
 		//get javascript code for each device
-		foreach ($this->app->device->devices as $device) {
+		$devices = $this->app->device->getDevices();
+		foreach ($devices as $device) {
 			//build the main code
 			$code = $main_code;
 			if ($device != 'desktop') {
@@ -151,6 +157,7 @@ class Javascript extends Asset
 			$code.= $config_code;
 			$code.= $properties_code;
 			$code.= $path_code;
+			$code.= $this->getExtra($device);
 
 			//cache the js code, without any strings. We'll need it in the admin
 			$cache_file = $this->getMainFile($device);
@@ -199,7 +206,6 @@ class Javascript extends Asset
 
 		//generate the theme's javascript code for each device
 		$devices = $this->app->device->getDevices();
-
 		foreach ($devices as $device) {
 			$code = $this->getTheme($theme, $device);
 			$code.= $main_code;
@@ -374,8 +380,18 @@ class Javascript extends Asset
 			$code.= "venus.lang.strings['{$name}'] = '{$string}';\n";
 		}
 
-		$code.= "\n";
+		return $code . "\n";
+	}
 
-		return $code;
+	/**
+	* Returns extra code, if any
+	* @param string $device The device to get the extra params for
+	* @return string
+	*/
+	protected function getExtra(string $device) : string
+	{
+		$code = '';
+
+		return $this->app->plugins->filter('assetsJavascriptGetExtra', $code, $device, $this);
 	}
 }
