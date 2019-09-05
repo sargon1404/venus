@@ -284,10 +284,7 @@ class App extends \Mars\App
 
 		$this->boot->minimum();
 
-		//redirect to the installer, if venus hasn't yet been installed
-		if (!defined('VENUS_INSTALLED')) {
-			$this->redirect($this->site_url . 'install/');
-		}
+		$this->checkInstalled();
 
 		$this->boot->db();
 		$this->boot->config();
@@ -343,6 +340,19 @@ class App extends \Mars\App
 	protected function loadBooter()
 	{
 		$this->boot = new AppBooter($this);
+	}
+
+	/**
+	* Checks if venus was installed
+	*/
+	protected function checkInstalled()
+	{
+		//redirect to the installer, if venus hasn't yet been installed
+		if (defined('VENUS_INSTALLED')) {
+			return;
+		}
+
+		$this->redirect($this->site_url . 'install/');
 	}
 
 	/******************EXTRA METHODS*******************************************/
@@ -413,10 +423,10 @@ class App extends \Mars\App
 	* @see \Mars\App::fatalError()
 	* {@inheritDoc}
 	*/
-	public function fatalError(string $error, bool $escape_html = true)
+	public function fatalError(string $text, bool $escape_html = true)
 	{
 		$screen = $this->getScreenObj();
-		$screen->fatalError($error, $escape_html);
+		$screen->fatalError($text, $escape_html);
 	}
 
 	/**

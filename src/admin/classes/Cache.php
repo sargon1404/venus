@@ -166,6 +166,8 @@ class Cache extends \Venus\Cache
 
 		$this->app->file->listDir($this->app->libraries_dir . 'css', $css_dirs, $files);
 		foreach ($css_dirs as $name) {
+			$this->app->output->message("Building css library: {$name}");
+
 			$data = $this->readLibraryData('css', $name);
 			$this->buildCssLibrary($name, $data);
 
@@ -175,12 +177,16 @@ class Cache extends \Venus\Cache
 
 		$this->app->file->listDir($this->app->libraries_dir . 'javascript', $js_dirs, $files);
 		foreach ($js_dirs as $name) {
+			$this->app->output->message("Building javascript library: {$name}");
+
 			$data = $this->readLibraryData('javascript', $name);
 			$this->buildJavascriptLibrary($name, $data);
 
 			//does this js library have css files?
 			$libraries['javascript'][$name] = $this->getLibraryData($data);
 		}
+
+		$this->app->output->message("Updating libraries cache data");
 
 		$this->update('libraries', $libraries, true);
 		$this->update('libraries_version', time(), false, 'frontend');

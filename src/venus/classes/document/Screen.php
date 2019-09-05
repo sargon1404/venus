@@ -36,20 +36,20 @@ class Screen extends \Mars\Document\Screen
 	* @see \Mars\Document\Screen::fatalError()
 	* {@inheritDoc}
 	*/
-	public function fatalError(string $error, bool $escape_html = true)
+	public function fatalError(string $text, bool $escape_html = true)
 	{
 		if ($this->app->is_cli) {
-			parent::fatalError($error, $escape_html);
+			parent::fatalError($text, $escape_html);
 		}
 
 		if ($escape_html) {
-			$error = App::e($error);
+			$text = App::e($text);
 		}
 
 		$template = $this->getTemplateFilename('fatal-error');
 
 		$content = file_get_contents($template);
-		$content = str_replace('{{ $error }}', nl2br($error), $content);
+		$content = str_replace('{{ $text }}', nl2br($text), $content);
 
 		echo $content;
 		die;
@@ -59,44 +59,44 @@ class Screen extends \Mars\Document\Screen
 	* @see \Mars\Document\Screen::error()
 	* {@inheritDoc}
 	*/
-	public function error(string $error, string $title = '', bool $escape_html = true)
+	public function error(string $text, string $title = '', bool $escape_html = true)
 	{
 		if ($this->app->is_cli) {
-			parent::error($error);
+			parent::error($text);
 		}
 		if ($this->app->response->isAjax()) {
-			$this->sendError($error, $escape_html);
+			$this->sendError($text, $escape_html);
 		}
 
 		if (!isset($this->app->theme)) {
-			$this->fatalError($error, $escape_html);
+			$this->fatalError($text, $escape_html);
 		}
 
 		if (!$title) {
 			$title = App::__('error');
 		}
 
-		$this->output($error, $title, $escape_html, 'error', 'error');
+		$this->output($text, $title, $escape_html, 'error', 'error');
 	}
 
 	/**
 	* @see \Mars\Document\Screen::message()
 	* {@inheritDoc}
 	*/
-	public function message(string $message, string $title = '', bool $escape_html = true)
+	public function message(string $text, string $title = '', bool $escape_html = true)
 	{
 		if ($this->app->is_cli) {
-			parent::message($message);
+			parent::message($text);
 		}
 		if ($this->app->response->isAjax()) {
-			$this->sendError($message, $escape_html);
+			$this->sendError($text, $escape_html);
 		}
 
 		if (!$title) {
 			$title = App::__('message');
 		}
 
-		$this->output($message, $title, $escape_html, 'message', 'message');
+		$this->output($text, $title, $escape_html, 'message', 'message');
 	}
 
 	/**
@@ -128,7 +128,7 @@ class Screen extends \Mars\Document\Screen
 	{
 		$this->app->lang->loadPackage('messages');
 		$title = App::__('permission_denied');
-		$error = App::__('permission_denied_text');
+		$text = App::__('permission_denied_text');
 
 		if ($this->app->is_cli) {
 			parent::permissionDenied();
@@ -139,7 +139,7 @@ class Screen extends \Mars\Document\Screen
 
 		header('HTTP/1.0 401 Unauthorized');
 
-		$this->output($error, $title, false, 'error', 'permission_denied');
+		$this->output($text, $title, false, 'error', 'permission_denied');
 	}
 
 	/**
@@ -150,7 +150,7 @@ class Screen extends \Mars\Document\Screen
 		$template = $this->getTemplateFilename('offline');
 
 		$content = file_get_contents($template);
-		$content = str_replace('{{ $message }}', $this->app->config->offline_reason, $content);
+		$content = str_replace('{{ $text }}', $this->app->config->offline_reason, $content);
 
 		echo $content;
 		die;
@@ -166,24 +166,24 @@ class Screen extends \Mars\Document\Screen
 
 	/**
 	* Sends an error using ajax
-	* @param string $error The error message
+	* @param string $text The error message
 	* @param bool $escape_html If true will escape the error message
 	*/
-	protected function sendError(string $error, bool $escape_html)
+	protected function sendError(string $text, bool $escape_html)
 	{
-		$this->app->errors->add($error, '', $escape_html);
+		$this->app->errors->add($text, '', $escape_html);
 
 		$this->send();
 	}
 
 	/**
 	* Sends a message using ajax
-	* @param string $message The message
+	* @param string $text The message
 	* @param bool $escape_html If true will escape the message
 	*/
-	protected function sendMessage(string $message, bool $escape_html)
+	protected function sendMessage(string $text, bool $escape_html)
 	{
-		$this->app->messages->add($error, '', $escape_html);
+		$this->app->messages->add($text, '', $escape_html);
 
 		$this->send();
 	}

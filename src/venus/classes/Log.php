@@ -70,7 +70,7 @@ class Log extends \Mars\Log
 			$text = implode(',', $log_array);
 		}
 
-		$this->logAction($action, $text);
+		$this->action($action, $text);
 
 		return $this;
 	}
