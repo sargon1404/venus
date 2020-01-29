@@ -40,7 +40,7 @@ $method = $app->plugins->filter('cliMethod', $method, $action);
 if ($command == 'help') {
 	$method = 'index';
 }
-//always call the help method, if the --help option is passed
+//always call the help method, if the --help option is passed or no action is specified
 if (!$method || isset($options['help']) || isset($options['h'])) {
 	$method = 'help';
 }
