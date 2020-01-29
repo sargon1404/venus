@@ -19,19 +19,19 @@ class Javascript extends \Venus\Assets\Javascript
 	/**
 	* @var array $config_array Array listing the config options to load
 	*/
-	protected $config_array = ['tags_separator' => '', 'response_param' => ''];
+	protected array $config_array = ['tags_separator' => '', 'response_param' => ''];
 
 	/**
 	* @var array $paths_array Array listing the paths to output
 	*/
-	protected $paths_array = [
+	protected array $paths_array = [
 		'admin_url', 'admin_url_rel', 'admin_utils_url'
 	];
 
 	/**
 	* @var string $scope The scope from where the config/properties are read
 	*/
-	protected $scope = 'admin';
+	protected string $scope = 'admin';
 
 	/**
 	* Builds the javascript cache object

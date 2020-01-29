@@ -15,12 +15,12 @@ trait ModeratorTrait
 	/**
 	* @var bool $is_moderator True if the user is a moderator of this item
 	*/
-	public $is_moderator = false;
+	public bool $is_moderator = false;
 
 	/**
 	* @var array $moderator_permissions The moderator permissions of the user, if he's a moderator
 	*/
-	public $moderator_permissions = ['publish' => 0, 'edit' => 0, 'delete' => 0];
+	public array $moderator_permissions = ['publish' => 0, 'edit' => 0, 'delete' => 0];
 
 	/**
 	* Marks the user as a moderator of the document

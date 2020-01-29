@@ -15,7 +15,7 @@ class Breadcrumbs
 	/**
 	* @var array $breadcrumbs Array with all the generated breadcrumbs
 	*/
-	public $breadcrumbs = [];
+	public array $breadcrumbs = [];
 
 	/**
 	* Adds a breadcrumb to the breadcrumbs list

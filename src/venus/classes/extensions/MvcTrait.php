@@ -20,32 +20,32 @@ trait MvcTrait
 	/**
 	* @var object $controller The currently loaded controller of this extension
 	*/
-	public $controller = null;
+	public Controller $controller;
 
 	/**
 	* @var string $controller_name The name of the currently loaded controller
 	*/
-	public $controller_name = '';
+	public string $controller_name = '';
 
 	/**
 	* @var string $controller_class The class of the currently loaded controller
 	*/
-	public $controller_class = '';
+	public string $controller_class = '';
 
 	/**
 	* @var string $controller_parent The name of the extension which loaded the controller. Will be non-empty only if the parent is not the current extension
 	*/
-	public $controller_parent = '';
+	public string $controller_parent = '';
 
 	/**
 	* @var string $controller_action The action to be returned when calling get_action. If empty $this->app->request->get_action is returned
 	*/
-	public $controller_action = '';
+	public string $controller_action = '';
 
 	/**
 	* @var bool $is_mvc True an extension implements mvc
 	*/
-	protected $is_mvc = true;
+	protected bool $is_mvc = true;
 
 	/**
 	* Returns the action to be executed

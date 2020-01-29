@@ -19,32 +19,32 @@ class Plugin extends \Venus\Extensions\Extension
 	/**
 	* @var int $pid The plugin's id
 	*/
-	public $pid = 0;
+	public int $pid = 0;
 
 	/**
 	* @var array $hooks Array listing the defined hooks
 	*/
-	protected $hooks = [];
+	protected array $hooks = [];
 
 	/**
 	* @internal
 	*/
-	protected static $id_name = 'pid';
+	protected static string $id_name = 'pid';
 
 	/**
 	* @internal
 	*/
-	protected static $table = 'venus_plugins';
+	protected static string $table = 'venus_plugins';
 
 	/**
 	* @internal
 	*/
-	protected static $type = 'plugin';
+	protected static string $type = 'plugin';
 
 	/**
 	* @internal
 	*/
-	protected static $base_dir = 'plugins';
+	protected static string $base_dir = 'plugins';
 
 	/**
 	* Builds the plugin

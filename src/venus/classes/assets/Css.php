@@ -20,22 +20,22 @@ class Css extends Asset
 	/**
 	* @internal
 	*/
-	protected $libraries_dir = 'css';
+	protected string $libraries_dir = 'css';
 
 	/**
 	* @internal
 	*/
-	protected $parser = null;
+	protected $parser;
 
 	/**
 	* @internal
 	*/
-	protected $vars = [];
+	protected array $vars = [];
 
 	/**
 	* @var string $merge_separator The separator between merged files
 	*/
-	protected $merge_separator = "\n";
+	protected string $merge_separator = "\n";
 
 	/**
 	* Builds the css cache object

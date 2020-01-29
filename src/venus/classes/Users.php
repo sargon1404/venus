@@ -14,15 +14,15 @@ class Users extends Items
 	/**
 	* @internal
 	*/
-	protected static $id_name = 'uid';
+	protected static string $id_name = 'uid';
 
 	/**
 	* @internal
 	*/
-	protected static $table = 'venus_users';
+	protected static string $table = 'venus_users';
 
 	/**
 	* @internal
 	*/
-	protected static $class = '\Venus\User';
+	protected static string $class = '\Venus\User';
 }

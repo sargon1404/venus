@@ -15,12 +15,12 @@ class Config extends \Mars\Config
 	/**
 	* @var string $table The database table used to store the config settings
 	*/
-	protected $table = 'venus_config';
+	protected string $table = 'venus_config';
 
 	/**
 	* @var string $key The memcache key used to store the config settings data, if any
 	*/
-	protected $key = 'venus_config';
+	protected string $key = 'venus_config';
 
 	/**
 	* Builds the config object

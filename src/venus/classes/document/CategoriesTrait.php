@@ -17,7 +17,7 @@ trait CategoriesTrait
 	/**
 	* @var array $categories The categories to which the object belongs to
 	*/
-	public $categories = null;
+	public array $categories = [];
 
 	/**
 	* @internal

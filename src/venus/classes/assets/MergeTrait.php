@@ -40,7 +40,7 @@ trait MergeTrait
 		$hash = $this->getHash($urls);
 		$file = $hash . '.' . $this->extension;
 
-		$merged_files = $this->app->cache->get($this->merge_key, true);
+		$merged_files = $this->app->cache->get($this->merge_key, true, []);
 		if (isset($merged_files[$hash])) {
 			return $file;
 		}

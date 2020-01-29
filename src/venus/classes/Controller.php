@@ -15,42 +15,42 @@ abstract class Controller extends \Mars\Controller
 	/**
 	* @var string $name The name of the controller
 	*/
-	public $name = '';
+	public string $name = '';
 
 	/**
 	* @var string $class The class of the controller
 	*/
-	public $class = '';
+	public string $class = '';
 
 	/**
 	* @var string $dir The controller's document's dir. Alias for $this->document->dir
 	*/
-	public $dir = '';
+	public string $dir = '';
 
 	/**
 	* @var string $dir_url The controller's document dir's url. Alias for $this->document->dir_url
 	*/
-	public $dir_url = '';
+	public string $dir_url = '';
 
 	/**
 	* @var string $base_url The controller's document url. Alias for $this->document->url
 	*/
-	public $base_url = '';
+	public string $base_url = '';
 
 	/**
 	* @var Document $document The document the controller belongs to
 	*/
-	public $document = null;
+	public Document $document;
 
 	/**
 	* @var array $params The document's params
 	*/
-	public $params = [];
+	public array $params = [];
 
 	/**
 	* @var string $prefix Prefix to be used when calling plugins. Defaults to the document's name
 	*/
-	public $prefix = '';
+	public string $prefix = '';
 
 	/**
 	* Builds the controller
@@ -89,12 +89,12 @@ abstract class Controller extends \Mars\Controller
 	* @see \Mars\Controller::dispatch()
 	* {@inheritDoc}
 	*/
-	public function dispatch(string $method = '')
+	public function dispatch(string $method = '', array $params = [])
 	{
 		//set the app url to the controller's url
 		$this->app->url = $this->url;
 
-		parent::dispatch($method);
+		parent::dispatch($method, $params);
 	}
 
 	/**

@@ -21,7 +21,7 @@ class Javascript extends \Mars\Document\Javascript
 	/**
 	* @var array $dialogs The dialogs data
 	*/
-	protected $dialogs = [];
+	protected array $dialogs = [];
 
 	/**
 	* Builds the javascript object

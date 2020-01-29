@@ -1,8 +1,28 @@
+
+[PHP Simple HTML Dom v4.7.x]
+1: add "findMultiOrFalse()" + "findOneOrFalse()"
+2: fix -> usage of e.g. "textContent"
+3: fix -> usage of special js template tags in the dom
+4: merge improvements from "ivopetkov/html5-dom-document-php -> length attribute
+5: merge improvements from "ivopetkov/html5-dom-document-php -> classList support
+6: add "nextNonWhitespaceSibling()"
+7: fix -> usage of "outerhtml"
+8: add support for "symfony/css-selector": ~5.0
+9: fix -> "save()" -> will use html() insteadof of innerHtml() now
+
+
+[PHP Simple HTML Dom v4.6.x]
+1: add an XmlDomParser Class + simple tests
+2: add support for text/x-custom-template type
+3: fix -> check result of "html5FallbackForScriptTags()"
+
+
 [PHP Simple HTML Dom v4.5.x]
 1: fix -> return types
 2: add abstract class and interface for "Dom Elements" (SimpleHtmlDom*)
 3: and abstract class and interface for "Dom Nodes" (SimpleHtmlDomNode*)
 4: fix -> errors reported by phpstan (level 7)
+5: fix -> error with Google AMP (<html ⚡>) & Php DomDocument
 
 
 [PHP Simple HTML Dom v4.4.x]

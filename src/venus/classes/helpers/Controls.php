@@ -19,257 +19,257 @@ class Controls
 	/**
 	*	@var bool $build_filters_html If true, will built the html for the filter controls. If the filters are not needed, should be set to false
 	*/
-	public $build_filters_html = true;
+	public bool $build_filters_html = true;
 
 	/**
 	* @var bool $build_filters_ajax If true, will use ajax when filtering
 	*/
-	public $build_filters_ajax = true;
+	public bool $build_filters_ajax = true;
 
 	/**
 	*	@var bool $build_order_html If true, will built the html for the order controls. If the order controls are not needed, should be set to false
 	*/
-	public $build_order_html = true;
+	public bool $build_order_html = true;
 
 	/**
 	*	@var bool $build_items_per_page_html If true, will built the 'items per page' control
 	*/
-	public $build_items_per_page_html = true;
+	public bool $build_items_per_page_html = true;
 
 	/**
 	*	@var bool $build_pagination_html If true, will built the pagination
 	*/
-	public $build_pagination_html = true;
+	public bool $build_pagination_html = true;
 
 	/**
 	* @var string $filter_ignore_value If the filter value equals $filter_ignore_value, that filter will not be included in the sql. Used to indicate select top options/hints
 	*/
-	public $filter_ignore_value = -1;
+	public string $filter_ignore_value = '-1';
 
 	/**
 	* @var string $filter_delimitator The delimitator used when building sql where/having clauses
 	*/
-	public $filter_delimitator = ' AND ';
+	public string $filter_delimitator = ' AND ';
 
 	/**
 	* @var string $filter_button The text of the filter button
 	*/
-	public $filter_button = '';
+	public string $filter_button = '';
 
 	/**
 	* @var string $filter_reset_button The text of the filter reset button
 	*/
-	public $filter_reset_button = '';
+	public string $filter_reset_button = '';
 
 	/**
 	* @var array $filter_skip Array with the filter options which will be shown; but skipped when returning the sql code
 	*/
-	public $filter_skip = [];
+	public array $filter_skip = [];
 
 	/**
 	* @var string $filter_show_reset_button If true will show the reset button
 	*/
-	public $filter_show_reset_button = true;
+	public bool $filter_show_reset_button = true;
 
 	/**
 	* @var string $filter_javascript_function javascript function to be executed when the filter button is clicked
 	*/
-	public $filter_javascript_function = 'venus.controls.filter()';
+	public string $filter_javascript_function = 'venus.controls.filter()';
 
 	/**
 	* @var string $filter_reset_javascript_function javascript function to be executed when the filter reset button is clicked
 	*/
-	public $filter_reset_javascript_function = 'venus.controls.filter_reset()';
+	public string $filter_reset_javascript_function = 'venus.controls.filter_reset()';
 
 	/**
 	* @var string $order_button The text of the order button
 	*/
-	public $order_button = '';
+	public string $order_button = '';
 
 	/**
 	* @var string $order_reset_button The text of the order reset button
 	*/
-	public $order_reset_button = '';
+	public string $order_reset_button = '';
 
 	/**
 	* @var array $order_skip Array with the order options which will be shown; but skipped when returning the sql code
 	*/
-	public $order_skip = [];
+	public array $order_skip = [];
 
 	/**
 	* @var bool $order_links If true, order links will be built based on control's data
 	*/
-	public $order_links = true;
+	public bool $order_links = true;
 
 	/**
 	* @var bool $order_links_use_ajax If true, the order links will use ajax for ordering results
 	*/
-	public $order_links_use_ajax = true;
+	public bool $order_links_use_ajax = true;
 
 	/**
 	* @var string $order_show_reset_button If true will show the reset button
 	*/
-	public $order_show_reset_button = true;
+	public bool $order_show_reset_button = true;
 
 	/**
 	* @var string $order_javascript_function javascript function to be executed when the order button is clicked
 	*/
-	public $order_javascript_function = 'venus.controls.order()';
+	public string $order_javascript_function = 'venus.controls.order()';
 
 	/**
 	* @var string $order_reset_javascript_function javascript function to be executed when the order reset button is clicked
 	*/
-	public $order_reset_javascript_function = 'venus.controls.order_reset()';
+	public string $order_reset_javascript_function = 'venus.controls.order_reset()';
 
 	/**
 	* @var int $items_per_page The default number of items per page
 	*/
-	public $items_per_page = 0;
+	public int $items_per_page = 0;
 
 	/**
 	* @var string $items_per_page_button The text of the items per page button
 	*/
-	public $items_per_page_button = '';
+	public string $items_per_page_button = '';
 
 	/**
 	* @var string $items_per_page_javascript_function javascript function to be executed when the Display button is clicked
 	*/
-	public $items_per_page_javascript_function = 'venus.controls.items_per_page()';
+	public string $items_per_page_javascript_function = 'venus.controls.items_per_page()';
 
 	/**
 	* @var bool $pagination_use_ajax If true,the pagination will use ajax for changing pages
 	*/
-	public $pagination_use_ajax = true;
+	public bool $pagination_use_ajax = true;
 
 	/**
 	* @var bool $pagination_use_ajax If true,the pagination will use ajax for changing pages
 	*/
-	public $pagination_is_dialog = false;
+	public bool $pagination_is_dialog = false;
 
 	/**
-	* The determined total items.
+	* @var int $total_items The determined total items
 	*/
-	public $total_items = 0;
+	public int $total_items = 0;
 
 	/**
 	* @var string $sql The sql code generated
 	*/
-	public $sql = '';
+	public string $sql = '';
 
 	/**
 	* @var string $where_sql The where_sql
 	*/
-	public $where_sql = '';
+	public string $where_sql = '';
 
 	/**
 	* @var string $having_sql The having_sql
 	*/
-	public $having_sql = '';
+	public string $having_sql = '';
 
 	/**
 	* @var string $having_sql The order_sql
 	*/
-	public $order_sql = '';
+	public string $order_sql = '';
 
 	/**
 	* @var string $limit_sql The limit_sql
 	*/
-	public $limit_sql = '';
+	public string $limit_sql = '';
 
 	/**
 	* @var string $order_limit_sql The limit_sql
 	*/
-	public $order_limit_sql = '';
+	public string $order_limit_sql = '';
 
 	/**
 	* @var string $session The session key where the session data is stored
 	*/
-	protected $session_key = 'controls';
+	protected string $session_key = 'controls';
 
 	/**
 	* @var string $session The name under which the controls values will be saved in the session
 	*/
-	protected $session = '';
+	protected string $session = '';
 
 	/**
 	* @var string $base_url The url of the controls form
 	*/
-	protected $base_url = '';
+	protected string $base_url = '';
 
 	/**
 	* @var string $ajax_url The url used for ajax requests [pagination, order]
 	*/
-	protected $ajax_url = '';
+	protected string $ajax_url = '';
 
 	/**
 	* @var array $filter_array Array storing the filters list
 	*/
-	protected $filter_array = [];
+	protected array $filter_array = [];
 
 	/**
 	* @var array $filter_extra_where Extra conditions to apply to the filter's sql where clause
 	*/
-	protected $filter_extra_where = [];
+	protected array $filter_extra_where = [];
 
 	/**
 	* @var array $order_array Array storing the orders list
 	*/
-	protected $order_array = [];
+	protected array $order_array = [];
 
 	/**
 	* @var string $order_default_value The default order value to be returned, if no order control is selected
 	*/
-	protected $order_default_value = '';
+	protected string $order_default_value = '';
 
 	/**
 	* @var string $pagination_table The database table from where the total items for the pagination are read
 	*/
-	protected $pagination_table = '';
+	protected string $pagination_table = '';
 
 	/**
 	* @var array $pagination_joins Array with joins to add to the pagination's sql code
 	*/
-	protected $pagination_joins = '';
+	protected string $pagination_joins = '';
 
 	/**
 	* @var int $pagination_items_count The total number of items. Instead of specifying the pagination table/joins, the total items can be set instead
 	*/
-	protected $pagination_items_count = 0;
+	protected int $pagination_items_count = 0;
 
 	/**
 	* @var string $controls_filters The generated filters html code is stored here
 	*/
-	protected $controls_filters = '';
+	protected string $controls_filters = '';
 
 	/**
 	* @var string $controls_order The generated orders html code is stored here
 	*/
-	protected $controls_order = '';
+	protected string $controls_order = '';
 
 	/**
 	* @var string $controls_items_per_page The generated items per page html code is stored here
 	*/
-	protected $controls_items_per_page = '';
+	protected string $controls_items_per_page = '';
 
 	/**
 	* @var string $controls_pagination The generated pagination html code is stored here
 	*/
-	protected $controls_pagination = '';
+	protected string $controls_pagination = '';
 
 	/**
 	* @internal
 	*/
-	protected $filter_saved = false;
+	protected bool $filter_saved = false;
 
 	/**
 	* @internal
 	*/
-	protected $order_saved = false;
+	protected bool $order_saved = false;
 
 	/**
 	* @internal
 	*/
-	protected $bottom_saved = false;
+	protected bool $bottom_saved = false;
 
 	/**
 	* Builds the controls object

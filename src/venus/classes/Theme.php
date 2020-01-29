@@ -19,102 +19,102 @@ class Theme extends \Venus\Extensions\Extension
 	/**
 	* @var string $site_index Alias for $this->app->site_index
 	*/
-	public $site_index = '';
+	public string $site_index = '';
 
 	/**
 	* @var int $tid The theme's id
 	*/
-	public $tid = 0;
+	public int $tid = 0;
 
 	/**
 	* @var int $parent The id of the parent theme, if any
 	*/
-	public $parent = 0;
+	public int $parent = 0;
 
 	/**
 	* @var string $parent_name The name of the theme's parent theme, if any
 	*/
-	public $parent_name = '';
+	public string $parent_name = '';
 
 	/**
 	* @var string $parent_templates_dir The filesystem path for the theme's parent templates folder
 	*/
-	public $parent_templates_dir = '';
+	public string $parent_templates_dir = '';
 
 	/**
 	* @var array $templates Array with the keys listing the available templates of the theme
 	*/
-	public $templates = [];
+	public array $templates = [];
 
 	/**
 	* @var array $parent_templates Array with the keys listing the available templates of the parent theme
 	*/
-	public $parent_templates = [];
+	public array $parent_templates = [];
 
 	/**
 	* @var string $root_images_dir The filesystem path for the theme's regular images folder. Unlike images_dir which might point to the tables/smartphones images dir, it will always point to the main/base images dir
 	*/
-	public $root_images_dir = '';
+	public string $root_images_dir = '';
 
 	/**
 	* @var string $root_images_url The url of the theme's images folder. Unlike images_url which might point to the tables/smartphones images dir, it will always point to the main/base images dir
 	*/
-	public $root_images_url = '';
+	public string $root_images_url = '';
 
 	/**
 	* @var bool $has_javascript_dir True if the theme has a javascript dir
 	*/
-	public $has_javascript_dir = [];
+	public bool $has_javascript_dir = false;
 
 	/**
 	* @var bool $has_images_dir True if the theme has an image folder
 	*/
-	public $has_images_dir = false;
+	public bool $has_images_dir = false;
 
 	/**
 	* @var bool $has_mobile_images_dir True if the mobile version has an image folder
 	*/
-	public $has_mobile_images_dir = false;
+	public bool $has_mobile_images_dir = false;
 
 	/**
 	* @var bool $has_tablets_images_dir True if the tablets version has an image folder
 	*/
-	public $has_tablets_images_dir = false;
+	public bool $has_tablets_images_dir = false;
 
 	/**
 	* @var bool $has_smartphones_images_dir True if the smartphones version has an image folder
 	*/
-	public $has_smartphones_images_dir = false;
+	public bool $has_smartphones_images_dir = false;
 
 	/**
 	* @var bool $parent_has_javascript_dir True if the parent theme has a javascript dir
 	*/
-	public $parent_has_javascript_dir = [];
+	public array $parent_has_javascript_dir = [];
 
 	/**
 	* @var bool $parent_has_images_dir True if the parent theme has an image folder
 	*/
-	public $parent_has_images_dir = false;
+	public bool $parent_has_images_dir = false;
 
 	/**
 	* @var bool $parent_has_mobile_images_dir True if the parent theme has a mobile image folder
 	*/
-	public $parent_has_mobile_images_dir = false;
+	public bool $parent_has_mobile_images_dir = false;
 
 	/**
 	* @var bool $parent_has_tablets_images_dir True if the parent theme has a tablets image folder
 	*/
-	public $parent_has_tablets_images_dir = false;
+	public bool $parent_has_tablets_images_dir = false;
 
 	/**
 	* @var bool $parent_has_smartphones_images_dir True if the parent theme has a smartphones image folder
 	*/
-	public $parent_has_smartphones_images_dir = false;
+	public bool $parent_has_smartphones_images_dir = false;
 
 	/**
 	* @var array $base_params The theme's base params
 	*/
-	public $base_params = [
+	public array $base_params = [
 		'create_tablets_images' => false,
 		'create_smartphones_images' => false,
 
@@ -177,7 +177,7 @@ class Theme extends \Venus\Extensions\Extension
 	/**
 	* @var array $base_params_mobile The theme's base mobile params
 	*/
-	public $base_params_mobile = [
+	public array $base_params_mobile = [
 		'mobile' => [],
 		'tablet' => [],
 		'smartphone' => []
@@ -191,27 +191,27 @@ class Theme extends \Venus\Extensions\Extension
 	/**
 	* @var array $parent_params The theme's parent params
 	*/
-	public $parent_params = [];
+	public array $parent_params = [];
 
 	/**
 	* @var array $params_data Array where the unserialized params data is stored
 	*/
-	protected $params_data = [];
+	protected array $params_data = [];
 
 	/**
 	* @var array $parent_params_data Array where the unserialized params data is stored
 	*/
-	protected $parent_params_data = [];
+	protected array $parent_params_data = [];
 
 	/**
 	* @internal
 	*/
-	protected static $id_name = 'tid';
+	protected static string $id_name = 'tid';
 
 	/**
 	* @internal
 	*/
-	protected static $table = 'venus_themes';
+	protected static string $table = 'venus_themes';
 
 	/**
 	* Builds the current theme object

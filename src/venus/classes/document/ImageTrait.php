@@ -30,27 +30,27 @@ trait ImageTrait
 	/**
 	* @var string $image_url The image's url
 	*/
-	public $image_url = '';
+	public string $image_url = '';
 
 	/**
 	* @var int $image_url The image's width
 	*/
-	public $image_width = 0;
+	public int $image_width = 0;
 
 	/**
 	* @var int $image_url The image's height
 	*/
-	public $image_height = 0;
+	public int $image_height = 0;
 
 	/**
 	* @var string $image_wh The image's width&height html code
 	*/
-	public $image_wh = '';
+	public string $image_wh = '';
 
 	/**
 	* @var string $image_html The image's html code
 	*/
-	public $image_html = '';
+	public string $image_html = '';
 
 	/**
 	* Returns the object's image type

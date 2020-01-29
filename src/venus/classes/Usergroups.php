@@ -14,27 +14,27 @@ class Usergroups extends Items
 	/**
 	* @internal
 	*/
-	protected static $id_name = 'ugid';
+	protected static string $id_name = 'ugid';
 
 	/**
 	* @internal
 	*/
-	protected static $table = 'venus_usergroups';
+	protected static string $table = 'venus_usergroups';
 
 	/**
 	* @internal
 	*/
-	protected static $user_usergroups_table = 'venus_users_usergroups';
+	protected static string $user_usergroups_table = 'venus_users_usergroups';
 
 	/**
 	* @internal
 	*/
-	protected static $class = '\Venus\Usergroup';
+	protected static string $class = '\Venus\Usergroup';
 
 	/**
 	* @internal
 	*/
-	protected static $title_name = 'title';
+	protected static string $title_name = 'title';
 
 	/**
 	* Returns the user usergroups table

@@ -19,7 +19,7 @@ class Splitter
 	/**
 	* @var array $urls The splitted urls
 	*/
-	protected $urls = ['local' => [], 'external' => []];
+	protected array $urls = ['local' => [], 'external' => []];
 
 	/**
 	* Builds the splitter object

@@ -17,7 +17,7 @@ abstract class Extension extends \Mars\Extensions\Extension
 	/**
 	* @var string $title The extension's title
 	*/
-	public $title = '';
+	public string $title = '';
 
 	/**
 	* @var array $params The extension's params

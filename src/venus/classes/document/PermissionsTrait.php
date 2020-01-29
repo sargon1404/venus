@@ -17,12 +17,12 @@ trait PermissionsTrait
 	/**
 	* @var array $permissions The item's permissions
 	*/
-	public $permissions = [];
+	public array $permissions = [];
 
 	/**
 	* @internal
 	*/
-	protected static $permissions_table = 'venus_items_permissions';
+	protected static string $permissions_table = 'venus_items_permissions';
 
 	/**
 	* Returns the name of the permissions table

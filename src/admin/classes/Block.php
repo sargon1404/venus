@@ -17,29 +17,29 @@ class Block extends \Venus\Block
 	/**
 	* @var bool $cache Don't cache the content of admin blocks
 	*/
-	protected $cache = false;
+	protected bool $cache = false;
 
 	//protected	$tags_count = 0;
 
 	/**
 	* @internal
 	*/
-	protected static $table = 'venus_admin_blocks';
+	protected static string $table = 'venus_admin_blocks';
 
 	/**
 	* @internal
 	*/
-	protected static $permissions_table = 'venus_administrators_permissions';
+	protected static string $permissions_table = 'venus_administrators_permissions';
 
 	/**
 	* @internal
 	*/
-	protected static $type = 'admin_block';
+	protected static string $type = 'admin_block';
 
 	/**
 	* @internal
 	*/
-	protected static $namespace = "\\Cms\\Admin\\Extensions\\Blocks\\";
+	protected static string $namespace = "\\Cms\\Admin\\Extensions\\Blocks\\";
 
 	/**
 	* @see \Venus\Block::get()

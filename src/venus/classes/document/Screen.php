@@ -39,7 +39,8 @@ class Screen extends \Mars\Document\Screen
 	public function fatalError(string $text, bool $escape_html = true)
 	{
 		if ($this->app->is_cli) {
-			parent::fatalError($text, $escape_html);
+			parent::fatalError($text, false);
+			return;
 		}
 
 		if ($escape_html) {

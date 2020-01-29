@@ -17,7 +17,7 @@ class Menu extends \Venus\Output\Menu
 	/**
 	* @internal
 	*/
-	protected static $table = 'venus_admin_menu';
+	protected static string $table = 'venus_admin_menu';
 
 	/**
 	* Returns the menu's table

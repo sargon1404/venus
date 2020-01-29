@@ -15,7 +15,7 @@ class Uri extends \Mars\Uri
 	/**
 	* @var array $blocks The name of the blocks used for login/register etc..
 	*/
-	public $block_names = [
+	public array $block_names = [
 		'login' => 'login',
 		'register' => 'register',
 		'profile' => 'profile',
@@ -27,12 +27,12 @@ class Uri extends \Mars\Uri
 	/**
 	* @var array $cached_data Array containing blocks/categories data read from the cache
 	*/
-	protected $cached_data = ['blocks' => null, 'categories' => null];
+	protected array $cached_data = ['blocks' => null, 'categories' => null];
 
 	/**
 	* @var array $preloaded_data Array storing the preloaded users/pages/tags data
 	*/
-	protected $preloaded_data = ['users' => [], 'pages' => [], 'tags' => []];
+	protected array $preloaded_data = ['users' => [], 'pages' => [], 'tags' => []];
 
 	/**
 	* Builds an url appending $params to $base_url
@@ -779,7 +779,7 @@ class Uri extends \Mars\Uri
 			return;
 		}
 
-		$this->cached_data[$type] = $this->app->cache->get($key, true);
+		$this->cached_data[$type] = $this->app->cache->get($key, true, []);
 	}
 
 	/**

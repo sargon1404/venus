@@ -19,7 +19,7 @@ class Plugins extends \Venus\Plugins
 	/**
 	* @internal
 	*/
-	protected static $_extensions_table = 'venus_items_plugins';
+	protected static string $_extensions_table = 'venus_items_plugins';
 
 	/**
 	* Builds the plugins object
@@ -60,7 +60,7 @@ class Plugins extends \Venus\Plugins
 		$plugins = [];
 
 		if ($this->app->cache->plugins) {
-			$plugins = $this->app->cache->get('plugins', true);
+			$plugins = $this->app->cache->get('plugins', true, []);
 		} else {
 			$table = $this->getTable();
 

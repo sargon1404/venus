@@ -15,7 +15,7 @@ trait PermissionsTrait
 	/**
 	* @var array default_permissions  The admin's permissions, if no permissions are set for the admin for a certain block
 	*/
-	protected $default_permissions = [
+	protected array $default_permissions = [
 		'view' => 1,
 		'add' => 1,
 		'publish' => 1,
@@ -29,17 +29,17 @@ trait PermissionsTrait
 	/**
 	* @var array $permissions The permissions of this user
 	*/
-	protected $permissions = ['view' => 1, 'comment' => 1, 'rate' => 1, 'add' => 1, 'publish' => 0, 'publish_own' => 0, 'edit' => 0, 'edit_own' => 0, 'delete' => 0, 'delete_own' => 0];
+	protected array $permissions = ['view' => 1, 'comment' => 1, 'rate' => 1, 'add' => 1, 'publish' => 0, 'publish_own' => 0, 'edit' => 0, 'edit_own' => 0, 'delete' => 0, 'delete_own' => 0];
 
 	/**
 	* @var array $permissions_own The defined own permissions
 	*/
-	protected $permissions_own = ['publish' => 'publish_own', 'edit' => 'edit_own', 'delete' => 'delete_own'];
+	protected array $permissions_own = ['publish' => 'publish_own', 'edit' => 'edit_own', 'delete' => 'delete_own'];
 
 	/**
 	* @var array $own_item_ids Array storing the ids of the items the current user has created. Used to determine if the user owns the item and has the edit_own/publish_own/delete_own permissions
 	*/
-	protected $own_item_ids = [];
+	protected array $own_item_ids = [];
 
 	/**
 	* Returns the default permissions

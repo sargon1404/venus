@@ -10,6 +10,6 @@ namespace Venus\Helpers;
 * The Curl Class
 * Wrapper around the Curl library
 */
-class Curl extends \Mars\Curl
+class Curl extends \Mars\Helpers\Curl
 {
 }

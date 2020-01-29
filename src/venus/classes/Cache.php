@@ -15,12 +15,12 @@ class Cache extends \Mars\Cache
 	/**
 	* @var string $table The database table used to store the cached data
 	*/
-	protected $table = 'venus_cache';
+	protected string $table = 'venus_cache';
 
 	/**
 	* @var string $key The memcache key used to store the cached data, if any
 	*/
-	protected $key = 'venus_cache';
+	protected string $key = 'venus_cache';
 
 	/**
 	* Builds the css & javascript cache for a theme
@@ -43,7 +43,7 @@ class Cache extends \Mars\Cache
 	*/
 	public function getCategories() : array
 	{
-		return $this->get('categories', true);
+		return $this->get('categories', true, []);
 	}
 
 	/**
@@ -52,7 +52,7 @@ class Cache extends \Mars\Cache
 	*/
 	public function getCategoryIds() : array
 	{
-		return $this->get('categories_ids', true);
+		return $this->get('categories_ids', true, []);
 	}
 
 	/**
@@ -61,7 +61,7 @@ class Cache extends \Mars\Cache
 	*/
 	public function getUsergroups() : array
 	{
-		return $this->get('usergroups', true);
+		return $this->get('usergroups', true, []);
 	}
 
 	/**
@@ -70,7 +70,7 @@ class Cache extends \Mars\Cache
 	*/
 	public function getLibraries() : array
 	{
-		return $this->get('libraries', true);
+		return $this->get('libraries', true, []);
 	}
 
 	/**

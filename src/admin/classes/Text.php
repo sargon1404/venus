@@ -12,7 +12,7 @@ namespace Venus\Admin;
 */
 class Text extends \Venus\Text
 {
-	protected $allowed_attributes = '*.class,*.style,img.src,img.alt,a.target,a.rel,a.href,a.title';
+	protected string $allowed_attributes = '*.class,*.style,img.src,img.alt,a.target,a.rel,a.href,a.title';
 
 	/**
 	* @see \Venus\Text::parse()

@@ -17,7 +17,7 @@ class Tree
 	/**
 	* @var string $prefix String used as prefix for items
 	*/
-	public $prefix = '---';
+	public string $prefix = '---';
 
 	/**
 	* Returns the prefix corresponding to a node of level $level

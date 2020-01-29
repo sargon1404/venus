@@ -40,27 +40,27 @@ class App extends \Venus\App
 	/**
 	* @var bool $is_admin True if the app is run from the admin
 	*/
-	public $is_admin = true;
+	public bool $is_admin = true;
 
 	/**
 	* @var string $help_url The link to the help section for the current loaded extension
 	*/
-	public $help_url = '';
+	public string $help_url = '';
 
 	/**
 	* @var string $config_url The link to the config section for the current loaded extension
 	*/
-	public $config_url = '';
+	public string $config_url = '';
 
 	/**
 	* @var string $admin_url_static The url from where static content is served
 	*/
-	public $admin_url_static = '';
+	public string $admin_url_static = '';
 
 	/**
 	* @var string $admin_url_rel The relative url of admin
 	*/
-	public $admin_url_rel = '';
+	public string $admin_url_rel = '';
 
 	/**
 	* @see \Mars\App::getSiteUrl()

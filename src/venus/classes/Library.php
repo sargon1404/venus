@@ -17,12 +17,12 @@ class Library
 	/**
 	* @var array $available_librarie Array listing the available libraries
 	*/
-	protected $available_libraries = [];
+	protected array $available_libraries = [];
 
 	/**
 	* @var string $version The version to be applied to the css/js urls
 	*/
-	protected $version = '';
+	protected string $version = '';
 
 	/**
 	* Builds the library object

@@ -13,6 +13,12 @@ namespace voku\helper;
  *                            <p>Get dom node's inner html.</p>
  * @property string      $plaintext
  *                            <p>Get dom node's plain text.</p>
+ * @property string      $class
+ *                            <p>Get dom node's class attribute.</p>
+ * @property string      $id
+ *                            <p>Get dom node's id attribute.</p>
+ * @property SimpleHtmlAttributes $classList
+ *                            <p>Get dom node attributes.</p>
  * @property-read string $tag
  *                            <p>Get dom node name.</p>
  * @property-read string $attr
@@ -40,9 +46,48 @@ namespace voku\helper;
  *                                           <p>Get dom node's outer html.</p>
  * @method string innerText()
  *                                           <p>Get dom node's inner html (alias for "innerHtml()").</p>
+ *
+ * @extends \IteratorAggregate<int, \DOMNode>
  */
 interface SimpleHtmlDomInterface extends \IteratorAggregate
 {
+    /**
+     * @param string $name
+     * @param array  $arguments
+     *
+     * @throws \BadMethodCallException
+     *
+     * @return SimpleHtmlDomInterface|string|null
+     */
+    public function __call($name, $arguments);
+
+    /**
+     * @param string $name
+     *
+     * @return array|string|null
+     */
+    public function __get($name);
+
+    /**
+     * @param string $selector
+     * @param int    $idx
+     *
+     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
+     */
+    public function __invoke($selector, $idx = null);
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function __isset($name);
+
+    /**
+     * @return string
+     */
+    public function __toString();
+
     /**
      * Returns children of node.
      *
@@ -58,9 +103,27 @@ interface SimpleHtmlDomInterface extends \IteratorAggregate
      * @param string   $selector
      * @param int|null $idx
      *
-     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface
+     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
      */
     public function find(string $selector, $idx = null);
+
+    /**
+     * Find nodes with a CSS selector.
+     *
+     * @param string $selector
+     *
+     * @return SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
+     */
+    public function findMulti(string $selector): SimpleHtmlDomNodeInterface;
+
+    /**
+     * Find nodes with a CSS selector or false, if no element is found.
+     *
+     * @param string $selector
+     *
+     * @return false|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
+     */
+    public function findMultiOrFalse(string $selector);
 
     /**
      * Find one node with a CSS selector.
@@ -72,13 +135,13 @@ interface SimpleHtmlDomInterface extends \IteratorAggregate
     public function findOne(string $selector): self;
 
     /**
-     * Find nodes with a CSS selector.
+     * Find one node with a CSS selector or false, if no element is found.
      *
      * @param string $selector
      *
-     * @return SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface
+     * @return false|SimpleHtmlDomInterface
      */
-    public function findMulti(string $selector): SimpleHtmlDomNodeInterface;
+    public function findOneOrFalse(string $selector);
 
     /**
      * Returns the first child of node.
@@ -90,7 +153,7 @@ interface SimpleHtmlDomInterface extends \IteratorAggregate
     /**
      * Returns an array of attributes.
      *
-     * @return array|null
+     * @return string[]|null
      */
     public function getAllAttributes();
 
@@ -104,32 +167,22 @@ interface SimpleHtmlDomInterface extends \IteratorAggregate
     public function getAttribute(string $name): string;
 
     /**
-     * Return element by #idtext.
+     * Return elements by ".class".
+     *
+     * @param string $class
+     *
+     * @return SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
+     */
+    public function getElementByClass(string $class);
+
+    /**
+     * Return element by "#id".
      *
      * @param string $id
      *
      * @return SimpleHtmlDomInterface
      */
     public function getElementById(string $id): self;
-
-    /**
-     * Returns elements by #id.
-     *
-     * @param string   $id
-     * @param int|null $idx
-     *
-     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface
-     */
-    public function getElementsById(string $id, $idx = null);
-
-    /**
-     * Return elements by .class.
-     *
-     * @param string $class
-     *
-     * @return SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface
-     */
-    public function getElementByClass(string $class);
 
     /**
      * Return element by tag name.
@@ -141,12 +194,22 @@ interface SimpleHtmlDomInterface extends \IteratorAggregate
     public function getElementByTagName(string $name): self;
 
     /**
+     * Returns elements by "#id".
+     *
+     * @param string   $id
+     * @param int|null $idx
+     *
+     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
+     */
+    public function getElementsById(string $id, $idx = null);
+
+    /**
      * Returns elements by tag name.
      *
      * @param string   $name
      * @param int|null $idx
      *
-     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface
+     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
      */
     public function getElementsByTagName(string $name, $idx = null);
 
@@ -162,7 +225,7 @@ interface SimpleHtmlDomInterface extends \IteratorAggregate
      *
      * @see  http://php.net/manual/en/iteratoraggregate.getiterator.php
      *
-     * @return SimpleHtmlDomNodeInterface
+     * @return SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
      *                           <p>
      *                              An instance of an object implementing <b>Iterator</b> or
      *                              <b>Traversable</b>
@@ -203,6 +266,24 @@ interface SimpleHtmlDomInterface extends \IteratorAggregate
     public function innerHtml(bool $multiDecodeNewHtmlEntity = false): string;
 
     /**
+     * Get dom node's inner html.
+     *
+     * @param bool $multiDecodeNewHtmlEntity
+     *
+     * @return string
+     */
+    public function innerXml(bool $multiDecodeNewHtmlEntity = false): string;
+
+    /**
+     * Nodes can get partially destroyed in which they're still an
+     * actual DOM node (such as \DOMElement) but almost their entire
+     * body is gone, including the `nodeType` attribute.
+     *
+     * @return bool true if node has been destroyed
+     */
+    public function isRemoved(): bool;
+
+    /**
      * Returns the last child of node.
      *
      * @return SimpleHtmlDomInterface|null
@@ -217,6 +298,13 @@ interface SimpleHtmlDomInterface extends \IteratorAggregate
     public function nextSibling();
 
     /**
+     * Returns the next sibling of node and it will ignore whitespace elements.
+     *
+     * @return SimpleHtmlDomInterface|null
+     */
+    public function nextNonWhitespaceSibling();
+
+    /**
      * Returns the parent of node.
      *
      * @return SimpleHtmlDomInterface
@@ -224,20 +312,20 @@ interface SimpleHtmlDomInterface extends \IteratorAggregate
     public function parentNode(): self;
 
     /**
-     * Nodes can get partially destroyed in which they're still an
-     * actual DOM node (such as \DOMElement) but almost their entire
-     * body is gone, including the `nodeType` attribute.
-     *
-     * @return bool true if node has been destroyed
-     */
-    public function isRemoved(): bool;
-
-    /**
      * Returns the previous sibling of node.
      *
      * @return SimpleHtmlDomInterface|null
      */
     public function previousSibling();
+
+    /**
+     * Remove attribute.
+     *
+     * @param string $name <p>The name of the html-attribute.</p>
+     *
+     * @return SimpleHtmlDomInterface
+     */
+    public function removeAttribute(string $name): self;
 
     /**
      * Set attribute value.
@@ -254,6 +342,13 @@ interface SimpleHtmlDomInterface extends \IteratorAggregate
     public function setAttribute(string $name, $value = null, bool $strict = false): self;
 
     /**
+     * Get dom node's plain text.
+     *
+     * @return string
+     */
+    public function text(): string;
+
+    /**
      * @param string|string[]|null $value <p>
      *                                    null === get the current input value
      *                                    text === set a new input value
@@ -262,57 +357,4 @@ interface SimpleHtmlDomInterface extends \IteratorAggregate
      * @return string|string[]|null
      */
     public function val($value = null);
-
-    /**
-     * Remove attribute.
-     *
-     * @param string $name <p>The name of the html-attribute.</p>
-     *
-     * @return SimpleHtmlDomInterface
-     */
-    public function removeAttribute(string $name): self;
-
-    /**
-     * Get dom node's plain text.
-     *
-     * @return string
-     */
-    public function text(): string;
-
-    /**
-     * @param string $name
-     *
-     * @return array|string|null
-     */
-    public function __get($name);
-
-    /**
-     * @param string $selector
-     * @param int    $idx
-     *
-     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface
-     */
-    public function __invoke($selector, $idx = null);
-
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function __isset($name);
-
-    /**
-     * @param string $name
-     * @param array  $arguments
-     *
-     * @throws \BadMethodCallException
-     *
-     * @return SimpleHtmlDomInterface|string|null
-     */
-    public function __call($name, $arguments);
-
-    /**
-     * @return string
-     */
-    public function __toString();
 }

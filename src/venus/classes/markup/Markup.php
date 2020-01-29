@@ -21,22 +21,22 @@ abstract class Markup
 	/**
 	* @var bool $is_filtered If true, the results of parse() are considered filtered and won't be filtered for a second time
 	*/
-	public $is_filtered = false;
+	public bool $is_filtered = false;
 
 	/**
 	* @var bool $url_nofollow If set to true, when parsing for urls, the rel="nofollow" will be set on each url
 	*/
-	public $url_nofollow = false;
+	public bool $url_nofollow = false;
 
 	/**
 	* @var bool $tags_all If true, all tags will be parses, iregardless of $tags_array
 	*/
-	public $tags_all = false;
+	public bool $tags_all = false;
 
 	/**
 	* @var array $tags_array The list of tags to parse
 	*/
-	public $tags_array = [];
+	public array $tags_array = [];
 
 	/**
 	* Builds the markup object

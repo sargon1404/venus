@@ -1,9 +1,8 @@
 <?php
-//#!/usr/bin/env php
 namespace Venus\Cli;
 
 if (PHP_SAPI != 'cli') {
-    die("bin/venus must be run as a CLI application\n");
+	die("bin/venus must be run as a CLI application\n");
 }
 
 chdir(dirname(__DIR__));
@@ -12,18 +11,49 @@ define('VENUS', 1);
 
 require('src/cli/boot.php');
 
-$name = $app->cli->getCommandName();
-if (!$name) {
-	$name = 'help';
-}
 
+$command = $app->cli->getCommandName();
 $action = $app->cli->getCommandAction();
 $options = $app->cli->getOptions();
 
-print_r($action);
-print_r($options);die;
+if (!$command) {
+	$command = 'help';
+}
 
-$class = '\\Cli\\' . App::strToClass($name);
-$class = $app->plugins->filter('cli_class', $class, $name);
-echo $class;die;
-$obj = new $class; 
+$class = $app->cli->getCommandClass($command);
+$class = $app->plugins->filter('cliClass', $class, $command);
+
+if (!$class || !class_exists($class)) {
+	$app->cli->error("Unknown command: {$command}");
+	die;
+}
+
+$obj = new $class($app, $command, $action);
+if (!$obj instanceof \Cli\Command) {
+	$app->cli->errorAndDie("Class {$class} must extend \Cli\Command");
+}
+
+$method = $obj->getMethod($action);
+$method = $app->plugins->filter('cliMethod', $method, $action);
+
+//always call the index method for the Help command
+if ($command == 'help') {
+	$method = 'index';
+}
+//always call the help method, if the --help option is passed
+if (isset($options['help']) || isset($options['h'])) {
+	$method = 'help';
+}
+
+if (!$method || !method_exists($obj, $method)) {
+	$app->cli->errorAndDie("Unknown action: {$action}");
+}
+
+//can the method be called?
+$rm = new \ReflectionMethod($obj, $method);
+
+if (!$rm->isPublic() || $rm->getDeclaringClass()->isAbstract()) {
+	$app->cli->errorAndDie("Unknown action: {$action}");
+}
+
+$obj->$method($options);

@@ -17,77 +17,77 @@ class Navbar
 	/**
 	* @var bool $display True if the navbar must be displayed
 	*/
-	public $display = false;
+	public bool $display = false;
 
 	/**
 	* @var string $title The navbar's title
 	*/
-	public $title = '';
+	public string $title = '';
 
 	/**
 	* @var string $icon The navbar's icon
 	*/
-	public $icon = '';
+	public string $icon = '';
 
 	/**
 	* @var array $links The navbar's links
 	*/
-	public $links = [];
+	public array $links = [];
 
 	/**
 	* @var int $links_index The index of the selected link
 	*/
-	public $links_index = -1;
+	public int $links_index = -1;
 
 	/**
 	* @var array $buttons The navbar's buttons
 	*/
-	public $buttons = [];
+	public array $buttons = [];
 
 	/**
 	* @var string $buttons_lists The redirect lists of the buttons
 	*/
-	protected $buttons_lists = '';
+	protected string $buttons_lists = '';
 
 	/**
 	* @var string $url The default navbar form url
 	*/
-	public $url = '';
+	public string $url = '';
 
 	/**
 	* @var string $ids_name The name of the ids field.
 	*/
-	public $ids_name = '';
+	public string $ids_name = '';
 
 	/**
 	* @var string $form_start The start of the navbar form
 	*/
-	protected $form_start = '';
+	protected string $form_start = '';
 
 	/**
 	* @var string $form_end The end of the navbar form
 	*/
-	protected $form_end = '';
+	protected string $form_end = '';
 
 	/**
 	* @var bool $form_output Determines if the navbar form is outputed
 	*/
-	protected $form_output = true;
+	protected bool $form_output = true;
 
 	/**
 	* @var array $form_hidden Array with extra hidden fields to place in the form
 	*/
-	protected $form_hidden = [];
+	protected array $form_hidden = [];
 
 	/**
 	* @var bool $form_display Determines if the navbar form is shown
 	*/
-	protected $form_display = false;
+	protected bool $form_display = false;
 
 	/**
 	* @var bool $form_display_outer Determines if the navbar outer form is shown
 	*/
-	protected $form_display_outer = false;
+	protected bool $form_display_outer = false;
 
 	/**
 	* Shows the navbar

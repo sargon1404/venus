@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace voku\helper;
 
-/** @noinspection PhpHierarchyChecksInspection */
+/**
+ * @noinspection PhpHierarchyChecksInspection
+ *
+ * {@inheritdoc}
+ *
+ * @implements \IteratorAggregate<int, \DOMNode>
+ */
 class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate, SimpleHtmlDomInterface
 {
-    /**
-     * @var \DOMElement|\DOMNode
-     */
-    protected $node;
-
     /**
      * @param \DOMElement|\DOMNode $node
      */
@@ -40,30 +41,12 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
     }
 
     /**
-     * Returns children of node.
-     *
-     * @param int $idx
-     *
-     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface|null
-     */
-    public function childNodes(int $idx = -1)
-    {
-        $nodeList = $this->getIterator();
-
-        if ($idx === -1) {
-            return $nodeList;
-        }
-
-        return $nodeList[$idx] ?? null;
-    }
-
-    /**
      * Find list of nodes with a CSS selector.
      *
      * @param string   $selector
      * @param int|null $idx
      *
-     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface
+     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
      */
     public function find(string $selector, $idx = null)
     {
@@ -71,50 +54,9 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
     }
 
     /**
-     * Find one node with a CSS selector.
-     *
-     * @param string $selector
-     *
-     * @return SimpleHtmlDomInterface
-     */
-    public function findOne(string $selector): SimpleHtmlDomInterface
-    {
-        return $this->find($selector, 0);
-    }
-
-    /**
-     * Find nodes with a CSS selector.
-     *
-     * @param string $selector
-     *
-     * @return SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface
-     */
-    public function findMulti(string $selector): SimpleHtmlDomNodeInterface
-    {
-        return $this->find($selector, null);
-    }
-
-    /**
-     * Returns the first child of node.
-     *
-     * @return SimpleHtmlDomInterface|null
-     */
-    public function firstChild()
-    {
-        /** @var \DOMNode|null $node */
-        $node = $this->node->firstChild;
-
-        if ($node === null) {
-            return null;
-        }
-
-        return new static($node);
-    }
-
-    /**
      * Returns an array of attributes.
      *
-     * @return array|null
+     * @return string[]|null
      */
     public function getAllAttributes()
     {
@@ -128,6 +70,14 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
         }
 
         return null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAttributes(): bool
+    {
+        return $this->node->hasAttributes();
     }
 
     /**
@@ -149,6 +99,381 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
     }
 
     /**
+     * Determine if an attribute exists on the element.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasAttribute(string $name): bool
+    {
+        if (!$this->node instanceof \DOMElement) {
+            return false;
+        }
+
+        return $this->node->hasAttribute($name);
+    }
+
+    /**
+     * Get dom node's outer html.
+     *
+     * @param bool $multiDecodeNewHtmlEntity
+     *
+     * @return string
+     */
+    public function html(bool $multiDecodeNewHtmlEntity = false): string
+    {
+        return $this->getHtmlDomParser()->html($multiDecodeNewHtmlEntity);
+    }
+
+    /**
+     * Get dom node's inner html.
+     *
+     * @param bool $multiDecodeNewHtmlEntity
+     *
+     * @return string
+     */
+    public function innerHtml(bool $multiDecodeNewHtmlEntity = false): string
+    {
+        return $this->getHtmlDomParser()->innerHtml($multiDecodeNewHtmlEntity);
+    }
+
+    /**
+     * Remove attribute.
+     *
+     * @param string $name <p>The name of the html-attribute.</p>
+     *
+     * @return SimpleHtmlDomInterface
+     */
+    public function removeAttribute(string $name): SimpleHtmlDomInterface
+    {
+        if (\method_exists($this->node, 'removeAttribute')) {
+            $this->node->removeAttribute($name);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Replace child node.
+     *
+     * @param string $string
+     *
+     * @return SimpleHtmlDomInterface
+     */
+    protected function replaceChildWithString(string $string): SimpleHtmlDomInterface
+    {
+        if (!empty($string)) {
+            $newDocument = new HtmlDomParser($string);
+
+            $tmpDomString = $this->normalizeStringForComparision($newDocument);
+            $tmpStr = $this->normalizeStringForComparision($string);
+            if ($tmpDomString !== $tmpStr) {
+                throw new \RuntimeException(
+                    'Not valid HTML fragment!' . "\n" .
+                    $tmpDomString . "\n" .
+                    $tmpStr
+                );
+            }
+        }
+
+        /** @var \DOMNode[] $remove_nodes */
+        $remove_nodes = [];
+        if ($this->node->childNodes->length > 0) {
+            // INFO: We need to fetch the nodes first, before we can delete them, because of missing references in the dom,
+            // if we delete the elements on the fly.
+            foreach ($this->node->childNodes as $node) {
+                $remove_nodes[] = $node;
+            }
+        }
+        foreach ($remove_nodes as $remove_node) {
+            $this->node->removeChild($remove_node);
+        }
+
+        if (!empty($newDocument)) {
+            $newDocument = $this->cleanHtmlWrapper($newDocument);
+            $ownerDocument = $this->node->ownerDocument;
+            if (
+                $ownerDocument !== null
+                &&
+                $newDocument->getDocument()->documentElement !== null
+            ) {
+                $newNode = $ownerDocument->importNode($newDocument->getDocument()->documentElement, true);
+                /** @noinspection UnusedFunctionResultInspection */
+                $this->node->appendChild($newNode);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Replace this node.
+     *
+     * @param string $string
+     *
+     * @return SimpleHtmlDomInterface
+     */
+    protected function replaceNodeWithString(string $string): SimpleHtmlDomInterface
+    {
+        if (empty($string)) {
+            $this->node->parentNode->removeChild($this->node);
+
+            return $this;
+        }
+
+        $newDocument = new HtmlDomParser($string);
+
+        $tmpDomOuterTextString = $this->normalizeStringForComparision($newDocument);
+        $tmpStr = $this->normalizeStringForComparision($string);
+        if ($tmpDomOuterTextString !== $tmpStr) {
+            throw new \RuntimeException(
+                'Not valid HTML fragment!' . "\n"
+                . $tmpDomOuterTextString . "\n" .
+                $tmpStr
+            );
+        }
+
+        $newDocument = $this->cleanHtmlWrapper($newDocument, true);
+        $ownerDocument = $this->node->ownerDocument;
+        if (
+            $ownerDocument === null
+            ||
+            $newDocument->getDocument()->documentElement === null
+        ) {
+            return $this;
+        }
+
+        $newNode = $ownerDocument->importNode($newDocument->getDocument()->documentElement, true);
+
+        $this->node->parentNode->replaceChild($newNode, $this->node);
+        $this->node = $newNode;
+
+        // Remove head element, preserving child nodes. (again)
+        if (
+            $this->node->parentNode instanceof \DOMElement
+            &&
+            $newDocument->getIsDOMDocumentCreatedWithoutHeadWrapper()
+        ) {
+            $html = $this->node->parentNode->getElementsByTagName('head')[0];
+
+            if ($this->node->parentNode->ownerDocument !== null) {
+                $fragment = $this->node->parentNode->ownerDocument->createDocumentFragment();
+                if ($html !== null) {
+                    /** @var \DOMNode $html */
+                    while ($html->childNodes->length > 0) {
+                        $tmpNode = $html->childNodes->item(0);
+                        if ($tmpNode !== null) {
+                            /** @noinspection UnusedFunctionResultInspection */
+                            $fragment->appendChild($tmpNode);
+                        }
+                    }
+                    /** @noinspection UnusedFunctionResultInspection */
+                    $html->parentNode->replaceChild($fragment, $html);
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Replace this node with text
+     *
+     * @param string $string
+     *
+     * @return SimpleHtmlDomInterface
+     */
+    protected function replaceTextWithString($string): SimpleHtmlDomInterface
+    {
+        if (empty($string)) {
+            $this->node->parentNode->removeChild($this->node);
+
+            return $this;
+        }
+
+        $ownerDocument = $this->node->ownerDocument;
+        if ($ownerDocument !== null) {
+            $newElement = $ownerDocument->createTextNode($string);
+            $newNode = $ownerDocument->importNode($newElement, true);
+            $this->node->parentNode->replaceChild($newNode, $this->node);
+            $this->node = $newNode;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set attribute value.
+     *
+     * @param string      $name       <p>The name of the html-attribute.</p>
+     * @param string|null $value      <p>Set to NULL or empty string, to remove the attribute.</p>
+     * @param bool        $strict     </p>
+     *                                $value must be NULL, to remove the attribute,
+     *                                so that you can set an empty string as attribute-value e.g. autofocus=""
+     *                                </p>
+     *
+     * @return SimpleHtmlDomInterface
+     */
+    public function setAttribute(string $name, $value = null, bool $strict = false): SimpleHtmlDomInterface
+    {
+        if (
+            ($strict && $value === null)
+            ||
+            (!$strict && empty($value))
+        ) {
+            /** @noinspection UnusedFunctionResultInspection */
+            $this->removeAttribute($name);
+        } elseif (\method_exists($this->node, 'setAttribute')) {
+            /** @noinspection UnusedFunctionResultInspection */
+            $this->node->setAttribute($name, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get dom node's plain text.
+     *
+     * @return string
+     */
+    public function text(): string
+    {
+        return $this->getHtmlDomParser()->fixHtmlOutput($this->node->textContent);
+    }
+
+    /**
+     * Change the name of a tag in a "DOMNode".
+     *
+     * @param \DOMNode $node
+     * @param string   $name
+     *
+     * @return \DOMElement|false
+     *                          <p>DOMElement a new instance of class DOMElement or false
+     *                          if an error occured.</p>
+     */
+    protected function changeElementName(\DOMNode $node, string $name)
+    {
+        $ownerDocument = $node->ownerDocument;
+        if ($ownerDocument) {
+            $newNode = $ownerDocument->createElement($name);
+        } else {
+            return false;
+        }
+
+        foreach ($node->childNodes as $child) {
+            $child = $ownerDocument->importNode($child, true);
+            /** @noinspection UnusedFunctionResultInspection */
+            $newNode->appendChild($child);
+        }
+
+        foreach ($node->attributes as $attrName => $attrNode) {
+            /** @noinspection UnusedFunctionResultInspection */
+            $newNode->setAttribute($attrName, $attrNode);
+        }
+
+        /** @noinspection UnusedFunctionResultInspection */
+        $newNode->ownerDocument->replaceChild($newNode, $node);
+
+        return $newNode;
+    }
+
+    /**
+     * Returns children of node.
+     *
+     * @param int $idx
+     *
+     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface|null
+     */
+    public function childNodes(int $idx = -1)
+    {
+        $nodeList = $this->getIterator();
+
+        if ($idx === -1) {
+            return $nodeList;
+        }
+
+        return $nodeList[$idx] ?? null;
+    }
+
+    /**
+     * Find nodes with a CSS selector.
+     *
+     * @param string $selector
+     *
+     * @return SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
+     */
+    public function findMulti(string $selector): SimpleHtmlDomNodeInterface
+    {
+        return $this->getHtmlDomParser()->findMulti($selector);
+    }
+
+    /**
+     * Find nodes with a CSS selector or false, if no element is found.
+     *
+     * @param string $selector
+     *
+     * @return false|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
+     */
+    public function findMultiOrFalse(string $selector)
+    {
+        return $this->getHtmlDomParser()->findMultiOrFalse($selector);
+    }
+
+    /**
+     * Find one node with a CSS selector.
+     *
+     * @param string $selector
+     *
+     * @return SimpleHtmlDomInterface
+     */
+    public function findOne(string $selector): SimpleHtmlDomInterface
+    {
+        return $this->getHtmlDomParser()->findOne($selector);
+    }
+
+    /**
+     * Find one node with a CSS selector or false, if no element is found.
+     *
+     * @param string $selector
+     *
+     * @return false|SimpleHtmlDomInterface
+     */
+    public function findOneOrFalse(string $selector)
+    {
+        return $this->getHtmlDomParser()->findOneOrFalse($selector);
+    }
+
+    /**
+     * Returns the first child of node.
+     *
+     * @return SimpleHtmlDomInterface|null
+     */
+    public function firstChild()
+    {
+        /** @var \DOMNode|null $node */
+        $node = $this->node->firstChild;
+
+        if ($node === null) {
+            return null;
+        }
+
+        return new static($node);
+    }
+
+    /**
+     * Return elements by ".class".
+     *
+     * @param string $class
+     *
+     * @return SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
+     */
+    public function getElementByClass(string $class): SimpleHtmlDomNodeInterface
+    {
+        return $this->findMulti(".${class}");
+    }
+
+    /**
      * Return element by #id.
      *
      * @param string $id
@@ -158,31 +483,6 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
     public function getElementById(string $id): SimpleHtmlDomInterface
     {
         return $this->findOne("#${id}");
-    }
-
-    /**
-     * Returns elements by #id.
-     *
-     * @param string   $id
-     * @param int|null $idx
-     *
-     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface
-     */
-    public function getElementsById(string $id, $idx = null)
-    {
-        return $this->find("#${id}", $idx);
-    }
-
-    /**
-     * Return elements by .class.
-     *
-     * @param string $class
-     *
-     * @return SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface
-     */
-    public function getElementByClass(string $class): SimpleHtmlDomNodeInterface
-    {
-        return $this->findMulti(".${class}");
     }
 
     /**
@@ -208,12 +508,25 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
     }
 
     /**
+     * Returns elements by "#id".
+     *
+     * @param string   $id
+     * @param int|null $idx
+     *
+     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
+     */
+    public function getElementsById(string $id, $idx = null)
+    {
+        return $this->find("#${id}", $idx);
+    }
+
+    /**
      * Returns elements by tag name.
      *
      * @param string   $name
      * @param int|null $idx
      *
-     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface
+     * @return SimpleHtmlDomInterface|SimpleHtmlDomInterface[]|SimpleHtmlDomNodeInterface<SimpleHtmlDomInterface>
      */
     public function getElementsByTagName(string $name, $idx = null)
     {
@@ -258,29 +571,6 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
     }
 
     /**
-     * Retrieve an external iterator.
-     *
-     * @see  http://php.net/manual/en/iteratoraggregate.getiterator.php
-     *
-     * @return SimpleHtmlDomNode
-     *                           <p>
-     *                              An instance of an object implementing <b>Iterator</b> or
-     *                              <b>Traversable</b>
-     *                           </p>
-     */
-    public function getIterator(): SimpleHtmlDomNodeInterface
-    {
-        $elements = new SimpleHtmlDomNode();
-        if ($this->node->hasChildNodes()) {
-            foreach ($this->node->childNodes as $node) {
-                $elements[] = new static($node);
-            }
-        }
-
-        return $elements;
-    }
-
-    /**
      * @return \DOMNode
      */
     public function getNode(): \DOMNode
@@ -289,43 +579,15 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
     }
 
     /**
-     * Determine if an attribute exists on the element.
+     * Nodes can get partially destroyed in which they're still an
+     * actual DOM node (such as \DOMElement) but almost their entire
+     * body is gone, including the `nodeType` attribute.
      *
-     * @param string $name
-     *
-     * @return bool
+     * @return bool true if node has been destroyed
      */
-    public function hasAttribute(string $name): bool
+    public function isRemoved(): bool
     {
-        if (!$this->node instanceof \DOMElement) {
-            return false;
-        }
-
-        return $this->node->hasAttribute($name);
-    }
-
-    /**
-     * Get dom node's outer html.
-     *
-     * @param bool $multiDecodeNewHtmlEntity
-     *
-     * @return string
-     */
-    public function html(bool $multiDecodeNewHtmlEntity = false): string
-    {
-        return $this->getHtmlDomParser()->html($multiDecodeNewHtmlEntity);
-    }
-
-    /**
-     * Get dom node's inner html.
-     *
-     * @param bool $multiDecodeNewHtmlEntity
-     *
-     * @return string
-     */
-    public function innerHtml(bool $multiDecodeNewHtmlEntity = false): string
-    {
-        return $this->getHtmlDomParser()->innerHtml($multiDecodeNewHtmlEntity);
+        return !isset($this->node->nodeType);
     }
 
     /**
@@ -363,6 +625,28 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
     }
 
     /**
+     * Returns the next sibling of node.
+     *
+     * @return SimpleHtmlDomInterface|null
+     */
+    public function nextNonWhitespaceSibling()
+    {
+        /** @var \DOMNode|null $node */
+        $node = $this->node->nextSibling;
+
+        while ($node && !\trim($node->textContent)) {
+            /** @var \DOMNode|null $node */
+            $node = $node->nextSibling;
+        }
+
+        if ($node === null) {
+            return null;
+        }
+
+        return new static($node);
+    }
+
+    /**
      * Returns the parent of node.
      *
      * @return SimpleHtmlDomInterface
@@ -370,18 +654,6 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
     public function parentNode(): SimpleHtmlDomInterface
     {
         return new static($this->node->parentNode);
-    }
-
-    /**
-     * Nodes can get partially destroyed in which they're still an
-     * actual DOM node (such as \DOMElement) but almost their entire
-     * body is gone, including the `nodeType` attribute.
-     *
-     * @return bool true if node has been destroyed
-     */
-    public function isRemoved(): bool
-    {
-        return !isset($this->node->nodeType);
     }
 
     /**
@@ -399,336 +671,6 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
         }
 
         return new static($node);
-    }
-
-    /**
-     * Replace child node.
-     *
-     * @param string $string
-     *
-     * @return SimpleHtmlDomInterface
-     */
-    protected function replaceChildWithString(string $string): SimpleHtmlDomInterface
-    {
-        if (!empty($string)) {
-            $newDocument = new HtmlDomParser($string);
-
-            $tmpDomString = $this->normalizeStringForComparision($newDocument);
-            $tmpStr = $this->normalizeStringForComparision($string);
-            if ($tmpDomString !== $tmpStr) {
-                throw new \RuntimeException(
-                    'Not valid HTML fragment!' . "\n" .
-                    $tmpDomString . "\n" .
-                    $tmpStr
-                );
-            }
-        }
-
-        if (\count($this->node->childNodes) > 0) {
-            foreach ($this->node->childNodes as $node) {
-                $this->node->removeChild($node);
-            }
-        }
-
-        if (!empty($newDocument)) {
-            $newDocument = $this->cleanHtmlWrapper($newDocument);
-            $ownerDocument = $this->node->ownerDocument;
-            if ($ownerDocument !== null) {
-                $newNode = $ownerDocument->importNode($newDocument->getDocument()->documentElement, true);
-                /** @noinspection UnusedFunctionResultInspection */
-                $this->node->appendChild($newNode);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * Replace this node with text
-     *
-     * @param string $string
-     *
-     * @return SimpleHtmlDomInterface
-     */
-    protected function replaceTextWithString($string): SimpleHtmlDomInterface
-    {
-        if (empty($string)) {
-            $this->node->parentNode->removeChild($this->node);
-
-            return $this;
-        }
-
-        $ownerDocument = $this->node->ownerDocument;
-        if ($ownerDocument !== null) {
-            $newElement = $ownerDocument->createTextNode($string);
-            $newNode = $ownerDocument->importNode($newElement, true);
-            $this->node->parentNode->replaceChild($newNode, $this->node);
-            $this->node = $newNode;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Replace this node.
-     *
-     * @param string $string
-     *
-     * @return SimpleHtmlDomInterface
-     */
-    protected function replaceNodeWithString(string $string): SimpleHtmlDomInterface
-    {
-        if (empty($string)) {
-            $this->node->parentNode->removeChild($this->node);
-
-            return $this;
-        }
-
-        $newDocument = new HtmlDomParser($string);
-
-        $tmpDomOuterTextString = $this->normalizeStringForComparision($newDocument);
-        $tmpStr = $this->normalizeStringForComparision($string);
-        if ($tmpDomOuterTextString !== $tmpStr) {
-            throw new \RuntimeException(
-                'Not valid HTML fragment!' . "\n"
-                . $tmpDomOuterTextString . "\n" .
-                $tmpStr
-            );
-        }
-
-        $newDocument = $this->cleanHtmlWrapper($newDocument, true);
-        $ownerDocument = $this->node->ownerDocument;
-        if ($ownerDocument === null) {
-            return $this;
-        }
-
-        $newNode = $ownerDocument->importNode($newDocument->getDocument()->documentElement, true);
-
-        $this->node->parentNode->replaceChild($newNode, $this->node);
-        $this->node = $newNode;
-
-        // Remove head element, preserving child nodes. (again)
-        if (
-            $this->node->parentNode instanceof \DOMElement
-            &&
-            $newDocument->getIsDOMDocumentCreatedWithoutHeadWrapper()
-        ) {
-            $html = $this->node->parentNode->getElementsByTagName('head')[0];
-            if ($this->node->parentNode->ownerDocument !== null) {
-                $fragment = $this->node->parentNode->ownerDocument->createDocumentFragment();
-                if ($html !== null) {
-                    /** @var \DOMNode $html */
-                    while ($html->childNodes->length > 0) {
-                        $tmpNode = $html->childNodes->item(0);
-                        if ($tmpNode !== null) {
-                            /** @noinspection UnusedFunctionResultInspection */
-                            $fragment->appendChild($tmpNode);
-                        }
-                    }
-                    /** @noinspection UnusedFunctionResultInspection */
-                    $html->parentNode->replaceChild($fragment, $html);
-                }
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * Normalize the given input for comparision.
-     *
-     * @param HtmlDomParser|string $input
-     *
-     * @return string
-     */
-    private function normalizeStringForComparision($input): string
-    {
-        if ($input instanceof HtmlDomParser) {
-            $string = $input->outerText();
-
-            if ($input->getIsDOMDocumentCreatedWithoutHeadWrapper()) {
-                /** @noinspection HtmlRequiredTitleElement */
-                $string = \str_replace(['<head>', '</head>'], '', $string);
-            }
-        } else {
-            $string = (string) $input;
-        }
-
-        return
-            \urlencode(
-                \urldecode(
-                    \trim(
-                        \str_replace(
-                            [
-                                ' ',
-                                "\n",
-                                "\r",
-                                '/>',
-                            ],
-                            [
-                                '',
-                                '',
-                                '',
-                                '>',
-                            ],
-                            \strtolower($string)
-                        )
-                    )
-                )
-            );
-    }
-
-    /**
-     * @param HtmlDomParser $newDocument
-     * @param bool          $removeExtraHeadTag
-     *
-     * @return HtmlDomParser
-     */
-    protected function cleanHtmlWrapper(HtmlDomParser $newDocument, $removeExtraHeadTag = false): HtmlDomParser
-    {
-        if (
-            $newDocument->getIsDOMDocumentCreatedWithoutHtml()
-            ||
-            $newDocument->getIsDOMDocumentCreatedWithoutHtmlWrapper()
-        ) {
-
-            // Remove doc-type node.
-            if ($newDocument->getDocument()->doctype !== null) {
-                /** @noinspection UnusedFunctionResultInspection */
-                $newDocument->getDocument()->doctype->parentNode->removeChild($newDocument->getDocument()->doctype);
-            }
-
-            // Remove html element, preserving child nodes.
-            $html = $newDocument->getDocument()->getElementsByTagName('html')->item(0);
-            $fragment = $newDocument->getDocument()->createDocumentFragment();
-            if ($html !== null) {
-                while ($html->childNodes->length > 0) {
-                    $tmpNode = $html->childNodes->item(0);
-                    if ($tmpNode !== null) {
-                        /** @noinspection UnusedFunctionResultInspection */
-                        $fragment->appendChild($tmpNode);
-                    }
-                }
-                /** @noinspection UnusedFunctionResultInspection */
-                $html->parentNode->replaceChild($fragment, $html);
-            }
-
-            // Remove body element, preserving child nodes.
-            $body = $newDocument->getDocument()->getElementsByTagName('body')->item(0);
-            $fragment = $newDocument->getDocument()->createDocumentFragment();
-            if ($body instanceof \DOMElement) {
-                while ($body->childNodes->length > 0) {
-                    $tmpNode = $body->childNodes->item(0);
-                    if ($tmpNode !== null) {
-                        /** @noinspection UnusedFunctionResultInspection */
-                        $fragment->appendChild($tmpNode);
-                    }
-                }
-                /** @noinspection UnusedFunctionResultInspection */
-                $body->parentNode->replaceChild($fragment, $body);
-
-                // At this point DOMDocument still added a "<p>"-wrapper around our string,
-                // so we replace it with "<simpleHtmlDomP>" and delete this at the ending ...
-                $item = $newDocument->getDocument()->getElementsByTagName('p')->item(0);
-                if ($item !== null) {
-                    /** @noinspection UnusedFunctionResultInspection */
-                    $this->changeElementName($item, 'simpleHtmlDomP');
-                }
-            }
-        }
-
-        // Remove head element, preserving child nodes.
-        if (
-            $removeExtraHeadTag
-            &&
-            $this->node->parentNode instanceof \DOMElement
-            &&
-            $newDocument->getIsDOMDocumentCreatedWithoutHeadWrapper()
-        ) {
-            $html = $this->node->parentNode->getElementsByTagName('head')[0];
-            if ($this->node->parentNode->ownerDocument !== null) {
-                $fragment = $this->node->parentNode->ownerDocument->createDocumentFragment();
-                if ($html !== null) {
-                    /** @var \DOMNode $html */
-                    while ($html->childNodes->length > 0) {
-                        $tmpNode = $html->childNodes->item(0);
-                        if ($tmpNode !== null) {
-                            /** @noinspection UnusedFunctionResultInspection */
-                            $fragment->appendChild($tmpNode);
-                        }
-                    }
-                    /** @noinspection UnusedFunctionResultInspection */
-                    $html->parentNode->replaceChild($fragment, $html);
-                }
-            }
-        }
-
-        return $newDocument;
-    }
-
-    /**
-     * Change the name of a tag in a "DOMNode".
-     *
-     * @param \DOMNode $node
-     * @param string   $name
-     *
-     * @return \DOMElement|false
-     *                          <p>DOMElement a new instance of class DOMElement or false
-     *                          if an error occured.</p>
-     */
-    protected function changeElementName(\DOMNode $node, string $name)
-    {
-        $ownerDocument = $node->ownerDocument;
-        if ($ownerDocument) {
-            $newNode = $ownerDocument->createElement($name);
-        } else {
-            return false;
-        }
-
-        foreach ($node->childNodes as $child) {
-            $child = $ownerDocument->importNode($child, true);
-            /** @noinspection UnusedFunctionResultInspection */
-            $newNode->appendChild($child);
-        }
-
-        foreach ($node->attributes as $attrName => $attrNode) {
-            /** @noinspection UnusedFunctionResultInspection */
-            $newNode->setAttribute($attrName, $attrNode);
-        }
-
-        /** @noinspection UnusedFunctionResultInspection */
-        $newNode->ownerDocument->replaceChild($newNode, $node);
-
-        return $newNode;
-    }
-
-    /**
-     * Set attribute value.
-     *
-     * @param string      $name       <p>The name of the html-attribute.</p>
-     * @param string|null $value      <p>Set to NULL or empty string, to remove the attribute.</p>
-     * @param bool        $strict     </p>
-     *                                $value must be NULL, to remove the attribute,
-     *                                so that you can set an empty string as attribute-value e.g. autofocus=""
-     *                                </p>
-     *
-     * @return SimpleHtmlDomInterface
-     */
-    public function setAttribute(string $name, $value = null, bool $strict = false): SimpleHtmlDomInterface
-    {
-        if (
-            ($strict && $value === null)
-            ||
-            (!$strict && empty($value))
-        ) {
-            /** @noinspection UnusedFunctionResultInspection */
-            $this->removeAttribute($name);
-        } elseif (\method_exists($this->node, 'setAttribute')) {
-            /** @noinspection UnusedFunctionResultInspection */
-            $this->node->setAttribute($name, $value);
-        }
-
-        return $this;
     }
 
     /**
@@ -817,28 +759,159 @@ class SimpleHtmlDom extends AbstractSimpleHtmlDom implements \IteratorAggregate,
     }
 
     /**
-     * Remove attribute.
+     * @param HtmlDomParser $newDocument
+     * @param bool          $removeExtraHeadTag
      *
-     * @param string $name <p>The name of the html-attribute.</p>
-     *
-     * @return SimpleHtmlDomInterface
+     * @return HtmlDomParser
      */
-    public function removeAttribute(string $name): SimpleHtmlDomInterface
-    {
-        if (\method_exists($this->node, 'removeAttribute')) {
-            $this->node->removeAttribute($name);
+    protected function cleanHtmlWrapper(
+        HtmlDomParser $newDocument,
+        $removeExtraHeadTag = false
+    ): HtmlDomParser {
+        if (
+            $newDocument->getIsDOMDocumentCreatedWithoutHtml()
+            ||
+            $newDocument->getIsDOMDocumentCreatedWithoutHtmlWrapper()
+        ) {
+
+            // Remove doc-type node.
+            if ($newDocument->getDocument()->doctype !== null) {
+                /** @noinspection UnusedFunctionResultInspection */
+                $newDocument->getDocument()->doctype->parentNode->removeChild($newDocument->getDocument()->doctype);
+            }
+
+            // Replace html element, preserving child nodes -> but keep the html wrapper, otherwise we got other problems ...
+            // so we replace it with "<simpleHtmlDomHtml>" and delete this at the ending.
+            $item = $newDocument->getDocument()->getElementsByTagName('html')->item(0);
+            if ($item !== null) {
+                /** @noinspection UnusedFunctionResultInspection */
+                $this->changeElementName($item, 'simpleHtmlDomHtml');
+            }
+
+            // Remove body element, preserving child nodes.
+            $body = $newDocument->getDocument()->getElementsByTagName('body')->item(0);
+            if ($body instanceof \DOMElement) {
+                $fragment = $newDocument->getDocument()->createDocumentFragment();
+
+                while ($body->childNodes->length > 0) {
+                    $tmpNode = $body->childNodes->item(0);
+                    if ($tmpNode !== null) {
+                        /** @noinspection UnusedFunctionResultInspection */
+                        $fragment->appendChild($tmpNode);
+                    }
+                }
+
+                /** @noinspection UnusedFunctionResultInspection */
+                $body->parentNode->replaceChild($fragment, $body);
+            }
         }
 
-        return $this;
+        // Remove head element, preserving child nodes.
+        if (
+            $removeExtraHeadTag
+            &&
+            $this->node->parentNode instanceof \DOMElement
+            &&
+            $newDocument->getIsDOMDocumentCreatedWithoutHeadWrapper()
+        ) {
+            $html = $this->node->parentNode->getElementsByTagName('head')[0] ?? null;
+
+            if ($html !== null && $this->node->parentNode->ownerDocument !== null) {
+                $fragment = $this->node->parentNode->ownerDocument->createDocumentFragment();
+
+                /** @var \DOMNode $html */
+                while ($html->childNodes->length > 0) {
+                    $tmpNode = $html->childNodes->item(0);
+                    if ($tmpNode !== null) {
+                        /** @noinspection UnusedFunctionResultInspection */
+                        $fragment->appendChild($tmpNode);
+                    }
+                }
+
+                /** @noinspection UnusedFunctionResultInspection */
+                $html->parentNode->replaceChild($fragment, $html);
+            }
+        }
+
+        return $newDocument;
     }
 
     /**
-     * Get dom node's plain text.
+     * Retrieve an external iterator.
+     *
+     * @see  http://php.net/manual/en/iteratoraggregate.getiterator.php
+     *
+     * @return SimpleHtmlDomNode
+     *                           <p>
+     *                              An instance of an object implementing <b>Iterator</b> or
+     *                              <b>Traversable</b>
+     *                           </p>
+     */
+    public function getIterator(): SimpleHtmlDomNodeInterface
+    {
+        $elements = new SimpleHtmlDomNode();
+        if ($this->node->hasChildNodes()) {
+            foreach ($this->node->childNodes as $node) {
+                $elements[] = new static($node);
+            }
+        }
+
+        return $elements;
+    }
+
+    /**
+     * Get dom node's inner html.
+     *
+     * @param bool $multiDecodeNewHtmlEntity
      *
      * @return string
      */
-    public function text(): string
+    public function innerXml(bool $multiDecodeNewHtmlEntity = false): string
     {
-        return $this->getHtmlDomParser()->fixHtmlOutput($this->node->textContent);
+        return $this->getHtmlDomParser()->innerXml($multiDecodeNewHtmlEntity);
+    }
+
+    /**
+     * Normalize the given input for comparision.
+     *
+     * @param HtmlDomParser|string $input
+     *
+     * @return string
+     */
+    private function normalizeStringForComparision($input): string
+    {
+        if ($input instanceof HtmlDomParser) {
+            $string = $input->outerText();
+
+            if ($input->getIsDOMDocumentCreatedWithoutHeadWrapper()) {
+                /** @noinspection HtmlRequiredTitleElement */
+                $string = \str_replace(['<head>', '</head>'], '', $string);
+            }
+        } else {
+            $string = (string) $input;
+        }
+
+        return
+            \urlencode(
+                \urldecode(
+                    \trim(
+                        \str_replace(
+                            [
+                                ' ',
+                                "\n",
+                                "\r",
+                                '/>',
+                            ],
+                            [
+                                '',
+                                '',
+                                '',
+                                '>',
+                            ],
+                            \strtolower($string)
+                        )
+                    )
+                )
+            );
     }
 }

@@ -15,15 +15,15 @@ class Plugins extends Items
 	/**
 	* @internal
 	*/
-	protected static $id_name = 'pid';
+	protected static string $id_name = 'pid';
 
 	/**
 	* @internal
 	*/
-	protected static $table = 'venus_plugins';
+	protected static string $table = 'venus_plugins';
 
 	/**
 	* @internal
 	*/
-	protected static $class = '\Venus\Plugin';
+	protected static string $class = '\Venus\Plugin';
 }

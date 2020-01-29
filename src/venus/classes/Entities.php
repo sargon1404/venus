@@ -14,5 +14,5 @@ abstract class Entities extends \Mars\Entities
 	/**
 	* @var string $class The class of the loaded items
 	*/
-	protected static $class = '\Venus\Entity';
+	protected static string $class = '\Venus\Entity';
 }

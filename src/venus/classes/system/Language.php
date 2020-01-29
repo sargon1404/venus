@@ -34,19 +34,15 @@ class Language extends \Venus\Language
 	* Returns the data of a language
 	* @return object The language
 	*/
-	public function get()
+	public function get() : object
 	{
 		$lid = $this->getLid();
 
+		$language = null;
 		if ($lid == $this->app->config->language_default) {
 			return $this->getDefault();
 		} else {
-			$language = $this->getRow($lid);
-			if (!$language) {
-				$language = $this->getDefault();
-			}
-
-			return $language;
+			return $this->getRow($lid);
 		}
 	}
 
@@ -67,7 +63,7 @@ class Language extends \Venus\Language
 	* Returns the data of the default language
 	* @return object The default language
 	*/
-	public function getDefault() : object
+	public function getDefault() : ?object
 	{
 		return $this->app->cache->get('language_default', true);
 	}

@@ -20,72 +20,72 @@ class Theme extends \Venus\Theme
 	/**
 	* @var bool $is_homepage Set to true if the homepage is currently displayed
 	*/
-	public $is_homepage = false;
+	public bool $is_homepage = false;
 
 	/**
 	* @var string $admin_url Alias for $this->app->admin_url
 	*/
-	public $admin_url = '';
+	public string $admin_url = '';
 
 	/**
 	* @var string $tab_id The id of the currently selected tab (ui element)
 	*/
-	public $tab_id = 1;
+	public string $tab_id = '1';
 
 	/**
 	* @var bool $css_merge If true, the css stylesheets will be merged into one file
 	*/
-	public $css_merge = true;
+	public bool $css_merge = true;
 
 	/**
 	* @var string $css_location The location where the merged css stylesheets will be outputted in the document [head|footer]
 	*/
-	public $css_location = '';
+	public string $css_location = '';
 
 	/**
 	* @var int $css_priority The priority of the main css file or the merged file, if css_merge = true
 	*/
-	public $css_priority = 50000;
+	public int $css_priority = 50000;
 
 	/**
 	* @var bool $javascript_merge If true, the js scripts will be merged into one file
 	*/
-	public $javascript_merge = true;
+	public bool $javascript_merge = true;
 
 	/**
 	* @var string $javascript_location The location where the merged js scripts will be outputted in the document [head|footer]
 	*/
-	public $javascript_location = '';
+	public string $javascript_location = '';
 
 	/**
 	* @var int $javascript_priority The priority of the main js file or the merged file, if javascript_merge = true
 	*/
-	public $javascript_priority = 50000;
+	public int $javascript_priority = 50000;
 
 	/**
 	* @var string $theme_javascript_location The location where theme's javascript will be outputted in the document [head|footer]
 	*/
-	public $theme_javascript_location = 'head';
+	public string $theme_javascript_location = 'head';
 
 	/**
-	* @var string $javascript_priority The priority of theme's javascript file
+	* @var int $javascript_priority The priority of theme's javascript file
 	*/
-	public $theme_javascript_priority = 5000;
+	public int $theme_javascript_priority = 5000;
 
 	/**
 	* @var array $libraries The javascript libraries loaded by this theme
 	*/
-	protected $libraries = [];
+	protected array $libraries = [];
 
 	/**
 	* @var bool $init Will include the theme's init file if $init is set to true
 	*/
-	protected $init = false;
+	protected bool $init = false;
 
 	/**
 	* @var string $init_file The name of the init file
 	*/
-	protected $init_file = 'javascript.js';
+	protected string $init_file = 'javascript.js';
 
 	/**
 	* Builds the system's theme object
@@ -113,12 +113,7 @@ class Theme extends \Venus\Theme
 		if ($tid == $this->app->config->theme_default) {
 			return $this->getDefault();
 		} else {
-			$theme = $this->getRow($tid);
-			if (!$theme) {
-				$theme = $this->getDefault();
-			}
-
-			return $theme;
+			return $this->getRow($tid);
 		}
 	}
 

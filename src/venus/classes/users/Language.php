@@ -17,7 +17,7 @@ class Language extends \Venus\Language
 	/**
 	* @var User $user The user
 	*/
-	protected $user = null;
+	protected User $user;
 
 	/**
 	* Builds the user's language

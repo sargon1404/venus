@@ -7,6 +7,7 @@
 namespace Venus\Admin;
 
 use Venus\Document;
+use Venus\Helpers\Controls;
 
 /**
 * The Controller Class
@@ -15,9 +16,9 @@ use Venus\Document;
 abstract class Controller extends \Venus\Controller
 {
 	/**
-	* @var object $controls The controls object. Alias for $this->app->controls
+	* @var Controls $controls The controls object. Alias for $this->app->controls
 	*/
-	public $controls = null;
+	public Controls $controls;
 
 	/**
 	* @see \Venus\Controller::prepare();

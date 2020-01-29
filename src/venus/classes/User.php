@@ -15,97 +15,97 @@ class User extends Item
 	/**
 	* @var int $uid The user's id. 0 if he's a guest
 	*/
-	public $uid = 0;
+	public int $uid = 0;
 
 	/**
 	* @var int $username The username of the user
 	*/
-	public $username = '';
+	public string $username = '';
 
 	/**
 	* @var string $email The email of the user
 	*/
-	public $email = '';
+	public string $email = '';
 
 	/**
 	* @var int $ugid The id of the primary usergroup the user belongs to
 	*/
-	public $ugid = App::USERGROUPS['guests'];
+	public array $ugid = App::USERGROUPS['guests'];
 
 	/**
 	* @var Usergroup $usergroup The primary usergroup of the user
 	*/
-	public $usergroup = null;
+	public Usergroup $usergroup;
 
 	/**
-	* @var Usergroups $usergroup The usergroups the user belongs to
+	* @var array $usergroups The usergroups the user belongs to
 	*/
-	public $usergroups = [];
+	public array $usergroups = [];
 
 	/**
 	* @var array $ugid The ids of the usergroups the user belongs to
 	*/
-	public $ugids = [];
+	public array $ugids = [];
 
 	/**
 	* @var int $timezone User's timezone
 	*/
-	public $timezone = '';
+	public string $timezone = '';
 
 	/**
 	* @var int $timezone_offset The difference in seconds between user's timezone and UTC
 	*/
-	public $timezone_offset = 0;
+	public int $timezone_offset = 0;
 
 	/**
 	* @var int $lang The user's language
 	*/
-	public $lang = 0;
+	public int $lang = 0;
 
 	/**
 	* @var int $theme The user's theme
 	*/
-	public $theme = 0;
+	public int $theme = 0;
 
 	/**
 	* @var string $editor The editor type: bbcode/html/textarea
 	*/
-	public $editor = 'bbcode';
+	public string $editor = 'bbcode';
 
 	/**
 	* @var string $markup_language The markup language used by the editor. bbcode/html/text
 	*/
-	public $markup_language = 'bbcode';
+	public string $markup_language = 'bbcode';
 
 	/**
 	* @var string $markup_tags Comma delimited list with the markup tags the user is allowed to use when parsing text
 	*/
-	public $markup_tags = '';
+	public string $markup_tags = '';
 
 	/**
 	* @var string $avatar_type The avatar type: image/thumb/small_thumb
 	*/
-	protected $avatar_type = 'image';
+	protected string $avatar_type = 'image';
 
 	/**
 	* @ignore
 	*/
-	protected static $id_name = 'uid';
+	protected static string $id_name = 'uid';
 
 	/**
 	* @ignore
 	*/
-	protected static $table = 'venus_users';
+	protected static string $table = 'venus_users';
 
 	/**
 	* @ignore
 	*/
-	protected static $usergroups_table = 'venus_users_usergroups';
+	protected static string $usergroups_table = 'venus_users_usergroups';
 
 	/**
 	* @var array $_ignore Custom properties which won't be inserted into the database
 	*/
-	protected static $_ignore = ['url', 'usergroup', 'ugids', 'usergroups', 'avatar_url', 'avatar_width', 'avatar_height', 'avatar_wh', 'avatar_html', 'avatar_type'];
+	protected static array $_ignore = ['url', 'usergroup', 'ugids', 'usergroups', 'avatar_url', 'avatar_width', 'avatar_height', 'avatar_wh', 'avatar_html', 'avatar_type'];
 
 	/**
 	* Builds the user

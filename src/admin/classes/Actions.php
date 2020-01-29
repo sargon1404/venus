@@ -17,7 +17,7 @@ class Actions
 	/**
 	* @var string $forms The html code of the generated forms
 	*/
-	protected $forms = '';
+	protected string $forms = '';
 
 	/**
 	* Builds an actions list from $links

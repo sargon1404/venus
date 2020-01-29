@@ -21,17 +21,17 @@ class Javascript extends Asset
 	/**
 	* @var array $config_array Array listing the config options to load
 	*/
-	protected $config_array = ['tags_separator' => '', 'editor' => ''];
+	protected array $config_array = ['tags_separator' => '', 'editor' => ''];
 
 	/**
 	* @var array $properties_array Array listing the properties to output
 	*/
-	protected $properties_array = ['debug' => [], 'development' => ''];
+	protected array $properties_array = ['debug' => [], 'development' => ''];
 
 	/**
 	* @var array $paths_array Array listing the paths to output
 	*/
-	protected $paths_array = [
+	protected array $paths_array = [
 		'site_url', 'site_url_rel', 'site_url_static',
 		'images_url', 'media_url', 'utils_url'
 	];
@@ -39,27 +39,27 @@ class Javascript extends Asset
 	/**
 	* @var string $scope The scope from where the config/properties are read
 	*/
-	protected $scope = 'frontend';
+	protected string $scope = 'frontend';
 
 	/**
 	* @internal
 	*/
-	protected $extension = 'js';
+	protected string $extension = 'js';
 
 	/**
 	* @internal
 	*/
-	protected $cache_dir = 'javascript';
+	protected string $cache_dir = 'javascript';
 
 	/**
 	* @internal
 	*/
-	protected $libraries_dir = 'javascript';
+	protected string $libraries_dir = 'javascript';
 
 	/**
 	* @var string $merge_separator The separator between merged files
 	*/
-	protected $merge_separator = ";\n";
+	protected string $merge_separator = ";\n";
 
 	/**
 	* Builds the javascript cache object

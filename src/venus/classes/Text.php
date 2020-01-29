@@ -17,7 +17,7 @@ class Text extends \Mars\Text
 	/**
 	* @var string allowed_attributes List of allowable attributes when filtering
 	*/
-	protected $allowed_attributes = 'img.src,img.alt,a.target,a.rel,a.href,a.title';
+	protected string $allowed_attributes = 'img.src,img.alt,a.target,a.rel,a.href,a.title';
 
 	/**
 	* Returns the markup object used to parse/convert text

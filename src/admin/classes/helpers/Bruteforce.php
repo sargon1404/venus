@@ -15,7 +15,7 @@ class Bruteforce extends \Venus\Helpers\Bruteforce
 	/**
 	* @var string $scope The bruteforce scope
 	*/
-	protected $scope = 'admin';
+	protected string $scope = 'admin';
 
 	/**
 	* Builds the Bruteforce object

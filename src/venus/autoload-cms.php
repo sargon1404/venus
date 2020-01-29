@@ -13,7 +13,7 @@ use function Mars\Autoload\get_filename;
 
 	$parts = explode('\\', $name);
 
-	$filename = dirname(__DIR__, 2) . '/' . get_filename($parts, false);
+	$filename = dirname(__DIR__, 2) . '/' . get_filename($parts);
 	var_dump($filename);
 	die;
 	require($filename);

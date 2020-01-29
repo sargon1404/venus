@@ -19,17 +19,17 @@ class User extends \Venus\System\User
 	/**
 	* @var object $config The admin's options
 	*/
-	public $config = null;
+	public ?object $config;
 
 	/**
 	* @internal
 	*/
-	protected static $administrators_table = 'venus_administrators';
+	protected static string $administrators_table = 'venus_administrators';
 
 	/**
 	* @internal
 	*/
-	protected static $login_keys_scope = 'admin';
+	protected static string $login_keys_scope = 'admin';
 
 	/**
 	* Builds the current system user

@@ -18,7 +18,7 @@ class Cache extends \Venus\Cache
 	/**
 	* @internal
 	*/
-	protected $scope = 'admin';
+	protected string $scope = 'admin';
 
 	/**
 	* Clears a folder and copies the empty index.htm file

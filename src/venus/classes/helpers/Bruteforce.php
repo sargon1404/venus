@@ -17,42 +17,42 @@ class Bruteforce
 	/**
 	* @var int $ip_max_attemps The number of failed attempts before an IP is marked as blocked
 	*/
-	public $ip_max_attemps = 0;
+	public int $ip_max_attemps = 0;
 
 	/**
 	* @var int $ip_block_seconds The number of seconds to block an IP marked as blocked
 	*/
-	public $ip_block_seconds = 0;
+	public int $ip_block_seconds = 0;
 
 	/**
 	* @var int $user_max_attemps The number of failed attempts before an user is marked as blocked
 	*/
-	public $user_max_attemps = 0;
+	public int $user_max_attemps = 0;
 
 	/**
 	* @var int $user_block_seconds The number of seconds to block an user marked as blocked
 	*/
-	public $user_block_seconds = 0;
+	public int $user_block_seconds = 0;
 
 	/**
 	* @var string $scope The bruteforce scope. Eg: frontend,admin. Any string can be used as a custom scope
 	*/
-	protected $scope = 'frontend';
+	protected string $scope = 'frontend';
 
 	/**
 	* @var object $data Stores data about the failed attempts
 	*/
-	protected $data = null;
+	protected ?object $data = null;
 
 	/**
 	* @internal
 	*/
-	protected $ips_table = 'venus_bruteforce_ips';
+	protected string $ips_table = 'venus_bruteforce_ips';
 
 	/**
 	* @internal
 	*/
-	protected $users_table = 'venus_bruteforce_users';
+	protected string $users_table = 'venus_bruteforce_users';
 
 	/**
 	* Builds the Bruteforce object

@@ -7,7 +7,7 @@
 namespace Venus;
 
 /**
-*
+* The User Interface Class
 */
 class Ui extends \Mars\Ui
 {

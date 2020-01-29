@@ -19,22 +19,22 @@ class Email
 	/**
 	* @internal
 	*/
-	public $search = [];
+	public array $search = [];
 
 	/**
 	* @internal
 	*/
-	public $replace = [];
+	public array $replace = [];
 
 	/**
 	* @var User $user The user
 	*/
-	protected $user = null;
+	protected object $user;
 
 	/**
-	* @var object $lang The language used to send the emails
+	* @var Language $lang The language used to send the emails
 	*/
-	protected $lang = null;
+	protected object $lang;
 
 	/**
 	* Builds the User Email class

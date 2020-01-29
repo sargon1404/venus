@@ -15,17 +15,17 @@ class Themes extends Items
 	/**
 	* @internal
 	*/
-	protected static $id_name = 'tid';
+	protected static string $id_name = 'tid';
 
 	/**
 	* @internal
 	*/
-	protected static $table = 'venus_themes';
+	protected static string $table = 'venus_themes';
 
 	/**
 	* @internal
 	*/
-	protected static $class = '\Venus\Theme';
+	protected static string $class = '\Venus\Theme';
 
 	/**
 	* @see \Mars\Items::load()

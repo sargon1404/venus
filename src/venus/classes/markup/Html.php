@@ -14,12 +14,12 @@ class Html extends Markup implements MarkupInterface
 	/**
 	* @var array $allowed_tags The list of allowed tags
 	*/
-	protected $allowed_tags = [];
+	protected array $allowed_tags = [];
 
 	/**
 	* @var array $allowed_attributes The list of allowed attributes
 	*/
-	protected $allowed_attributes = [];
+	protected array $allowed_attributes = [];
 
 	/**
 	* @see \Venus\Markup\MarkupInterface::parse()

@@ -6,9 +6,10 @@
 
 namespace Venus\Cli;
 
-use Mars\Cli;
+use Venus\Cli;
 use Venus\System\Plugins;
-use Venus\Cli\System\{Output, Language};
+use Venus\Cli\System\Output;
+use Venus\Cli\System\Language;
 
 /**
 * The Booter Class
@@ -26,9 +27,7 @@ class AppBooter extends \Venus\AppBooter
 		$this->app->plugins = new Plugins($this->app);
 		$this->app->plugins->load();
 
-		$this->app->lang = new Language($this->app);
-		
-		$this->app->cli = new Cli;
+		$this->app->cli = new Cli($this->app);
 
 		return $this;
 	}

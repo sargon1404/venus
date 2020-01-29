@@ -12,17 +12,17 @@ class Export
 {
 	use \Venus\AppTrait;
 
-	public $header_file = 'header.json';
+	public string $header_file = 'header.json';
 
-	protected $header = [];
+	protected array $header = [];
 
-	protected $zip_dir = '';
+	protected string $zip_dir = '';
 
-	protected $dirs = [];
+	protected array $dirs = [];
 
-	protected $files = [];
+	protected array $files = [];
 
-	protected $handle = 0;
+	protected object $handle;
 
 	public function __construct()
 	{

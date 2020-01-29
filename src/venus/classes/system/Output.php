@@ -11,13 +11,12 @@ namespace Venus\System;
 */
 class Output
 {
-
 	use \Venus\AppTrait;
 	
 	/**
 	* @var string $file The file to output to
 	*/
-	protected $file = 'system';
+	protected string $file = 'system';
 	
 	/**
 	* Outputs a message
@@ -38,7 +37,7 @@ class Output
 	*/
 	public function error(string $text)
 	{
-		$this->app->log->log($this->file, '***[ERROR]*** '. $text);
+		$this->app->log->log($this->file, '***[ERROR]*** ' . $text);
 		
 		return $this;
 	}
@@ -50,21 +49,20 @@ class Output
 	*/
 	public function warning(string $text)
 	{
-		$this->app->log->log($this->file, '[WARNING] '. $text);
+		$this->app->log->log($this->file, '[WARNING] ' . $text);
 		
 		return $this;
 	}
 	
 	/**
-	* Outputs an info 
+	* Outputs an info
 	* @param string $text The text to output
 	* @return $this
 	*/
 	public function info(string $text)
 	{
-		$this->app->log->log($this->file, '[INFO] '. $text);
+		$this->app->log->log($this->file, '[INFO] ' . $text);
 		
 		return $this;
 	}
-
 }

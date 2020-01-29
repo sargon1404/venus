@@ -19,17 +19,17 @@ class Order
 	/**
 	* @var string $ajax_update_element The default javascript update element, when making ajax calls
 	*/
-	protected $ajax_update_element = '';
+	protected string $ajax_update_element = '';
 
 	/**
 	* @var array $icons Array storing the generated order icons
 	*/
-	protected $icons = [];
+	protected array $icons = [];
 
 	/**
 	* @var array $icons Array storing the generated order links
 	*/
-	protected $links = [];
+	protected array $links = [];
 
 	/**
 	* Builds up/down icons depending on the $orderby and $order fields.

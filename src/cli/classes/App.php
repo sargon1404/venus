@@ -17,7 +17,7 @@ class App extends \Venus\App
 	/**
 	* @var bool $is_api True if the app is run as as an api call
 	*/
-	public $is_cli = true;
+	public bool $is_cli = true;
 
 	/**
 	* @see \Mars\App::loadBooter()
@@ -43,5 +43,4 @@ class App extends \Venus\App
 	public function checkOffline()
 	{
 	}
-
 }

@@ -17,7 +17,7 @@ class Html extends \Venus\Html
 	/**
 	* @var string $root String used as the root/first entry in select controls, if required
 	*/
-	public $root = '-------------------';
+	public string $root = '-------------------';
 
 	/**
 	* Returns a select control with options : yes/no

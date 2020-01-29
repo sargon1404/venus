@@ -15,17 +15,17 @@ class Languages extends Items
 	/**
 	* @internal
 	*/
-	protected static $id_name = 'lid';
+	protected static string $id_name = 'lid';
 
 	/**
 	* @internal
 	*/
-	protected static $table = 'venus_languages';
+	protected static string $table = 'venus_languages';
 
 	/**
 	* @internal
 	*/
-	protected static $class = '\Venus\Language';
+	protected static string $class = '\Venus\Language';
 
 	/**
 	* @see \Mars\Items::load()

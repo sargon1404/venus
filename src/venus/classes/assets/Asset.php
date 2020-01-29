@@ -20,37 +20,37 @@ abstract class Asset
 	/**
 	* @var array $skip_dirs Array with the dirs to skip when reading files
 	*/
-	protected $skip_dirs = [App::EXTENSIONS_DIRS['inline'], App::EXTENSIONS_DIRS['plugins'], App::MOBILE_DIRS['mobile'], App::MOBILE_DIRS['tablets'], App::MOBILE_DIRS['smartphones']];
+	protected array $skip_dirs = [App::EXTENSIONS_DIRS['inline'], App::EXTENSIONS_DIRS['plugins'], App::MOBILE_DIRS['mobile'], App::MOBILE_DIRS['tablets'], App::MOBILE_DIRS['smartphones']];
 
 	/**
 	* @var string $dir The dir from where the assets will be loaded
 	*/
-	protected $dir = '';
+	protected string $dir = '';
 
 	/**
 	* @var string $extension The extension of the files for this type of asset
 	*/
-	protected $extension = '';
+	protected string $extension = '';
 
 	/**
 	* @var string $base_cache_dir The folder where the assets will be cached, for the frontend
 	*/
-	protected $base_cache_dir = '';
+	protected string $base_cache_dir = '';
 
 	/**
 	* @var string $cache_dir The folder where this assets will be cached
 	*/
-	protected $cache_dir = '';
+	protected string $cache_dir = '';
 
 	/**
 	* @var string $libraries_dir The folder where the libraries of this type are located
 	*/
-	protected $libraries_dir = '';
+	protected string $libraries_dir = '';
 
 	/**
 	* @var bool $minify True, if the output can be minified
 	*/
-	protected $minify = true;
+	protected bool $minify = true;
 
 	/**
 	* Returns the asset responsible for handling the dependencies for libraries of this type

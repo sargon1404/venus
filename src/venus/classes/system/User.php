@@ -7,6 +7,7 @@
 namespace Venus\System;
 
 use Venus\App;
+use Venus\Session;
 
 /**
 * The System's User Class
@@ -17,67 +18,67 @@ class User extends \Venus\User
 	/**
 	* @var string $sid The session id
 	*/
-	public $sid = '';
+	public string $sid = '';
 
 	/**
 	* @var bool $is_admin True if the user has admin priviledges
 	*/
-	public $is_admin = false;
+	public bool $is_admin = false;
 
 	/**
 	* @var bool $is_moderator True if the user is a moderator
 	*/
-	public $is_moderator = false;
+	public bool $is_moderator = false;
 
 	/**
 	* @var string $token The session token value. Used to prevent CSRF attacks
 	*/
-	public $token = '';
+	public string $token = '';
 
 	/**
 	* @var array $moderator_permissions The moderator permissions of this user,if he's a moderator
 	*/
-	public $moderator_permissions = [];
+	public array $moderator_permissions = [];
 
 	/**
-	* @var object $session The session object
+	* @var session $session The session object
 	*/
-	protected $session = null;
+	protected object $session;
 
 	/**
 	* @var int $session_regenerate_interval The interval - in minutes - after which the session id will be regenerated
 	*/
-	protected $session_regenerate_interval = 0;
+	protected int $session_regenerate_interval = 0;
 
 	/**
 	* @var string $cookie_name The name of the user cookie
 	*/
-	protected $cookie_name = '';
+	protected string $cookie_name = '';
 
 	/**
 	* @var int $cookie_expires The interval - in minutes - after which the user cookie will expire
 	*/
-	protected $cookie_expires = '';
+	protected string $cookie_expires = '';
 
 	/**
 	* @internal
 	*/
-	protected static $login_keys_table = 'venus_users_login_keys';
+	protected static string $login_keys_table = 'venus_users_login_keys';
 
 	/**
 	* @internal
 	*/
-	protected static $login_keys_scope = 'frontend';
+	protected static string $login_keys_scope = 'frontend';
 
 	/**
 	* @internal
 	*/
-	protected static $notifications_table = 'venus_users_notifications';
+	protected static string $notifications_table = 'venus_users_notifications';
 
 	/**
 	* @internal
 	*/
-	protected static $moderator_permissions_table = 'venus_moderators_permissions';
+	protected static string $moderator_permissions_table = 'venus_moderators_permissions';
 
 	/**
 	* Builds the current system user

@@ -14,10 +14,10 @@ abstract class Video
 	/**
 	* @var int $width The width of the video
 	*/
-	public $width = 420;
+	public int $width = 420;
 
 	/**
 	* @var int $height The height of the video
 	*/
-	public $height = 315;
+	public int $height = 315;
 }

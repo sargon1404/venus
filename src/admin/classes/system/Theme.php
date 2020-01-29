@@ -18,7 +18,7 @@ class Theme extends \Venus\Admin\Theme
 	/**
 	* @var string $tab_id The tab id of the currently selected tab
 	*/
-	public $tab_id = 1;
+	public string $tab_id = '1';
 
 	/**
 	* Builds the system's theme object

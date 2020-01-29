@@ -20,7 +20,7 @@ class Output extends \Venus\System\Output
 	{
 		parent::message($text);
 		
-		$this->app->cli->print($text);
+		$this->app->cli->message($text);
 		
 		return $this;
 	}
@@ -63,5 +63,4 @@ class Output extends \Venus\System\Output
 		
 		return $this;
 	}
-
 }

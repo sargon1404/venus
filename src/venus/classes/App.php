@@ -15,152 +15,152 @@ class App extends \Mars\App
 	/**
 	* @var float $version The version
 	*/
-	public $version = '1.00';
+	public string $version = '1.00';
 
 	/**
 	* @var bool $is_api True if the app is run as as an api call
 	*/
-	public $is_api = false;
+	public bool $is_api = false;
 
 	/**
 	* @var bool $is_admin True if the app is run from the admin
 	*/
-	public $is_admin = false;
+	public bool $is_admin = false;
 
 	/**
 	* @var string $type True app type (dialog, ajax)
 	*/
-	public $type = '';
+	public string $type = '';
 
 	/**
 	* @var string The url of the main index file
 	*/
-	public $site_index = '';
+	public string $site_index = '';
 
 	/**
 	* @var array $categories The current categories the current document belongs to
 	*/
-	public $categories = [];
+	public array $categories = [];
 
 	/**
-	* @var object $document The current document [block,page,category,tag]
+	* @var Document $document The current document [block,page,category,tag]
 	*/
-	public $document = null;
+	public ?Document $document = null;
 
 	/**
 	* @var string $namespace The root namespace
 	*/
-	public $namespace = "Cms\\";
+	public string $namespace = "Cms\\";
 
 	/**
 	* @var string $extensions_namespace The root namespace for extensions
 	*/
-	public $extensions_namespace = "Cms\\Extensions\\";
+	public string $extensions_namespace = "Cms\\Extensions\\";
 
 	/**
 	* @var string $images_dir The folder where the images are stored
 	*/
-	public $images_dir = '';
+	public string $images_dir = '';
 
 	/**
 	* @var string $media_dir The folder where the media files are stored
 	*/
-	public $media_dir = '';
+	public string $media_dir = '';
 
 	/**
 	* @var string $uploads_dir The folder where the uploaded files are stored
 	*/
-	public $uploads_dir = '';
+	public string $uploads_dir = '';
 
 	/**
 	* @var string $javascript_dir The folder where the javascript files are stored
 	*/
-	public $javascript_dir = '';
+	public string $javascript_dir = '';
 
 	/**
 	* @var string $images_url The url of the images folder. Will dynamically point to the regular/tablets/smartphones images folder, based on the theme type
 	*/
-	public $images_url = '';
+	public string $images_url = '';
 
 	/**
 	* @var string $images_url_base The url of the images folder. Will always point to the regular folder
 	*/
-	public $images_url_base = '';
+	public string $images_url_base = '';
 
 	/**
 	* @var string $media_url The url of the media folder
 	*/
-	public $media_url = '';
+	public string $media_url = '';
 
 	/**
 	* @var string $uploads_url The url of the uploads folder
 	*/
-	public $uploads_url = '';
+	public string $uploads_url = '';
 
 	/**
 	* @var string $javascript_url The url of the javascript folder
 	*/
-	public $javascript_url = '';
+	public string $javascript_url = '';
 
 	/**
 	* @var string $utils_url The url of the utils folder
 	*/
-	public $utils_url = '';
+	public string $utils_url = '';
 
 	/**
 	* @var string $admin_url The url of the admin area
 	*/
-	public $admin_url = '';
+	public string $admin_url = '';
 
 	/**
 	* @var string	$admin_dir The path for the admin area
 	*/
-	public $admin_dir = '';
+	public string $admin_dir = '';
 
 	/**
 	* @var bool $is_homepage Set to true if the homepage is currently displayed
 	*/
-	public $is_homepage = false;
+	public bool $is_homepage = false;
 
 	/**
 	* @var bool $show_menu Determines if the menu is to be displayed
 	*/
-	public $show_menu = true;
+	public bool $show_menu = true;
 
 	/**
 	* @var bool $show_breadcrumbs Determines if the breadcrumbs are to be displayed
 	*/
-	public $show_breadcrumbs = true;
+	public bool $show_breadcrumbs = true;
 
 	/**
 	* @var bool $show_announcements Determines if the announcements are to be displayed
 	*/
-	public $show_announcements = true;
+	public bool $show_announcements = true;
 
 	/**
 	* @var bool $show_widgets Determines if the widgets are to be displayed
 	*/
-	public $show_widgets = true;
+	public bool $show_widgets = true;
 
 	/**
 	* @var bool $show_banners Determines if the banners are to be displayed
 	*/
-	public $show_banners = true;
+	public bool $show_banners = true;
 
 	/**
 	* @var array $extra_html Extra html code to be placed in the head/body/footer
 	*/
-	public $extra_html = ['head' => '', 'body' => '', 'footer' => ''];
+	public array $extra_html = ['head' => '', 'body' => '', 'footer' => ''];
 
 	/**
 	* @var array $extra_javascript Extra javascript code to be placed in the head/body/footer
 	*/
-	public $extra_javascript = ['head' => '', 'body' => '', 'footer' => ''];
+	public array $extra_javascript = ['head' => '', 'body' => '', 'footer' => ''];
 
 	/**
 	* @var array $extra_css Extra css code to be placed in the head/body/footer
 	*/
-	public $extra_css = ['head' => '', 'body' => '', 'footer' => ''];
+	public array $extra_css = ['head' => '', 'body' => '', 'footer' => ''];
 
 	/**
 	* @const array DIRS The locations of the used dirs
@@ -261,7 +261,7 @@ class App extends \Mars\App
 	* Instantiates the App object
 	* @return App The app instance
 	*/
-	public static function instantiate() : \Mars\App
+	public static function instantiate() : App
 	{
 		parent::$instance = new static;
 
@@ -331,6 +331,15 @@ class App extends \Mars\App
 
 		$this->show_menu = (bool)$this->config->menu_show;
 		$this->show_breadcrumbs = (bool)$this->config->breadcrumbs_show;
+	}
+	
+	/**
+	* @see \Mars\App::getSireUrl()
+	* {@inheritDoc}
+	*/
+	protected function getSiteUrl() : string
+	{
+		return $this->config->site_url;
 	}
 
 	/**

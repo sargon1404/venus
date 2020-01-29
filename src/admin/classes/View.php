@@ -15,9 +15,9 @@ use Venus\Controller;
 abstract class View extends \Venus\View
 {
 	/**
-	* @var object $navbar Alias for $this->app->navbar
+	* @var Navbar $navbar Alias for $this->app->navbar
 	*/
-	public $navbar = null;
+	public Navbar $navbar;
 
 	/**
 	* @see \Mars\View::prepare()

@@ -20,24 +20,24 @@ class Css
 	/**
 	* @var array $vars The parsed vars
 	*/
-	protected $vars = [];
+	protected array $vars = [];
 
 	/**
 	* @var string $current_url The url corresponding to the ./ entry
 	*/
-	protected $current_url = '';
+	protected string $current_url = '';
 	/**
 	* @var string $up_url The url corresponding to the ../ entry
 	*/
-	protected $up_url = '';
+	protected string $up_url = '';
 	/**
 	* @var string $images_url The url corresponding to the theme's images url
 	*/
-	protected $images_url = '';
+	protected string $images_url = '';
 	/**
 	* @var string $root_images_url The url corresponding to theme's root images url
 	*/
-	protected $root_images_url = '';
+	protected string $root_images_url = '';
 
 	/**
 	* Returns the vars

@@ -19,17 +19,17 @@ class Captcha
 	/**
 	* @var bool $enabled Will be set to true, if captcha is enabled
 	*/
-	protected $enabled = false;
+	protected bool $enabled = false;
 
 	/**
 	* @var string $driver The used driver
 	*/
-	protected $driver = '';
+	protected string $driver = '';
 
 	/**
 	* @var object $handle The driver's handle
 	*/
-	protected $handle = null;
+	protected DriverInterface $handle;
 
 	/**
 	* Builds the captcha object

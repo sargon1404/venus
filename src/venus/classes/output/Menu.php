@@ -17,12 +17,12 @@ class Menu
 	/**
 	* @var int $icon_width The icon's width
 	*/
-	public $icon_width = 0;
+	public int $icon_width = 0;
 
 	/**
 	* @var int $icon_height The icon's height
 	*/
-	public $icon_height = 0;
+	public int $icon_height = 0;
 
 	/**
 	* Outputs a menu

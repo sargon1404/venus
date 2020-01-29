@@ -6,6 +6,8 @@
 
 namespace Venus;
 
+use \Mars\Controller; //for preloading
+
 /**
 * The View Class
 * Implements the View functionality of the MVC pattern
@@ -15,42 +17,42 @@ abstract class View extends \Mars\View
 	/**
 	* @var string $base_url The base url of the controller to which the view belongs.
 	*/
-	public $base_url = '';
+	public string $base_url = '';
 
 	/**
 	* @var Document $document The document the view belongs to
 	*/
-	public $document = null;
+	public Document $document;
 
 	/**
 	* @var string $images_url Alias for $this->app->images_url
 	*/
-	public $images_url = null;
+	public string $images_url = '';
 
 	/**
 	* @var string $prefix Prefix to be used when calling plugins
 	*/
-	public $prefix = '';
+	public string $prefix = '';
 
 	/**
 	* @var string $prefix_output Prefix to be used when calling plugins in the templates
 	*/
-	public $prefix_output = '';
+	public string $prefix_output = '';
 
 	/**
 	* @var string $item_id The name of the id param, when building the item's url
 	*/
-	public $item_id = 'id';
+	public string $item_id = 'id';
 
 	/**
 	* @var string $item_id The name of the id param, when building the item's url. Brackets will be appended to this param
 	*/
-	public $item_ids = 'ids';
+	public string $item_ids = 'ids';
 
 	/**
 	* @var string $controller_name The controller's name
 	*/
-	protected $controller_name = null;
+	protected string $controller_name = '';
 
 	/**
 	* @see \Mars\View::prepare()

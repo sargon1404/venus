@@ -17,32 +17,32 @@ class Language extends \Venus\Extensions\Extension
 	/**
 	* @var int $lid The id of the language
 	*/
-	public $lid = 0;
+	public int $lid = 0;
 
 	/**
 	* @var int $parent The id of the parent language, if any
 	*/
-	public $parent = 0;
+	public int $parent = 0;
 
 	/**
 	* @var string $parent_name The name of the language's parent language, if any
 	*/
-	public $parent_name = '';
+	public string $parent_name = '';
 
 	/**
 	* @var string $parent_dir The dir of the language's parent language, if any
 	*/
-	public $parent_dir = '';
+	public string $parent_dir = '';
 
 	/**
 	* @var string $date_picker_format The language's date picker format
 	*/
-	public $date_picker_format = 'dd/mm/yyyy';
+	public string $date_picker_format = 'dd/mm/yyyy';
 
 	/**
 	* @var string $time_picker_format The language's time picker format
 	*/
-	public $time_picker_format = 'hh:mm:ss';
+	public string $time_picker_format = 'hh:mm:ss';
 
 	/**
 	* @var array $files Array with the keys listing the available files of the language
@@ -57,12 +57,12 @@ class Language extends \Venus\Extensions\Extension
 	/**
 	* @internal
 	*/
-	protected static $id_name = 'lid';
+	protected static string $id_name = 'lid';
 
 	/**
 	* @internal
 	*/
-	protected static $table = 'venus_languages';
+	protected static string $table = 'venus_languages';
 
 	/**
 	* Builds the language object

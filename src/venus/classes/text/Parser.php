@@ -20,22 +20,22 @@ class Parser extends \Mars\Text\Parser
 	/**
 	* @internal
 	*/
-	protected $escape_html = true;
+	protected bool $escape_html = true;
 
 	/**
 	* @internal
 	*/
-	protected $snippet_index = 0;
+	protected int $snippet_index = 0;
 
 	/**
 	* @internal
 	*/
-	protected $widgets_index = 0;
+	protected int $widgets_index = 0;
 
 	/**
 	* @internal
 	*/
-	protected $widgets_list_index = 0;
+	protected int $widgets_list_index = 0;
 
 	/**
 	* @see \Mars\Text\Parser::parseLinks()

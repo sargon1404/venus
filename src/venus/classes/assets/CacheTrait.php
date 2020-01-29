@@ -23,12 +23,12 @@ trait CacheTrait
 	/**
 	* @var string $base_cache_url The url of the base/frontend cache url
 	*/
-	protected $base_cache_url = '';
+	protected string $base_cache_url = '';
 
 	/**
 	* @var string $cache_url The url of the cache dir
 	*/
-	protected $cache_url = '';
+	protected string $cache_url = '';
 
 	/**
 	* Returns the name under which a file will be cached
@@ -43,7 +43,7 @@ trait CacheTrait
 
 		$parts = array_filter($parts);
 
-		return implode($parts, '-') . '.' . $this->extension;
+		return implode('-', $parts) . '.' . $this->extension;
 	}
 
 	/**

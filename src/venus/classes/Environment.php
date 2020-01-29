@@ -106,7 +106,7 @@ class Environment
 		static $blocks = [];
 
 		if (!$blocks) {
-			$blocks = $this->app->cache->get('blocks', true);
+			$blocks = $this->app->cache->get('blocks', true, []);
 		}
 
 		return $blocks;

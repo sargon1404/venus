@@ -15,22 +15,22 @@ abstract class Model extends \Mars\Model
 	/**
 	* @var string $prefix Prefix to be used when calling plugins
 	*/
-	public $prefix = '';
+	public string $prefix = '';
 
 	/**
 	* @internal
 	*/
-	protected static $users_table = 'venus_users';
+	protected static string $users_table = 'venus_users';
 
 	/**
 	* @internal
 	*/
-	protected static $usergroups_table = 'venus_usergroups';
+	protected static string $usergroups_table = 'venus_usergroups';
 
 	/**
 	* @internal
 	*/
-	protected static $categories_table = 'venus_categories';
+	protected static string $categories_table = 'venus_categories';
 
 	/**
 	* Builds the Model

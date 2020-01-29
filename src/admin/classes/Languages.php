@@ -17,12 +17,12 @@ class Languages extends \Venus\Entities
 	/**
 	* @internal
 	*/
-	protected static $class = '\Venus\Admin\Language';
+	protected static string $class = '\Venus\Admin\Language';
 
 	/**
 	* @internal
 	*/
-	protected static $base_dir = 'languages';
+	protected static string $base_dir = 'languages';
 
 	/**
 	* @internal

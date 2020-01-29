@@ -13,8 +13,11 @@ use function Mars\Autoload\get_filename;
 
 	$parts = explode('\\', $name);
 
-	$filename = dirname(__DIR__, 2) . '/' . get_filename($parts, false);
-	var_dump($filename);
-	die;
+	$filename = dirname(__DIR__, 2) . '/cli/classes/' . get_filename($parts, 1);
+	
+	if (!is_file($filename)) {
+		return;
+	}
+	
 	require($filename);
 });

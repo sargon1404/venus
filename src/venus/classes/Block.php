@@ -23,81 +23,81 @@ class Block extends \Venus\Extensions\Extension implements Document
 	/**
 	* @var int $bid The block's id
 	*/
-	public $bid = 0;
+	public int $bid = 0;
 
 	/**
 	* @var int $id1 The block's sub item 1
 	*/
-	public $id1 = 0;
+	public int $id1 = 0;
 
 	/**
 	* @var int $id2 The block's sub item 2
 	*/
-	public $id2 = 0;
+	public int $id2 = 0;
 
 	/**
 	* @var int $id3 The block's sub item3
 	*/
-	public $id3 = 0;
+	public int $id3 = 0;
 
 	/**
 	* @var string $full_url The url of the current block page
 	*/
-	public $full_url = '';
+	public string $full_url = '';
 
 	/**
 	* @internal
 	*/
-	protected static $id_name = 'bid';
+	protected static string $id_name = 'bid';
 
 	/**
 	* @internal
 	*/
-	protected static $table = 'venus_blocks';
+	protected static string $table = 'venus_blocks';
 
 	/**
 	* Needed by ConfigTrait
 	* @internal
 	*/
-	protected static $config_prefix = 'block_';
+	protected static string $config_prefix = 'block_';
 
 	/**
 	* Needed by ImageTrait
 	* @internal
 	*/
-	protected static $image_type = 'image';
+	protected static string $image_type = 'image';
 
 	/**
 	* Needed by ImageTrait
 	* @internal
 	*/
-	protected static $image_subdir = false;
+	protected static bool $image_subdir = false;
 
 	/**
 	* Needed by CategoryTrait
 	* @internal
 	*/
-	protected static $category_image_type = 'small_thumb';
+	protected static string $category_image_type = 'small_thumb';
 
 	/**
 	* @internal
 	*/
-	protected static $languages_cache = true;
+	protected static bool $languages_cache = true;
 
 	/**
 	* @internal
 	*/
-	protected static $type = 'block';
+	protected static string $type = 'block';
 
 	/**
 	* @internal
 	*/
-	protected static $base_dir = 'blocks';
+	protected static string $base_dir = 'blocks';
 
 	/**
 	* @internal
 	*/
-	protected static $namespace = "\\Cms\\Extensions\\Blocks\\";
+	protected static string $namespace = "\\Cms\\Extensions\\Blocks\\";
 
 	/**
 	* Builds a block extension object
