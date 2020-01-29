@@ -10,7 +10,7 @@ namespace Venus\Cli;
 * The Main Venus Class
 * The system's main object
 */
-class App extends \Venus\App
+class App extends \Venus\Admin\App
 {
 	use \Mars\Cli\CliFunctionsTrait;
 

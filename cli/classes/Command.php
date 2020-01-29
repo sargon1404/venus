@@ -83,4 +83,15 @@ class Command extends Base
 			$help->listOptions($this->name . ':' . $this->action, $data[1], $data[2] ?? []);
 		}
 	}
+	
+	public function newline()
+	{
+		echo "\n";	
+	}
+	
+	public function done()
+	{
+		$this->newline();
+		$this->print("Done", '1;33');			
+	}
 }

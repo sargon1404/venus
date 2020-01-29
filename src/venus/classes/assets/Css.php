@@ -123,6 +123,8 @@ class Css extends Asset
 	*/
 	public function cacheTheme(Theme $theme)
 	{
+		$this->app->output->message("Building css code for theme {$theme->title}");
+		
 		$this->parser->setTheme($theme);
 
 		$dir = $theme->dir . App::EXTENSIONS_DIRS['css'];

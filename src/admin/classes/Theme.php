@@ -111,8 +111,7 @@ class Theme extends \Venus\System\Theme
 	*/
 	protected function prepareTemplates()
 	{
-		$this->templates = $this->app->cache->get('theme_templates', true);
-
+		$this->templates = $this->app->cache->get('theme_templates', true, []);
 		if ($this->templates) {
 			return;
 		}

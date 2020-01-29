@@ -9,13 +9,12 @@ namespace Venus\Cli;
 use Venus\Cli;
 use Venus\System\Plugins;
 use Venus\Cli\System\Output;
-use Venus\Cli\System\Language;
 
 /**
 * The Booter Class
 * Initializes the system's required classes
 */
-class AppBooter extends \Venus\AppBooter
+class AppBooter extends \Venus\Admin\AppBooter
 {
 	/**
 	* @see \Mars\Booter::system()

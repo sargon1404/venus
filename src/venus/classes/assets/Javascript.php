@@ -129,7 +129,9 @@ class Javascript extends Asset
 	* Combines & minifies & caches the javascript code from the /javascript folder, the plugins, the config options, the paths and the strings
 	*/
 	public function cacheMain()
-	{
+	{		
+		$this->app->output->message("Building main javascript code");
+		
 		$main_code = $this->readFromDir($this->dir);
 		$plugins_code = $this->readFromDir($this->dir . App::EXTENSIONS_DIRS['plugins']);
 		$config_code = $this->getConfig();
@@ -193,6 +195,8 @@ class Javascript extends Asset
 	*/
 	public function cacheTheme(Theme $theme)
 	{
+		$this->app->output->message("Building javascript code for theme {$theme->title}");
+		
 		//use the javascript_minify theme param, if set
 		$minify = $theme->params->javascript_minify ?? null;
 		if (!$theme->has_javascript_dir) {
@@ -231,6 +235,8 @@ class Javascript extends Asset
 	*/
 	public function cacheInline()
 	{
+		$this->app->output->message("Building inline javascript code");
+		
 		$inline_code = $this->getInline($this->dir, $this->minify);
 
 		$this->app->cache->update('js_inline', $inline_code, true, $this->scope);

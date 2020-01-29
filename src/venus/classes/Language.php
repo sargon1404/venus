@@ -27,7 +27,7 @@ class Language extends \Venus\Extensions\Extension
 	/**
 	* @var string $parent_name The name of the language's parent language, if any
 	*/
-	public string $parent_name = '';
+	public ?string $parent_name = '';
 
 	/**
 	* @var string $parent_dir The dir of the language's parent language, if any

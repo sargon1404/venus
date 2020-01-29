@@ -12,7 +12,7 @@ use Mars\Alerts\{Errors, Messages, Warnings, Notifications};
 use Venus\{Log, Time, Format, File, Uri, Library, Environment, Media};
 use Venus\Helpers\{Controls, Tree, Order};
 use Venus\Document\Breadcrumbs;
-use Venus\System\{Print, Plugins};
+use Venus\System\{Output, Plugins};
 
 /**
 * The Booter Class
@@ -129,7 +129,7 @@ class AppBooter extends \Venus\AppBooter
 	*/
 	public function system()
 	{
-		$this->app->print = new Print($this->app);
+		$this->app->output = new Output($this->app);
 		$this->app->plugins = new Plugins($this->app);
 		$this->app->plugins->load();
 

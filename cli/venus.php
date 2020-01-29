@@ -41,11 +41,11 @@ if ($command == 'help') {
 	$method = 'index';
 }
 //always call the help method, if the --help option is passed
-if (isset($options['help']) || isset($options['h'])) {
+if (!$method || isset($options['help']) || isset($options['h'])) {
 	$method = 'help';
 }
 
-if (!$method || !method_exists($obj, $method)) {
+if (!method_exists($obj, $method)) {
 	$app->cli->errorAndDie("Unknown action: {$action}");
 }
 

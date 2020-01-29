@@ -63,7 +63,7 @@ class Javascript extends \Venus\Assets\Javascript
 	* Caches the javascript code of the admin theme
 	*/
 	public function cacheThemes()
-	{
+	{				
 		$theme = new \Venus\Admin\Theme($this->app);
 
 		$this->cacheTheme($theme);
@@ -75,6 +75,8 @@ class Javascript extends \Venus\Assets\Javascript
 	*/
 	public function cacheTheme(Theme $theme)
 	{
+		$this->app->output->message("Building javascript code for theme {$theme->title}");
+		
 		$javascript_dir = $theme->dir . App::EXTENSIONS_DIRS['javascript'];
 		$has_javascript_dir = is_dir($javascript_dir);
 		$main_code = '';

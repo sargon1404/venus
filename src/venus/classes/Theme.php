@@ -34,7 +34,7 @@ class Theme extends \Venus\Extensions\Extension
 	/**
 	* @var string $parent_name The name of the theme's parent theme, if any
 	*/
-	public string $parent_name = '';
+	public ?string $parent_name = '';
 
 	/**
 	* @var string $parent_templates_dir The filesystem path for the theme's parent templates folder
@@ -42,14 +42,14 @@ class Theme extends \Venus\Extensions\Extension
 	public string $parent_templates_dir = '';
 
 	/**
-	* @var array $templates Array with the keys listing the available templates of the theme
+	* @var string|array $templates Array with the keys listing the available templates of the theme
 	*/
-	public array $templates = [];
+	public $templates = [];
 
 	/**
-	* @var array $parent_templates Array with the keys listing the available templates of the parent theme
+	* @var string|array $parent_templates Array with the keys listing the available templates of the parent theme
 	*/
-	public array $parent_templates = [];
+	public $parent_templates = [];
 
 	/**
 	* @var string $root_images_dir The filesystem path for the theme's regular images folder. Unlike images_dir which might point to the tables/smartphones images dir, it will always point to the main/base images dir
@@ -89,27 +89,27 @@ class Theme extends \Venus\Extensions\Extension
 	/**
 	* @var bool $parent_has_javascript_dir True if the parent theme has a javascript dir
 	*/
-	public array $parent_has_javascript_dir = [];
+	public ?bool $parent_has_javascript_dir = false;
 
 	/**
 	* @var bool $parent_has_images_dir True if the parent theme has an image folder
 	*/
-	public bool $parent_has_images_dir = false;
+	public ?bool $parent_has_images_dir = false;
 
 	/**
 	* @var bool $parent_has_mobile_images_dir True if the parent theme has a mobile image folder
 	*/
-	public bool $parent_has_mobile_images_dir = false;
+	public ?bool $parent_has_mobile_images_dir = false;
 
 	/**
 	* @var bool $parent_has_tablets_images_dir True if the parent theme has a tablets image folder
 	*/
-	public bool $parent_has_tablets_images_dir = false;
+	public ?bool $parent_has_tablets_images_dir = false;
 
 	/**
 	* @var bool $parent_has_smartphones_images_dir True if the parent theme has a smartphones image folder
 	*/
-	public bool $parent_has_smartphones_images_dir = false;
+	public ?bool $parent_has_smartphones_images_dir = false;
 
 	/**
 	* @var array $base_params The theme's base params
@@ -191,7 +191,7 @@ class Theme extends \Venus\Extensions\Extension
 	/**
 	* @var array $parent_params The theme's parent params
 	*/
-	public array $parent_params = [];
+	public $parent_params = [];
 
 	/**
 	* @var array $params_data Array where the unserialized params data is stored
@@ -232,7 +232,7 @@ class Theme extends \Venus\Extensions\Extension
 	public function getRow(int $tid) : object
 	{
 		$table = $this->getTable();
-
+		
 		$this->app->db->readQuery("
 			SELECT
 			t.*, p.name as parent_name, p.templates as parent_templates,
