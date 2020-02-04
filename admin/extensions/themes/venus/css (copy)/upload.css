@@ -1,0 +1,26 @@
+.upload-area
+{
+	border: 3px dashed #b7b7b7;
+	min-height: 75px;
+	margin-bottom: 15px;
+}
+
+.upload-over
+{
+	border: 3px dashed #79AB31;
+}
+
+.upload-error
+{
+	border: 3px dashed #D2342C;
+}
+
+.upload-area input[type="file"]
+{
+	display: none;
+}
+
+.upload-area progress
+{
+	margin-top: 0;
+}

@@ -1,9 +1,7 @@
-#debug-info
-{
+#debug-info {
 	margin-bottom: 50px; 
 }
 
-#debug-info .debug-grid-templates td
-{
+#debug-info .debug-grid-templates td {
 	text-align: left;
 }

@@ -341,3 +341,71 @@ create table venus_themes
 	
 	primary key(tid)
 );
+
+create table venus_administrators
+(
+	`uid`										int   				unsigned			NOT NULL,
+	`filter`									tinyint				unsigned			NOT NULL,
+	`editor`									varchar(255)					   	NOT NULL,
+	index uid_index(uid)
+);
+
+create table venus_administrators_permissions
+(
+	`uid`										int   				unsigned			NOT NULL,
+	`bid`										int   				unsigned			NOT NULL,
+	`view`									tinyint									NOT NULL,
+	`add`										tinyint									NOT NULL,
+	`publish`								tinyint									NOT NULL,
+	`publish_own`							tinyint									NOT NULL,
+	`edit`									tinyint									NOT NULL,
+	`edit_own`								tinyint									NOT NULL,
+	`delete`									tinyint									NOT NULL,
+	`delete_own`							tinyint									NOT NULL,
+	index uid_index(uid,bid)
+);
+
+create table venus_administrators_logins
+(
+	`uid`										int unsigned							NOT NULL,
+	`ip`         							varchar(255)							NOT NULL,
+	`useragent`								varchar(255)							NOT NULL,
+	`timestamp`   							int unsigned							NOT NULL,
+
+	index timestamp_index(`timestamp`)
+);
+
+create table venus_admin_blocks
+(
+	`bid`                   			int	unsigned 	auto_increment	NOT NULL,
+	`title`               				varchar(255) 							NOT NULL,
+	`name`               				varchar(255) 							NOT NULL,
+	`name_crc`								int 			 		unsigned			NOT NULL,
+	`status`									tinyint									NOT NULL,
+	`default`								tinyint									NOT NULL,
+	`development`							tinyint									NOT NULL,
+	`note`									varchar(2048)							NOT NULL,
+	`languages`								text										NOT NULL,
+	`params` 								mediumtext								NOT NULL,
+	`created_timestamp`					int					unsigned			NOT NULL,
+ 	`created_by`							int					unsigned			NOT NULL,
+ 	`modified_timestamp`					int					unsigned			NOT NULL,
+ 	`modified_by`							int					unsigned			NOT NULL,
+
+	primary key(bid),
+	index name_crc_index(`name_crc`)
+);
+
+
+create table venus_admin_menu
+(
+	`mid`     	 							int unsigned	auto_increment  	NOT NULL,
+	`type`									varchar(255)							NOT NULL,
+	`type_id`								int										NOT NULL,
+	`title`				   				varchar(255)							NOT NULL,
+	`url`          						text							   		NOT NULL,
+	`icon`         	   				varchar(255)							NOT NULL,
+	`parent`       						int unsigned							NOT NULL,
+	`block`									varchar(255)							NOT NULL,
+	primary key(mid)
+);

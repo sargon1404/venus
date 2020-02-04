@@ -205,7 +205,7 @@ class Uri extends \Mars\Uri
 	{
 		$url = $this->getBlock($this->block_names[$block], $action, $params);
 
-		$this->app->plugins->run('uriGetBlockUrl', $block, $url, $this);
+		$this->app->plugins->run('uri_get_block_url', $block, $url, $this);
 
 		return $url;
 	}
@@ -330,7 +330,7 @@ class Uri extends \Mars\Uri
 
 		$url = $this->getDocumentUrl('block', $this->app->config->seo_block_url, $block, $block->bid, $params, $seo_extra, $page_no, $return_base_url);
 
-		$this->app->plugins->run('uriGetBlock', $url, $block, $action, $params, $seo_extra, $page_no, $return_base_url, $this);
+		$this->app->plugins->run('uri_get_block', $url, $block, $action, $params, $seo_extra, $page_no, $return_base_url, $this);
 
 		return $url;
 	}
@@ -392,7 +392,7 @@ class Uri extends \Mars\Uri
 
 		$url = $this->getDocumentUrl('page', $this->app->config->seo_page_url, $page, $page->pid, [], [], $page_no, $return_base_url);
 
-		$this->app->plugins->run('uriGetPage', $url, $page, $page_no, $return_base_url, $this);
+		$this->app->plugins->run('uri_get_page', $url, $page, $page_no, $return_base_url, $this);
 
 		return $url;
 	}
@@ -451,7 +451,7 @@ class Uri extends \Mars\Uri
 			$url = $this->getDocumentUrl('category', $this->app->config->seo_category_url, $category, $category->cid, [], [], $page_no, $return_base_url, false, true);
 		}
 
-		$this->app->plugins->run('uriGetCategory', $url, $category, $page_no, $return_base_url, $this);
+		$this->app->plugins->run('uri_get_category', $url, $category, $page_no, $return_base_url, $this);
 
 		return $url;
 	}
@@ -503,7 +503,7 @@ class Uri extends \Mars\Uri
 
 		$url = $this->getDocumentUrl('tag', $this->app->config->seo_tag_url, $tag, $tag->tid, [], [], $page_no, $return_base_url, false);
 
-		$this->app->plugins->run('uriGetTag', $url, $tag, $page_no, $return_base_url, $this);
+		$this->app->plugins->run('uri_get_tag', $url, $tag, $page_no, $return_base_url, $this);
 
 		return $url;
 	}
@@ -563,7 +563,7 @@ class Uri extends \Mars\Uri
 			$url.= str_replace($search, $replace, $this->app->config->seo_user_url);
 		}
 
-		$this->app->plugins->run('uriGetUser', $url, $user, $this);
+		$this->app->plugins->run('uri_get_user', $url, $user, $this);
 
 		return $url;
 	}

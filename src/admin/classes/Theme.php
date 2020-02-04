@@ -26,7 +26,7 @@ class Theme extends \Venus\System\Theme
 
 		$this->load($name);
 
-		$this->app->plugins->run('adminThemeConstruct', $this);
+		$this->app->plugins->run('admin_theme_construct', $this);
 	}
 
 	/**

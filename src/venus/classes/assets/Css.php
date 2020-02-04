@@ -79,7 +79,7 @@ class Css extends Asset
 	{
 		$content = $this->parser->parse($content, $params);
 
-		return $this->app->plugins->filter('assetCssParse', $content, $params, $this);
+		return $this->app->plugins->filter('asset_css_parse', $content, $params, $this);
 	}
 
 	/**
@@ -190,6 +190,6 @@ class Css extends Asset
 	{
 		$code = '';
 
-		return $this->app->plugins->filter('assetsCssGetExtra', $code, $this);
+		return $this->app->plugins->filter('assets_css_get_extra', $code, $this);
 	}
 }

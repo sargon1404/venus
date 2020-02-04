@@ -12,7 +12,7 @@ try {
 	$app = App::instantiate();
 	$app->boot();
 
-	$app->plugins->run('cliBootSystem');
+	$app->plugins->run('cli_boot');
 } catch (\Exception $e) {
 	$app->fatalError($e->getMessage());
 }

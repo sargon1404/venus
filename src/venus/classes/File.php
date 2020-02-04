@@ -44,7 +44,7 @@ class File extends \Mars\File
 	{
 		$filename = $this->app->text->cutMiddle($filename, $max_length, $replace_with);
 
-		$filename = $this->app->plugins->filter('fileCutFilename', $filename, $max_length, $replace_with, $this);
+		$filename = $this->app->plugins->filter('file_cut_filename', $filename, $max_length, $replace_with, $this);
 
 		return $filename;
 	}

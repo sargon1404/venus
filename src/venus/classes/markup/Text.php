@@ -24,7 +24,7 @@ class Text extends Markup implements MarkupInterface
 
 		$text = nl2br(App::e($text));
 
-		return $this->app->plugins->filter('markupTextParse', $text, $this);
+		return $this->app->plugins->filter('markup_text_parse', $text, $this);
 
 		return $text;
 	}
@@ -35,7 +35,7 @@ class Text extends Markup implements MarkupInterface
 	*/
 	public function convert(string $text) : string
 	{
-		return $this->app->plugins->filter('markupTextConvert', $text, $this);
+		return $this->app->plugins->filter('markup_text_convert', $text, $this);
 	}
 
 	/**

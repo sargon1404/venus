@@ -1,0 +1,33 @@
+fieldset
+{
+	border: 0;
+	padding: 10px 10px;
+}
+
+fieldset .field
+{
+	padding: 6px 0;
+}
+
+fieldset .field label
+{
+	display: inline-block;
+	width: 30%;
+	text-align: right;
+	padding: 0 20px 0 2px;
+	vertical-align: middle;	
+}
+
+fieldset .field input,
+fieldset .field select,
+fieldset .field textarea
+{
+	display: inline-block;
+	width: 55%;
+}
+
+fieldset .field input[type="submit"]
+{
+	margin-left: 30%;
+	width: auto;
+}

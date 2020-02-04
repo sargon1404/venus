@@ -11,7 +11,7 @@ header.login-header
 
 header.login-header #topbar
 {
-	background: #000 url('../images/header_top.jpg') no-repeat center top;
+	background: #000 url('../images/header-top.jpg') no-repeat center top;
 }
 
 header.login-header #logo

@@ -1,5 +1,4 @@
-input, select, textarea
-{
+input, select, textarea {
 	font-size: 1.09em;
 	background: #FFF;
 	border-radius: 4px;
@@ -8,46 +7,40 @@ input, select, textarea
 	color: #2F2F2F;
 }
 
-textarea
-{
+textarea {
 	padding: 7px 8px 0 8px;
+	width: 92%;
+	height: 100px;
 }
 
-input:focus, select:focus, option:focus, textarea:focus
-{
+input:focus, select:focus, option:focus, textarea:focus {
 	border: 1px solid #79AB31;
 	outline: 0;
 }
 
-input[type=text], input[type=password], input[type=email], textarea.input
-{
+input[type=text], input[type=password], input[type=email], textarea.input {
 	width: 92%;
 	height: 30px;
 }
 
-textarea.input:focus
-{
+textarea.input:focus {
 	height: 100px;
 }
 
-input[type=file]
-{
+input[type=file] {
 	width: 400px;
 }
 
-select
-{
+select {
 	width: 92%;
 	height: 30px;
 }
 
-option
-{
+option {
 	padding: 0 15px 0 0;
 }
 
-input[type=submit], input[type=button], a.button
-{
+input[type=submit], input[type=button], a.button {
 	padding: 0 14px;
 	margin: 0;
 	height: 28px;
@@ -59,64 +52,54 @@ input[type=submit], input[type=button], a.button
 	color: #fff;
 }
 
-input[type=button]
-{
+input[type=button] {
 	padding: 0 13px;
 }
 
-input[type=submit]:hover, input[type=button]:hover, a.button:hover
-{
+input[type=submit]:hover, input[type=button]:hover, a.button:hover {
 	background: #6D6D6D linear-gradient(#353535, #6D6D6D);
 }
 
-input[type=checkbox], input[type=radio]
-{
+input[type=checkbox], input[type=radio] {
 	vertical-align: middle;
-}
-
-textarea
-{
-	width: 92%;
-	height: 100px;
 }
 
 /*****************************/
 
-input.auto, select.auto
-{
+input.auto, select.auto {
 	width: auto;
 }
 
-input.small, select.small
-{
+input.small, select.small {
 	width: 55px;
 }
 
-input.date
-{
+input.date {
 	width: 95px;
 }
 
-input.url
-{
+input.url {
 	width: 50%;
 	max-width: 650px;
 }
 
-input.with-button
-{
+input.with-button {
 	width: calc(92% - 78px);
 }
 
-progress
-{
+progress {
 	display: block;
 	margin: 15px auto;
 	width: 100%;
 	height: 20px;
 }
 
-progress.upload
-{
+progress.upload {
 	display: none;
+}
+
+.required:after {
+	content: '*';
+	color: #D2342C;
+	padding: 0 6px;
 }

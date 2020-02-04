@@ -1,40 +1,30 @@
 <?php
+namespace Venus\Admin;
+
 define('VENUS', 1);
 define('VENUS_ADMIN', 1);
 
 chdir('..');
-require('src/admin/boot/system.php');
+require('src/admin/boot.php');
 
 try {
+	$block_name = $app->request->value($app->config->block_param);	
+
+	if (!$app->session->get('admin')) {
+		$block_name = 'login';		
+	} else {
+		if (!$block_name) {
+			$block_name = 'index';
+		}	
+	}
+
+	$app->document = new Block($block_name);
+
 	$app->start();
-	echo 'Some content';
+	$app->document->output();
 	$app->end();
+
+	$app->output();
 } catch (\Exception $e) {
 	$app->fatalError($e->getMessage());
-}
-
-$app->output();
-die;
-
-try {
-	if (!$venus->session->get('admin')) {
-		$venus->session->set('admin_referrer', $venus->full_url);
-
-		$venus->redirectForce('login.php');
-	}
-
-	$block_name = $venus->request->value($venus->config->block_param);
-	if (!$block_name) {
-		$block_name = 'index';
-	}
-
-	$venus->document = new \venus\admin\Block($block_name);
-
-	$venus->start();
-	$venus->document->output();
-	$venus->end();
-
-	$venus->output();
-} catch (\Exception $e) {
-	$venus->fatalError($e->getMessage());
 }

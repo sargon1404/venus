@@ -99,7 +99,7 @@ class Theme extends \Venus\Theme
 
 		parent::__construct($theme);
 
-		$this->app->plugins->run('systemThemeConstruct', $this, $theme);
+		$this->app->plugins->run('system_theme_construct', $this, $theme);
 	}
 
 	/**
@@ -196,14 +196,9 @@ class Theme extends \Venus\Theme
 		$this->javascript_location = $this->params->javascript_location ?? $this->app->config->javascript_location;
 		$this->javascript_priority = $this->params->javascript_priority ?? $this->css_priority;
 
-		$this->development = false;
-		$this->javascript_merge = true;
-		var_dump("remove development");
-
 		//don't merge css/js files in development mode
 		if ($this->development) {
 			$this->css_merge = false;
-
 			$this->javascript_merge = false;
 		}
 	}
@@ -365,7 +360,7 @@ class Theme extends \Venus\Theme
 	{
 		$content = parent::getTemplateFromFilename($filename, $debug);
 
-		$this->app->plugins->run('systemThemeGetTemplateFromFilename', $this, $content, $filename, $debug);
+		$this->app->plugins->run('system_theme_get_template_from_filename', $this, $content, $filename, $debug);
 
 		return $content;
 	}
@@ -385,7 +380,7 @@ class Theme extends \Venus\Theme
 
 		$content = $this->getTemplateContent($filename, $cache_filename, $debug);
 
-		$this->app->plugins->run('systemThemeGetExtensionTemplate', $this, $content, $filename, $cache_filename, $debug);
+		$this->app->plugins->run('system_theme_get_extension_template', $this, $content, $filename, $cache_filename, $debug);
 
 		return $content;
 	}
@@ -400,16 +395,17 @@ class Theme extends \Venus\Theme
 	* @return string The template's filename
 	*/
 	public function getExtensionTemplateFilename(string $dir, string $name, string $layout, string $template, string $device = '') : string
-	{
-		var_dump("aici");
-		die;
+	{		
 		$device_dir = $this->app->device->getSubdir($device);
-
+				
 		if ($layout) {
-			return $this->getTemplateAbsoluteFilename(VENUS_THEMES_TEMPLATES_LAYOUTS_DIR . sl($layout) . VENUS_THEMES_TEMPLATES_EXTENSIONS_DIR . $dir . $name . $device_dir . $template);
-		} else {
-			return $this->getTemplateAbsoluteFilename(VENUS_THEMES_TEMPLATES_EXTENSIONS_DIR . $dir . $name . $device_dir . $template);
+			$filename = $this->findTemplateFilename(App::EXTENSIONS_DIRS['layouts'] . App::sl($layout) . App::DIRS['extensions'] . '/' . $dir . $name . $device_dir . $template);
+			if ($filename) {
+				return $filename;
+			}
 		}
+		
+		return $this->findTemplateFilename(App::DIRS['extensions'] . '/' . $dir . $name . $device_dir . $template);		
 	}
 
 	/**
@@ -446,7 +442,7 @@ class Theme extends \Venus\Theme
 	{
 		$title = str_ireplace('{TITLE}', $this->app->title->get(), $this->app->config->title);
 
-		$this->app->plugins->run('systemThemeGetTitle', $this, $title);
+		$this->app->plugins->run('system_theme_get_title', $this, $title);
 
 		return $title;
 	}
@@ -655,7 +651,7 @@ class Theme extends \Venus\Theme
 			$this->outputDesktopExtra();
 		}
 
-		$this->app->plugins->run('systemThemeOutputHead', $this);
+		$this->app->plugins->run('system_theme_output_head', $this);
 
 		$this->outputHeadExtra();
 	}
@@ -697,7 +693,7 @@ class Theme extends \Venus\Theme
 	*/
 	public function outputDesktopExtra()
 	{
-		$this->app->plugins->run('systemThemeOutputDesktopExtra', $this);
+		$this->app->plugins->run('system_theme_output_desktop_extra', $this);
 	}
 
 	/**
@@ -707,7 +703,7 @@ class Theme extends \Venus\Theme
 	{
 		$this->outputViewport();
 
-		$this->app->plugins->run('systemThemeOutputTabletsExtra', $this);
+		$this->app->plugins->run('system_theme_output_tablets_extra', $this);
 	}
 
 	/**
@@ -717,7 +713,7 @@ class Theme extends \Venus\Theme
 	{
 		$this->outputViewport();
 
-		$this->app->plugins->run('systemThemeOutputSmartphonesExtra', $this);
+		$this->app->plugins->run('system_theme_output_smartphones_extra', $this);
 	}
 
 	/**
@@ -731,7 +727,7 @@ class Theme extends \Venus\Theme
 
 		$meta = '<meta name="viewport" content="width=' . App::e($this->params->viewport_width) . ', initial-scale=' . App::e($this->params->viewport_initial_scale) . '">' . "\n";
 
-		$meta = $this->app->plugins->filter('systemThemeOutputViewport', $meta, $this);
+		$meta = $this->app->plugins->filter('system_theme_output_viewport', $meta, $this);
 
 		echo $meta;
 	}
@@ -746,7 +742,7 @@ class Theme extends \Venus\Theme
 
 		echo $this->app->extra_html['head'];
 
-		$this->app->plugins->run('systemThemeOutputHeadExtra', $this);
+		$this->app->plugins->run('system_theme_output_head_extra', $this);
 	}
 
 	/**
@@ -768,7 +764,7 @@ class Theme extends \Venus\Theme
 
 		echo $this->app->extra_html['body'];
 
-		$this->app->plugins->run('systemThemeOutputBodyExtra', $this);
+		$this->app->plugins->run('system_theme_output_body_extra', $this);
 	}
 
 	/**
@@ -780,7 +776,7 @@ class Theme extends \Venus\Theme
 
 		echo $this->app->extra_html['footer'];
 
-		$this->app->plugins->run('systemThemeOutputFooterExtra', $this);
+		$this->app->plugins->run('system_theme_output_footer_extra', $this);
 	}
 
 	/**

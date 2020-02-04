@@ -27,7 +27,7 @@ class Language extends \Venus\Language
 
 		$this->loadFiles();
 
-		$this->app->plugins->run('systemLanguageConstruct', $language, $this);
+		$this->app->plugins->run('system_language_construct', $language, $this);
 	}
 
 	/**

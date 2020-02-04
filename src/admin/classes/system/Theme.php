@@ -28,7 +28,7 @@ class Theme extends \Venus\Admin\Theme
 	{
 		parent::__construct($app);
 
-		$this->app->plugins->run('adminSystemThemeConstruct', $this);
+		$this->app->plugins->run('admin_system_theme_construct', $this);
 	}
 
 	/**
@@ -103,7 +103,7 @@ class Theme extends \Venus\Admin\Theme
 			$positions[$pos] = l($name);
 		}
 
-		$this->app->plugins->run('adminSystemThemeGetBannerPositions', $this, $positions);
+		$this->app->plugins->run('admin_system_theme_get_banner_positions', $this, $positions);
 
 		return $positions;
 	}
@@ -121,7 +121,7 @@ class Theme extends \Venus\Admin\Theme
 			$positions[$pos] = l($name);
 		}
 
-		$this->app->plugins->run('adminSystemThemeGetWidgetPositions', $this, $positions);
+		$this->app->plugins->run('admin_system_theme_get_widget_positions', $this, $positions);
 
 		return $positions;
 	}
@@ -136,7 +136,7 @@ class Theme extends \Venus\Admin\Theme
 	{
 		$title = $this->app->title->get();
 
-		return $this->app->plugins->filter('adminSystemThemeGetTitle', $title, $this);
+		return $this->app->plugins->filter('admin_system_theme_get_title', $title, $this);
 	}
 
 	/**************** CSS & JAVASCRIPT *************************************/
@@ -154,23 +154,10 @@ class Theme extends \Venus\Admin\Theme
 		$this->outputCssUrls('head');
 		$this->outputJavascriptUrls('head');
 
-		$this->app->plugins->run('adminSystemThemeOutputHead', $this);
+		$this->app->plugins->run('admin_system_theme_output_head', $this);
 
 		$this->outputHeadExtra();
 	}
-
-	/**
-	* Outputs the javascript urls loaded in a position
-	* @param string $location The location
-	*/
-	/*public function outputJavascriptUrls(string $location)
-	{
-		if ($this->javascript_merge) {
-			$this->app->javascript->outputUrls($this->getJavascriptExternalUrls($location));
-		} else {
-			$this->app->javascript->output($location);
-		}
-	}*/
 
 	/**
 	* Outputs the inline javascript code. It will output it only if the javascript_location is not set to 'head'!
@@ -221,7 +208,7 @@ class Theme extends \Venus\Admin\Theme
 
 		$html = '<a href="javascript:venus.dialog.open_url(\'' . App::ejs($this->app->help_url) . '\', \'' . App::ejsstr('help') . '\')" data-tooltip="' . App::e(App::estr('tooltip_help')) . '"><img src="' . App::e($this->images_url . 'help_link.png') . '" alt="' . estr('tooltip_help') . '" /></a>';
 
-		return $this->app->plugins->run('adminSystemOutputHelpLink', $html, $this);
+		return $this->app->plugins->run('admin_system_theme_output_help_link', $html, $this);
 	}
 
 	/**
@@ -235,7 +222,7 @@ class Theme extends \Venus\Admin\Theme
 
 		$html = '<a href="' . App::e($this->app->config_url) . '" data-tooltip="' . App::e(App::estr('tooltip_config')) . '"><img src="' . App::e($this->images_url . 'config_link.png') . '" alt="' . App::estr('tooltip_config') . '" /></a>';
 
-		return $this->app->plugins->run('adminSystemOoutputConfigLink', $html, $this);
+		return $this->app->plugins->run('admin_system_theme_output_config_link', $html, $this);
 	}
 
 	/**
@@ -245,7 +232,7 @@ class Theme extends \Venus\Admin\Theme
 	{
 		$html = '<a href="javascript:venus.logout()" data-tooltip="' . App::e(App::estr('tooltip_logout')) . '" class="logout"><img src="' . App::e($this->images_url . 'logout_link.png') . '" alt="' . App::estr('tooltip_logout') . '" /></a>';
 
-		$html = $this->app->plugins->run('adminSystemoutputLogoutLink', $html, $this);
+		$html = $this->app->plugins->run('admin_system_theme_output_logout_link', $html, $this);
 
 		$this->outputLogoutForm();
 

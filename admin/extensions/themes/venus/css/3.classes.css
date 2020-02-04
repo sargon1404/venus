@@ -1,71 +1,37 @@
-.pull-left
-{
+.pull-left {
 	float: left;
 }
 
-.pull-right
-{
+.pull-right {
 	float: right;
 }
 
 .clear,
-.clearfix
-{
+.clearfix {
 	clear:both;
 }
 
-.left
-{
+.left {
  	text-align: left;
 }
 
-.center
-{
+.center {
  	text-align: center;
 }
 
-.right
-{
+.right {
  	text-align: right;
 }
 
-.visible
-{
+.visible {
 	display: block;
 }
 
-.hidden
-{
+.hidden {
 	display: none;
 }
 
-.disabled
-{
+.disabled {
 	pointer-events: none;
 	opacity: 0.7;
-}
-
-.required:after
-{
-	content: '*';
-	color: #D2342C;
-	padding: 0 6px;
-}
-
-.close
-{
-	float: right;
-	display: block;
-	width: 20px;
-	height: 20px;
-	background: url('../images/x.png');
-}
-
-.close-small
-{
-	float: right;
-	display: block;
-	width: 16px;
-	height: 16px;
-	background: url('../images/x-small.png');
 }

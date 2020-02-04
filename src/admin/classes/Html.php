@@ -34,7 +34,7 @@ class Html extends \Venus\Html
 
 		$html = $this->select($name, $options, $selected);
 
-		return $this->app->plugins->filter('adminHtmlSelectYesNo', $html, $name, $options, $selected, $this);
+		return $this->app->plugins->filter('admin_html_select_yes_no', $html, $name, $options, $selected, $this);
 	}
 
 	/**
@@ -53,7 +53,7 @@ class Html extends \Venus\Html
 
 		$html = $this->select($name, $options, $selected);
 
-		return $this->app->plugins->filter('adminHtmlSelectGlobalYesNo', $html, $name, $options, $selected, $this);
+		return $this->app->plugins->filter('admin_html_select_global_yes_no', $html, $name, $options, $selected, $this);
 	}
 
 	/**
@@ -72,7 +72,7 @@ class Html extends \Venus\Html
 
 		$html = $this->select($name, $options, $selected);
 
-		return $html = $this->app->plugins->filter('adminHtmlSelectNochangeYesNo', $html, $name, $options, $selected, $this);
+		return $html = $this->app->plugins->filter('admin_html_select_nochange_yes_no', $html, $name, $options, $selected, $this);
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Html extends \Venus\Html
 		$html.= $this->radio($name, App::__('yes'), ($selected == '1' ? true : false), '1');
 		$html.= $this->radio($name, App::__('no'), ($selected == '0' ? true : false), '0');
 
-		return $this->app->plugins->filter('adminHtmlRadioGlobalYesNo', $html, $name, $selected, $this);
+		return $this->app->plugins->filter('admin_html_radio_global_yes_no', $html, $name, $selected, $this);
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Html extends \Venus\Html
 		$html.= $this->radio($name, App::__('yes'), ($selected == '1' ? true : false), '1');
 		$html.= $this->radio($name, App::__('no'), ($selected == '0' ? true : false), '0');
 
-		return $this->app->plugins->filter('adminHtmlRadioNoChangeYesNo', $html, $name, $selected, $this);
+		return $this->app->plugins->filter('admin_html_radio_nochange_yes_no', $html, $name, $selected, $this);
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Html extends \Venus\Html
 		$html.= $this->radio($name, App::__('yes'), ($selected == '1' ? true : false), '1');
 		$html.= $this->radio($name, App::__('no'), ($selected == '0' ? true : false), '0');
 
-		return $this->app->plugins->filter('adminHtmlRadioNochangeGlobalYesNo', $html, $name, $selected, $this);
+		return $this->app->plugins->filter('admin_html_radio_nochange_global_yes_no', $html, $name, $selected, $this);
 	}
 
 	/**
@@ -145,7 +145,7 @@ class Html extends \Venus\Html
 
 		$html = $this->select($name, $options, $selected);
 
-		return $this->app->plugins->filter('adminHtmlSelectSeoRel', $html, $name, $selected, $show_no_change, $show_global, $this);
+		return $this->app->plugins->filter('admin_html_select_seo_rel', $html, $name, $selected, $show_no_change, $show_global, $this);
 	}
 
 	/**
@@ -172,7 +172,7 @@ class Html extends \Venus\Html
 
 		$html = $this->select($name, $options, $selected);
 
-		return $this->app->plugins->filter('adminHtmlSelectSeoTarget', $html, $name, $selected, $show_no_change, $show_global, $this);
+		return $this->app->plugins->filter('admin_html_select_seo_target', $html, $name, $selected, $show_no_change, $show_global, $this);
 	}
 
 	/**
@@ -202,7 +202,7 @@ class Html extends \Venus\Html
 
 		$html = $this->select($name, $options, $selected);
 
-		return $this->app->plugins->filter('adminHtmlSelectMetaRobots', $html, $name, $selected, $show_no_change, $show_global, $this);
+		return $this->app->plugins->filter('admin_html_select_meta_robots', $html, $name, $selected, $show_no_change, $show_global, $this);
 	}
 
 	/**
@@ -234,7 +234,7 @@ class Html extends \Venus\Html
 
 		$html = $this->select($name, $options, $selected);
 
-		return $this->app->plugins->filter('adminHtmlSelectSitemapFrequency', $html, $name, $selected, $show_no_change, $show_global, $this);
+		return $this->app->plugins->filter('admin_html_select_sitemap_frequency', $html, $name, $selected, $show_no_change, $show_global, $this);
 	}
 
 	/**
@@ -258,7 +258,7 @@ class Html extends \Venus\Html
 
 		$html = $this->select($name, $options, $selected);
 
-		return $this->app->plugins->filter('adminHtmlSelectSitemapPriority', $html, $name, $selected, $show_no_change, $show_global, $class, $this);
+		return $this->app->plugins->filter('admin_html_select_sitemap_priority', $html, $name, $selected, $show_no_change, $show_global, $class, $this);
 	}
 
 	/**
@@ -447,7 +447,7 @@ class Html extends \Venus\Html
 		$html.= '&nbsp;';
 		$html.= $this->requestButton('', App::__('user_select_text2'), '', '', ['onclick' => [$onclick]]);
 
-		return $this->app->plugins->filter('adminHtmlSelectUser', $html, $name, $selected, $required, $placeholder, $onkeyup, $onclick, $class, $id, $this);
+		return $this->app->plugins->filter('admin_html_select_user', $html, $name, $selected, $required, $placeholder, $onkeyup, $onclick, $class, $id, $this);
 	}
 
 	/**
@@ -495,7 +495,7 @@ class Html extends \Venus\Html
 		$html.= '&nbsp;';
 		$html.= $this->requestButton('', App::__('page_select_text2'));
 
-		$html = $this->app->plugins->filter('adminHtmlSelectPage', $html, $name, $selected, $required, $placeholder, $onkeyup, $class, $id, $this);
+		$html = $this->app->plugins->filter('admin_html_select_page', $html, $name, $selected, $required, $placeholder, $onkeyup, $class, $id, $this);
 
 		return $html;
 	}

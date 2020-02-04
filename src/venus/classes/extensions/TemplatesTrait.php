@@ -55,7 +55,7 @@ trait TemplatesTrait
 
 		$filename = $this->getTemplateFilename($name, $layout, $template);
 
-		return $this->app->theme->getExtensionTemplate($filename, $cache_filename, $this->debug);
+		return $this->app->theme->getExtensionTemplate($filename, $cache_filename, $this->development);
 	}
 
 	/**
@@ -67,15 +67,14 @@ trait TemplatesTrait
 	*/
 	protected function getTemplateFilename(string $name, string $layout, string $template) : string
 	{
-		$dir = App::sl($this->getContentDir());
+		$dir = App::sl(static::$base_dir);
 		$name = App::sl($name);
 		$layout = App::sl($layout);
-		var_dump("aici");
-		die;
+		
 		$template.= '.' . App::FILE_EXTENSIONS['templates'];
 
 		if ($this->app->device->isMobile()) {
-			$filename = $this->getTemplateFilenameForDevice($dir, $name, $layout, $template, $this->app->device->type);
+			$filename = $this->getTemplateFilenameForDevice($dir, $name, $layout, $template, $this->app->device->type);			
 			if ($filename) {
 				return $filename;
 			}
@@ -120,8 +119,7 @@ trait TemplatesTrait
 		if ($device != 'desktop') {
 			return '';
 		} else {
-			//return the filename even if it doesn't exist, so the extension's dev. is aware of the missing template
-			return $templates_dir . $filename;
+			throw new \Exception("Missing template: " . $templates_dir . $filename);
 		}
 	}
 

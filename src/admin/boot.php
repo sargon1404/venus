@@ -10,7 +10,7 @@ try {
 	$app = App::instantiate();
 	$app->boot();
 
-	$app->plugins->run('adminBootSystem');
+	$app->plugins->run('admin_boot');
 } catch (\Exception $e) {
 	$app->fatalError($e->getMessage());
 }

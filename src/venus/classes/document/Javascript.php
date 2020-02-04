@@ -98,7 +98,7 @@ class Javascript extends \Mars\Document\Javascript
 
 		$url = $this->cache_url . $this->getMainFile($this->app->device->get(), $this->app->lang->name);
 
-		$this->app->plugins->run('documentJavascriptLoadMain', $url, $location, $priority, $async, $defer);
+		$this->app->plugins->run('document_javascript_load_main', $url, $location, $priority, $async, $defer);
 
 		$this->load($url, $location, $priority, $async, $defer);
 

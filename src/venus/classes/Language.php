@@ -72,7 +72,7 @@ class Language extends \Venus\Extensions\Extension
 	{
 		parent::__construct($language);
 
-		$this->app->plugins->run('languageConstruct', $language, $this);
+		$this->app->plugins->run('language_construct', $language, $this);
 	}
 
 	/**

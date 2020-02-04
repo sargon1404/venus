@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="{{ $this.output_lang_code() }}">
+<html lang="{{ $this.outputLangCode() }}">
 <head>
-{{ $this.output_head() }}
+{{ $this.outputHead() }}
 </head>
 
 <body>
-{{ $this.output_body_extra() }}
+{{ $this.outputBodyExtra() }}
 
 <header class="login-header">
 	<div id="topbar"></div>
@@ -16,5 +16,5 @@
 
 <div id="container">
 	<div id="login-alerts">
-		{{ $this.output_alerts() }}
+		{{ $this.outputAlerts() }}
 	</div>

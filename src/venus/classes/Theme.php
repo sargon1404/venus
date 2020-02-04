@@ -221,7 +221,7 @@ class Theme extends \Venus\Extensions\Extension
 	{
 		parent::__construct($theme);
 
-		$this->app->plugins->run('themeConstruct', $this, $theme);
+		$this->app->plugins->run('theme_construct', $this, $theme);
 	}
 
 	/**

@@ -102,7 +102,7 @@ class Ui extends \Mars\Ui
 			$height = '300px';
 		}
 
-		$this->app->plugins->run('uiBuildEditor1', $name, $content, $webstorage_name, $webstorage_item_id, $width, $height, $this);
+		$this->app->plugins->run('ui_build_editor1', $name, $content, $webstorage_name, $webstorage_item_id, $width, $height, $this);
 
 		$html = '';
 		if ($this->app->user->editor == 'wysiwyg') {

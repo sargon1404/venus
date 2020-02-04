@@ -61,6 +61,6 @@ class Css extends \Venus\Assets\Css
 	{
 		$code = '';
 
-		return $this->app->plugins->filter('adminAssetsCssGetExtra', $code, $this);
+		return $this->app->plugins->filter('admin_assets_css_get_extra', $code, $this);
 	}
 }

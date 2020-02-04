@@ -109,7 +109,7 @@ class Bbcode extends Markup implements MarkupInterface
 
 		$text = nl2br($text);
 
-		return $this->app->plugins->filter('markupBbcodeParse', $text, $this);
+		return $this->app->plugins->filter('markup_bbcode_parse', $text, $this);
 	}
 
 	/**
@@ -337,7 +337,7 @@ class Bbcode extends Markup implements MarkupInterface
 
 		$text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5);
 
-		return $this->app->plugins->filter('markupBbcodeConvert', $text, $this);
+		return $this->app->plugins->filter('markup_bbcode_convert', $text, $this);
 	}
 
 	/**

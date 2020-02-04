@@ -117,10 +117,10 @@ class Block extends \Venus\Extensions\Extension implements Document
 
 	/**
 	* Returns the data of a block
-	* @param mixed $name The name of the block *or* the block id
+	* @param int|string $name The name of the block *or* the block id
 	* @return object The block
 	*/
-	protected function get($name) : object
+	protected function get($name)
 	{
 		$table = $this->getTable();
 
@@ -163,7 +163,7 @@ class Block extends \Venus\Extensions\Extension implements Document
 		$this->prepareModerator();
 		$this->prepareSystem();
 
-		$this->app->plugins->run('blockPrepare', $this);
+		$this->app->plugins->run('block_prepare', $this);
 	}
 
 	/**

@@ -39,7 +39,7 @@ class Cache extends \Venus\Cache
 		$this->buildCssFrontend();
 		$this->buildCssAdmin();
 
-		$this->app->plugins->run('adminCacheBuildCss', $this);
+		$this->app->plugins->run('admin_cache_build_css', $this);
 
 		return $this;
 	}
@@ -62,7 +62,7 @@ class Cache extends \Venus\Cache
 
 		$this->update('css_version', time(), false, 'frontend');
 
-		$this->app->plugins->run('adminCacheBuildCssFrontend', $css, $this);
+		$this->app->plugins->run('admin_cache_build_css_frontend', $css, $this);
 
 		return $this;
 	}
@@ -81,7 +81,7 @@ class Cache extends \Venus\Cache
 		//clear the list of merged files
 		$this->update('css_merged', '', false, 'admin');
 
-		$this->app->plugins->run('adminCacheBuildCssAdmin', $css, $this);
+		$this->app->plugins->run('admin_cache_build_css_admin', $css, $this);
 
 		return $this;
 	}
@@ -95,7 +95,7 @@ class Cache extends \Venus\Cache
 		$this->buildJavascriptFrontend();
 		$this->buildJavascriptAdmin();
 
-		$this->app->plugins->run('adminCacheBuildJavascript', $this);
+		$this->app->plugins->run('admin_cache_build_javascript', $this);
 	}
 
 	/**
@@ -115,7 +115,7 @@ class Cache extends \Venus\Cache
 
 		$this->update('javascript_version', time(), false, 'frontend');
 
-		$this->app->plugins->run('adminCacheBuildJavascriptFrontend', $javascript, $this);
+		$this->app->plugins->run('admin_cache_build_javascript_frontend', $javascript, $this);
 
 		return $this;
 	}
@@ -133,7 +133,7 @@ class Cache extends \Venus\Cache
 		//clear the list of merged files
 		$this->update('javascript_merged', '', false, 'admin');
 
-		$this->app->plugins->run('adminCacheBuildJavascriptAdmin', $javascript, $this);
+		$this->app->plugins->run('admin_cache_build_javascript_admnin', $javascript, $this);
 
 		return $this;
 	}
@@ -150,7 +150,7 @@ class Cache extends \Venus\Cache
 		$javascript = new \Venus\Admin\Assets\Javascript($this->app);
 		$javascript->cacheTheme($theme);
 
-		$this->app->plugins->run('adminCacheBuildForTheme', $theme, $css, $javascript, $this);
+		$this->app->plugins->run('admin_cache_build_for_theme', $theme, $css, $javascript, $this);
 	}
 
 	/**
@@ -197,7 +197,7 @@ class Cache extends \Venus\Cache
 		$this->update('javascript_merged', '', false, 'frontend');
 		$this->update('javascript_merged', '', false, 'admin');
 
-		$this->app->plugins->run('adminCacheBuildLibraries', $libraries, $this);
+		$this->app->plugins->run('admin_cache_build_libraries', $libraries, $this);
 
 		return $this;
 	}
@@ -261,7 +261,7 @@ class Cache extends \Venus\Cache
 		$css = new \Venus\Assets\Css($this->app);
 		$css->cacheLibrary($name, $css_files, $js_files);
 
-		$this->app->plugins->run('adminCacheBuildCssLibrary', $name, $data, $css, $this);
+		$this->app->plugins->run('admin_cache_build_css_library', $name, $data, $css, $this);
 
 		return $this;
 	}
@@ -285,7 +285,7 @@ class Cache extends \Venus\Cache
 		$javascript = new \Venus\Assets\Javascript($this->app);
 		$javascript->cacheLibrary($name, $js_files, $css_files);
 
-		$this->app->plugins->run('adminCacheBuildJavascriptLibrary', $name, $data, $javascript, $this);
+		$this->app->plugins->run('admin_cache_build_javascript_library', $name, $data, $javascript, $this);
 
 		return $this;
 	}
@@ -309,7 +309,7 @@ class Cache extends \Venus\Cache
 
 		$this->cacheThemeDefault();
 
-		$this->app->plugins->run('adminCacheBuildThemes', $themes, $this);
+		$this->app->plugins->run('admin_cache_build_themes', $themes, $this);
 
 		return $this;
 	}
@@ -344,7 +344,7 @@ class Cache extends \Venus\Cache
 
 		$this->cacheLanguageDefault();
 
-		$this->app->plugins->run('adminCacheBuildLanguages', $languages, $this);
+		$this->app->plugins->run('admin_cache_build_languages', $languages, $this);
 
 		return $this;
 	}
@@ -381,6 +381,8 @@ class Cache extends \Venus\Cache
 
 		$guests = $this->app->db->selectRow('venus_usergroups', '*', ['ugid' => APP::USERGROUPS['guests']]);
 		$usergroups = $this->app->db->selectWithKey('venus_usergroups', 'ugid');
+		
+		$this->app->plugins->run('admin_cache_build_usergroups', $usergroups, $this);
 
 		$this->update('usergroups', $usergroups, true);
 		$this->update('usergroup_guests', $guests, true);

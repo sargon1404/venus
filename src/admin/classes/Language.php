@@ -24,7 +24,7 @@ class Language extends \Venus\Language
 
 		$this->load($name);
 
-		$this->app->plugins->run('adminLanguageConstruct', $this);
+		$this->app->plugins->run('admin_language_construct', $this);
 	}
 
 	/**

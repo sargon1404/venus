@@ -1,13 +1,11 @@
-*
-{
+* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
 
-body
-{
-	font-family: helvetica,arial,​sans-serif;
+body {
+	font-family: Verdana, Geneva, sans-serif;
 	font-size: 12px;
 	line-height: 17px;
 	background: #252525 url('../images/background.jpg');
@@ -16,53 +14,25 @@ body
 
 /******************************************************************/
 
-a
-{
-	color: #427100;
-	text-decoration: none;
-	outline: none;
-}
-
-a:hover
-{
-	text-decoration: underline;
-}
-
-a.button
-{
-	height: auto !important;
-}
-
-a.tooltip
-{
-	font-size: 1.09em;
-}
-
-/******************************************************************/
-
-img
-{
+img {
 	border: none;
 	vertical-align: middle;
 	max-width: 100%;
 }
 
-hr
-{
+hr {
 	margin: 10px 0;
 	border: none;
 	border-top: 1px solid #b7b7b7;
 }
 
-label
-{
+label {
 	cursor: pointer;
 }
 
 /******************************************************************/
 
-#container
-{
+#container {
 	margin: 0 auto 60px auto;
 	padding: 20px;
 	width: 98%;
@@ -70,18 +40,15 @@ label
 	background: #F5F5F5 linear-gradient(#F5F5F5, #F3F3F3);
 }
 
-#content-inner
-{
+#content-inner {
 	clear: both;
 }
 
-#content-inner main
-{
+#content-inner main {
 	border-top-left-radius: 0;
 }
 
-main
-{
+main {
 	background: #fff;
 	border: 1px solid #b7b7b7;
 	border-radius: 5px;

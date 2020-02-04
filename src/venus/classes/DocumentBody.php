@@ -273,13 +273,13 @@ trait DocumentBody
 			$this->app->timer->start('document_output');
 		}
 
-		$this->app->plugins->run('documentOutput', $action, $this);
+		$this->app->plugins->run('document_output', $action, $this);
 
 		$this->setup();
 
 		$this->content = $this->getContent($action);
 
-		$this->content = $this->app->plugins->filter('documentContent', $this->content, $this->getType(), $action, $this);
+		$this->content = $this->app->plugins->filter('document_content', $this->content, $this->getType(), $action, $this);
 
 		echo $this->getOutput();
 
@@ -377,7 +377,7 @@ trait DocumentBody
 			$this->app->meta->add('robots', $this->meta_robots);
 		}
 
-		$this->app->plugins->run('documentBuildMeta', $this);
+		$this->app->plugins->run('document_build_meta', $this);
 
 		return $this;
 	}

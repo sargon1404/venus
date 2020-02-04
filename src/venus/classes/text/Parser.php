@@ -51,7 +51,7 @@ class Parser extends \Mars\Text\Parser
 
 		$text = str_replace(['<p> ', ' </p>'], ['<p>', '</p>'], $text);
 
-		return $this->app->plugins->filter('textParserParseLinks', $text, $this);
+		return $this->app->plugins->filter('text_parser_parse_links', $text, $this);
 	}
 
 	/**
@@ -76,7 +76,7 @@ class Parser extends \Mars\Text\Parser
 	{
 		$text = parent::parseNofollow($text);
 
-		return $this->app->plugins->filter('textParserParseNofollow', $text, $this);
+		return $this->app->plugins->filter('text_parser_parse_nofollow', $text, $this);
 	}
 
 	/**
@@ -88,7 +88,7 @@ class Parser extends \Mars\Text\Parser
 	{
 		$text = preg_replace_callback('/\[video(=(.*))?\s*(width=([0-9]*))?\s*(height=([0-9]*))?\](.*)\[\/video\]/sU', [$this, 'parseVideosCallback'], $text);
 
-		return $this->app->plugins->filter('textParserParseVideos', $text, $this);
+		return $this->app->plugins->filter('text_parser_parse_videos', $text, $this);
 	}
 
 	/**
@@ -135,7 +135,7 @@ class Parser extends \Mars\Text\Parser
 		}
 
 		if (!$video) {
-			$this->app->plugins->run('textParserGetVideoObj', $video, $type, $this);
+			$this->app->plugins->run('ext_parser_get_video_obj', $video, $type, $this);
 		}
 		if (!$video) {
 			return null;
@@ -157,7 +157,7 @@ class Parser extends \Mars\Text\Parser
 	{
 		$text = preg_replace_callback('/\[mediafile(=(.*))?\](.*)\[\/mediafile\]/sU', [$this, 'parseMediaCallback'], $text);
 
-		return $this->app->plugins->filter('textParserParseMedia', $text, $this);
+		return $this->app->plugins->filter('text_parser_parse_media', $text, $this);
 	}
 
 	/**
@@ -188,7 +188,7 @@ class Parser extends \Mars\Text\Parser
 
 		$html = '<a href="' . App::e($download_link) . '"><img src="' . App::e($this->app->theme->images_url) . 'media_download.png" alt="' . App::estr('download') . '" />' . $name . '</a>';
 
-		return $this->app->plugins->filter('textParserParseMediaCallback', $html, $download_link, $match, $this);
+		return $this->app->plugins->filter('text_parser_parse_media_callback', $html, $download_link, $match, $this);
 	}
 
 	/**
@@ -271,7 +271,7 @@ class Parser extends \Mars\Text\Parser
 		$text = str_replace($start_tag, '', $text);
 		$text = str_replace($end_tag, '', $text);
 
-		return $this->app->plugins->filter('textParserGetReadMore', $html, $text, $read_more_text, $max_read_more, $this);
+		return $this->app->plugins->filter('text_parser_get_read_more', $html, $text, $read_more_text, $max_read_more, $this);
 	}
 
 	/**

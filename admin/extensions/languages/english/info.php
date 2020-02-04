@@ -1,8 +1,6 @@
 <?php
-if(!defined('VENUS')) die;
 
-$info =
-[
+return [
 	'title' => 'English',
 	'author' => 'Adrian Răzvan Chiş',
 	'email' => 'webmaster@venus-cms.org',

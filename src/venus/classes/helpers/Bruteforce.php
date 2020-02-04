@@ -163,7 +163,7 @@ class Bruteforce
 	* @param string $ip The IP
 	* @return bool
 	*/
-	public function ipIsBlocked(string $ip) : bool
+	public function isIpBlocked(string $ip) : bool
 	{
 		$this->data = $this->getAttemptsByIp($ip);
 		if (!$this->data) {
@@ -186,7 +186,7 @@ class Bruteforce
 	* @param int $uid The user ID
 	* @return bool
 	*/
-	public function userIsBlocked(int $uid) : bool
+	public function isUserBlocked(int $uid) : bool
 	{
 		if (!$uid) {
 			return false;

@@ -101,7 +101,7 @@ class Javascript extends Asset
 	*/
 	public function parse(string $content, array $params = []) : string
 	{
-		return $this->app->plugins->filter('assetJavascriptParse', $content, $params, $this);
+		return $this->app->plugins->filter('asset_javascript_parse', $content, $params, $this);
 	}
 
 	/**
@@ -398,6 +398,6 @@ class Javascript extends Asset
 	{
 		$code = '';
 
-		return $this->app->plugins->filter('assetsJavascriptGetExtra', $code, $device, $this);
+		return $this->app->plugins->filter('assets_javascript_get_extra', $code, $device, $this);
 	}
 }

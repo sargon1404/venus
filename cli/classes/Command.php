@@ -72,7 +72,7 @@ class Command extends Base
 	{
 		$help = new Help($this->app);
 		if (!$this->action) {
-			$help->listActions($this->name, $this->actions);		
+			$help->listActions($this->name, $this->actions);
 		} else {
 			if (!isset($this->actions[$this->action])) {
 				$this->app->cli->errorAndDie("Unknown action: {$this->action}");
@@ -92,6 +92,6 @@ class Command extends Base
 	public function done()
 	{
 		$this->newline();
-		$this->print("Done", '1;33');			
+		$this->print("Done", '1;33');
 	}
 }

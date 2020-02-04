@@ -39,7 +39,7 @@ class Block extends \Venus\Block
 	/**
 	* @internal
 	*/
-	protected static string $namespace = "\\Cms\\Admin\\Extensions\\Blocks\\";
+	protected static string $namespace = "\\Cms\\Admin\\Blocks\\";
 
 	/**
 	* @see \Venus\Block::get()
@@ -73,7 +73,7 @@ class Block extends \Venus\Block
 
 		$this->prepareTitle();
 
-		$this->app->plugins->run('adminBlockPrepare', $this);
+		$this->app->plugins->run('admin_block_prepare', $this);
 	}
 
 	/**
@@ -178,7 +178,7 @@ class Block extends \Venus\Block
 	{
 		$this->app->title->set($this->title);
 
-		$this->app->plugins->run('adminBlockSetMeta', $this);
+		$this->app->plugins->run('admin_block_set_meta', $this);
 
 		return $this;
 	}

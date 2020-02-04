@@ -286,9 +286,9 @@ class App extends \Mars\App
 
 		$this->checkInstalled();
 
-		$this->boot->db();
+		$this->boot->db();		
 		$this->boot->config();
-		$this->boot->base();
+		$this->boot->base();		
 		$this->boot->properties();
 		$this->boot->env();
 		$this->boot->document();
@@ -477,7 +477,7 @@ class App extends \Mars\App
 			return false;
 		}
 
-		$this->plugins->run('appMailParams', $to, $subject, $message, $from, $from_name, $reply_to, $reply_to_name, $is_html, $attachments, $this);
+		$this->plugins->run('app_mail_params', $to, $subject, $message, $from, $from_name, $reply_to, $reply_to_name, $is_html, $attachments, $this);
 
 		if (!$from) {
 			$from = $this->config->mail_from;
@@ -493,7 +493,7 @@ class App extends \Mars\App
 			$mailer->isSmtp($this->config->mail_smtp_server, $this->config->mail_smtp_port, $this->config->mail_smtp_secure, $this->config->mail_smtp_auth_username, $this->config->mail_smtp_auth_password);
 		}
 
-		$this->plugins->run('appMailMailer', $mailer, $this);
+		$this->plugins->run('app_mail_mailer', $mailer, $this);
 
 		$result = $mailer->send();
 		if (!$result) {

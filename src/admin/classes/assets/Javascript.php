@@ -134,6 +134,6 @@ class Javascript extends \Venus\Assets\Javascript
 	{
 		$code = '';
 
-		return $this->app->plugins->filter('adminAssetsJavascriptGetExtra', $code, $device, $this);
+		return $this->app->plugins->filter('admin_assets_javascript_get_extra', $code, $device, $this);
 	}
 }

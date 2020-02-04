@@ -29,12 +29,12 @@ class Email
 	/**
 	* @var User $user The user
 	*/
-	protected object $user;
+	protected User $user;
 
 	/**
 	* @var Language $lang The language used to send the emails
 	*/
-	protected object $lang;
+	protected Language $lang;
 
 	/**
 	* Builds the User Email class

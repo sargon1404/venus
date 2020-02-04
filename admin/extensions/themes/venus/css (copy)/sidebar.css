@@ -1,0 +1,9 @@
+main.open-effect
+{
+	transition: all 0.3s linear;
+}
+
+aside.close-effect
+{
+	transition: all 0.3s linear;
+}

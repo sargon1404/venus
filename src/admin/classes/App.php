@@ -107,6 +107,14 @@ class App extends \Venus\App
 	}
 
 	/**********************SCREEN FUNCTIONS***************************************/
+	
+	/**
+	* @internal
+	*/
+	protected function getScreenObj()
+	{
+		return new Document\Screen($this);
+	}
 
 	/**
 	* @see \Mars\App::error()

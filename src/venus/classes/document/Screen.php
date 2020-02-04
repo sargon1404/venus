@@ -17,6 +17,21 @@ use Mars\Alerts\Alert;
 class Screen extends \Mars\Document\Screen
 {
 	/**
+	* @param string $extensions_dir The folder where the extensions are located
+	*/
+	protected string $extensions_dir = '';
+
+	/**
+	* Builds the screen object
+	*/	
+	public function __construct(App $app)
+	{
+		$this->app = $app;
+		$this->extensions_dir = $this->app->extensions_dir; 
+	}
+	
+		
+	/**
 	* Returns the filename of a screen template
 	* @param string $template The template
 	* @return string The filename
@@ -24,12 +39,12 @@ class Screen extends \Mars\Document\Screen
 	protected function getTemplateFilename(string $template) : string
 	{
 		if (isset($this->app->theme)) {
-			if ($this->app->theme->hasTemplate('offline')) {
+			if ($this->app->theme->hasTemplate($template)) {				
 				return $this->app->theme->getTemplateFilename($template);
 			}
 		}
 
-		return $this->app->extensions_dir . Theme::getBaseDir() . '/' . $template . '.tpl';
+		return $this->extensions_dir . Theme::getBaseDir() . '/' . $template . '.tpl';
 	}
 
 	/**
@@ -50,7 +65,7 @@ class Screen extends \Mars\Document\Screen
 		$template = $this->getTemplateFilename('fatal-error');
 
 		$content = file_get_contents($template);
-		$content = str_replace('{{ $text }}', nl2br($text), $content);
+		$content = str_replace('{{ $error }}', nl2br($text), $content);
 
 		echo $content;
 		die;

@@ -1,0 +1,26 @@
+header.login-header
+{
+	margin-bottom: 25px;
+}
+
+#login-alerts
+{
+	width: 50%;
+	margin: 0 auto;
+}
+
+header.login-header #topbar
+{
+	background: #000 url('../images/header_top.jpg') no-repeat center top;
+}
+
+header.login-header #logo
+{
+	background: #040301;
+}
+
+#login fieldset
+{
+	width: 50%;
+	margin: 0 auto;
+}

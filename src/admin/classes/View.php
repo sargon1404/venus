@@ -6,7 +6,7 @@
 
 namespace Venus\Admin;
 
-use Venus\Controller;
+use \Mars\Controller;
 
 /**
 	* Builds the View

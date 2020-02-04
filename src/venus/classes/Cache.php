@@ -34,7 +34,7 @@ class Cache extends \Mars\Cache
 		$javascript = new \Venus\Assets\Javascript($this->app);
 		$javascript->cacheTheme($theme);
 
-		$this->app->plugins->run('cacheBuildForTheme', $theme, $css, $javascript, $this);
+		$this->app->plugins->run('cache_build_for_theme', $theme, $css, $javascript, $this);
 	}
 
 	/**

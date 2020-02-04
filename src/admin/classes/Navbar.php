@@ -130,7 +130,7 @@ class Navbar
 	*/
 	public function setTitle(string $title, string $icon = '', bool $is_block_icon = true)
 	{
-		$this->app->plugins->run('adminNavbarSetTitle', $title, $icon, $is_block_icon, $this);
+		$this->app->plugins->run('admin_navbar_set_title', $title, $icon, $is_block_icon, $this);
 
 		$this->display = true;
 		$this->title = $title;
@@ -157,7 +157,7 @@ class Navbar
 	*/
 	public function setLinks(array $links, int $links_index = 0)
 	{
-		$this->app->plugins->run('adminNavbarSetLinks', $links, $links_index, $this);
+		$this->app->plugins->run('admin_navbar_set_links', $links, $links_index, $this);
 
 		$this->links = $links;
 		$this->links_index = $links_index;
@@ -251,7 +251,7 @@ class Navbar
 		$start = $this->getFormStart($url, $default_action, $default_admin_action, $enctype);
 		$end = $this->getFormEnd();
 
-		$this->app->plugins->run('adminNavbarSetForm', $start, $end, $this);
+		$this->app->plugins->run('admin_navbar_set_form', $start, $end, $this);
 
 		$this->form_start = $start;
 		$this->form_end = $end;
@@ -337,7 +337,7 @@ class Navbar
 	*/
 	public function outputTitle()
 	{
-		$this->title = $this->app->plugins->filter('adminNavbarOutputTitle', $this->title, $this);
+		$this->title = $this->app->plugins->filter('admin_navbar_output_title', $this->title, $this);
 
 		echo App::e($this->title);
 	}
@@ -357,7 +357,7 @@ class Navbar
 
 		echo $this->form_start;
 
-		$this->app->plugins->run('adminNavbaroutputFormStart', $this);
+		$this->app->plugins->run('admin_navbar_output_form_start', $this);
 
 		$this->form_start = '';
 	}
@@ -377,7 +377,7 @@ class Navbar
 
 		echo $this->form_end;
 
-		$this->app->plugins->run('adminNavbaroutputFormEnd', $this);
+		$this->app->plugins->run('admin_navbar_output_form_end', $this);
 
 		$this->form_end = '';
 	}
@@ -409,7 +409,7 @@ class Navbar
 	*/
 	public function outputButtons()
 	{
-		$this->buttons = $this->app->plugins->filter('adminNavbarOutputButtonsButtons', $this->buttons, $this);
+		$this->buttons = $this->app->plugins->filter('admin_navbar_output_buttons_buttons', $this->buttons, $this);
 
 		if (!$this->buttons) {
 			return;
@@ -493,7 +493,7 @@ class Navbar
 			$html = '';
 		}
 
-		$html = $this->app->plugins->filter('adminNavbarOutputButtonsHtml', $html, $this->buttons, $this);
+		$html = $this->app->plugins->filter('admin_navbar_output_buttons_html', $html, $this->buttons, $this);
 
 		echo $html;
 
@@ -532,7 +532,7 @@ class Navbar
 	*/
 	public function outputLinks()
 	{
-		$this->links = $this->app->plugins->filter('adminNavbarOutputLinksLinks', $this->links, $this);
+		$this->links = $this->app->plugins->filter('admin_navbar_output_links_links', $this->links, $this);
 
 		echo '<ul>' . "\n";
 		echo '<li>' . "\n";
@@ -556,7 +556,7 @@ class Navbar
 				$html.= '<li>' . $this->app->html->a($link['url'], $link['text'], $link['class']) . '</li>';
 			}
 
-			$html = $this->app->plugins->filter('adminNavbarOutputLinksHtml', $html, $this->links, $this);
+			$html = $this->app->plugins->filter('admin_navbar_output_links_html', $html, $this->links, $this);
 
 			echo $html;
 		}
@@ -574,7 +574,7 @@ class Navbar
 	{
 		$history = $this->app->session->get('history');
 
-		$history = $this->app->plugins->filter('adminNavbaroutputHistoryLinksUrls', $history, $this);
+		$history = $this->app->plugins->filter('admin_navbar_output_history_links_links', $history, $this);
 
 		$html = '<div id="history-list" class="hidden">';
 
@@ -588,7 +588,7 @@ class Navbar
 
 		$html.= '</div>';
 
-		$html = $this->app->plugins->filter('adminNavbaroutputHistoryLinksHtml', $html, $history, $this);
+		$html = $this->app->plugins->filter('admin_navbar_output_history_links_html', $html, $history, $this);
 
 		echo $html;
 	}

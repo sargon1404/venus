@@ -106,7 +106,7 @@ class Html extends \Mars\Html
 		$html = $this->input($name . '-date', $date, $required, $this->app->lang->date_picker_format, 'date') . '&nbsp;';
 		$html.= $this->input($name . '-time', $time, $required, $this->app->lang->time_picker_format, 'date');
 
-		return $this->app->plugins->filter('htmlSelectDatetime', $html, $name, $timestamp, $date, $time, $required, $this);
+		return $this->app->plugins->filter('html_select_datetime', $html, $name, $timestamp, $date, $time, $required, $this);
 	}
 
 	/**
@@ -123,7 +123,7 @@ class Html extends \Mars\Html
 
 		$html = $this->input($name, $date, $required, $this->app->lang->date_picker_format, 'date');
 
-		return $this->app->plugins->filter('htmlSelectDate', $html, $name, $timestamp, $date, $required, $this);
+		return $this->app->plugins->filter('html_select_date', $html, $name, $timestamp, $date, $required, $this);
 	}
 
 	/**
@@ -140,7 +140,7 @@ class Html extends \Mars\Html
 
 		$html = $this->input($name, $time, $required, '', 'time');
 
-		return $this->app->plugins->filter('htmlSelectTime', $html, $name, $timestamp, $time, $required, $this);
+		return $this->app->plugins->filter('html_select_time', $html, $name, $timestamp, $time, $required, $this);
 	}
 
 	/**
@@ -201,6 +201,6 @@ class Html extends \Mars\Html
 
 		$html = $this->select($name, $options, $selected, $required);
 
-		return $this->app->plugins->filter('htmlSelectTimezone', $html, $name, $options, $selected, $required, $this);
+		return $this->app->plugins->filter('html_select_timezone', $html, $name, $options, $selected, $required, $this);
 	}
 }

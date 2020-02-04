@@ -50,7 +50,7 @@ class Pagination extends \Mars\Ui\Pagination
 			$js_update_element_id = App::ejs($update_element_id);
 		}
 
-		$this->app->plugins->run('uiPaginationGetParams', $base_url, $current_page, $total_items, $items_per_page, $is_seo_url, $use_ajax, $update_element_id, $js_function, $this);
+		$this->app->plugins->run('ui_pagination_get_params', $base_url, $current_page, $total_items, $items_per_page, $is_seo_url, $use_ajax, $update_element_id, $js_function, $this);
 
 		$url_extra = [
 			'use_ajax' => $use_ajax,
@@ -82,7 +82,7 @@ class Pagination extends \Mars\Ui\Pagination
 
 		$content = $this->getTemplate($pagination_data);
 
-		return $this->app->plugins->filter('uiPaginationGetContent', $content, $pagination_data, $this);
+		return $this->app->plugins->filter('ui_pagination_get_content', $content, $pagination_data, $this);
 	}
 
 	/**

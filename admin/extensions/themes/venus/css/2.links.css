@@ -1,0 +1,17 @@
+a {
+	color: #427100;
+	text-decoration: none;
+	outline: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a.button {
+	height: auto !important;
+}
+
+a.tooltip {
+	font-size: 1.09em;
+}

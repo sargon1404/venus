@@ -61,7 +61,7 @@ class Captcha
 				$handle = new Recaptcha2($this->app);
 		}
 
-		$this->app->plugins->run('captchaGetHandle', $this->driver, $handle, $this);
+		$this->app->plugins->run('captcha_get_handle', $this->driver, $handle, $this);
 
 		if (!$handle instanceof DriverInterface) {
 			throw new \Exception('The captcha driver must implement interface DriverInterface');

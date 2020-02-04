@@ -30,7 +30,7 @@ class Language extends \Venus\Admin\Language
 		$this->loadFile('errors');
 		$this->loadFile('admin');
 
-		$this->app->plugins->run('adminSystemLanguageConstruct', $this);
+		$this->app->plugins->run('admin_system_language_construct', $this);
 	}
 
 	/**

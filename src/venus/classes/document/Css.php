@@ -80,7 +80,7 @@ class Css extends \Mars\Document\Css
 	{
 		$url = $this->cache_url . $this->getThemeFile($name, $this->app->device->get());
 
-		$this->app->plugins->run('documentCssLoadMain', $url, $location, $priority);
+		$this->app->plugins->run('document_css_load_main', $url, $location, $priority);
 
 		$this->load($url, $location, $priority);
 

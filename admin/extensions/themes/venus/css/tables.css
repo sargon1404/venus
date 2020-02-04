@@ -1,59 +1,50 @@
-table
-{
+table {
  	border-collapse: separate;
 	border-spacing: 0;
 	text-align: center;
 	width: 100%;
 }
 
-table.center
-{
+table.center {
 	margin-left: auto;
 	margin-right: auto;
 }
 
-table.left
-{
+table.left {
 	margin-left: 0;
 }
 
-table.right
-{
+table.right {
 	margin-left: auto;
 	margin-right: 0;
 }
 
-table th
-{
+table th {
 	padding: 10px 10px;
 	color: #F3F3F3;
 	background: #79AB31 linear-gradient(#79AB31, #608A21);
 }
 
-table td
-{
+table td {
 	padding: 4px 5px;
 }
 
 /*************************************/
 
-table.sticky thead
-{
+table.sticky thead {
 	position: sticky;
 	top: 48px;
 	display:block;
 }
 
-table.sticky tbody, table.sticky thead tr
-{
+table.sticky tbody, table.sticky thead tr {
 	display: table;
 	width: 100%;
 }
 
 /*************************************/
 
-table.info td:first-child
-{
+table.info td:first-child {
 	width: 35%;
 	text-align: right;
 	padding: 5px 30px 5px 2px;
@@ -61,67 +52,55 @@ table.info td:first-child
 	font-weight: bold;
 }
 
-table.info td:last-child
-{
+table.info td:last-child {
 	width: 65%;
 	text-align: left;
 	padding: 5px 2px 5px 20px;
 	vertical-align: top;
 }
-
-table.info strong
-{
+ table.info strong {
 	font-size: 0.9em;
 }
 
-table.info img
-{
+table.info img {
 	max-height: 100px;
 }
 
 /*************************************/
 
-table.list
-{
+table.list {
 	table-layout: fixed;
 	margin-bottom: 10px;
 }
 
-table.list th.tmain
-{
+table.list th.tmain {
 	text-align: left;
 }
 
-table.list th a
-{
+table.list th a {
 	color: #F3F3F3;
 	font-size: 1.09em;
 	margin-bottom: 2px;
 }
 
-table.list tr:nth-child(even)
-{
+table.list tr:nth-child(even) {
 	background: #E4E4E4;
 }
 
-table.list tr:nth-child(odd)
-{
+table.list tr:nth-child(odd) {
 	background: #EEEEEE;
 }
 
-table.list tr:hover
-{
+table.list tr:hover {
 	background: #DCDCDC;
 }
 
-table.list td
-{
+table.list td {
    padding: 15px 5px;
    vertical-align: middle;
 }
 
-table.list td.tmain
-{
+table.list td.tmain {
 	text-align: left;
 	padding: 10px 5px;
 	overflow: hidden;
@@ -130,69 +109,58 @@ table.list td.tmain
 	border-right: 1px solid #D4D4D4;
 }
 
-table.list td.thas-icon
-{
+table.list td.thas-icon {
 	border-right: 0;
 }
 
-table.list td.tmain a
-{
+table.list td.tmain a {
   color: #030305;
   font-size: 1.09em;
 }
 
-table.list td.tmain small
-{
+table.list td.tmain small {
 	font-size: 0.90em;
 	padding-left: 2px;
 	display: block;
 	margin-top: 5px;
 }
 
-table.list td.tid, table.list td.ticon
-{
+table.list td.tid, table.list td.ticon {
 	border-right: 1px solid #D4D4D4;
 }
 
-table.list td.taction
-{
+table.list td.taction {
 	border-left: 1px solid #D4D4D4;
 	text-align: right;
 	padding: 10px 5px;
 	border-radius: 0 5px 5px 0;
 }
 
-table.list td.taction select
-{
+table.list td.taction select {
 	width: calc(80% - 30px - 44px);
 }
 
-table.list td.taction .loading-small
-{
+table.list td.taction .loading-small {
 	float: left;
 	margin: 5px 0 0 10px;
 }
 
-table.list td.colspan
-{
+table.list td.colspan {
 	border-radius: 5px;
 }
 
-table td.tsummary
-{
+table td.tsummary {
 	background: #CB4C3B;
 	color: #fff;
 	padding: 5px;
 	font-weight: bold;
 }
 
-table td.thr
-{
+table td.thr {
 	padding: 0;
 }
 
-table td.thr hr
-{
+table td.thr hr {
 	margin: 6px 0 2px 0;
 }
 
@@ -240,8 +208,7 @@ table.grid a.label
 
 /*************************************/
 
-table.data
-{
+table.data {
 	border-collapse: separate;
 	border-spacing: 0;
 	text-align: center;
@@ -249,13 +216,11 @@ table.data
 	border-spacing: 0 10px;
 }
 
-table.data td
-{
+table.data td {
 	padding: 4px 10px;
 	border-right: 1px solid #B7B7B7;
 }
 
-table.data td:last-child
-{
+table.data td:last-child {
 	border-right: none;
 }

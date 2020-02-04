@@ -1,6 +1,6 @@
 <div id="redirect" class="alert-screen">
 	<div class="content">
-		{{ $redirect.output_text() }}
+		{{ $redirect.outputText() }}
 	</div>
 </div>
 

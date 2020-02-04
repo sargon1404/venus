@@ -43,7 +43,7 @@ class Text extends \Mars\Text
 				$markup = new Markup\Text($tags_list);
 		}
 
-		$this->app->plugins->run('textGetMarkupObj', $markup, $markup_language, $tags_list, $this);
+		$this->app->plugins->run('text_get_markup_obj', $markup, $markup_language, $tags_list, $this);
 
 		if (!$markup instanceof MarkupInterface) {
 			throw new \Exception('The markup parser must implement interface MarkupInterface');
@@ -104,7 +104,7 @@ class Text extends \Mars\Text
 			$text = $parser->parseLinks($text, $parse_nofollow);
 		}
 
-		return $this->app->plugins->filter('textParse', $text, $this);
+		return $this->app->plugins->filter('text_parse', $text, $this);
 	}
 
 	/**
@@ -127,7 +127,7 @@ class Text extends \Mars\Text
 
 		$text = parent::filter($text, $allowed_attributes, $allowed_elements, $encoding);
 		
-		return $this->app->plugins->filter('textFilter', $allowed_attributes, $allowed_elements, $encoding, $this);
+		return $this->app->plugins->filter('text_filter', $allowed_attributes, $allowed_elements, $encoding, $this);
 	}
 
 	/**
@@ -167,7 +167,7 @@ class Text extends \Mars\Text
 			}
 		}
 
-		return $this->app->plugins->filter('textConvert', $text, $from, $to, $this);
+		return $this->app->plugins->filter('text_convert', $text, $from, $to, $this);
 	}
 
 	/**

@@ -49,7 +49,7 @@ class User extends \Venus\System\User
 		$this->prepareAdmin();
 		$this->prepareConfig();
 
-		$this->app->plugins->run('adminSystemUserConstruct', $this);
+		$this->app->plugins->run('admin_system_user_construct', $this);
 	}
 
 	/**
@@ -128,7 +128,7 @@ class User extends \Venus\System\User
 			return;
 		}
 
-		$this->app->plugins->run('adminSystemUserPrepareUser', $this);
+		$this->app->plugins->run('admin_system_user_prepare_user', $this);
 	}
 
 	/**
@@ -148,7 +148,7 @@ class User extends \Venus\System\User
 			return;
 		}
 
-		$this->app->plugins->run('adminSystemUserPrepareAdmin', $this);
+		$this->app->plugins->run('admin_system_user_prepare_admin', $this);
 	}
 
 	/**
@@ -162,13 +162,16 @@ class User extends \Venus\System\User
 		//$this->markup_language =
 		$this->markup_tags = 'all';
 
-		$this->config = $this->app->db->selectById($this->getAdministratorsTable(), 'uid', $this->uid);
+		$this->config = null;
+		if ($this->uid) {
+			$this->config = $this->app->db->selectById($this->getAdministratorsTable(), 'uid', $this->uid);
+		}
 
 		if ($this->config) {
 			$this->filter = $this->config->filter;
 		}
 
-		$this->app->plugins->run('adminSystemUserPrepareConfig', $this);
+		$this->app->plugins->run('admin_system_user_prepare_config', $this);
 	}
 
 	/*************** LOGIN METHODS ******************************/

@@ -7,7 +7,7 @@
 namespace Venus\System;
 
 use Venus\App;
-use Venus\Session;
+use Mars\Session;
 
 /**
 * The System's User Class
@@ -43,7 +43,7 @@ class User extends \Venus\User
 	/**
 	* @var session $session The session object
 	*/
-	protected object $session;
+	protected Session $session; //preload
 
 	/**
 	* @var int $session_regenerate_interval The interval - in minutes - after which the session id will be regenerated
@@ -98,7 +98,7 @@ class User extends \Venus\User
 
 		$this->prepareConfig();
 
-		$this->app->plugins->run('systemUserConstruct', $this);
+		$this->app->plugins->run('system_user_construct', $this);
 	}
 
 	/**
@@ -157,7 +157,7 @@ class User extends \Venus\User
 			$this->session->set('session_timestamp', time());
 		}
 
-		$this->app->plugins->run('systemUserPrepareSession', $this);
+		$this->app->plugins->run('system_user_prepare_session', $this);
 	}
 
 	/**
@@ -185,7 +185,7 @@ class User extends \Venus\User
 
 		$this->token = $this->session->get('token');
 
-		$this->app->plugins->run('systemUserPrepareToken', $this);
+		$this->app->plugins->run('system_user_prepare_token', $this);
 	}
 
 	/**
@@ -246,7 +246,7 @@ class User extends \Venus\User
 		$this->prepareAdmin();
 		$this->prepareModerator();
 
-		$this->app->plugins->run('systemUserPrepareUser', $this);
+		$this->app->plugins->run('system_user_prepare_user', $this);
 	}
 
 	/**
@@ -273,9 +273,7 @@ class User extends \Venus\User
 			$this->session->set('usergroups_timestamp', time());
 		}
 
-		if (!$this->usergroup) {
-			$this->usergroup = $this->usergroups->find($this->ugid);
-		}
+		$this->usergroup = $this->usergroups->find($this->ugid);
 
 		$this->ugids = $this->usergroups->getUgids();
 

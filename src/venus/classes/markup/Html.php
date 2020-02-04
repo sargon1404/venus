@@ -42,7 +42,7 @@ class Html extends Markup implements MarkupInterface
 
 		$text = nl2br($text);
 
-		return $this->app->plugins->filter('markupHtmlParse', $text, $this);
+		return $this->app->plugins->filter('markup_html_parse', $text, $this);
 	}
 
 	/**
@@ -142,7 +142,7 @@ class Html extends Markup implements MarkupInterface
 	*/
 	public function convert(string $text) : string
 	{
-		return $this->app->plugins->filter('markupHtmlConvert', $text, $this);
+		return $this->app->plugins->filter('markup_html_convert', $text, $this);
 	}
 
 	/**

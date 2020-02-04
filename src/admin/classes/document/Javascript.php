@@ -47,7 +47,7 @@ class Javascript extends \Venus\Document\Javascript
 		$frontend_url = $this->base_cache_url . $this->getMainFile($this->app->device->get(), $this->app->lang->name);
 		$admin_url = $this->cache_url . $this->getMainFile($this->app->device->get(), $this->app->lang->name);
 
-		$this->app->plugins->run('adminDocumentJavascriptLoadMain', $frontend_url, $admin_url, $location, $priority, $async, $defer);
+		$this->app->plugins->run('admin_document_javascript_load_main', $frontend_url, $admin_url, $location, $priority, $async, $defer);
 
 		$this->load($frontend_url, $location, $priority, $async, $defer);
 		$this->load($admin_url, $location, $priority, $async, $defer);

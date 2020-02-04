@@ -42,7 +42,7 @@ class Css extends \Venus\Document\Css
 	{
 		$url = $this->cache_url . $this->getThemeFile($name, $this->app->device->get());
 
-		$this->app->plugins->run('adminDocumentCssLoadMain', $url, $location, $priority);
+		$this->app->plugins->run('admin_document_css_load_main', $url, $location, $priority);
 
 		$this->load($url, $location, $priority);
 

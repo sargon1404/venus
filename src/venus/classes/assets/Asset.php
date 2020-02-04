@@ -255,7 +255,7 @@ abstract class Asset
 
 		$filename = $dir . $file;
 
-		$content = $this->app->plugins->filter('assetsMergeTraitStoreFile', $content, $filename, $append, $minify, $parse, $flags);
+		$content = $this->app->plugins->filter('assets_merge_trait_store_file', $content, $filename, $append, $minify, $parse, $flags);
 
 		return file_put_contents($filename, $content, $flags);
 	}

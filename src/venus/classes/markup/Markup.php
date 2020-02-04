@@ -119,7 +119,7 @@ abstract class Markup
 		$code = $this->app->html->list($type, $items);
 		$code = str_replace("\n", '', $code);
 
-		return $this->app->plugins->filter('markupMarkupGetList', $code, $type, $items, $this);
+		return $this->app->plugins->filter('markup_markup_get_list', $code, $type, $items, $this);
 	}
 
 	/**
@@ -137,7 +137,7 @@ abstract class Markup
 
 		$code = $this->app->html->img($url, 0, 0, '', '', '', '', false);
 
-		return $this->app->plugins->filter('markupMarkupGetImage', $code, $url, $this);
+		return $this->app->plugins->filter('markup_markup_get_image', $code, $url, $this);
 	}
 
 	/**

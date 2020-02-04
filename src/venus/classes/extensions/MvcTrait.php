@@ -18,7 +18,7 @@ use Venus\View;
 trait MvcTrait
 {
 	/**
-	* @var object $controller The currently loaded controller of this extension
+	* @var Controller $controller The currently loaded controller of this extension
 	*/
 	public Controller $controller;
 
@@ -80,7 +80,7 @@ trait MvcTrait
 	*/
 	protected function getMvcClass(string $dir, string $class_name) : string
 	{
-		$namespace_dir = str_replace("/", "\\", $dir);
+		$namespace_dir = str_replace("/", "\\", ucfirst($dir));
 
 		return $namespace_dir . ucfirst(App::strToClass($class_name));
 	}
@@ -105,7 +105,7 @@ trait MvcTrait
 		$this->controller_name = $controller;
 		$this->controller_class = $controller_class;
 
-		$class_name = static::$namespace . $name . "\\" . $controller_class;
+		$class_name = static::$namespace . App::strToClass($name) . "\\" . $controller_class;
 
 		$this->controller = new $class_name($this);
 

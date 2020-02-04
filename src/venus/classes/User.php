@@ -30,7 +30,7 @@ class User extends Item
 	/**
 	* @var int $ugid The id of the primary usergroup the user belongs to
 	*/
-	public array $ugid = App::USERGROUPS['guests'];
+	public int $ugid = App::USERGROUPS['guests'];
 
 	/**
 	* @var Usergroup $usergroup The primary usergroup of the user
@@ -38,9 +38,9 @@ class User extends Item
 	public Usergroup $usergroup;
 
 	/**
-	* @var array $usergroups The usergroups the user belongs to
+	* @var Usergroups $usergroups The usergroups the user belongs to
 	*/
-	public array $usergroups = [];
+	public Usergroups $usergroups;
 
 	/**
 	* @var array $ugid The ids of the usergroups the user belongs to
@@ -115,7 +115,7 @@ class User extends Item
 	{
 		parent::__construct($user);
 
-		$this->app->plugins->run('userConstruct', $this, $uid);
+		$this->app->plugins->run('user_construct', $this, $uid);
 	}
 
 	/**
@@ -256,13 +256,14 @@ class User extends Item
 
 			$this->ugids = [$this->ugid];
 			$this->usergroup = $usergroups->get($this->ugid);
-			$this->usergroups = [$this->ugid => $this->usergroup];
+			var_dump("usergroups!!!!");
+			//$this->usergroups = [$this->ugid => $this->usergroup];
 		}
 
 		$this->url = $this->app->uri->getUser($this);
 		$this->avatar_type = $avatar_type;
 
-		$this->app->plugins->run('userPrepare', $this);
+		$this->app->plugins->run('user_prepare', $this);
 	}
 
 	/**
@@ -480,7 +481,7 @@ class User extends Item
 
 		$url = $this->app->theme->images_url . $avatar_type . 'avatar.png';
 
-		return $this->app->plugins->filter('userGetAvatarUrl', $url, $this);
+		return $this->app->plugins->filter('user_get_avatar_url', $url, $this);
 	}
 
 	/**
