@@ -17,7 +17,7 @@ class Login extends \Venus\Admin\Controller
 	/**
 	* @internal
 	*/
-	public string $prefix = 'adminBlockLogin';
+	public string $prefix = 'admin_block_login';
 
 	/**
 	* Inits the controller
@@ -46,11 +46,11 @@ class Login extends \Venus\Admin\Controller
 	*/
 	public function login() : bool
 	{
-		global $venus;
 		$username = $this->request->post('username');
 		$password = $this->request->post('password');
 		$uid = $this->app->user->getUidByUsername($username);
-		$ip = $this->app->user->ip;
+		$ip = $this->app->ip;
+		var_dump($uid);die;
 
 		if($this->model->bruteforce->ipIsBlocked($ip))
 			$this->outputIpError();

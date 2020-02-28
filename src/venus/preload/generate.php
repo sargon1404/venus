@@ -1,7 +1,10 @@
 <?php
 namespace Venus\Preload;
 
-use function Mars\Preload\{get_traits_and_interfaces, get_classes, sort_classes, write_file};
+use function Mars\Preload\get_traits_and_interfaces;
+use function Mars\Preload\get_classes;
+use function Mars\Preload\sort_classes;
+use function Mars\Preload\write_file;
 
 chdir(dirname(__DIR__, 3));
 

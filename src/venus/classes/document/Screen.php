@@ -23,14 +23,14 @@ class Screen extends \Mars\Document\Screen
 
 	/**
 	* Builds the screen object
-	*/	
+	*/
 	public function __construct(App $app)
 	{
 		$this->app = $app;
-		$this->extensions_dir = $this->app->extensions_dir; 
+		$this->extensions_dir = $this->app->extensions_dir;
 	}
-	
-		
+
+
 	/**
 	* Returns the filename of a screen template
 	* @param string $template The template
@@ -39,7 +39,7 @@ class Screen extends \Mars\Document\Screen
 	protected function getTemplateFilename(string $template) : string
 	{
 		if (isset($this->app->theme)) {
-			if ($this->app->theme->hasTemplate($template)) {				
+			if ($this->app->theme->hasTemplate($template)) {
 				return $this->app->theme->getTemplateFilename($template);
 			}
 		}
@@ -131,7 +131,7 @@ class Screen extends \Mars\Document\Screen
 
 		$this->app->theme->addVar($var_name, $alert);
 
-		$this->app->content = $this->app->theme->getTemplate('messages/' . $template);
+		$this->app->content = $this->app->theme->getTemplate('alerts/' . $template);
 		$this->app->output();
 		die;
 	}
@@ -142,7 +142,7 @@ class Screen extends \Mars\Document\Screen
 	*/
 	public function permissionDenied()
 	{
-		$this->app->lang->loadPackage('messages');
+		$this->app->lang->loadFile('messages');
 		$title = App::__('permission_denied');
 		$text = App::__('permission_denied_text');
 

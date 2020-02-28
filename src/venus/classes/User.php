@@ -18,12 +18,22 @@ class User extends Item
 	public int $uid = 0;
 
 	/**
-	* @var int $username The username of the user
+	* @var string $username The username of the user
 	*/
 	public string $username = '';
 
 	/**
-	* @var string $email The email of the user
+	* @var string $password The user's password
+	*/
+	public string $password = '';
+
+	/**
+	* @var string $password_clear The user's clear password
+	*/
+	public string $password_clear = '';
+
+	/**
+	* @var string $email The user's email
 	*/
 	public string $email = '';
 
@@ -88,6 +98,11 @@ class User extends Item
 	protected string $avatar_type = 'image';
 
 	/**
+	* @var string $username_pattern The username pattern
+	*/
+	protected static string $username_pattern = '/[^a-z0-9\-_\. \(\)\'@äàâèéêôöœßùûüÿ]+/i';
+
+	/**
 	* @ignore
 	*/
 	protected static string $id_name = 'uid';
@@ -105,7 +120,18 @@ class User extends Item
 	/**
 	* @var array $_ignore Custom properties which won't be inserted into the database
 	*/
-	protected static array $_ignore = ['url', 'usergroup', 'ugids', 'usergroups', 'avatar_url', 'avatar_width', 'avatar_height', 'avatar_wh', 'avatar_html', 'avatar_type'];
+	protected static array $_ignore = ['url', 'password_clear' ,'usergroup', 'ugids', 'usergroups', 'avatar_url', 'avatar_width', 'avatar_height', 'avatar_wh', 'avatar_html', 'avatar_type'];
+
+	/**
+	* @ignore
+	*/
+	protected static array $_defaults_array = [
+		'status' => 1,
+		'activated' => 1,
+		'receaive_pms' => 1,
+		'receaive_emails' => 1,
+		'receaive_admin_emails' => 1
+	];
 
 	/**
 	* Builds the user
@@ -116,6 +142,74 @@ class User extends Item
 		parent::__construct($user);
 
 		$this->app->plugins->run('user_construct', $this, $uid);
+	}
+
+	/**
+	* Returns the validation rules
+	* @return array The rules
+	*/
+	protected function getRules() : array
+	{
+		return [
+			'username' => [
+								 'required' => 'user_username_missing', 'unique' => 'user_username_exists',
+								 'min' => ['user_username_short', $this->app->config->users_min_username],
+								 'pattern' => ['user_username_invalid', static::$username_pattern]
+							  ],
+			'password' => ['required' => 'user_password_missing', 'min' => ['user_password_short', $this->app->config->users_min_password]],
+			'email' => ['required' => 'user_email_missing', 'email' => 'user_email_invalid', 'unique' => 'user_email_exists'],
+			'ip' => ['ip_exists' => ['user_ip_to_many', [$this, 'validateIp']]]
+		];
+	}
+
+	/**
+	* Validates the ip
+	*/
+	public function validateIp(string $ip) : bool
+	{
+		if (!$this->registration_ip || !$this->app->config->registration_per_ip) {
+			return true;
+		}
+
+		$count = $this->app->db->count($this->getTable(), ['registration_ip' => $this->registration_ip, 'registration_ip_crc' => $this->app->db->crc32($this->registration_ip)]);
+		if ($count >= $this->app->config->registration_per_ip) {
+			return false;
+		}
+
+		return true;
+	}
+
+	protected function process()
+	{
+		if ($this->password_clear) {
+			$this->password = $this->hashPassword($this->password_clear);
+		}
+
+		$this->seo_alias = $this->app->filter->slug($this->username);
+
+		if (!$this->uid) {
+			$this->secret_key = App::randStr();
+
+			$this->lang = 0;
+			$this->theme = 0;
+			$this->timezone = '';
+
+			$this->registration_type = 'venus';
+			$this->registration_timestamp = time();
+			$this->registration_ip = $this->app->ip;
+			$this->registration_ip_crc = $this->app->db->crc32($this->registration_ip);
+		}
+	}
+	
+	public function insert(bool $process = true, bool $keep_old_id = false) : int
+	{
+		if (parent::insert($process, $keep_old_id)) {
+			$this->insertUsergroups();
+		}
+	}
+	
+	public function insertUsergroups()
+	{
 	}
 
 	/**

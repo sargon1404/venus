@@ -24,7 +24,7 @@ return [
 'src/venus/classes/Language.php',
 'src/venus/classes/Languages.php',
 'src/venus/classes/Library.php',
-//'src/venus/classes/Log.php',
+'src/venus/classes/Log.php',
 'src/venus/classes/Media.php',
 'src/venus/classes/Model.php',
 'src/venus/classes/Plugin.php',

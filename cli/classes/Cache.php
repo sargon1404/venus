@@ -20,7 +20,7 @@ class Cache extends Command
 		'themes' => ['themes', 'Caches the themes data'],
 		'usergroups' => ['usergroups', 'Caches the usergroups data'],
 	];
-	
+
 	/**
 	* Caches everything
 	* @param array $options Not used
@@ -39,7 +39,7 @@ class Cache extends Command
 		$this->newline();
 		$this->usergroups($options);
 	}
-		
+
 	/**
 	* Caches the libraries
 	* @param array $options Not used
@@ -47,13 +47,13 @@ class Cache extends Command
 	public function libraries(array $options)
 	{
 		$this->info('Building libraries...');
-		
+
 		$cache = new \Venus\Admin\Cache;
 		$cache->buildLibraries();
-		
+
 		$this->done();
 	}
-	
+
 	/**
 	* Caches the frontend & admin css code
 	* @param array $options Not used
@@ -61,12 +61,12 @@ class Cache extends Command
 	public function css(array $options)
 	{
 		$this->info('Building css code...');
-		
+
 		$this->app->cache->buildCss();
-		
+
 		$this->done();
 	}
-	
+
 	/**
 	* Caches the frontend css code
 	* @param array $options Not used
@@ -74,12 +74,12 @@ class Cache extends Command
 	public function cssFrontend(array $options)
 	{
 		$this->info('Building frontend css code...');
-	
+
 		$this->app->cache->buildCssFrontend();
-		
+
 		$this->done();
 	}
-	
+
 	/**
 	* Caches the admin css code
 	* @param array $options Not used
@@ -87,12 +87,12 @@ class Cache extends Command
 	public function cssAdmin(array $options)
 	{
 		$this->info('Building admin css code...');
-	
+
 		$this->app->cache->buildCssAdmin();
-		
+
 		$this->done();
 	}
-	
+
 	/**
 	* Caches the frontend & adminjavascript code
 	* @param array $options Not used
@@ -100,12 +100,12 @@ class Cache extends Command
 	public function javascript(array $options)
 	{
 		$this->info('Building javascript code...');
-		
+
 		$this->app->cache->buildJavascript();
-		
+
 		$this->done();
 	}
-	
+
 	/**
 	* Caches the frontend javascript code
 	* @param array $options Not used
@@ -113,12 +113,12 @@ class Cache extends Command
 	public function javascriptFrontend(array $options)
 	{
 		$this->info('Building frontend javascript code...');
-	
+
 		$this->app->cache->buildJavascriptFrontend();
-		
+
 		$this->done();
 	}
-	
+
 	/**
 	* Caches the admin javascript code
 	* @param array $options Not used
@@ -126,12 +126,12 @@ class Cache extends Command
 	public function javascriptAdmin(array $options)
 	{
 		$this->info('Building admin javascript code...');
-	
+
 		$this->app->cache->buildJavascriptAdmin();
-		
+
 		$this->done();
 	}
-	
+
 	/**
 	* Caches the languages data
 	* @param array $options Not used
@@ -139,12 +139,12 @@ class Cache extends Command
 	public function languages(array $options)
 	{
 		$this->info('Building the languages cache...');
-	
+
 		$this->app->cache->buildLanguages();
-		
+
 		$this->done();
 	}
-	
+
 	/**
 	* Caches the themes data
 	* @param array $options Not used
@@ -152,12 +152,12 @@ class Cache extends Command
 	public function themes(array $options)
 	{
 		$this->info('Building the themes cache...');
-	
+
 		$this->app->cache->buildThemes();
-		
+
 		$this->done();
 	}
-	
+
 	/**
 	* Caches the usergroups data
 	* @param array $options Not used
@@ -165,9 +165,9 @@ class Cache extends Command
 	public function usergroups(array $options)
 	{
 		$this->info('Building the usergroups cache...');
-	
+
 		$this->app->cache->buildUsergroups();
-		
+
 		$this->done();
 	}
 }

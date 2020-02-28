@@ -70,11 +70,11 @@ trait TemplatesTrait
 		$dir = App::sl(static::$base_dir);
 		$name = App::sl($name);
 		$layout = App::sl($layout);
-		
+
 		$template.= '.' . App::FILE_EXTENSIONS['templates'];
 
 		if ($this->app->device->isMobile()) {
-			$filename = $this->getTemplateFilenameForDevice($dir, $name, $layout, $template, $this->app->device->type);			
+			$filename = $this->getTemplateFilenameForDevice($dir, $name, $layout, $template, $this->app->device->type);
 			if ($filename) {
 				return $filename;
 			}

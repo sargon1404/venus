@@ -6,7 +6,7 @@
 
 body {
 	font-family: Verdana, Geneva, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 	line-height: 17px;
 	background: #252525 url('../images/background.jpg');
 	color: #030305;
@@ -40,13 +40,14 @@ label {
 	background: #F5F5F5 linear-gradient(#F5F5F5, #F3F3F3);
 }
 
+/*
 #content-inner {
 	clear: both;
 }
 
 #content-inner main {
 	border-top-left-radius: 0;
-}
+}*/
 
 main {
 	background: #fff;
@@ -58,18 +59,15 @@ main {
 	padding: 25px 20px;
 }
 
-main.open
-{
+main.open {
 	width: calc(100% - 80px);
 }
 
-main.full
-{
+main.full {
 	width: 100%;
 }
 
-aside
-{
+aside {
 	float: right;
 	width: calc(20% - 20px);
 	padding: 20px 20px;
@@ -78,7 +76,6 @@ aside
 	border-radius: 5px;
 }
 
-aside.closed
-{
+aside.closed {
 	width: 60px;
 }

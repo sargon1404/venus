@@ -1,157 +1,90 @@
 /******************************************/
 
-.alert-screen
-{
-	font-size: 1.19em;
-	line-height: 1.5em;
-	text-align:center;
+.alert-screen {
 	margin: 40px 0;
-	position: relative;
-	width: 100%;
 	border-radius: 5px;
-   padding: 8px 0;
+   padding: 40px 10px;
 }
 
-.alert-screen .icon
-{
-	position: absolute;
-	top: 0;
-	left: 0;
-   width: 12%;
-   height: 100%;
+.alert-screen p {
+	font-size: 1.1em;
+	line-height: 1.5em;
 }
 
-.alert-screen .content
-{
-	padding: 30px 0;
-	margin-left: 12%;
-}
-
-.alert-screen .title
-{
-	text-align: left;
-	margin: 0 0 25px 0;
-	font-size: 1.8em;
-}
-
-.alert-screen .text
-{
-	text-align: left;
-	padding-right: 40px;
-}
-
-#error, #permission-denied
-{
+#error, #permission-denied {
 	@error-properties
 }
 
-#message
-{
+#message {
 	@message-properties
 }
 
-#redirect
-{
+#redirect {
 	@redirect-properties
 }
 
-#error .icon
-{
+#error .icon {
 	background: url('../images/messages/error-big.png') center center no-repeat;
 }
 
-#message .icon
-{
+#message .icon {
 	background: url('../images/messages/message-big.png') center center no-repeat;
 }
 
-#permission-denied .icon
-{
+#permission-denied .icon {
 	background: url('../images/messages/permission-denied.png') center center no-repeat;
 }
 
-#redirect .content
-{
+#redirect .content {
 	margin-left: 0;
 }
 
-
-
 /***********************************/
 
-.alert
-{
+.alert {
 	border-radius: 5px;
-	font-size: 1.15em;
-   padding: 8px 0;
+	font-size: 1.1em;
+   padding: 10px 10px;
    margin-bottom: 20px;
-   position: relative;
 }
 
-.alert .close
-{
-   margin: 10px 15px 2px 10px;
+.alert .close-icon {
+   padding: 5px 10px;
+   text-align: center;
 }
 
-.alert .icon
-{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 80px;
-	height: 100%;
-	text-align: center;
-	margin-top: 4px;
-}
-
-.alert .content
-{
-	text-align: left;
-	padding: 2px 0;
-	margin: 4px 40px 0 80px;
-}
-
-.alert .text
-{
+.alert p {
 	padding: 5px 0;
 }
 
-#errors
-{
+#errors {
 	@error-properties
 }
 
-#messages
-{
+#messages {
 	@message-properties
 }
 
-#notifications
-{
+#notifications {
 	@notification-properties
 }
 
-#warnings
-{
+#warnings {
 	@warning-properties
 }
 
-#errors .icon
-{
+#errors .icon {
 	background: url('../images/messages/error-medium.png') center center no-repeat;
 }
 
-#messages .icon
-{
+#messages .icon {
 	background: url('../images/messages/message-medium.png') center center no-repeat;
 }
 
-#notifications .icon
-{
+#notifications .icon {
 	background: url('../images/messages/notification-medium.png') center center no-repeat;
 }
 
-#warnings .icon
-{
+#warnings .icon {
 	background: url('../images/messages/warning-medium.png') center center no-repeat;
 }

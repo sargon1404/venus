@@ -6,7 +6,7 @@
 
 namespace Venus;
 
-use \Mars\Controller;
+use Mars\Controller;
 
 /**
 * The View Class
@@ -68,8 +68,8 @@ abstract class View extends \Mars\View
 		$this->url = $this->controller->url;
 		$this->base_url = $this->controller->base_url;
 
-		$this->prefix = $this->getPrefix('view');
-		$this->prefix_output = $this->prefix . 'Output';
+		$this->prefix = $this->getPrefix();
+		$this->prefix_output = $this->prefix . '_output';
 
 		$this->images_url = $this->app->images_url;
 	}
@@ -106,7 +106,7 @@ abstract class View extends \Mars\View
 		}
 
 		//set the plugin's output data
-		$this->app->plugins->setOutputData($this->prefix_output . '_' . $template), $this);
+		$this->app->plugins->setOutputData($this->prefix_output . '_' . $template, $this);
 
 		$content = $this->controller->document->renderTemplate($template, $layout);
 

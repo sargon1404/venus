@@ -44,7 +44,7 @@ abstract class Extension extends \Mars\Extensions\Extension
 
 	/**
 	* Returns the extension's info, if any
-	*/	
+	*/
 	public function getInfo() : array
 	{
 		$info_file = $this->dir . 'info.php';

@@ -347,6 +347,8 @@ class Theme extends \Venus\Theme
 		$filename = $this->findTemplateFilename($template);
 		if ($filename) {
 			return $filename;
+		} else {
+			throw new \Exception("Template {$template} not found");
 		}
 
 		return $this->templates_dir . $filename;
@@ -395,17 +397,17 @@ class Theme extends \Venus\Theme
 	* @return string The template's filename
 	*/
 	public function getExtensionTemplateFilename(string $dir, string $name, string $layout, string $template, string $device = '') : string
-	{		
+	{
 		$device_dir = $this->app->device->getSubdir($device);
-				
+
 		if ($layout) {
 			$filename = $this->findTemplateFilename(App::EXTENSIONS_DIRS['layouts'] . App::sl($layout) . App::DIRS['extensions'] . '/' . $dir . $name . $device_dir . $template);
 			if ($filename) {
 				return $filename;
 			}
 		}
-		
-		return $this->findTemplateFilename(App::DIRS['extensions'] . '/' . $dir . $name . $device_dir . $template);		
+
+		return $this->findTemplateFilename(App::DIRS['extensions'] . '/' . $dir . $name . $device_dir . $template);
 	}
 
 	/**

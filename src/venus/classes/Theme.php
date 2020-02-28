@@ -232,7 +232,7 @@ class Theme extends \Venus\Extensions\Extension
 	public function getRow(int $tid) : object
 	{
 		$table = $this->getTable();
-		
+
 		$this->app->db->readQuery("
 			SELECT
 			t.*, p.name as parent_name, p.templates as parent_templates,

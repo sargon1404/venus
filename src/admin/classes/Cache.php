@@ -6,7 +6,10 @@
 
 namespace Venus\Admin;
 
-use Venus\{Theme, Themes, Language, Languages};
+use Venus\Theme;
+use Venus\Themes;
+use Venus\Language;
+use Venus\Languages;
 
 /**
 * The Admin Cache Class
@@ -301,7 +304,7 @@ class Cache extends \Venus\Cache
 
 		foreach ($themes as $theme) {
 			$this->app->output->message("Updating cache data for theme {$theme->title}");
-				
+
 			$templates = App::serialize($theme->getTemplates());
 
 			$this->app->db->updateById('venus_themes', ['templates' => $templates], 'tid', $theme->tid);
@@ -320,7 +323,7 @@ class Cache extends \Venus\Cache
 	public function cacheThemeDefault()
 	{
 		$this->app->output->message("Updating cache data for the default theme");
-		
+
 		$theme = new Theme;
 		$this->update('theme_default', $theme->getRow($this->app->config->theme_default), true);
 	}
@@ -336,7 +339,7 @@ class Cache extends \Venus\Cache
 
 		foreach ($languages as $language) {
 			$this->app->output->message("Updating cache data for language {$language->title}");
-			
+
 			$files = App::serialize($language->getFiles());
 
 			$this->app->db->updateById('venus_languages', ['files' => $files], 'lid', $language->lid);
@@ -355,7 +358,7 @@ class Cache extends \Venus\Cache
 	public function cacheLanguageDefault()
 	{
 		$this->app->output->message("Updating cache data for the default language");
-		
+
 		$language = new Language;
 		$this->update('language_default', $language->getRow($this->app->config->language_default), true);
 	}
@@ -381,7 +384,7 @@ class Cache extends \Venus\Cache
 
 		$guests = $this->app->db->selectRow('venus_usergroups', '*', ['ugid' => APP::USERGROUPS['guests']]);
 		$usergroups = $this->app->db->selectWithKey('venus_usergroups', 'ugid');
-		
+
 		$this->app->plugins->run('admin_cache_build_usergroups', $usergroups, $this);
 
 		$this->update('usergroups', $usergroups, true);

@@ -1,6 +1,5 @@
 .close {
 	float: right;
-	display: block;
 	width: 20px;
 	height: 20px;
 	background: url('../images/x.png');

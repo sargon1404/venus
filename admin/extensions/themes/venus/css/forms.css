@@ -3,30 +3,62 @@ fieldset {
 	padding: 10px 10px;
 }
 
-fieldset .field
-{
+fieldset > div {
 	padding: 6px 0;
+	display: grid;
+	grid-template-columns: 35% 65%;
 }
 
-fieldset .field label
-{
-	display: inline-block;
-	width: 30%;
+fieldset > div.submit {
+	display: block;
+	padding-left: 35%;
+}
+
+fieldset > div label {
 	text-align: right;
-	padding: 0 20px 0 2px;
-	vertical-align: middle;	
+	padding: 0 35px 0 2px;
+	align-self: center;
 }
 
-fieldset .field input,
-fieldset .field select,
-fieldset .field textarea
-{
+fieldset > div label:after {
+	content: ' ';
 	display: inline-block;
-	width: 55%;
+	width: 20px;
+	text-align: center;
+	vertical-align: middle;
 }
 
-fieldset .field input[type="submit"]
-{
-	margin-left: 30%;
+fieldset > div label.required:after {
+	content: '*';
+	color: #D2342C;
+}
+
+fieldset > div > div {
+	align-self: center;
+}
+
+fieldset > div.submit input {
 	width: auto;
+}
+
+
+
+@media (max-width: 769px) {
+	fieldset > div {
+		padding: 10px 0;
+		grid-template-columns: 100%;
+	}
+
+	fieldset > div label{
+		text-align: left;
+		margin-bottom: 10px;
+	}
+
+	fieldset > div.submit {
+		padding-left: 0;
+	}
+
+	fieldset > div.submit input {
+		width: 100%;
+	}
 }

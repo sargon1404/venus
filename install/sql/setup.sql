@@ -50,7 +50,7 @@ create table venus_cli
 (
 	`command`								varchar(255)					   	NOT NULL,
 	`class`									varchar(255)					   	NOT NULL,
-	
+
 	index command_index(command(4))
 );
 
@@ -317,7 +317,7 @@ create table venus_themes
 	`status`									tinyint unsigned						NOT NULL,
 	`note`									varchar(255)             			NOT NULL,
 	`development`							tinyint unsigned						NOT NULL,
-	
+
 	`params`									text                             NOT NULL,
 	`templates`								text										NOT NULL,
 	`layouts`								text										NOT NULL,
@@ -333,12 +333,12 @@ create table venus_themes
 	`has_tablets_images_dir`			tinyint unsigned						NOT NULL,
 	`has_smartphones_images_dir`		tinyint unsigned						NOT NULL,
 	`init`									tinyint unsigned						NOT NULL,
-	
+
 	`created_timestamp`					int unsigned							NOT NULL,
 	`created_by`							int unsigned							NOT NULL,
 	`modified_timestamp`					int unsigned							NOT NULL,
 	`modified_by`							int unsigned							NOT NULL,
-	
+
 	primary key(tid)
 );
 

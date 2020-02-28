@@ -28,7 +28,7 @@ class Login extends \Venus\Admin\Model
 	/**
 	* @internal
 	*/
-	public string $prefix = 'adminBlockLogin';
+	public string $prefix = 'admin_block_login';
 
 
 	/**
@@ -82,14 +82,14 @@ class Login extends \Venus\Admin\Model
 	public function getLanguages() : array
 	{
 		$list = [];
-		
+
 		$languages = new Languages;
 		foreach($languages as $lang) {
 			$info = $lang->getInfo();
-			
+
 			$list[$lang->name] = $info['title'];
 		}
-		
+
 		return $list;
 	}
 

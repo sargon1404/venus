@@ -1,14 +1,33 @@
+.full{
+	width: 100%;
+}
+
+.three-fourths{
+	width: 75%;
+}
+
+.half{
+	width: 50%;
+}
+
+.one-third{
+	width: 33.33%;
+}
+
+.one-fourth{
+	width: 25%;
+}
+
+.middle{
+	margin: 0 auto;
+}
+
 .pull-left {
 	float: left;
 }
 
 .pull-right {
 	float: right;
-}
-
-.clear,
-.clearfix {
-	clear:both;
 }
 
 .left {
@@ -29,6 +48,11 @@
 
 .hidden {
 	display: none;
+}
+
+.clear,
+.clearfix {
+	clear:both;
 }
 
 .disabled {

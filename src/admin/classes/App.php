@@ -107,7 +107,7 @@ class App extends \Venus\App
 	}
 
 	/**********************SCREEN FUNCTIONS***************************************/
-	
+
 	/**
 	* @internal
 	*/
@@ -144,8 +144,8 @@ class App extends \Venus\App
 	*/
 	public function permissionDenied()
 	{
-		$this->lang->loadPackage('messages');
-		$this->navbar->setTitle(l('permission_denied'));
+		$this->lang->loadFile('messages');
+		$this->navbar->setTitle(App::__('permission_denied'));
 
 		parent::permissionDenied();
 	}

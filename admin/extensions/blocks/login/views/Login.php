@@ -19,7 +19,7 @@ class Login extends \Venus\Admin\View
 	/**
 	* @internal
 	*/
-	public string $prefix = 'adminBlockLogin';
+	public string $prefix = 'admin_block_login';
 
 
 	/**

@@ -132,7 +132,22 @@ abstract class Asset
 
 		$files_array = [];
 		foreach ($files as $dir => $files_list) {
-			natsort($files_list);
+			$desktop_files = [];
+			$mobile_files = [];
+
+			//split the files into desktop and mobile
+			foreach ($files_list as $filename) {
+				if (strpos($filename, 'mobile') !== false) {
+					$mobile_files[] = $filename;
+				} else {
+					$desktop_files[] = $filename;
+				}
+			}
+
+			natsort($desktop_files);
+			natsort($mobile_files);
+
+			$files_list = array_merge($desktop_files, $mobile_files);
 
 			foreach ($files_list as $filename) {
 				$ext = $this->app->file->getExtension($filename);

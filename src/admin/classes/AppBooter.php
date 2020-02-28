@@ -6,13 +6,36 @@
 
 namespace Venus\Admin;
 
-use Mars\{Memcache, Caching, Timer, Filter, Escape, Validator, Session, Device, Response};
-use Mars\Document\{Title, Meta, Rss};
-use Mars\Alerts\{Errors, Messages, Warnings, Notifications};
-use Venus\{Log, Time, Format, File, Uri, Library, Environment, Media};
-use Venus\Helpers\{Controls, Tree, Order};
+use Mars\Memcache;
+use Mars\Caching;
+use Mars\Timer;
+use Mars\Filter;
+use Mars\Escape;
+use Mars\Validator;
+use Mars\Session;
+use Mars\Device;
+use Mars\Response;
+use Mars\Document\Title;
+use Mars\Document\Meta;
+use Mars\Document\Rss;
+use Mars\Alerts\Errors;
+use Mars\Alerts\Messages;
+use Mars\Alerts\Warnings;
+use Mars\Alerts\Notifications;
+use Venus\Log;
+use Venus\Time;
+use Venus\Format;
+use Venus\File;
+use Venus\Uri;
+use Venus\Library;
+use Venus\Environment;
+use Venus\Media;
+use Venus\Helpers\Controls;
+use Venus\Helpers\Tree;
+use Venus\Helpers\Order;
 use Venus\Document\Breadcrumbs;
-use Venus\System\{Output, Plugins};
+use Venus\System\Output;
+use Venus\System\Plugins;
 
 /**
 * The Booter Class
@@ -128,7 +151,7 @@ class AppBooter extends \Venus\AppBooter
 	* {@inheritDoc}
 	*/
 	public function system()
-	{		
+	{
 		$this->app->output = new Output($this->app);
 		$this->app->plugins = new Plugins($this->app);
 		$this->app->plugins->load();

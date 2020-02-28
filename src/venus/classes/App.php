@@ -286,9 +286,9 @@ class App extends \Mars\App
 
 		$this->checkInstalled();
 
-		$this->boot->db();		
+		$this->boot->db();
 		$this->boot->config();
-		$this->boot->base();		
+		$this->boot->base();
 		$this->boot->properties();
 		$this->boot->env();
 		$this->boot->document();

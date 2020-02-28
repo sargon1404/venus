@@ -15,6 +15,6 @@
 </header>
 
 <div id="container">
-	<div id="login-alerts">
+	<div class="half three-fourths-lg full-sm middle">
 		{{ $this.outputAlerts() }}
 	</div>

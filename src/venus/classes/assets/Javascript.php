@@ -129,7 +129,7 @@ class Javascript extends Asset
 	* Combines & minifies & caches the javascript code from the /javascript folder, the plugins, the config options, the paths and the strings
 	*/
 	public function cacheMain()
-	{		
+	{
 		$this->app->output->message("Building main javascript code");
 		
 		$main_code = $this->readFromDir($this->dir);
