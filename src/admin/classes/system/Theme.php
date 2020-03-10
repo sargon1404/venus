@@ -6,6 +6,7 @@
 
 namespace Venus\Admin\System;
 
+use Mars\Templates;
 use Venus\Admin\App;
 use Venus\Admin\Output\Menu;
 
@@ -27,6 +28,8 @@ class Theme extends \Venus\Admin\Theme
 	public function __construct(App $app)
 	{
 		parent::__construct($app);
+
+		$this->engine = new Templates;
 
 		$this->app->plugins->run('admin_system_theme_construct', $this);
 	}

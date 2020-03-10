@@ -6,11 +6,9 @@
 
 namespace Venus\System;
 
+use Mars\Templates;
 use Venus\App;
-use Venus\Output\Menu;
-use Venus\Output\Announcements;
-use Venus\Output\Breadcrumbs;
-use Venus\Output\Banners;
+use Venus\Output\{Menu, Announcements, Breadcrumbs, Banners};
 
 /**
 * The System's Theme Class
@@ -94,6 +92,7 @@ class Theme extends \Venus\Theme
 	public function __construct(App $app)
 	{
 		$this->app = $app;
+		$this->engine = new Templates;
 
 		$theme = $this->get();
 

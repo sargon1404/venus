@@ -123,21 +123,10 @@ class User extends Item
 	protected static array $_ignore = ['url', 'password_clear' ,'usergroup', 'ugids', 'usergroups', 'avatar_url', 'avatar_width', 'avatar_height', 'avatar_wh', 'avatar_html', 'avatar_type'];
 
 	/**
-	* @ignore
-	*/
-	protected static array $_defaults_array = [
-		'status' => 1,
-		'activated' => 1,
-		'receaive_pms' => 1,
-		'receaive_emails' => 1,
-		'receaive_admin_emails' => 1
-	];
-
-	/**
 	* Builds the user
 	* @param mixed $user The user's id/data
 	*/
-	public function __construct($user = 0)
+	public function __construct($user = null)
 	{
 		parent::__construct($user);
 
@@ -148,7 +137,7 @@ class User extends Item
 	* Returns the validation rules
 	* @return array The rules
 	*/
-	protected function getRules() : array
+	/*protected function getRules() : array
 	{
 		return [
 			'username' => [
@@ -159,6 +148,20 @@ class User extends Item
 			'password' => ['required' => 'user_password_missing', 'min' => ['user_password_short', $this->app->config->users_min_password]],
 			'email' => ['required' => 'user_email_missing', 'email' => 'user_email_invalid', 'unique' => 'user_email_exists'],
 			'ip' => ['ip_exists' => ['user_ip_to_many', [$this, 'validateIp']]]
+		];
+	}*/
+
+	protected function getRules() : array
+	{
+		return [
+			'username' => [
+								 'user_username_missing' => 'required', 'user_username_exists' => 'unique',
+								 'user_username_short' => ['min', $this->app->config->users_min_username],
+								 'user_username_invalid' => ['pattern', static::$username_pattern]
+							  ],
+			'password' => ['required' => 'user_password_missing', 'min' => ['user_password_short', $this->app->config->users_min_password]],
+			'email' => ['user_email_missing' => 'required', 'user_email_invalid' => 'email', 'user_email_exists' => 'unique'],
+			'ip' => ['user_ip_to_many' => ['ip_exists', [$this, 'validateIp']]]
 		];
 	}
 
@@ -179,6 +182,27 @@ class User extends Item
 		return true;
 	}
 
+	protected function getDefaultsArray() : array
+	{
+		return [
+			'status' => 1,
+			'activated' => 1,
+
+			'lang' => 0,
+			'theme' => 0,
+			'timezone' => '',
+
+			'receaive_pms' => 1,
+			'receaive_emails' => 1,
+			'receaive_admin_emails' => 1,
+
+			'registration_type' => 'venus',
+			'registration_timestamp' => time(),
+			'registration_ip' => $this->app->ip,
+			'registration_ip_crc' => $this->app->db->crc32($this->app->ip)
+		];
+	}
+
 	protected function process()
 	{
 		if ($this->password_clear) {
@@ -189,25 +213,17 @@ class User extends Item
 
 		if (!$this->uid) {
 			$this->secret_key = App::randStr();
-
-			$this->lang = 0;
-			$this->theme = 0;
-			$this->timezone = '';
-
-			$this->registration_type = 'venus';
-			$this->registration_timestamp = time();
-			$this->registration_ip = $this->app->ip;
-			$this->registration_ip_crc = $this->app->db->crc32($this->registration_ip);
 		}
 	}
-	
+
 	public function insert(bool $process = true, bool $keep_old_id = false) : int
 	{
+App::print_r($this);die("qqqqq");
 		if (parent::insert($process, $keep_old_id)) {
 			$this->insertUsergroups();
 		}
 	}
-	
+
 	public function insertUsergroups()
 	{
 	}

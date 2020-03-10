@@ -16,22 +16,22 @@ class Help extends Command
 	public function index(array $options)
 	{
 		$commands = $this->app->cli->getCommandClasses();
-		
-		$list = [];			
+
+		$list = [];
 		foreach ($commands as $name => $class) {
 			$obj = new $class($this->app);
-			
+
 			$list[$name] = [];
-			
+
 			$actions = $obj->getActions();
 			foreach ($actions as $action_name => $data) {
 				$list[$name][] = [$name . ':' . $action_name, $data[1] ?? ''];
 			}
 		}
-		
+
 		$this->list($list);
 	}
-	
+
 	/**
 	* List actions
 	* @param string $name The name of the command
@@ -46,28 +46,66 @@ class Help extends Command
 
 		$this->list($list);
 	}
-	
+
 	/**
 	* Lists the options of an action
-	* @param string $name The name of the action
-	* @param string $desc The action's description
-	* @param array $options The params list
+	* @param string $action The name of action
+	* @param array $options The options list
 	* @param array The actions to list
 	*/
-	public function listOptions(string $action, string $desc, array $options)
+	public function listOptions(string $action, array $options)
 	{
-		$this->app->cli->header($action);
-		$this->app->cli->message(str_pad($desc, 5 + strlen($desc), ' ', STR_PAD_LEFT));
-		
-		if ($options) {
-			echo "\n";
-			
-			$list = [];
-			foreach($options as $key => $val) {
-				$list[] = [$key, $val];
-			}		
-				
-			$this->list([$action => $list], false);
+		if (!$options) {
+			return;
+		}
+
+		echo "\n";
+
+		$list = [];
+		foreach($options as $key => $val) {
+			$list[] = [$key, $val];
+		}
+
+		$this->list([$action => $list], false);
+	}
+
+	/**
+	* Prints the usage
+	* @param array $usage_array
+	*/
+	public function printUsage(array $usage_array)
+	{
+		if (!$usage_array) {
+			return;
+		}
+
+		echo "\n";
+		$this->message('Usage:', 5);
+		echo "\n";
+
+		foreach ($usage_array as $usage) {
+			$this->message($usage, 5);
 		}
 	}
+
+	/**
+	* Prints a header
+	* @param string $text The header
+	*/
+	public function printHeader(string $text)
+	{
+		echo "\n";
+		$this->header($text);
+		echo "\n";
+	}
+
+	/**
+	* Prints a description
+	* @param string $text The description
+	*/
+	public function printDescription(string $text)
+	{
+		$this->message($text, 5);
+	}
+
 }

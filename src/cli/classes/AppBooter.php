@@ -8,6 +8,7 @@ namespace Venus\Cli;
 
 use Venus\Cli;
 use Venus\System\Plugins;
+use Venus\Admin\System\Language;
 use Venus\Cli\System\Output;
 
 /**
@@ -25,6 +26,8 @@ class AppBooter extends \Venus\Admin\AppBooter
 		$this->app->output = new Output($this->app);
 		$this->app->plugins = new Plugins($this->app);
 		$this->app->plugins->load();
+
+		$this->app->lang = new Language($this->app);
 
 		$this->app->cli = new Cli($this->app);
 

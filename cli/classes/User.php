@@ -8,7 +8,10 @@ class User extends Command
 	* @param array $actions Array defining the available actions, in the format: [method, description, params(optional)]
 	*/
 	protected array $actions = [
-		'create' => ['create', 'Creates an user', ['-u' => 'The username', '-p' => 'The password', '-e' => 'The email'], 'user:create -u=<username> -p=<password> -e=<email>'],
+		'create' => [
+							'create', 'Creates an user', ['--username, -u' => 'The username', '--password, -p' => 'The password', '--email, -e' => 'The email'],
+						 	['user:create <username> <password> <email>', 'user:create -u <username> -p <password> -e <email>', 'user:create -user=<username> --password=<password> -email=<email>']
+						],
 	];
 
 
@@ -19,21 +22,25 @@ class User extends Command
 	*/
 	public function create(array $options)
 	{
-		if (empty($options['u'])) {
-			$this->errorAndDie("Please input the username [-u]");
-		}
-		if (empty($options['p'])) {
-			$this->errorAndDie("Please input the password [-p]");
-		}
-		if (empty($options['e'])) {
-			$this->errorAndDie("Please input the email [-e]");
+		[$username, $password, $email] = $this->getOptionsList(3);
+
+		if (!$username || !$password || !$email) {
+			if (!$this->checkOptions(['username' => ['u', 'username'], 'password' => ['p', 'password'], 'email' => ['e', 'email']])) {
+				$this->errorOptions();
+			}
+
+			$username = $this->getOption(['u', 'user']);
+			$password = $this->getOption(['p', 'password']);
+			$email = $this->getOption(['e', 'email']);
 		}
 
 		$user = new \Venus\User;
-		$user->username = $options['u'];
-		$user->password_clear = $options['p'];
-		$user->email = $options['e'];
+		$user->username = $username;
+		$user->password_clear = $password;
+		$user->email = $email;
 		//$user->skipRules('ip');
+
+		print_r($user);die;
 
 		if (!$user->insert()) {
 
