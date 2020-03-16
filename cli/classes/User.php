@@ -2,6 +2,8 @@
 
 namespace Cli;
 
+use Venus\App;
+
 class User extends Command
 {
 	/**
@@ -38,13 +40,18 @@ class User extends Command
 		$user->username = $username;
 		$user->password_clear = $password;
 		$user->email = $email;
-		//$user->skipRules('ip');
+		$user->skipRule('ip');
 
-		print_r($user);die;
+		$uid = $user->insert();
 
-		if (!$user->insert()) {
+		if ($uid) {
 
+		} else {
+			$this->app->lang->loadFile('user');
+
+			$this->error(App::__($user->getErrors()));
 		}
+
 
 		$this->done();
 	}

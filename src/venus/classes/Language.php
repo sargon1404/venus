@@ -183,7 +183,7 @@ class Language extends \Venus\Extensions\Extension
 	* @param string $file The name of the file to load
 	* @return array The strings
 	*/
-	public function getStrings(string $file)
+	public function getStringsFromFile(string $file)
 	{
 		$file = $file . '.php';
 

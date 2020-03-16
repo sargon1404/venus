@@ -1,7 +1,6 @@
 <?php
 
-$params =
-[
+$params = [
 	'encoding' => 'UTF-8',
  	'code' => 'en',
  	'timestamp_format' => 'D M d, Y g:i a',

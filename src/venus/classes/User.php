@@ -120,7 +120,11 @@ class User extends Item
 	/**
 	* @var array $_ignore Custom properties which won't be inserted into the database
 	*/
-	protected static array $_ignore = ['url', 'password_clear' ,'usergroup', 'ugids', 'usergroups', 'avatar_url', 'avatar_width', 'avatar_height', 'avatar_wh', 'avatar_html', 'avatar_type'];
+	protected static array $_ignore = [
+		'url', 'password_clear' ,'usergroup', 'ugids', 'usergroups', 'timezone_offset',
+		'editor', 'markup_language', 'markup_tags',
+		'avatar_url', 'avatar_width', 'avatar_height', 'avatar_wh', 'avatar_html', 'avatar_type'
+	];
 
 	/**
 	* Builds the user
@@ -134,23 +138,8 @@ class User extends Item
 	}
 
 	/**
-	* Returns the validation rules
-	* @return array The rules
+	* {@inheritDocs}
 	*/
-	/*protected function getRules() : array
-	{
-		return [
-			'username' => [
-								 'required' => 'user_username_missing', 'unique' => 'user_username_exists',
-								 'min' => ['user_username_short', $this->app->config->users_min_username],
-								 'pattern' => ['user_username_invalid', static::$username_pattern]
-							  ],
-			'password' => ['required' => 'user_password_missing', 'min' => ['user_password_short', $this->app->config->users_min_password]],
-			'email' => ['required' => 'user_email_missing', 'email' => 'user_email_invalid', 'unique' => 'user_email_exists'],
-			'ip' => ['ip_exists' => ['user_ip_to_many', [$this, 'validateIp']]]
-		];
-	}*/
-
 	protected function getRules() : array
 	{
 		return [
@@ -159,10 +148,23 @@ class User extends Item
 								 'user_username_short' => ['min', $this->app->config->users_min_username],
 								 'user_username_invalid' => ['pattern', static::$username_pattern]
 							  ],
-			'password' => ['required' => 'user_password_missing', 'min' => ['user_password_short', $this->app->config->users_min_password]],
+			'password_clear' => ['user_password_missing' => 'required', 'user_password_short' => ['min', $this->app->config->users_min_password]],
 			'email' => ['user_email_missing' => 'required', 'user_email_invalid' => 'email', 'user_email_exists' => 'unique'],
-			'ip' => ['user_ip_to_many' => ['ip_exists', [$this, 'validateIp']]]
+			'registration_ip' => ['user_ip_to_many' => [$this, 'validateIp']]
 		];
+	}
+
+	/**
+	* {@inheritDocs}
+	*/
+	protected function validate() : bool
+	{
+		//don't validate the password_clear field, if empty
+		if (!$this->password_clear) {
+			$user->skipRule('password_clear');
+		}
+
+		return parent::validate();
 	}
 
 	/**
@@ -170,11 +172,11 @@ class User extends Item
 	*/
 	public function validateIp(string $ip) : bool
 	{
-		if (!$this->registration_ip || !$this->app->config->registration_per_ip) {
+		if (!$ip || !$this->app->config->registration_per_ip) {
 			return true;
 		}
 
-		$count = $this->app->db->count($this->getTable(), ['registration_ip' => $this->registration_ip, 'registration_ip_crc' => $this->app->db->crc32($this->registration_ip)]);
+		$count = $this->app->db->count($this->getTable(), ['registration_ip' => $ip, 'registration_ip_crc' => $this->app->db->crc32($ip)]);
 		if ($count >= $this->app->config->registration_per_ip) {
 			return false;
 		}
@@ -182,9 +184,15 @@ class User extends Item
 		return true;
 	}
 
+	/**
+	* {@inheritDocs}
+	*/
 	protected function getDefaultsArray() : array
 	{
 		return [
+			'ugid' => App::USERGROUPS['registered'],
+			'secret_key' => App::randStr(),
+
 			'status' => 1,
 			'activated' => 1,
 
@@ -203,6 +211,9 @@ class User extends Item
 		];
 	}
 
+	/**
+	* {@inheritDocs}
+	*/
 	protected function process()
 	{
 		if ($this->password_clear) {
@@ -210,18 +221,19 @@ class User extends Item
 		}
 
 		$this->seo_alias = $this->app->filter->slug($this->username);
-
-		if (!$this->uid) {
-			$this->secret_key = App::randStr();
-		}
 	}
 
+	/**
+	* {@inheritDocs}
+	*/
 	public function insert(bool $process = true, bool $keep_old_id = false) : int
 	{
-App::print_r($this);die("qqqqq");
-		if (parent::insert($process, $keep_old_id)) {
+		$uid = parent::insert($process, $keep_old_id);
+		if ($uid) {
 			$this->insertUsergroups();
 		}
+
+		return $uid;
 	}
 
 	public function insertUsergroups()

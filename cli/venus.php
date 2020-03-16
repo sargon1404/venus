@@ -25,12 +25,11 @@ try {
 
 	if (!$class || !class_exists($class)) {
 		$app->cli->error("Unknown command: {$command}");
-		die;
 	}
 
 	$obj = new $class($app, $command, $action);
 	if (!$obj instanceof \Cli\Command) {
-		$app->cli->errorAndDie("Class {$class} must extend \Cli\Command");
+		$app->cli->error("Class {$class} must extend \Cli\Command");
 	}
 
 	$method = $obj->getMethod($action);
@@ -46,14 +45,14 @@ try {
 	}
 
 	if (!method_exists($obj, $method)) {
-		$app->cli->errorAndDie("Unknown action: {$action}");
+		$app->cli->error("Unknown action: {$action}");
 	}
 
 	//can the method be called?
 	$rm = new \ReflectionMethod($obj, $method);
 
 	if (!$rm->isPublic() || $rm->getDeclaringClass()->isAbstract()) {
-		$app->cli->errorAndDie("Unknown action: {$action}");
+		$app->cli->error("Unknown action: {$action}");
 	}
 
 	$obj->$method($options);
