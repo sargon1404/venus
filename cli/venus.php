@@ -27,7 +27,7 @@ try {
 		$app->cli->error("Unknown command: {$command}");
 	}
 
-	$obj = new $class($app, $command, $action);
+	$obj = new $class($app, $command, $action, $options);
 	if (!$obj instanceof \Cli\Command) {
 		$app->cli->error("Class {$class} must extend \Cli\Command");
 	}
@@ -55,7 +55,7 @@ try {
 		$app->cli->error("Unknown action: {$action}");
 	}
 
-	$obj->$method($options);
+	$obj->$method();
 } catch (\Exception $e) {
 	$app->fatalError($e->getMessage());
 }

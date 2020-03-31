@@ -140,7 +140,7 @@ class User extends Item
 	/**
 	* {@inheritDocs}
 	*/
-	protected function getRules() : array
+	protected function getValidationRules() : array
 	{
 		return [
 			'username' => [
@@ -150,6 +150,7 @@ class User extends Item
 							  ],
 			'password_clear' => ['user_password_missing' => 'required', 'user_password_short' => ['min', $this->app->config->users_min_password]],
 			'email' => ['user_email_missing' => 'required', 'user_email_invalid' => 'email', 'user_email_exists' => 'unique'],
+			'ugid' => ['user_usergroup_doesnt_exist' => [$this, 'validateUsergroup']],
 			'registration_ip' => ['user_ip_to_many' => [$this, 'validateIp']]
 		];
 	}
@@ -161,14 +162,27 @@ class User extends Item
 	{
 		//don't validate the password_clear field, if empty
 		if (!$this->password_clear) {
-			$user->skipRule('password_clear');
+			$this->skipValidationRule('password_clear');
 		}
 
 		return parent::validate();
 	}
 
 	/**
+	* Validates the usergroup
+	* @param int $ugid The usergroup id
+	* @return bool
+	*/
+	public function validateUsergroup(int $ugid) : bool
+	{
+		$usergroup = new Usergroup($ugid);
+		return $usergroup->isValid();
+	}
+
+	/**
 	* Validates the ip
+	* @param string $ip The ip
+	* @return bool
 	*/
 	public function validateIp(string $ip) : bool
 	{
@@ -238,6 +252,20 @@ class User extends Item
 
 	public function insertUsergroups()
 	{
+	}
+
+	public function delete() : int
+	{
+		$rows = parent::delete();
+
+		$this->deleteUsergroups();
+
+		return $rows;
+	}
+
+	public function deleteUsergroups()
+	{
+
 	}
 
 	/**

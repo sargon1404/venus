@@ -23,16 +23,22 @@ class Command extends Base
 	protected array $actions = [];
 
 	/**
+	* @param array $options List of options
+	*/
+	protected array $options = [];
+
+	/**
 	* Builds the command object
 	* @param App The app object
 	* @param string $command The command name
 	* @param string $action The executed action
 	*/
-	public function __construct(App $app, string $command = '', string $action = '')
+	public function __construct(App $app, string $command = '', string $action = '', array $options = [])
 	{
 		$this->app = $app;
 		$this->name = $command;
 		$this->action = $action;
+		$this->options = $options;
 	}
 
 	/**
@@ -59,16 +65,15 @@ class Command extends Base
 
 	/**
 	* Placeholder index method
-	* @param array $options The options, if any
 	*/
-	public function index(array $options)
+	public function index()
 	{
 	}
 
 	/**
-	* @param array $options The options, if any
+	* @ Shows the help options for a command
 	*/
-	public function help(array $options)
+	public function help()
 	{
 		$help = new Help($this->app);
 		if (!$this->action) {
@@ -84,7 +89,7 @@ class Command extends Base
 			$help->printDescription($data[1]);
 			$help->listOptions($this->action, $data[2] ?? []);
 			$help->printUsage(App::getArray($data[3] ?? []));
-			
+
 			echo "\n";
 		}
 	}
@@ -101,6 +106,33 @@ class Command extends Base
 	}
 
 	/**
+	* Will print an error about the missing arguments
+	* @param int $size The number of required arguments
+	*/
+	protected function errorArguments(int $size = 1)
+	{
+		$data = $this->actions[$this->action];
+		$usage_array = App::getArray($data[3] ?? []);
+
+		$text = "{$size} arguments must be passed to this command.";
+		if ($size == 1) {
+			$text = "One argument must be passed to this command.";
+		}
+
+		if (!empty($usage_array)) {
+			$text.= "\n\n";
+			$text.= $this->padStringLeft("Usage:", 10);
+			$text.= "\n\n";
+
+			foreach ($usage_array as $usage) {
+				$text.= $this->padStringLeft($usage . "\n", 10);
+			}
+		}
+
+		$this->error($text);
+	}
+
+	/**
 	* Will print an error about the missing options
 	*/
 	protected function errorOptions()
@@ -112,6 +144,6 @@ class Command extends Base
 			$text.= "The {$option} argument is missing\n";
 		}
 
-		$this->errorAndDie($text);
+		$this->error($text);
 	}
 }

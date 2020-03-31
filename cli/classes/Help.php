@@ -11,9 +11,8 @@ class Help extends Command
 
 	/**
 	* Shows the available commands & actions
-	* @param array $options The options, if any
 	*/
-	public function index(array $options)
+	public function index()
 	{
 		$commands = $this->app->cli->getCommandClasses();
 

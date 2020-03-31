@@ -33,7 +33,7 @@ class Environment
 	* @param int $ugid The usergroup's id
 	* @return object The usergroup
 	*/
-	public function getUsergroup(int $ugid) : object
+	public function getUsergroup(int $ugid) : ?object
 	{
 		if (!$ugid) {
 			$ugid = APP::USERGROUPS['guests'];
@@ -44,8 +44,6 @@ class Environment
 
 		if (isset($usergroups[$ugid])) {
 			$usergroup = $usergroups[$ugid];
-		} else {
-			$usergroup = $usergroups[APP::USERGROUPS['guests']];
 		}
 
 		return $usergroup;

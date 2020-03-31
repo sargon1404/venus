@@ -27,7 +27,7 @@ class Usergroup extends Item
 	* @param int $id The usergroup's id
 	* @return object The usergroup
 	*/
-	public function getRow(int $id) : object
+	public function getRow(int $id) : ?object
 	{
 		return $this->app->env->getUsergroup($id);
 	}

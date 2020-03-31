@@ -23,28 +23,26 @@ class Cache extends Command
 
 	/**
 	* Caches everything
-	* @param array $options Not used
 	*/
-	public function all($options)
+	public function all()
 	{
-		$this->libraries($options);
+		$this->libraries();
 		$this->newline();
-		$this->css($options);
+		$this->css();
 		$this->newline();
-		$this->javascript($options);
+		$this->javascript();
 		$this->newline();
-		$this->languages($options);
+		$this->languages();
 		$this->newline();
-		$this->themes($options);
+		$this->themes();
 		$this->newline();
-		$this->usergroups($options);
+		$this->usergroups();
 	}
 
 	/**
 	* Caches the libraries
-	* @param array $options Not used
 	*/
-	public function libraries(array $options)
+	public function libraries()
 	{
 		$this->info('Building libraries...');
 
@@ -56,9 +54,8 @@ class Cache extends Command
 
 	/**
 	* Caches the frontend & admin css code
-	* @param array $options Not used
 	*/
-	public function css(array $options)
+	public function css()
 	{
 		$this->info('Building css code...');
 
@@ -69,9 +66,8 @@ class Cache extends Command
 
 	/**
 	* Caches the frontend css code
-	* @param array $options Not used
 	*/
-	public function cssFrontend(array $options)
+	public function cssFrontend()
 	{
 		$this->info('Building frontend css code...');
 
@@ -82,9 +78,8 @@ class Cache extends Command
 
 	/**
 	* Caches the admin css code
-	* @param array $options Not used
 	*/
-	public function cssAdmin(array $options)
+	public function cssAdmin()
 	{
 		$this->info('Building admin css code...');
 
@@ -95,9 +90,8 @@ class Cache extends Command
 
 	/**
 	* Caches the frontend & adminjavascript code
-	* @param array $options Not used
 	*/
-	public function javascript(array $options)
+	public function javascript()
 	{
 		$this->info('Building javascript code...');
 
@@ -108,9 +102,8 @@ class Cache extends Command
 
 	/**
 	* Caches the frontend javascript code
-	* @param array $options Not used
 	*/
-	public function javascriptFrontend(array $options)
+	public function javascriptFrontend()
 	{
 		$this->info('Building frontend javascript code...');
 
@@ -121,9 +114,8 @@ class Cache extends Command
 
 	/**
 	* Caches the admin javascript code
-	* @param array $options Not used
 	*/
-	public function javascriptAdmin(array $options)
+	public function javascriptAdmin()
 	{
 		$this->info('Building admin javascript code...');
 
@@ -134,9 +126,8 @@ class Cache extends Command
 
 	/**
 	* Caches the languages data
-	* @param array $options Not used
 	*/
-	public function languages(array $options)
+	public function languages()
 	{
 		$this->info('Building the languages cache...');
 
@@ -147,9 +138,8 @@ class Cache extends Command
 
 	/**
 	* Caches the themes data
-	* @param array $options Not used
 	*/
-	public function themes(array $options)
+	public function themes()
 	{
 		$this->info('Building the themes cache...');
 
@@ -160,9 +150,8 @@ class Cache extends Command
 
 	/**
 	* Caches the usergroups data
-	* @param array $options Not used
 	*/
-	public function usergroups(array $options)
+	public function usergroups()
 	{
 		$this->info('Building the usergroups cache...');
 
