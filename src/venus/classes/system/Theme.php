@@ -71,9 +71,9 @@ class Theme extends \Venus\Theme
 	public int $theme_javascript_priority = 5000;
 
 	/**
-	* @var array $libraries The javascript libraries loaded by this theme
+	* @var string|array $libraries The javascript libraries loaded by this theme
 	*/
-	protected array $libraries = [];
+	protected $libraries = [];
 
 	/**
 	* @var bool $init Will include the theme's init file if $init is set to true

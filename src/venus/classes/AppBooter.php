@@ -23,12 +23,12 @@ class AppBooter extends \Mars\AppBooter
 	public function minimum()
 	{
 		$this->app->timer = new Timer($this->app);
+		$this->app->uri = new Uri($this->app);
 
 		$this->app->config = new Config($this->app);
 		$this->app->config->read();
 
 		$this->app->memcache = new Memcache($this->app);
-
 		$this->app->caching = new Caching($this->app);
 
 		return $this;
@@ -46,13 +46,6 @@ class AppBooter extends \Mars\AppBooter
 		return $this;
 	}
 
-	/**
-	* Loads the config settings from the database
-	*/
-	public function config()
-	{
-		$this->app->config->load();
-	}
 
 	/**
 	* @see \Mars\Booter::base()
@@ -62,28 +55,24 @@ class AppBooter extends \Mars\AppBooter
 	{
 		$this->app->log = new Log($this->app);
 		$this->app->time = new Time($this->app);
-
 		$this->app->filter = new Filter($this->app);
 		$this->app->escape = new Escape($this->app);
 		$this->app->validator = new Validator($this->app);
 		$this->app->format = new Format($this->app);
-
-		$this->app->request = new Request($this->app);
 		$this->app->file = new File($this->app);
-		$this->app->uri = new Uri($this->app);
-
 		$this->app->html = new Html($this->app);
 		$this->app->ui = new Ui($this->app);
 		$this->app->text = new Text($this->app);
 
-		$this->app->cache = new Cache($this->app);
-		$this->app->cache->load();
-
-		$this->app->device = new Device($this->app);
-
-		$this->app->library = new Library($this->app);
-
 		return $this;
+	}
+
+	/**
+	* Loads the config settings from the database
+	*/
+	public function config()
+	{
+		$this->app->config->load();
 	}
 
 	/**
@@ -95,10 +84,18 @@ class AppBooter extends \Mars\AppBooter
 		$this->app->session = new Session($this->app);
 		$this->app->session->start();
 
+		$this->app->device = new Device($this->app);
+		$this->app->request = new Request($this->app);
 		$this->app->response = new Response($this->app);
 
+		$this->app->cache = new Cache($this->app);
+		$this->app->cache->load();
+
+		$this->app->library = new Library($this->app);
 		$this->app->env = new Environment($this->app);
 		$this->app->media = new Media;
+
+
 
 		return $this;
 	}
@@ -132,7 +129,8 @@ class AppBooter extends \Mars\AppBooter
 	public function system()
 	{
 		$this->app->output = new system\Output($this->app);
-		$this->app->plugins = new system\Plugins($this->app);
+
+		$this->app->plugins = new System\Plugins($this->app);
 		$this->app->plugins->load();
 
 		$this->app->user = new system\User($this->app);

@@ -12,6 +12,12 @@ namespace Venus\Admin;
 */
 class Config extends \Venus\Config
 {
+
+	/**
+	* @internal
+	*/
+	protected array $read_scope = ['frontend', 'admin'];
+
 	/**
 	* Builds the config object
 	* @param App $app The app object

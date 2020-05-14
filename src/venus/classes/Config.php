@@ -12,6 +12,7 @@ namespace Venus;
 */
 class Config extends \Mars\Config
 {
+
 	/**
 	* @var string $table The database table used to store the config settings
 	*/
@@ -36,6 +37,19 @@ class Config extends \Mars\Config
 		parent::__construct($app);
 
 		$this->defaults = array_merge($this->defaults, $defaults);
+	}
+
+	/**
+	* Reads the config files
+	* @return $this
+	*/
+	public function read()
+	{
+		parent::read();
+
+		$this->readFilename(App::DIRS['cache'] . '/config.php');
+
+		return $this;
 	}
 
 	/**

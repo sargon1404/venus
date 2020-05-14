@@ -63,18 +63,6 @@ class App extends \Venus\App
 	public string $admin_url_rel = '';
 
 	/**
-	* @see \Mars\App::getSiteUrl()
-	* {@inheritDoc}
-	*/
-	protected function getSiteUrl() : string
-	{
-		$host = $_SERVER['HTTP_HOST'];
-		$pi = pathinfo($_SERVER['PHP_SELF']);
-
-		return $this->scheme . $host . dirname($pi['dirname']) . '/';
-	}
-
-	/**
 	* @see \Mars\App::loadBooter()
 	* {@inheritDoc}
 	*/

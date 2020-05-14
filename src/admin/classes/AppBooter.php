@@ -12,7 +12,7 @@ use Mars\Alerts\{Errors, Messages, Warnings, Notifications};
 use Venus\{Log, Time, Format, File, Uri, Library, Environment , Media};
 use Venus\Helpers\{Controls, Tree, Order};
 use Venus\Document\Breadcrumbs;
-use Venus\System\{Output, Plugins};
+use Venus\System\{Output};
 
 /**
 * The Booter Class
@@ -32,7 +32,6 @@ class AppBooter extends \Venus\AppBooter
 		$this->app->config->read();
 
 		$this->app->memcache = new Memcache($this->app);
-
 		$this->app->caching = new Caching($this->app);
 
 		return $this;
@@ -41,11 +40,11 @@ class AppBooter extends \Venus\AppBooter
 	/**
 	* Loads the config settings from the database
 	*/
-	public function config()
+	/*public function config()
 	{
 		$this->app->config->load('frontend', true);
 		$this->app->config->load('admin', true);
-	}
+	}*/
 
 	/**
 	* @see \Mars\Booter::base()
@@ -130,7 +129,8 @@ class AppBooter extends \Venus\AppBooter
 	public function system()
 	{
 		$this->app->output = new Output($this->app);
-		$this->app->plugins = new Plugins($this->app);
+
+		$this->app->plugins = new System\Plugins($this->app);
 		$this->app->plugins->load();
 
 		$this->app->user = new system\User($this->app);

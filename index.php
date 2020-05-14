@@ -3,7 +3,7 @@ namespace Venus;
 
 define('VENUS', 1);
 
-require('src/venus/boot/system.php');
+require('src/venus/boot.php');
 
 try {
 	$app->start();

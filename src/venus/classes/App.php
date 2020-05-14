@@ -274,27 +274,25 @@ class App extends \Mars\App
 	*/
 	public function boot()
 	{
-		$this->setData();
-		$this->setDirs();
-		$this->setUrls();
-		$this->setGzip();
-
 		$this->loadBooter();
-		$this->loadLibraries();
 
 		$this->boot->minimum();
+		$this->boot->Data();
+		$this->boot->libraries();
 
 		$this->checkInstalled();
 
 		$this->boot->db();
 		$this->boot->config();
 		$this->boot->base();
-		$this->boot->properties();
 		$this->boot->env();
+		$this->boot->properties();
 		$this->boot->document();
 		$this->boot->system();
 
 		$this->checkOffline();
+
+		$this->plugins->run('app_boot', $this);
 	}
 
 	/**
@@ -332,14 +330,13 @@ class App extends \Mars\App
 		$this->show_menu = (bool)$this->config->menu_show;
 		$this->show_breadcrumbs = (bool)$this->config->breadcrumbs_show;
 	}
-	
+
 	/**
-	* @see \Mars\App::getSireUrl()
-	* {@inheritDoc}
+	* Sets extra proprerties
 	*/
-	protected function getSiteUrl() : string
+	public function setExtraProperties()
 	{
-		return $this->config->site_url;
+		//$this->images_url = $this->images_url . $this->device->getDir();
 	}
 
 	/**

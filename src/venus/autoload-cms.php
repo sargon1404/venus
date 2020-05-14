@@ -10,11 +10,13 @@ use function Mars\Autoload\get_filename;
 	if (strpos($name, 'Cms\\') !== 0) {
 		return;
 	}
-	
+
 	$map = [
+		'Cms\Plugins' => 'Cms\Extensions\Plugins',
+		'Cms\Blocks' => 'Cms\Extensions\Blocks',
 		'Cms\Admin\Blocks' => 'Cms\Admin\Extensions\Blocks',
 	];
-	
+
 	$name = str_replace(array_keys($map), $map, $name);
 
 	$parts = explode('\\', $name);

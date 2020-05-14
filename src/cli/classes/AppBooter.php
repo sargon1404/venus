@@ -24,6 +24,7 @@ class AppBooter extends \Venus\Admin\AppBooter
 	public function system()
 	{
 		$this->app->output = new Output($this->app);
+
 		$this->app->plugins = new Plugins($this->app);
 		$this->app->plugins->load();
 

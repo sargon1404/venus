@@ -62,6 +62,6 @@ class Plugin extends \Venus\Extensions\Extension
 	*/
 	protected function addHooks()
 	{
-		$this->app->plugins->addHooks($this->pid, $this->hooks);
+		$this->app->plugins->addHooks($this->name, $this->hooks);
 	}
 }

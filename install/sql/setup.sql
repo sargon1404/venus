@@ -229,9 +229,7 @@ create table venus_plugins
 	`pid`                     			int unsigned auto_increment		NOT NULL,
 	`title`									varchar(255)							NOT NULL,
 	`name`                				varchar(255)							NOT NULL,
-	`site_access`							tinyint unsigned						NOT NULL,
-	`admin_access`							tinyint unsigned						NOT NULL,
-	`global`									tinyint unsigned						NOT NULL,
+	`scope`									varchar(255)							NOT NULL,
 	`status`									tinyint unsigned						NOT NULL,
 	`order`             					int unsigned							NOT NULL,
 	`note`                				varchar(2048)							NOT NULL,
@@ -244,7 +242,17 @@ create table venus_plugins
 	`modified_by`							int unsigned							NOT NULL,
 
 	primary key(pid),
-	index plugins_index(`status`, `global`, `order`)
+	index plugins_index(`status`, `scope`(8), `order`)
+);
+
+create table venus_plugins_extensions
+(
+	`pid`                     			int					unsigned 		NOT NULL,
+	`type`									varchar(255)							NOT NULL,
+	`name`									varchar(255)							NOT NULL,
+	`name_crc`								int 			 		unsigned			NOT NULL,
+	index ext_index(`name_crc`, `type`(4)),
+	index pid_index(`pid`)
 );
 
 create table venus_cron

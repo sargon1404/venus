@@ -145,10 +145,10 @@ class User extends Item
 		return [
 			'username' => [
 								 'user_username_missing' => 'required', 'user_username_exists' => 'unique',
-								 'user_username_short' => ['min', $this->app->config->users_min_username],
+								 'user_username_short' => ['min_chars', $this->app->config->users_min_username],
 								 'user_username_invalid' => ['pattern', static::$username_pattern]
 							  ],
-			'password_clear' => ['user_password_missing' => 'required', 'user_password_short' => ['min', $this->app->config->users_min_password]],
+			'password_clear' => ['user_password_missing' => 'required', 'user_password_short' => ['min_chars', $this->app->config->users_min_password]],
 			'email' => ['user_email_missing' => 'required', 'user_email_invalid' => 'email', 'user_email_exists' => 'unique'],
 			'ugid' => ['user_usergroup_doesnt_exist' => [$this, 'validateUsergroup']],
 			'registration_ip' => ['user_ip_to_many' => [$this, 'validateIp']]

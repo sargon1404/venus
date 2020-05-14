@@ -7,6 +7,7 @@
 namespace Venus\System;
 
 use Venus\App;
+use Venus\Plugin;
 
 /**
 * The System Plugins Class
@@ -17,9 +18,19 @@ class Plugins extends \Venus\Plugins
 	use \Mars\Plugins;
 
 	/**
+	* @var string $scope The scope where the plugins will be loaded
+	*/
+	protected string $scope = 'frontend';
+
+	/**
+	* @var string $namespace The namespace used to load plugins
+	*/
+	protected static string $namespace = "Cms\\Plugins\\";
+
+	/**
 	* @internal
 	*/
-	protected static string $_extensions_table = 'venus_items_plugins';
+	protected static string $_extensions_table = 'venus_plugins_extensions';
 
 	/**
 	* Builds the plugins object
@@ -29,7 +40,7 @@ class Plugins extends \Venus\Plugins
 	{
 		$this->app = $app;
 
-		if (!$this->app->config->plugins_enable || defined('DISABLE_PLUGINS')) {
+		if (!$this->app->config->plugins_enable) {
 			return;
 		}
 		if (!$this->app->cache->plugins_count) {
@@ -67,8 +78,8 @@ class Plugins extends \Venus\Plugins
 			$this->app->db->readQuery("
 				SELECT *
 				FROM {$table}
-				WHERE status = 1 AND global = 1
-				ORDER BY `order` DESC");
+				WHERE status = 1 AND (scope = :scope or scope = 'both')
+				ORDER BY `order` DESC", ['scope' => $this->scope]);
 
 			$plugins = $this->app->db->get();
 
@@ -90,50 +101,17 @@ class Plugins extends \Venus\Plugins
 			return;
 		}
 
-		$namespace = $this->app->extensions_namespace . static::$namespace;
-
 		foreach ($plugins as $plugin) {
-			$pid = $plugin->pid;
-
-			if (isset($this->plugins[$pid])) {
-				continue;
-			}
-
-			if (!$this->canRun($plugin)) {
-				continue;
-			}
-
-			$class = $namespace . App::strToClass($plugin->name) . "\\" . App::strToClass($plugin->name);
+			$class = static::$namespace . App::strToClass($plugin->name) . "\\" . App::strToClass($plugin->name);
 
 			$plugin = new $class($plugin);
-			var_dump($plugin);
-			die;
+
 			if (!$plugin instanceof Plugin) {
 				throw new \Exception("Class {$class} must extend class Plugin");
 			}
 
-			$this->plugins[$pid] = $plugin;
+			$this->plugins[$plugin->name] = $plugin;
 		}
-	}
-
-	/**
-	* Determines if the plugin can be run
-	* @param object $plugin The plugin
-	* @return bool
-	*/
-	protected function canRun(object $plugin) : bool
-	{
-		if ($this->app->is_admin) {
-			if (!$plugin->admin_access) {
-				return false;
-			}
-		} else {
-			if (!$plugin->site_access) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	/**
@@ -169,16 +147,6 @@ class Plugins extends \Venus\Plugins
 		$this->loadPlugins($plugins);
 
 		return true;
-	}
-
-	/**
-	* Returns a loaded plugin
-	* @param int $id The id of the plugin to return
-	* @return object The loaded pluing, or null, if nothing is found
-	*/
-	public function find(int $id) : ?Plugin
-	{
-		return $this->plugins[$id] ?? null;
 	}
 
 	/**

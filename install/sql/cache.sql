@@ -1,6 +1,9 @@
 INSERT INTO venus_cache VALUES ('plugins', '', 'frontend');
+INSERT INTO venus_cache VALUES ('plugins', '', 'admin');
 INSERT INTO venus_cache VALUES ('plugins_count', '0', 'frontend');
+INSERT INTO venus_cache VALUES ('plugins_count', '0', 'admin');
 INSERT INTO venus_cache VALUES ('plugins_extensions_count', '0', 'frontend');
+INSERT INTO venus_cache VALUES ('plugins_extensions_count', '0', 'admin');
 INSERT INTO venus_cache VALUES ('plugins_extensions_skip', '', 'frontend');
 INSERT INTO venus_cache VALUES ('plugins_extensions_skip', '', 'admin');
 

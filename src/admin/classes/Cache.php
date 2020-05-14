@@ -20,7 +20,7 @@ class Cache extends \Venus\Cache
 	/**
 	* @internal
 	*/
-	protected string $scope = 'admin';
+	protected array $read_scope = ['frontend', 'admin'];
 
 	/**
 	* Clears a folder and copies the empty index.htm file
