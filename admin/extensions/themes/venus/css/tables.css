@@ -166,8 +166,8 @@ table td.thr hr {
 
 /*************************************/
 
-table.grid
-{
+table.grid {
+	display: table;
 	border-collapse: collapse;
 	border-spacing: 0;
 	border-radius: 5px;
@@ -175,34 +175,28 @@ table.grid
 	text-align: center;
 }
 
-table.grid th
-{
+table.grid th {
 	border: 1px solid #B7B7B7;
 }
 
-table.grid td
-{
+table.grid td {
 	border: 1px solid #B7B7B7;
 	padding: 6px 7px;
 }
 
-table.grid td:nth-child(even)
-{
+table.grid td:nth-child(even) {
 	background: #EEEEEE;
 }
 
-table.grid td:nth-child(odd)
-{
+table.grid td:nth-child(odd) {
 	background: #E4E4E4;
 }
 
-table.grid td:hover
-{
+table.grid td:hover {
 	background: #D1D1D1;
 }
 
-table.grid a.label
-{
+table.grid a.label {
 	color: #030305;
 }
 

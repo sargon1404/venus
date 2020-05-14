@@ -53,6 +53,16 @@ class Config extends \Mars\Config
 	}
 
 	/**
+	* @see \Mars\Data::load()
+	*/
+	public function load()
+	{
+		parent::load();
+
+		$this->normalizeAfterLoad();
+	}
+
+	/**
 	* @see \Mars\Config::normalize()
 	*/
 	protected function normalize()
@@ -62,14 +72,17 @@ class Config extends \Mars\Config
 		$this->device_start = true;
 		$this->libraries_start = true;
 
+		$this->admin_dir = App::sl($this->admin_dir);
+
+		parent::normalize();
+	}
+
+	protected function normalizeAfterLoad()
+	{
 		if ($this->debug_ips) {
 			$this->debug_ips = explode(',', $this->debug_ips);
 		} else {
 			$this->debug_ips = [];
 		}
-
-		$this->admin_dir = App::sl($this->admin_dir);
-
-		parent::normalize();
 	}
 }

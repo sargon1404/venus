@@ -52,7 +52,7 @@ trait PluginsTrait
 			if (!in_array($this->name, $skip[$type])) {
 				$skip[$type][] = $this->name;
 
-				$this->app->cache->update('plugins_extensions_skip', $skip, true, null);
+				$this->app->cache->update('plugins_extensions_skip', $skip, true);
 			}
 		}
 	}

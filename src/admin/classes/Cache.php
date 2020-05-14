@@ -23,6 +23,11 @@ class Cache extends \Venus\Cache
 	protected array $read_scope = ['frontend', 'admin'];
 
 	/**
+	* @internal
+	*/
+	protected string $write_scope = 'admin';
+
+	/**
 	* Clears a folder and copies the empty index.htm file
 	* @param string $dir The folder's name
 	*/
@@ -112,7 +117,7 @@ class Cache extends \Venus\Cache
 		$javascript->buildCache();
 
 		$this->cacheThemeDefault();
-
+debug_print_backtrace(2);die;
 		//clear the list of merged files
 		$this->update('javascript_merged', '', false, 'frontend');
 
@@ -132,7 +137,7 @@ class Cache extends \Venus\Cache
 
 		$javascript = new \Venus\Admin\Assets\Javascript($this->app);
 		$javascript->buildCache();
-
+debug_print_backtrace(2);die;
 		//clear the list of merged files
 		$this->update('javascript_merged', '', false, 'admin');
 

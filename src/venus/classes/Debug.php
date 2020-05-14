@@ -33,7 +33,7 @@ class Debug extends \Mars\Debug
 		$this->outputLoadedTemplates();
 
 		$this->outputOpcacheInfo();
-		
+
 		$this->outputPreloadInfo();
 
 		echo '</div>';

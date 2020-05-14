@@ -120,6 +120,6 @@ class Theme extends \Venus\System\Theme
 
 		$this->templates = array_fill_keys($templates, '');
 
-		$this->app->cache->update('theme_templates', $this->templates, true, 'admin');
+		$this->app->cache->update('theme_templates', $this->templates, true);
 	}
 }

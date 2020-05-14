@@ -38,15 +38,6 @@ class AppBooter extends \Venus\AppBooter
 	}
 
 	/**
-	* Loads the config settings from the database
-	*/
-	/*public function config()
-	{
-		$this->app->config->load('frontend', true);
-		$this->app->config->load('admin', true);
-	}*/
-
-	/**
 	* @see \Mars\Booter::base()
 	* {@inheritDoc}
 	*/
@@ -54,33 +45,15 @@ class AppBooter extends \Venus\AppBooter
 	{
 		$this->app->log = new Log($this->app);
 		$this->app->time = new Time($this->app);
-
 		$this->app->filter = new Filter($this->app);
 		$this->app->escape = new Escape($this->app);
 		$this->app->validator = new Validator($this->app);
 		$this->app->format = new Format($this->app);
-
-		$this->app->request = new Request($this->app);
 		$this->app->file = new File($this->app);
 		$this->app->uri = new Uri($this->app);
-
 		$this->app->html = new Html($this->app);
 		$this->app->ui = new Ui($this->app);
 		$this->app->text = new Text($this->app);
-
-		$this->app->cache = new Cache($this->app);
-		$this->app->cache->load();
-		$this->app->cache->load('admin');
-
-		$this->app->device = new Device($this->app);
-
-		$this->app->library = new Library($this->app);
-
-		$this->app->navbar = new Navbar($this->app);
-		$this->app->actions = new Actions($this->app);
-
-		$this->app->tree = new Tree($this->app);
-		$this->app->order = new Order($this->app);
 
 		return $this;
 	}
@@ -94,10 +67,22 @@ class AppBooter extends \Venus\AppBooter
 		$this->app->session = new Session($this->app);
 		$this->app->session->start();
 
+		$this->app->device = new Device($this->app);
+		$this->app->request = new Request($this->app);
 		$this->app->response = new Response($this->app);
 
+		$this->app->cache = new Cache($this->app);
+		$this->app->cache->load();
+
+		$this->app->library = new Library($this->app);
 		$this->app->env = new Environment($this->app);
 		$this->app->media = new Media;
+
+		$this->app->navbar = new Navbar($this->app);
+		$this->app->actions = new Actions($this->app);
+
+		$this->app->tree = new Tree($this->app);
+		$this->app->order = new Order($this->app);
 
 		return $this;
 	}
