@@ -16,12 +16,12 @@ class Config extends \Venus\Config
 	/**
 	* @internal
 	*/
-	protected array $read_scope = ['frontend', 'admin'];
+	protected array $scope = ['frontend', 'admin'];
 
 	/**
 	* @internal
 	*/
-	protected string $write_scope = 'admin';
+	protected string $default_scope = 'admin';
 
 	/**
 	* Builds the config object

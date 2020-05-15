@@ -11,24 +11,11 @@ namespace Venus;
 */
 class Cli extends \Mars\Cli
 {
-	use AppTrait;
-	
 	/**
 	* @internal
 	*/
 	protected static string $table = 'venus_cli';
-	
-	/**
-	* Builds the cli object
-	* @param App $app The app object
-	*/
-	public function __construct(App $app)
-	{
-		parent::__construct();
-		
-		$this->app = $app;
-	}
-	
+
 	/**
 	* Returns all defined cli classes
 	* @return array
@@ -37,7 +24,7 @@ class Cli extends \Mars\Cli
 	{
 		return $this->app->db->selectList(static::$table, 'command', 'class', [], 'command');
 	}
-			
+
 	/**
 	* Returns the class associated with a command
 	* @param string $command The command to return the class for
@@ -47,7 +34,7 @@ class Cli extends \Mars\Cli
 	{
 		return (string)$this->app->db->selectResult(static::$table, 'class', ['command' => $command]);
 	}
-	
+
 	/**
 	* Adds a command to the list of cli commands
 	* @param string $command The command to add
@@ -59,14 +46,14 @@ class Cli extends \Mars\Cli
 		if ($this->app->db->count(static::$table, ['command' => $command])) {
 			return $this;
 		}
-		
+
 		$insert_array = [
 			'command' => $command,
 			'class' => $class
 		];
-		
+
 		$this->app->db->insert(static::$table, $insert_array);
-			
+
 		return $this;
 	}
 
@@ -78,7 +65,7 @@ class Cli extends \Mars\Cli
 	public function deleteCommand(string $command)
 	{
 		$this->app->db->delete(static::$table, ['command' => $command]);
-			
+
 		return $this;
 	}
 }

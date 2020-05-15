@@ -123,10 +123,10 @@ class Cache extends \Mars\Cache
 		$users_deactivated_count = $this->app->db->count('venus_users', ['activated' => 0]);
 		$users_banned_count = $this->app->db->count('venus_banned_users', ['status' => 1]);
 
-		$this->update('users_count', $users_count);
-		$this->update('users_disabled_count', $users_disabled_count);
-		$this->update('users_deactivated_count', $users_deactivated_count);
-		$this->update('users_banned_count', $users_banned_count);
+		$this->update('users_count', $users_count, 'frontend');
+		$this->update('users_disabled_count', $users_disabled_count, 'frontend');
+		$this->update('users_deactivated_count', $users_deactivated_count, 'frontend');
+		$this->update('users_banned_count', $users_banned_count, 'frontend');
 
 		return $this;
 	}
@@ -163,7 +163,7 @@ class Cache extends \Mars\Cache
 		global $venus;
 		$banners_count = $this->app->db->count('venus_banners', ['status' => 1]);
 
-		$this->update('banners_count', $banners_count);
+		$this->update('banners_count', $banners_count, 'frontend');
 
 		return $this;
 	}
@@ -227,7 +227,7 @@ class Cache extends \Mars\Cache
 		global $venus;
 		$widgets_count = $this->app->db->count('venus_widgets', 'WHERE status = 1');
 
-		$this->update('widgets_count', $widgets_count);
+		$this->update('widgets_count', $widgets_count, 'frontend');
 
 		return $this;
 	}
@@ -251,6 +251,7 @@ class Cache extends \Mars\Cache
 	public function buildMenu()
 	{
 		global $venus;
+		var_dump("cache-build-menu");die;
 		$menu_count = $this->app->db->count('venus_menu', 'WHERE status = 1');
 		$menu_entries_count = $this->app->db->count('venus_menu_entries', 'WHERE status = 1');
 
@@ -283,7 +284,7 @@ class Cache extends \Mars\Cache
 		global $venus;
 		$announcements_count = $this->app->db->count('venus_announcements', 'WHERE status = 1');
 
-		$this->update('announcements_count', $announcements_count);
+		$this->update('announcements_count', $announcements_count, 'frontend');
 
 		return $this;
 	}
@@ -297,7 +298,7 @@ class Cache extends \Mars\Cache
 		global $venus;
 		$links_count = $this->app->db->count('venus_links', 'WHERE status = 1');
 
-		$this->update('links_count', $links_count);
+		$this->update('links_count', $links_count, 'frontend');
 
 		return $this;
 	}
@@ -311,7 +312,7 @@ class Cache extends \Mars\Cache
 		global $venus;
 		$news_count = $this->app->db->count('venus_news', 'WHERE status = 1');
 
-		$this->update('news_count', $news_count);
+		$this->update('news_count', $news_count, 'frontend');
 
 		return $this;
 	}
@@ -327,9 +328,9 @@ class Cache extends \Mars\Cache
 		$comments_unpublished_count = $this->app->db->count('venus_comments', 'WHERE status = 0 AND visible = 1');
 		$comments_spam_count = $this->app->db->count('venus_comments', 'WHERE is_spam = 1 AND visible = 1');
 
-		$this->update('comments_count', $comments_count);
-		$this->update('comments_unpublished_count', $comments_unpublished_count);
-		$this->update('comments_spam_count', $comments_spam_count);
+		$this->update('comments_count', $comments_count, 'frontend');
+		$this->update('comments_unpublished_count', $comments_unpublished_count, 'frontend');
+		$this->update('comments_spam_count', $comments_spam_count, 'frontend');
 
 		return $this;
 	}

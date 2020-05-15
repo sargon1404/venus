@@ -51,7 +51,7 @@ class Css extends \Venus\Assets\Css
 
 		$inline_code = $this->getInline($theme->dir . App::EXTENSIONS_DIRS['css'], $minify);
 
-		$this->app->cache->update('css_inline', $inline_code, true);
+		$this->app->cache->update('css_inline', $inline_code, null, true);
 	}
 
 	/**

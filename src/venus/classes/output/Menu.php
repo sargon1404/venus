@@ -78,7 +78,7 @@ class Menu
 
 		$menu_output[$menu_id][$ugid] = $output;
 
-		$this->app->cache->update('menu_output', serialize($menu_output));
+		$this->app->cache->update('menu_output', $menu_output, null, true);
 
 		$this->outputMenu($menu_name, $for_mobile, $output);
 	}

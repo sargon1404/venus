@@ -83,7 +83,7 @@ class Plugins extends \Venus\Plugins
 
 			$plugins = $this->app->db->get();
 
-			$this->app->cache->update('plugins', $plugins, true);
+			$this->app->cache->update('plugins', $plugins, null, true);
 		}
 
 		$this->loadPlugins($plugins);

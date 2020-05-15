@@ -20,12 +20,12 @@ class Cache extends \Venus\Cache
 	/**
 	* @internal
 	*/
-	protected array $read_scope = ['frontend', 'admin'];
+	protected array $scope = ['frontend', 'admin'];
 
 	/**
 	* @internal
 	*/
-	protected string $write_scope = 'admin';
+	protected string $default_scope = 'admin';
 
 	/**
 	* Clears a folder and copies the empty index.htm file
@@ -66,9 +66,8 @@ class Cache extends \Venus\Cache
 		$this->cacheThemeDefault();
 
 		//clear the list of merged files
-		$this->update('css_merged', '', false, 'frontend');
-
-		$this->update('css_version', time(), false, 'frontend');
+		$this->update('css_merged', '', 'frontend');
+		$this->update('css_version', time(), 'frontend');
 
 		$this->app->plugins->run('admin_cache_build_css_frontend', $css, $this);
 
@@ -87,7 +86,7 @@ class Cache extends \Venus\Cache
 		$css->buildCache();
 
 		//clear the list of merged files
-		$this->update('css_merged', '', false, 'admin');
+		$this->update('css_merged', '', 'admin');
 
 		$this->app->plugins->run('admin_cache_build_css_admin', $css, $this);
 
@@ -117,11 +116,10 @@ class Cache extends \Venus\Cache
 		$javascript->buildCache();
 
 		$this->cacheThemeDefault();
-debug_print_backtrace(2);die;
-		//clear the list of merged files
-		$this->update('javascript_merged', '', false, 'frontend');
 
-		$this->update('javascript_version', time(), false, 'frontend');
+		//clear the list of merged files
+		$this->update('javascript_merged', '', 'frontend');
+		$this->update('javascript_version', time(), 'frontend');
 
 		$this->app->plugins->run('admin_cache_build_javascript_frontend', $javascript, $this);
 
@@ -137,9 +135,9 @@ debug_print_backtrace(2);die;
 
 		$javascript = new \Venus\Admin\Assets\Javascript($this->app);
 		$javascript->buildCache();
-debug_print_backtrace(2);die;
+
 		//clear the list of merged files
-		$this->update('javascript_merged', '', false, 'admin');
+		$this->update('javascript_merged', '', 'admin');
 
 		$this->app->plugins->run('admin_cache_build_javascript_admnin', $javascript, $this);
 
@@ -195,15 +193,15 @@ debug_print_backtrace(2);die;
 
 		$this->app->output->message("Updating libraries cache data");
 
-		$this->update('libraries', $libraries, true);
-		$this->update('libraries_version', time(), false, 'frontend');
+		$this->update('libraries', $libraries, 'frontend', true);
+		$this->update('libraries_version', time(), 'frontend');
 
 		//clear the list of merged files
-		$this->update('css_merged', '', false, 'frontend');
-		$this->update('css_merged', '', false, 'admin');
+		$this->update('css_merged', '', 'frontend');
+		$this->update('css_merged', '', 'admin');
 
-		$this->update('javascript_merged', '', false, 'frontend');
-		$this->update('javascript_merged', '', false, 'admin');
+		$this->update('javascript_merged', '', 'frontend');
+		$this->update('javascript_merged', '', 'admin');
 
 		$this->app->plugins->run('admin_cache_build_libraries', $libraries, $this);
 
@@ -330,7 +328,7 @@ debug_print_backtrace(2);die;
 		$this->app->output->message("Updating cache data for the default theme");
 
 		$theme = new Theme;
-		$this->update('theme_default', $theme->getRow($this->app->config->theme_default), true);
+		$this->update('theme_default', $theme->getRow($this->app->config->theme_default), 'frontend', true);
 	}
 
 	/**
@@ -365,7 +363,7 @@ debug_print_backtrace(2);die;
 		$this->app->output->message("Updating cache data for the default language");
 
 		$language = new Language;
-		$this->update('language_default', $language->getRow($this->app->config->language_default), true);
+		$this->update('language_default', $language->getRow($this->app->config->language_default), 'frontend', true);
 	}
 
 	/**
@@ -392,10 +390,10 @@ debug_print_backtrace(2);die;
 
 		$this->app->plugins->run('admin_cache_build_usergroups', $usergroups, $this);
 
-		$this->update('usergroups', $usergroups, true);
-		$this->update('usergroup_guests', $guests, true);
-		$this->update('usergroups_permissions', $permissions, true);
-		$this->update('usergroups_timestamp', time());
+		$this->update('usergroups', $usergroups, 'frontend', true);
+		$this->update('usergroup_guests', $guests, 'frontend', true);
+		$this->update('usergroups_permissions', $permissions, 'frontend', true);
+		$this->update('usergroups_timestamp', time(), 'frontend');
 
 		return $this;
 	}
@@ -426,7 +424,7 @@ debug_print_backtrace(2);die;
 		$this->app->db->readQuery('SELECT bid, status, category, name, seo_alias, seo_slug FROM venus_blocks');
 		$blocks = $this->app->db->get('name');
 
-		$this->update('blocks', $blocks, true);
+		$this->update('blocks', $blocks, 'frontend', true);
 
 		return $this;
 	}
@@ -451,7 +449,7 @@ debug_print_backtrace(2);die;
 	{
 		$notifications_count = $this->app->db->count('venus_users_notifications');
 
-		$this->update('users_notifications', $notifications_count);
+		$this->update('users_notifications', $notifications_count, 'frontend');
 
 		return $this;
 	}
@@ -465,7 +463,7 @@ debug_print_backtrace(2);die;
 		global $venus;
 		$snippets_count = $this->app->db->count('venus_snippets', ['status' => 1]);
 
-		$this->update('snippets_count', $snippets_count);
+		$this->update('snippets_count', $snippets_count, 'frontend');
 
 		return $this;
 	}
@@ -487,8 +485,8 @@ debug_print_backtrace(2);die;
 			$category->parents_slug = implode('/', $parents);
 		}
 
-		$this->update('categories', $categories, true);
-		$this->update('categories_ids', array_keys($categories), true);
+		$this->update('categories', $categories, 'frontend', true);
+		$this->update('categories_ids', array_keys($categories), 'frontend', true);
 
 		$this->clearCategoriesCount();
 
