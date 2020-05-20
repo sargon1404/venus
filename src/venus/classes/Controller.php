@@ -192,21 +192,4 @@ abstract class Controller extends \Mars\Controller
 		return $this->view;
 	}
 
-	/**
-	* Returns the model's table
-	* @return string The table name
-	*/
-	public function getTable() : string
-	{
-		return $this->model->getTable();
-	}
-
-	/**
-	* Returns the model's id name
-	* @return string The id name
-	*/
-	public function getIdName() : string
-	{
-		return $this->model->getIdName();
-	}
 }

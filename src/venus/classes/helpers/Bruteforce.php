@@ -264,7 +264,7 @@ class Bruteforce
 		$users_table = $this->getUsersTable();
 
 		//insert the IP's invalid attempt
-		$this->app->db->readQuery("SELECT COUNT(*) FROM {$ips_table} WHERE ip_crc = CRC32(:ip) AND ip = :ip AND scope = :scope", ['ip' => $this->app->user->ip, 'scope' => $this->scope]);
+		$this->app->db->readQuery("SELECT COUNT(*) FROM {$ips_table} WHERE ip_crc = CRC32(:ip) AND ip = :ip AND scope = :scope", ['ip' => $ip, 'scope' => $this->scope]);
 		$ips_count = $this->app->db->getCount();
 
 		if ($ips_count) {

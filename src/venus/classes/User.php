@@ -406,7 +406,7 @@ class User extends Item
 
 			$this->ugids = [$this->ugid];
 			$this->usergroup = $usergroups->get($this->ugid);
-			var_dump("usergroups!!!!");
+			//var_dump("usergroups!!!!");
 			//$this->usergroups = [$this->ugid => $this->usergroup];
 		}
 

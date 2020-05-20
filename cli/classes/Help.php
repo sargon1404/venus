@@ -28,7 +28,9 @@ class Help extends Command
 			}
 		}
 
+		echo "\n";
 		$this->list($list);
+		echo "\n";
 	}
 
 	/**
@@ -43,7 +45,9 @@ class Help extends Command
 			$list[$name][] = [$name . ':' . $action_name, $data[1] ?? ''];
 		}
 
+		echo "\n";
 		$this->list($list);
+		echo "\n";
 	}
 
 	/**
@@ -58,13 +62,12 @@ class Help extends Command
 			return;
 		}
 
-		echo "\n";
-
 		$list = [];
 		foreach($options as $key => $val) {
 			$list[] = [$key, $val];
 		}
 
+		echo "\n";
 		$this->list([$action => $list], false);
 	}
 
@@ -79,11 +82,11 @@ class Help extends Command
 		}
 
 		echo "\n";
-		$this->message('Usage:', 5);
+		$this->print('Usage:', '', 5);
 		echo "\n";
 
 		foreach ($usage_array as $usage) {
-			$this->message($usage, 5);
+			$this->print($usage, '', 5);
 		}
 	}
 
@@ -93,9 +96,7 @@ class Help extends Command
 	*/
 	public function printHeader(string $text)
 	{
-		echo "\n";
 		$this->header($text);
-		echo "\n";
 	}
 
 	/**
@@ -104,7 +105,7 @@ class Help extends Command
 	*/
 	public function printDescription(string $text)
 	{
-		$this->message($text, 5);
+		$this->print($text, '', 5);
 	}
 
 }

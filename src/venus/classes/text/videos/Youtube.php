@@ -33,7 +33,7 @@ class Youtube extends Video implements VideoInterface
 	{
 		$url_parts = parse_url($url);
 
-		if (strpos($url, 'https://www.youtube.com/embed/') === 0) {
+		if (str_starts_with($url, 'https://www.youtube.com/embed/')) {
 			return $url;
 		} elseif ($url_parts['host'] == 'www.youtube.com' || $url_parts['host'] == 'youtube.com') {
 			return $this->parseUrl($url_parts['query']);

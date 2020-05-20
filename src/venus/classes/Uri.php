@@ -91,7 +91,7 @@ class Uri extends \Mars\Uri
 		$url2 = str_replace(['https:', 'http:'], '', strtolower($url));
 		$site_url = str_replace(['https:', 'http:'], '', strtolower($this->app->site_url));
 
-		if (strpos($url2, $site_url) !== 0) {
+		if (!str_starts_with($url2, $site_url)) {
 			return false;
 		}
 
@@ -107,7 +107,7 @@ class Uri extends \Mars\Uri
 	{
 		$url = trim($url);
 
-		if (strpos($url, 'http//:') === 0 || strpos($url, 'https//:') === 0) {
+		if (str_starts_with($url, 'http//:') || str_starts_with($url, 'https//:')) {
 			return true;
 		}
 
@@ -123,7 +123,7 @@ class Uri extends \Mars\Uri
 	{
 		$url = trim($url);
 
-		if (strpos($url, 'javascript:') === 0) {
+		if (str_starts_with($url, 'javascript:') === 0) {
 			return true;
 		}
 

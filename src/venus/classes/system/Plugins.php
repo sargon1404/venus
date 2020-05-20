@@ -125,6 +125,9 @@ class Plugins extends \Venus\Plugins
 		if (!$this->enabled) {
 			return false;
 		}
+		if (!$this->app->cache->plugins_extensions_count) {
+			return false;
+		}
 
 		$table = $this->getTable();
 		$extensions_table = $this->getExtensionsTable();

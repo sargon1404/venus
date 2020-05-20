@@ -85,8 +85,8 @@ class Config extends \Mars\Config
 			$this->debug_ips = [];
 		}
 
-		if ($this->debug_ips) {
-			if (in_array($_SERVER['REMOTE_ADDR'], $this->debug_ips)) {
+		if ($this->app->ip && $this->debug_ips) {
+			if (in_array($this->app->ip, $this->debug_ips)) {
 				$this->debug = true;
 			}
 		}

@@ -80,12 +80,14 @@ class Command extends Base
 			$help->listActions($this->name, $this->actions);
 		} else {
 			if (!isset($this->actions[$this->action])) {
-				$this->app->cli->errorAndDie("Unknown action: {$this->action}");
+				$this->app->cli->error("Unknown action: {$this->action}");
 			}
 
 			$data = $this->actions[$this->action];
 
+			echo "\n";
 			$help->printHeader($this->name . ':' . $this->action);
+			echo "\n";
 			$help->printDescription($data[1]);
 			$help->listOptions($this->action, $data[2] ?? []);
 			$help->printUsage(App::getArray($data[3] ?? []));
@@ -129,7 +131,7 @@ class Command extends Base
 			}
 		}
 
-		$this->error($text);
+		$this->error(trim($text));
 	}
 
 	/**

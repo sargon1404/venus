@@ -458,7 +458,7 @@ class Navbar
 			if ($button['on_click']) {
 				//custom on click specified
 				$params = '';
-				if (strpos($button['on_click'], '(') === false) {
+				if (!str_contains($button['on_click'], '(')) {
 					$params = "('{$type}', this)";
 				}
 

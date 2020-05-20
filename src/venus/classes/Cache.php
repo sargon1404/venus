@@ -129,30 +129,7 @@ class Cache extends \Mars\Cache
 		$this->update('users_banned_count', $users_banned_count, 'frontend');
 
 		return $this;
-	}
-
-	/**
-	* Builds the plugins cache
-	* @return $this
-	*/
-	public function buildPlugins()
-	{
-		global $venus;
-		$plugins_count = $this->app->db->count('venus_plugins');
-		$plugins_blocks_count = $this->app->db->count('venus_plugins_blocks');
-		$plugins_dialogs_count = $this->app->db->count('venus_plugins_dialogs');
-
-		$this->update('plugins_count', $plugins_count);
-		$this->update('plugins_blocks_count', $plugins_blocks_count);
-		$this->update('plugins_dialogs_count', $plugins_dialogs_count);
-		$this->update('plugins', '');
-		$this->update('plugins_blocks_skip', '');
-		$this->update('plugins_dialogs_skip', '');
-		$this->update('plugins_admin_blocks_skip', '');
-		$this->update('plugins_admin_dialogs_skip', '');
-
-		return $this;
-	}
+	}	
 
 	/**
 	* Builds the banners cache

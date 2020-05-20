@@ -365,6 +365,30 @@ class Cache extends \Venus\Cache
 		$language = new Language;
 		$this->update('language_default', $language->getRow($this->app->config->language_default), 'frontend', true);
 	}
+	
+	/**
+	* Builds the plugins cache
+	* @return $this
+	*/
+	public function buildPlugins()
+	{
+		$plugins_count = $this->app->db->count('venus_plugins');
+		$plugins_extensions_count = $this->app->db->count('venus_plugins_extensions');
+
+		$this->update('plugins', '', 'frontend');
+		$this->update('plugins', '', 'admin');
+		
+		$this->update('plugins_count', $plugins_count, 'frontend');
+		$this->update('plugins_count', $plugins_count, 'admin');
+
+		$this->update('plugins_extensions_skip', '', 'frontend');
+		$this->update('plugins_extensions_skip', '', 'admin');
+		
+		$this->update('plugins_extensions_count', $plugins_extensions_count, 'frontend');
+		$this->update('plugins_extensions_count', $plugins_extensions_count, 'admin');
+
+		return $this;
+	}
 
 	/**
 	* Builds the usergroups data cache

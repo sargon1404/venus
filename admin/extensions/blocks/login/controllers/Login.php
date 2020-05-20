@@ -17,7 +17,12 @@ class Login extends \Venus\Admin\Controller
 	/**
 	* @internal
 	*/
-	public string $prefix = 'admin_block_login';
+	public string $prefix = 'admin_block_login_';
+
+	protected array $validation_rules = [
+		'username' => ['user_username_missing' => 'required'],
+		'password' => ['user_password_missing' => 'required']
+	];
 
 	/**
 	* Inits the controller
@@ -33,10 +38,11 @@ class Login extends \Venus\Admin\Controller
 	*/
 	public function index()
 	{
-		if($this->model->bruteforce->isIpBlocked($this->app->ip))
+		if($this->model->bruteforce->isIpBlocked($this->app->ip)) {
 			$this->outputIpError();
+		}
 
-		$this->app->plugins->run($this->prefix . 'Index', $this);
+		$this->app->plugins->run($this->prefix . 'index', $this);
 
 		$this->view->render();
 	}
@@ -50,25 +56,22 @@ class Login extends \Venus\Admin\Controller
 		$password = $this->request->post('password');
 		$uid = $this->app->user->getUidByUsername($username);
 		$ip = $this->app->ip;
-		var_dump($uid);die;
 
-		if($this->model->bruteforce->ipIsBlocked($ip))
+		if($this->model->bruteforce->isIpBlocked($ip))
 			$this->outputIpError();
-		if($uid)
-		{
-			if($this->model->bruteforce->userIsBlocked($uid))
+		if($uid) {
+			if($this->model->bruteforce->isUserBlocked($uid))
 				$this->outputUserError();
 		}
 
-		$this->validate($username, $password);
-
 		$this->app->plugins->run($this->prefix . 'login', $username, $password, $this);
 
-		if(!$this->app->ok())
+		if(!$this->validate()) {
 			return false;
+		}
 
 		$user = $this->model->login($username, $password);
-
+var_dump($user);die;
 		if(!$user)
 		{
 			//the login failed
@@ -148,13 +151,13 @@ class Login extends \Venus\Admin\Controller
 	* @param string $username The username
 	* @param string $password The password
 	*/
-	protected function validate($username, $password)
+	/*protected function validate($username, $password)
 	{
 		if(!$username)
 			$this->errors->add(l('login_err4'));
 		if(!$password)
 			$this->errors->add(l('login_err5'));
-	}
+	}*/
 
 	/**
 	* Outputs the error screen if the IP can't login

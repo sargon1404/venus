@@ -137,7 +137,7 @@ abstract class Asset
 
 			//split the files into desktop and mobile
 			foreach ($files_list as $filename) {
-				if (strpos($filename, 'mobile') !== false) {
+				if (str_contains($filename, 'mobile')) {
 					$mobile_files[] = $filename;
 				} else {
 					$desktop_files[] = $filename;

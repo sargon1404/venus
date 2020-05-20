@@ -24,7 +24,7 @@ class Environment
 		if (!$usergroups) {
 			$usergroups = $this->app->cache->getUsergroups();
 		}
-App::pp($usergroups);die;
+
 		return $usergroups;
 	}
 

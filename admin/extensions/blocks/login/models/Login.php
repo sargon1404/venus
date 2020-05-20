@@ -24,7 +24,7 @@ class Login extends \Venus\Admin\Model
 	/**
 	* @var Bruteforce $bruteforce The bruteforce object
 	*/
-	public object $bruteforce;
+	public Bruteforce $bruteforce;
 	/**
 	* @internal
 	*/
@@ -47,13 +47,12 @@ class Login extends \Venus\Admin\Model
 	*/
 	public function login($username, $password)
 	{
-		global $venus;
 		$user = $this->app->user->login($username, $password);
 
 		if($user)
 		{
 			//delete previous invalid login attempts
-			$this->bruteforce->delete($this->app->user->ip, $user->uid);
+			$this->bruteforce->delete($this->app->ip, $user->uid);
 
 			//log the login
 			$log_insert_array =
@@ -69,7 +68,7 @@ class Login extends \Venus\Admin\Model
 		else
 		{
 			//record the failed login attempt
-			$this->bruteforce->insert($this->app->user->ip, $this->app->user->getUidByUsername($username));
+			$this->bruteforce->insert($this->app->ip, $this->app->user->getUidByUsername($username));
 		}
 
 		return $user;

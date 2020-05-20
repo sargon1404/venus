@@ -7,7 +7,7 @@ use function Mars\Autoload\get_filename;
 * Autoloader for the venus files
 */
 \spl_autoload_register(function ($name) {
-	if (strpos($name, 'Venus\\Admin\\') !== 0) {
+	if (!str_contains($name, 'Venus\\Admin\\')) {
 		return;
 	}
 

@@ -75,7 +75,7 @@ class Actions
 			if ($link['on_click']) {
 				//custom on click specified
 				$params = '';
-				if (strpos($button['on_click'], '(') === false) {
+				if (!str_contains($button['on_click'], '(')) {
 					$params = "('{$item_id}', '{$action}', this)";
 				}
 

@@ -18,6 +18,7 @@ class Cache extends Command
 		'javascript-admin' => ['javascriptAdmin', 'Caches the admin javascript code'],
 		'languages' => ['languages', 'Caches the languages data'],
 		'themes' => ['themes', 'Caches the themes data'],
+		'plugins' => ['plugins', 'Caches the plugins data'],
 		'usergroups' => ['usergroups', 'Caches the usergroups data'],
 	];
 
@@ -36,6 +37,7 @@ class Cache extends Command
 		$this->newline();
 		$this->themes();
 		$this->newline();
+		$this->plugins();
 		$this->usergroups();
 	}
 
@@ -144,6 +146,18 @@ class Cache extends Command
 		$this->info('Building the themes cache...');
 
 		$this->app->cache->buildThemes();
+
+		$this->done();
+	}
+
+	/**
+	* Caches the plugins data
+	*/
+	public function plugins()
+	{
+		$this->info('Building the plugins cache...');
+
+		$this->app->cache->buildPlugins();
 
 		$this->done();
 	}

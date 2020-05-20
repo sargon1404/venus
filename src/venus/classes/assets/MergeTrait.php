@@ -52,7 +52,7 @@ trait MergeTrait
 			$libraries_cache_url = $this->app->cache_url . App::CACHE_DIRS['libraries'];
 
 			//is the url pointing to the cache folder. If it is, then the file is most likely already minified
-			if (strpos($url, $this->cache_url) !== false || strpos($url, $this->base_cache_url) !== false || strpos($url, $libraries_cache_url) !== false) {
+			if (str_contains($url, $this->cache_url) || str_contains($url, $this->base_cache_url) || str_contains($url, $libraries_cache_url)) {
 				$cached = true;
 			}
 

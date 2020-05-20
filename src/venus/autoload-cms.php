@@ -7,7 +7,7 @@ use function Mars\Autoload\get_filename;
 * Autoloader for the cms files
 */
 \spl_autoload_register(function ($name) {
-	if (strpos($name, 'Cms\\') !== 0) {
+	if (!str_contains($name, 'Cms\\')) {
 		return;
 	}
 

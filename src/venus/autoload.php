@@ -7,17 +7,17 @@ use function Mars\Autoload\get_filename;
 * Autoloader for the venus files
 */
 \spl_autoload_register(function ($name) {
-	if (strpos($name, 'Venus\\') !== 0) {
+	if (!str_contains($name, 'Venus\\')) {
 		return;
 	}
 
 	//don't load admin classes
-	if (strpos($name, 'Venus\\Admin\\') === 0) {
+	if (str_contains($name, 'Venus\\Admin\\')) {
 		return;
 	}
 
 	//don't load cli classes
-	if (strpos($name, 'Venus\\Cli\\') === 0) {
+	if (str_contains($name, 'Venus\\Cli\\')) {
 		return;
 	}
 

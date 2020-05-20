@@ -7,7 +7,7 @@ use function Mars\Autoload\get_filename;
 * Autoloader for the CLI classes
 */
 \spl_autoload_register(function ($name) {
-	if (strpos($name, 'Venus\\Cli\\') !== 0) {
+	if (!str_contains($name, 'Venus\\Cli\\')) {
 		return;
 	}
 
