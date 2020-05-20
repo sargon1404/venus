@@ -20,8 +20,8 @@ class Login extends \Venus\Admin\Controller
 	public string $prefix = 'admin_block_login_';
 
 	protected array $validation_rules = [
-		'username' => ['user_username_missing' => 'required'],
-		'password' => ['user_password_missing' => 'required']
+		'username' => ['login_err4' => 'required'],
+		'password' => ['login_err5' => 'required']
 	];
 
 	/**
@@ -70,6 +70,8 @@ class Login extends \Venus\Admin\Controller
 			return false;
 		}
 
+		var_dump($this);die;
+die("validate");
 		$user = $this->model->login($username, $password);
 var_dump($user);die;
 		if(!$user)
