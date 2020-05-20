@@ -10,12 +10,12 @@
 
 		<div>
 			<label for="username" class="required">{{ login_form1 }}</label>
-			<input type="text" id="username" name="username" autofocus />
+			<input type="text" id="username" name="username" required autofocus />
 		</div>
 
 		<div>
 			<label for="password" class="required">{{ login_form2 }}</label>
-			<input type="password" id="password" name="password" />
+			<input type="password" id="password" name="password" required />
 		</div>
 
 		{{ $plugins.output('fields_2') }}
