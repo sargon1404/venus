@@ -2,30 +2,25 @@
 * The Sidebar Class
 * @author Venus-CMS
 */
-class VenusSidebar
-{
-
-	constructor()
-	{
+class VenusSidebar {
+	constructor () {
 		this.main_obj = null;
 		this.aside_obj = null;
 		this.top_obj = null;
 		this.content_obj = null;
 		this.cookie_name = 'venus-sidebar-closed';
 
-		var self = this;
+		let self = this;
 
-		venus.ready(function() {
-
+		venus.ready(function () {
 			self.main_obj = venus.main_obj;
 			self.aside_obj = venus.aside_obj;
 			self.top_obj = venus.get('sidebar-top');
 			self.content_obj = venus.get('sidebar-content');
 
-			self.top_obj.click(function(){
+			self.top_obj.click(function () {
 				self.toggle();
 			});
-
 		});
 	}
 
@@ -33,21 +28,15 @@ class VenusSidebar
 	* Automatically opens/closes the sidebar based on the sidebar cookie
 	* @return {this}
 	*/
-	auto()
-	{
-		var self = this;
+	auto () {
+		let self = this;
 
-		venus.ready(function() {
-
-			if(venus.input.getCookie(self.cookie_name))
-			{
-				//we have the close cookie set; auto close the sidebar
+		venus.ready(function () {
+			if (venus.input.getCookie(self.cookie_name)) {
+				// we have the close cookie set; auto close the sidebar
 				self.setHeight();
 				self.close();
-
-				return;
 			}
-
 		});
 
 		return this;
@@ -57,10 +46,9 @@ class VenusSidebar
 	* Sets the height of the sidebar
 	* @return {this}
 	*/
-	setHeight()
-	{
-		var top_height = this.top_obj.outerHeight();
-		var content_height = this.content_obj.outerHeight();
+	setHeight () {
+		let top_height = this.top_obj.outerHeight();
+		let content_height = this.content_obj.outerHeight();
 
 		this.aside_obj.height(top_height + content_height);
 
@@ -71,12 +59,12 @@ class VenusSidebar
 	* Toggles the sidebar open/close
 	* @return {this}
 	*/
-	toggle()
-	{
-		if(this.aside_obj.hasClass('closed'))
+	toggle () {
+		if (this.aside_obj.hasClass('closed')) {
 			this.open();
-		else
+		} else {
 			this.close(true);
+		}
 
 		return this;
 	}
@@ -85,8 +73,7 @@ class VenusSidebar
 	* Opens the sidebar
 	* @return {this}
 	*/
-	open()
-	{
+	open () {
 		venus.input.unsetCookie(this.cookie_name);
 
 		this.openObj();
@@ -97,9 +84,8 @@ class VenusSidebar
 	/**
 	* @private
 	*/
-	openObj()
-	{
-		var self = this;
+	openObj () {
+		let self = this;
 
 		self.aside_obj.removeClass('closed close-effect');
 		this.main_obj.removeClass('open');
@@ -109,8 +95,7 @@ class VenusSidebar
 	* Closes the sidebar
 	* @return {this}
 	*/
-	close(effect)
-	{
+	close (effect) {
 		venus.input.setCookie(this.cookie_name, 1, 365);
 
 		this.setHeight();
@@ -123,20 +108,15 @@ class VenusSidebar
 	/**
 	* @private
 	*/
-	closeObj(effect)
-	{
-		if(effect)
-		{
+	closeObj (effect) {
+		if (effect) {
 			this.aside_obj.addClass('closed close-effect');
 
 			this.main_obj.addClass('open open-effect');
-		}
-		else
-		{
+		} else {
 			this.aside_obj.addClass('closed');
 
 			this.main_obj.addClass('open');
 		}
 	}
-
 }

@@ -3,11 +3,8 @@
 * Shows a list of links when the parent element is clicked
 * @author Venus-CMS
 */
-class VenusList
-{
-
-	constructor()
-	{
+class VenusList {
+	constructor () {
 		this.obj = null;
 		this.is_visible = false;
 	}
@@ -19,10 +16,10 @@ class VenusList
 	* @param {event} event If specified, will stop the propagation
 	* @return {this}
 	*/
-	open(element, parent_element, event)
-	{
-		if(event)
+	open (element, parent_element, event) {
+		if (event) {
 			event.stopPropagation();
+		}
 
 		this.show(element, parent_element);
 
@@ -34,8 +31,7 @@ class VenusList
 	* @param {string} content The content
 	* @private
 	*/
-	add(content)
-	{
+	add (content) {
 		this.obj.html(content);
 	}
 
@@ -44,14 +40,13 @@ class VenusList
 	* @param {string|object} obj The object to which the list is attached
 	* @private
 	*/
-	show(element, parent_element)
-	{
+	show (element, parent_element) {
 		this.obj = venus.get(element);
 
-		//temporarily show the object, so we can get it's position
+		// temporarily show the object, so we can get it's position
 		this.obj.addClass('entry-list');
 		this.obj.css({visibility: 'hidden'}).show();
-		var pos = venus.getPosition(parent_element, this.obj);
+		let pos = venus.getPosition(parent_element, this.obj);
 		this.obj.css({left: pos.x + 'px', top: pos.y + 'px'});
 
 		this.obj.css({visibility: 'visible'}).hide();
@@ -64,8 +59,7 @@ class VenusList
 	/**
 	* @private
 	*/
-	showObj()
-	{
+	showObj () {
 		this.obj.show();
 	}
 
@@ -73,10 +67,10 @@ class VenusList
 	* Closes the list
 	* @return {this}
 	*/
-	close()
-	{
-		if(!this.is_visible)
+	close () {
+		if (!this.is_visible) {
 			return;
+		}
 
 		this.is_visible = false;
 		this.hideObj();
@@ -87,8 +81,7 @@ class VenusList
 	/**
 	* @private
 	*/
-	hideObj()
-	{
+	hideObj () {
 		this.obj.hide();
 	}
 
@@ -99,17 +92,17 @@ class VenusList
 	* @param {event} event If specified, will stop the propagation
 	* @return {this}
 	*/
-	toggle(element, parent_element, event)
-	{
-		if(event)
+	toggle (element, parent_element, event) {
+		if (event) {
 			event.stopPropagation();
+		}
 
-		if(this.is_visible)
+		if (this.is_visible) {
 			this.close();
-		else
+		} else {
 			this.open(element, parent_element);
+		}
 
 		return this;
 	}
-
 }

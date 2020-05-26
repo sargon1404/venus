@@ -2,15 +2,12 @@
 * The Dialog Class
 * @author Venus-CMS
 */
-class VenusDialog
-{
-
+class VenusDialog {
 	/**
 	* @property {object} dialogs Object containing the data of the existing dialogs
 	* @property {object} dialog The data of the currently loaded dialog
 	*/
-	constructor()
-	{
+	constructor () {
 		this.overlay_obj = null;
 		this.dialogs_obj = null;
 		this.dialogs = {};
@@ -26,10 +23,10 @@ class VenusDialog
 	* @return {string} The id
 	* @private
 	*/
-	getId(id)
-	{
-		if(!id)
+	getId (id) {
+		if (!id) {
 			id = venus.generateId();
+		}
 
 		return 'dialog-id-' + id;
 	}
@@ -40,8 +37,7 @@ class VenusDialog
 	* @return {string} The id
 	* @private
 	*/
-	getPreloadedId(id)
-	{
+	getPreloadedId (id) {
 		return 'dialog-cnt-' + id;
 	}
 
@@ -49,12 +45,12 @@ class VenusDialog
 	* Inits the dialog
 	* @private
 	*/
-	init()
-	{
-		if(this.dialogs_obj)
+	init () {
+		if (this.dialogs_obj) {
 			return;
+		}
 
-		var html = '\
+		let html = '\
 			<div id="dialogs-overlay">\
 				<div id="dialogs"></div>\
 			</div>';
@@ -64,11 +60,11 @@ class VenusDialog
 		this.overlay_obj = venus.get('dialogs-overlay');
 		this.dialogs_obj = venus.get('dialogs');
 
-		//close the dialog if the overlay is clicked
-		var self = this;
-		this.overlay_obj.click(function(e){
-				self.close();
-				e.stopPropagation()
+		// close the dialog if the overlay is clicked
+		let self = this;
+		this.overlay_obj.click(function (e) {
+			self.close();
+			e.stopPropagation();
 		});
 
 		this.overlay_obj.hide();
@@ -79,10 +75,8 @@ class VenusDialog
 	* @param {string} id The dialog's id
 	* @private
 	*/
-	set(id)
-	{
-		if(!this.dialogs[id])
-		{
+	set (id) {
+		if (!this.dialogs[id]) {
 			this.dialog = null;
 			return;
 		}
@@ -96,18 +90,18 @@ class VenusDialog
 	* @param {object} [options] The options. Supported options: {title: title, icon: icon, width: width, height: height, show_scroll: bool}
 	* @return {this}
 	*/
-	openElement(element, options)
-	{
+	openElement (element, options) {
 		this.init();
 
-		var obj = venus.get(element);
-		var id = this.getId(obj.prop('id'));
+		let obj = venus.get(element);
+		let id = this.getId(obj.prop('id'));
 
-		//add the dialog, if it doesn't exist
-		if(!this.dialogs[id])
+		// add the dialog, if it doesn't exist
+		if (!this.dialogs[id]) {
 			this.add(id, obj, options);
-		else
+		} else {
 			this.set(id);
+		}
 
 		this.show();
 
@@ -115,52 +109,45 @@ class VenusDialog
 	}
 
 	/**
-	* Opens an url in a dialog
+	* Opens an url in a dialog as an iframe
 	* @param {string} url The url to open
 	* @param {id} url The id under which the dialog's content will be stored
 	* @param {object} [options] The options. Supported options: {title: title, icon: icon, width: width, height: height, show_scroll: bool}
 	* @return {this}
 	*/
-	openUrl(url, id, options)
-	{
+	openUrl (url, id, options) {
 		this.init();
 
 		id = this.getId(id);
 
-		//add the dialog, if it doesn't exist
-		if(!this.dialogs[id])
-		{
+		// add the dialog, if it doesn't exist
+		if (!this.dialogs[id]) {
 			venus.loading.show();
 
-			//create the html code for the iframe, then add it
-			var html = '<iframe src="' + url + '"></iframe>';
+			// create the html code for the iframe, then add it
+			let html = '<iframe src="' + url + '"></iframe>';
 
 			this.add(id, html, options);
 
-			//dirty but effective hack:
-			//show the dialog & overlay, but keep overlay's visibility hidden until the dialog has loaded, then hide it again so we can resize the iframe
-			this.dialog.overlay.css({'visibility' : 'hidden'}).show();
+			// show the dialog & overlay, but keep overlay's visibility hidden until the dialog has loaded, then hide it again so we can resize the iframe
+			this.dialog.overlay.css({visibility: 'hidden'}).show();
 			this.dialog.obj.show();
 
-			var self = this;
-			this.dialog.iframe.on('load', function(){
-
-				//resize the dialog &iframe
-				var height = Math.max(this.contentWindow.document.body.scrollHeight, this.contentWindow.document.documentElement.offsetHeight);
+			let self = this;
+			this.dialog.iframe.on('load', function () {
+				// resize the dialog &iframe
+				let height = Math.max(this.contentWindow.document.body.scrollHeight, this.contentWindow.document.documentElement.offsetHeight);
 				self.resize(height);
 
-				//hide the dialog & overlay again; then show it using show(), so we can display it using effects
-				self.dialog.overlay.css({'visibility' : 'visible'}).hide();
+				// hide the dialog & overlay again; then show it using show(), so we can display it using effects
+				self.dialog.overlay.css({visibility: 'visible'}).hide();
 				self.dialog.obj.hide();
 
 				self.show();
 
 				venus.loading.hide();
-
 			});
-		}
-		else
-		{
+		} else {
 			this.set(id);
 			this.show();
 		}
@@ -176,22 +163,21 @@ class VenusDialog
 	* @param {string} [alias] The dialog's alias. Must be specified if multiple dialogs of the same type are opened on a page, with each dialog of that type having it's own alias
 	* @return {this}
 	*/
-	open(name, options, params, alias)
-	{
+	open (name, options, params, alias) {
 		this.init();
 
-		if(!alias)
+		if (!alias) {
 			alias = name;
+		}
 
-		var id = name + '-' + alias;
-		var preloadedId = this.getPreloadedId(id);
+		let id = name + '-' + alias;
+		let preloadedId = this.getPreloadedId(id);
 
-		//was the dialog preloaded?
-		if(venus.exists(preloadedId))
+		// was the dialog preloaded?
+		if (venus.exists(preloadedId)) {
 			this.openElement(preloadedId);
-		else
-		{
-			var url = venus.uri.convert(this.getUrl(name, alias, params));
+		} else {
+			let url = venus.uri.convert(this.getUrl(name, alias, params));
 			this.openUrl(url, id, options);
 		}
 
@@ -206,12 +192,12 @@ class VenusDialog
 	* @return {string} The url
 	* @private
 	*/
-	getUrl(name, alias, params)
-	{
-		var url = venus.assets_url + 'dialog.php?dialog_name=' + encodeURI(name) + '&dialog_alias=' + encodeURI(alias);
+	getUrl (name, alias, params) {
+		let url = venus.assets_url + 'dialog.php?dialog_name=' + encodeURI(name) + '&dialog_alias=' + encodeURI(alias);
 
-		if(params)
-			url+= '&' + venus.uri.buildParams(params);
+		if (params) {
+			url += '&' + venus.uri.buildParams(params);
+		}
 
 		return url;
 	}
@@ -223,22 +209,20 @@ class VenusDialog
 	* @param {object} [options] The options
 	* @private
 	*/
-	add(id, content, options)
-	{
+	add (id, content, options) {
 		options = options || {};
 		options.title = this.getTitle(content, options.title);
 		options.icon = this.getIcon(options.icon);
 		options.show_scroll = options.show_scroll || false;
 
-		var scroll_top = '';
-		var scroll_bottom = '';
-		if(options.show_scroll)
-		{
+		let scroll_top = '';
+		let scroll_bottom = '';
+		if (options.show_scroll) {
 			scroll_top = '<div class="dialog-scroll-top"></div>';
 			scroll_bottom = '<div class="dialog-scroll-bottom"></div>';
 		}
 
-		var html = '\
+		let html = '\
 			<div class="dialog" id="' + id + '">\
 				<div class="dialog-title">\
 					<a href="javascript:void(0)" onclick="venus.dialog.close()" class="close"></a>' + options.icon + '<h1>' + options.title + '</h1>\
@@ -248,22 +232,24 @@ class VenusDialog
 				' + scroll_bottom + '\
 			</div>';
 
-		//append the dialog's html code to the dialogs object
+		// append the dialog's html code to the dialogs object
 		this.dialogs_obj.append(html);
 
-		var dialog = venus.get(id);
-		var content_obj = dialog.find('.dialog-content');
+		let dialog = venus.get(id);
+		let content_obj = dialog.find('.dialog-content');
 
-		this.append(content, content_obj);;
+		this.append(content, content_obj);
 
-		if(options.width)
+		if (options.width) {
 			dialog.width(options.width);
-		if(options.height)
+		}
+		if (options.height) {
 			content_obj.height(options.height);
+		}
 
 		dialog.hide();
 
-		//store the dialog's objects in this.dialogs for faster access
+		// store the dialog's objects in this.dialogs for faster access
 		this.dialogs[id] = {
 			id: id,
 			overlay: this.overlay_obj,
@@ -281,15 +267,11 @@ class VenusDialog
 	* Appends the content to the content obj
 	* @private
 	*/
-	append(content, content_obj)
-	{
-		if(typeof content == 'object')
-		{
+	append (content, content_obj) {
+		if (typeof content == 'object') {
 			content_obj.append(content);
 			content.show();
-		}
-		else
-		{
+		} else {
 			content_obj.html(content);
 			venus.initHtml(content_obj);
 		}
@@ -299,10 +281,10 @@ class VenusDialog
 	* Returns the title of the dialog
 	* @private
 	*/
-	getTitle(content, title)
-	{
-		if(typeof content == 'object')
+	getTitle (content, title) {
+		if (typeof content == 'object') {
 			title = title || content.attr('data-title');
+		}
 
 		title = title || '&nbsp;';
 
@@ -313,11 +295,11 @@ class VenusDialog
 	* Returns the title of the dialog
 	* @private
 	*/
-	getIcon(icon)
-	{
+	getIcon (icon) {
 		icon = icon || '';
-		if(icon)
+		if (icon) {
 			icon = '<img src="' + venus.theme.getImage(icon, 'dialogs') + '">';
+		}
 
 		return icon;
 	}
@@ -327,62 +309,54 @@ class VenusDialog
 	* @param {bool} show_scroll If true, will prepare the scrolling areas
 	* @private
 	*/
-	prepare(show_scroll)
-	{
-		var self = this;
+	prepare (show_scroll) {
+		let self = this;
 
-		this.dialog.obj.click(function(e){
-			e.stopPropagation()
+		this.dialog.obj.click(function (e) {
+			e.stopPropagation();
 		});
 
-		if(show_scroll)
-		{
-			var scroll_top_obj = this.dialog.obj.find('.dialog-scroll-top');
-			var scroll_bottom_obj = this.dialog.obj.find('.dialog-scroll-bottom');
+		if (show_scroll) {
+			let scroll_top_obj = this.dialog.obj.find('.dialog-scroll-top');
+			let scroll_bottom_obj = this.dialog.obj.find('.dialog-scroll-bottom');
 
-			//scroll the dialog content-if scroll bars are visible- if an item is dragged above/below the content area
-			scroll_top_obj.click(function(){
+			// scroll the dialog content-if scroll bars are visible- if an item is dragged above/below the content area
+			scroll_top_obj.click(function () {
 				self.scrollToTop();
 			});
 
-			scroll_bottom_obj.click(function(){
+			scroll_bottom_obj.click(function () {
 				self.scrollToBottom();
 			});
 
-			scroll_top_obj.on('dragenter', function(){
-
+			scroll_top_obj.on('dragenter', function () {
 				self.scrollTop();
 				self.scroll_interval_handle = setInterval(self.scrollTop, 100);
 
 				return false;
-
 			});
 
-			scroll_top_obj.on('dragleave', function(){
-
-				if(self.scroll_interval_handle)
+			scroll_top_obj.on('dragleave', function () {
+				if (self.scroll_interval_handle) {
 					clearInterval(self.scroll_interval_handle);
+				}
 
 				return false;
-
 			});
 
-			scroll_bottom_obj.on('dragenter', function(){
-
+			scroll_bottom_obj.on('dragenter', function () {
 				self.scrollBottom();
 				self.scroll_interval_handle = setInterval(self.scrollBottom, 100);
 
 				return false;
-
 			});
 
-			scroll_bottom_obj.on('dragleave', function(){
-
-				if(self.scroll_interval_handle)
+			scroll_bottom_obj.on('dragleave', function () {
+				if (self.scroll_interval_handle) {
 					clearInterval(self.scroll_interval_handle);
+				}
 
 				return false;
-
 			});
 		}
 	}
@@ -392,12 +366,10 @@ class VenusDialog
 	* @param {int} height The height to resize to
 	* @private
 	*/
-	resize(height)
-	{
-		var max_height = this.dialog.obj.outerHeight();
+	resize (height) {
+		let max_height = this.dialog.obj.outerHeight();
 
-		if(height < max_height)
-		{
+		if (height < max_height) {
 			this.dialog.iframe.height(height);
 			this.dialog.content.height(height + 15);
 		}
@@ -407,10 +379,10 @@ class VenusDialog
 	* Displays the currently opened dialog
 	* @private
 	*/
-	show()
-	{
-		if(!this.dialog)
+	show () {
+		if (!this.dialog) {
 			return;
+		}
 
 		this.showObj();
 	}
@@ -418,8 +390,7 @@ class VenusDialog
 	/**
 	* @private
 	*/
-	showObj()
-	{
+	showObj () {
 		this.dialog.overlay.show();
 		this.dialog.obj.show();
 	}
@@ -428,10 +399,10 @@ class VenusDialog
 	* Closes the currently opened dialog,if any
 	* @return {this}
 	*/
-	close()
-	{
-		if(!this.dialog)
+	close () {
+		if (!this.dialog) {
 			return;
+		}
 
 		this.hideObj();
 
@@ -441,8 +412,7 @@ class VenusDialog
 	/**
 	* @private
 	*/
-	hideObj()
-	{
+	hideObj () {
 		this.dialog.obj.hide();
 		this.dialog.overlay.hide();
 	}
@@ -452,8 +422,7 @@ class VenusDialog
 	* @param {string} id The id of the dialog to reload
 	* @return {this}
 	*/
-	reloadById(id)
-	{
+	reloadById (id) {
 		id = this.getId(id);
 
 		this.dialogs[id] = null;
@@ -469,12 +438,12 @@ class VenusDialog
 	* @param {string} [alias] The dialog's alias
 	* @return {this}
 	*/
-	reload(name, alias)
-	{
-		if(!alias)
+	reload (name, alias) {
+		if (!alias) {
 			alias = name;
+		}
 
-		var id = this.getId(name + '-' + alias);
+		let id = this.getId(name + '-' + alias);
 
 		this.reloadById(id);
 
@@ -485,27 +454,28 @@ class VenusDialog
 	* Scrolls the dialog to top if the user drags a file inside the top scroll area
 	* @private
 	*/
-	scrollTop()
-	{
-		var self = venus.dialog;
+	scrollTop () {
+		let self = venus.dialog;
 
-		if(!self.dialog.iframe)
+		if (!self.dialog.iframe) {
 			return;
+		}
 
-		var iframe = self.dialog.iframe[0];
-		var top = iframe.contentDocument.documentElement.scrollTop || iframe.contentDocument.body.scrollTop;
+		let iframe = self.dialog.iframe[0];
+		let top = iframe.contentDocument.documentElement.scrollTop || iframe.contentDocument.body.scrollTop;
 
-		if(top <= 0)
-		{
-			if(self.scroll_interval_handle)
+		if (top <= 0) {
+			if (self.scroll_interval_handle) {
 				clearInterval(self.scroll_interval_handle);
+			}
 
 			return;
 		}
 
 		top = top - self.scroll_by;
-		if(top < 0)
+		if (top < 0) {
 			top = 0;
+		}
 
 		iframe.contentWindow.scrollTo(0, top);
 	}
@@ -514,29 +484,30 @@ class VenusDialog
 	* Scrolls the dialog to bottom if the user drags a file inside the top scroll area
 	* @private
 	*/
-	scrollBottom()
-	{
-		var self = venus.dialog;
+	scrollBottom () {
+		let self = venus.dialog;
 
-		if(!self.dialog.iframe)
+		if (!self.dialog.iframe) {
 			return;
+		}
 
-		var iframe = self.dialog.iframe[0];
-		var top = iframe.contentDocument.documentElement.scrollTop || iframe.contentDocument.body.scrollTop;
-		var max = iframe.contentDocument.documentElement.scrollHeight || iframe.contentDocument.body.scrollHeight;
+		let iframe = self.dialog.iframe[0];
+		let top = iframe.contentDocument.documentElement.scrollTop || iframe.contentDocument.body.scrollTop;
+		let max = iframe.contentDocument.documentElement.scrollHeight || iframe.contentDocument.body.scrollHeight;
 
-		if(top > max)
-		{
-			if(self.scroll_interval_handle)
+		if (top > max) {
+			if (self.scroll_interval_handle) {
 				clearInterval(self.scroll_interval_handle);
+			}
 
 			return;
 		}
 
 		top = top + self.scroll_by;
 
-		if(top > max)
+		if (top > max) {
 			return;
+		}
 
 		iframe.contentWindow.scrollTo(0, top);
 	}
@@ -545,12 +516,12 @@ class VenusDialog
 	* Scrolls the dialog to top if the user clicks the top scroll area
 	* @private
 	*/
-	scrollToTop()
-	{
-		if(!this.dialog.iframe)
+	scrollToTop () {
+		if (!this.dialog.iframe) {
 			return;
+		}
 
-		var iframe = this.dialog.iframe[0];
+		let iframe = this.dialog.iframe[0];
 		iframe.contentWindow.scrollTo(0, 0);
 	}
 
@@ -558,15 +529,14 @@ class VenusDialog
 	* Scrolls the dialog to bottom if the user clicks the top scroll area
 	* @private
 	*/
-	scrollToBottom()
-	{
-		if(!this.dialog.iframe)
+	scrollToBottom () {
+		if (!this.dialog.iframe) {
 			return;
+		}
 
-		var iframe = this.dialog.iframe[0];
-		var height = iframe.contentDocument.documentElement.scrollHeight || iframe.contentDocument.body.scrollHeight;
+		let iframe = this.dialog.iframe[0];
+		let height = iframe.contentDocument.documentElement.scrollHeight || iframe.contentDocument.body.scrollHeight;
 
 		iframe.contentWindow.scrollTo(0, height);
 	}
-
 }

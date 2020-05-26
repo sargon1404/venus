@@ -1,5 +1,4 @@
-Venus.prototype.init = function()
-{
+Venus.prototype.init = function() {
 	this.prepare();
 
 	this.loading = new VenusLoading;
@@ -39,23 +38,14 @@ Venus.prototype.init = function()
 	this.populate = new VenusPopulate;
 	this.list = new VenusList;
 
-
-
-
-
-
-
-
-
-
-	//this.tab = new venus_tab;
-
+	this.controls = new VenusControls;
+	this.tabs = new VenusTabs;
 
 
 
 
 	//this.iframe = new venus_iframe;
-	this.editor = new venus_editor;
+	//this.editor = new venus_editor;
 	//this.drag = new venus_drag;
 	//this.drop = new venus_drop;
 
@@ -72,4 +62,4 @@ Venus.prototype.init = function()
 }
 
 
-var venus = new Venus;
+let venus = new Venus;

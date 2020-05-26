@@ -130,7 +130,7 @@ class User extends Item
 	* Builds the user
 	* @param mixed $user The user's id/data
 	*/
-	public function __construct($user = null)
+	public function __construct($user = 0)
 	{
 		parent::__construct($user);
 

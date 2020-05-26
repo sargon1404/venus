@@ -4,11 +4,8 @@
 * @property {object} popups Object containing the data of the existing popups
 * @property {int} opened The number of currently opened popups
 */
-class VenusPopup
-{
-
-	constructor()
-	{
+class VenusPopup {
+	constructor () {
 		this.obj = null;
 		this.popups = {};
 		this.opened = 0;
@@ -20,10 +17,10 @@ class VenusPopup
 	* @return {string} The id
 	* @private
 	*/
-	getId(id)
-	{
-		if(!id)
+	getId (id) {
+		if (!id) {
 			id = venus.generateId();
+		}
 
 		return 'popup-id-' + id;
 	}
@@ -32,12 +29,12 @@ class VenusPopup
 	* Inits the popup
 	* @private
 	*/
-	init()
-	{
-		if(this.obj)
+	init () {
+		if (this.obj) {
 			return;
+		}
 
-		var html = '<div id="popups"></div>';
+		let html = '<div id="popups"></div>';
 
 		jQuery('body').append(html);
 
@@ -52,27 +49,29 @@ class VenusPopup
 	* @param {object} [options] The options. Supported options: {title: title, show_bar: bool, width: width, height: height}
 	* @return {this}
 	*/
-	open(element, parent_element, options)
-	{
+	open (element, parent_element, options) {
 		this.init();
 
-		var obj = venus.get(element);
-		var id = this.getId(obj.attr('id'));
+		let obj = venus.get(element);
+		let id = this.getId(obj.attr('id'));
 
-		if(!this.popups[id])
+		if (!this.popups[id]) {
 			this.add(id, obj, options);
+		}
 
-		var popup = this.popups[id];
+		let popup = this.popups[id];
 
-		//temporarily show the #popups object, so we can get the position of the popup
-		if(!this.opened)
+		// temporarily show the #popups object, so we can get the position of the popup
+		if (!this.opened) {
 			this.obj.css({visibility: 'hidden'}).show();
+		}
 
-		var pos = venus.getPosition(parent_element, popup.obj);
+		let pos = venus.getPosition(parent_element, popup.obj);
 		popup.obj.css({left: pos.x + 'px', top: pos.y + 'px'});
 
-		if(!this.opened)
+		if (!this.opened) {
 			this.obj.css({visibility: 'visible'}).hide();
+		}
 
 		this.show(id);
 
@@ -87,11 +86,11 @@ class VenusPopup
 	* @param {object} [options] The options. Supported options: {title: title, show_bar: bool, width: width, height: height}
 	* @return {this}
 	*/
-	openDialog(name, parent_element, alias, options)
-	{
-		var id = name;
-		if(alias)
-			id+= '-' + alias;
+	openDialog (name, parent_element, alias, options) {
+		let id = name;
+		if (alias) {
+			id += '-' + alias;
+		}
 
 		id = venus.dialog.getPreloadedId(id);
 
@@ -107,13 +106,12 @@ class VenusPopup
 	* @param {object} [options] The options
 	* @private
 	*/
-	add(id, content, options)
-	{
+	add (id, content, options) {
 		options = options || {};
 		options.title = options.title || '&nbsp;';
 		options.show_bar = options.show_bar || true;
 
-		var html = '\
+		let html = '\
 			<div class="popup" id="' + id + '">\
 				<div class="popup-title">\
 					<a href="javascript:void(0)" onclick="venus.popup.close(\'' + id + '\')" class="close"></a><h3>' + options.title + '</h3>\
@@ -122,11 +120,11 @@ class VenusPopup
 			</div>\
 		';
 
-		//append the popup's html code to the popups object
+		// append the popup's html code to the popups object
 		this.obj.append(html);
 
-		var popup = venus.get(id);
-		var content_obj = popup.find('.popup-content');
+		let popup = venus.get(id);
+		let content_obj = popup.find('.popup-content');
 
 		content_obj.append(content);
 		content.show();
@@ -134,13 +132,16 @@ class VenusPopup
 		popup.css({top: 0, left: 0});
 		popup.hide();
 
-		if(!options.show_bar)
+		if (!options.show_bar) {
 			popup.find('.popup-title').hide();
+		}
 
-		if(options.width)
+		if (options.width) {
 			popup.width(options.width);
-		if(options.height)
+		}
+		if (options.height) {
 			content_obj.height(options.height);
+		}
 
 		this.popups[id] = {
 			id: id,
@@ -154,13 +155,14 @@ class VenusPopup
 	* @param {string} id The popup's id
 	* @private
 	*/
-	show(id)
-	{
-		if(!this.popups[id])
+	show (id) {
+		if (!this.popups[id]) {
 			return;
+		}
 
-		if(!this.opened)
+		if (!this.opened) {
 			this.obj.show();
+		}
 
 		this.opened++;
 		this.popups[id].visible = true;
@@ -171,8 +173,7 @@ class VenusPopup
 	/**
 	* @private
 	*/
-	showObj(obj)
-	{
+	showObj (obj) {
 		obj.show();
 	}
 
@@ -181,10 +182,10 @@ class VenusPopup
 	* @param {string} id The popup's id
 	* @return {this}
 	*/
-	close(id)
-	{
-		if(!this.popups[id])
+	close (id) {
+		if (!this.popups[id]) {
 			return;
+		}
 
 		this.opened--;
 		this.popups[id].visible = false;
@@ -197,12 +198,12 @@ class VenusPopup
 	/**
 	* @private
 	*/
-	hideObj(obj, opened)
-	{
+	hideObj (obj, opened) {
 		obj.hide();
 
-		if(!opened)
+		if (!opened) {
 			this.obj.hide();
+		}
 	}
 
 	/**
@@ -212,19 +213,20 @@ class VenusPopup
 	* @param {object} [options] The options. Supported options: {title: title, show_bar: bool, width: width, height: height}
 	* @return {this}
 	*/
-	toggle(element, parent_element, options)
-	{
-		var obj = venus.get(element);
-		var id = this.getId(obj.attr('id'));
+	toggle (element, parent_element, options) {
+		let obj = venus.get(element);
+		let id = this.getId(obj.attr('id'));
 
-		var visible = false;
-		if(this.popups[id])
+		let visible = false;
+		if (this.popups[id]) {
 			visible = this.popups[id].visible;
+		}
 
-		if(!visible)
+		if (!visible) {
 			this.open(element, parent_element, options);
-		else
+		} else {
 			this.close(id);
+		}
 
 		return this;
 	}
@@ -237,11 +239,11 @@ class VenusPopup
 	* @param {object} [options] The options. Supported options: {title: title, show_bar: bool, width: width, height: height}
 	* @return {this}
 	*/
-	toggleDialog(name, parent_element, alias, options)
-	{
-		var id = name;
-		if(alias)
-			id+= '-' + alias;
+	toggleDialog (name, parent_element, alias, options) {
+		let id = name;
+		if (alias) {
+			id += '-' + alias;
+		}
 
 		id = venus.dialog.getPreloadedId(id);
 
@@ -249,5 +251,4 @@ class VenusPopup
 
 		return this;
 	}
-
 }

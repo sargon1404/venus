@@ -1,45 +1,40 @@
-VenusUi.prototype.close = function(container)
-{
+VenusUi.prototype.close = function (container) {
 	venus.get(container).fadeOut();
-}
+};
 
-VenusAlerts.prototype.showObj = function(obj)
-{
+VenusAlerts.prototype.showObj = function (obj) {
 	obj.fadeIn();
-}
+};
 
-VenusAlerts.prototype.hideObj = function(obj, opened)
-{
-	var self = this;
-	obj.fadeOut(400, function(){
+VenusAlerts.prototype.hideObj = function (obj, opened) {
+	let self = this;
+	obj.fadeOut(400, function () {
 		obj.remove();
-		if(!opened)
+		if (!opened) {
 			self.obj.hide();
+		}
 	});
-}
+};
 
-VenusAlertsInline.prototype.showObj = function(obj)
-{
+VenusAlertsInline.prototype.showObj = function (obj) {
 	obj.fadeIn();
-}
+};
 
-VenusAlertsInline.prototype.hideObj = function(obj, parent)
-{
-	parent.fadeOut(400, function(){
+VenusAlertsInline.prototype.hideObj = function (obj, parent) {
+	parent.fadeOut(400, function () {
 		obj.remove();
 	});
-}
+};
 
-VenusPopup.prototype.showObj = function(obj)
-{
+VenusPopup.prototype.showObj = function (obj) {
 	obj.fadeIn();
-}
+};
 
-VenusPopup.prototype.hideObj = function(obj, opened)
-{
-	var self = this;
-	obj.fadeOut(400, function(){
-		if(!opened)
+VenusPopup.prototype.hideObj = function (obj, opened) {
+	let self = this;
+	obj.fadeOut(400, function () {
+		if (!opened) {
 			self.obj.hide();
+		}
 	});
-}
+};

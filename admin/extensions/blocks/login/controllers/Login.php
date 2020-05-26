@@ -70,8 +70,6 @@ class Login extends \Venus\Admin\Controller
 			return false;
 		}
 
-		var_dump($this);die;
-die("validate");
 		$user = $this->model->login($username, $password);
 var_dump($user);die;
 		if(!$user)

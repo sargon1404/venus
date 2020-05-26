@@ -3,11 +3,8 @@
 * Shows a loading icon over a specified area
 * @author Venus-CMS
 */
-class VenusLoading
-{
-
-	constructor()
-	{
+class VenusLoading {
+	constructor () {
 		this.obj = null;
 	}
 
@@ -15,12 +12,12 @@ class VenusLoading
 	* Inits the loading object
 	* @private
 	*/
-	init()
-	{
-		if(this.obj)
+	init () {
+		if (this.obj) {
 			return;
+		}
 
-		var html = '\
+		let html = '\
 			<div id="loading-overlay">\
 				<div id="loading-container"><div id="loading-image"></div></div>\
 			</div>';
@@ -36,20 +33,17 @@ class VenusLoading
 	* @param {string|object} [element] If specified will show the animation over element [id | object]. If not specified, will show it on the entire screen
 	* @return {this}
 	*/
-	show(element)
-	{
+	show (element) {
 		this.init();
 
-		if(element)
-		{
-			var obj = venus.get(element);
-
-			var pos = obj.position();
+		if (element) {
+			let obj = venus.get(element);
+			let pos = obj.position();
 
 			this.obj.css({position: 'absolute', left: pos.left + 'px', top: pos.top + 'px', width: obj.innerWidth(), height: obj.innerHeight()});
-		}
-		else
+		} else {
 			this.obj.css({position: 'fixed', left: '0px', top: '0px', width: '100%', height: jQuery(window).height()});
+		}
 
 		this.showObj();
 
@@ -59,8 +53,7 @@ class VenusLoading
 	/**
 	* @private
 	*/
-	showObj()
-	{
+	showObj () {
 		this.obj.show();
 	}
 
@@ -68,8 +61,7 @@ class VenusLoading
 	* Shows the loading screen over the venus.content_obj element
 	* @return {this}
 	*/
-	showOverContent()
-	{
+	showOverContent () {
 		this.show(venus.content_obj);
 
 		return this;
@@ -79,8 +71,7 @@ class VenusLoading
 	* Shows the loading screen over the venus.main_obj element
 	* @return {this}
 	*/
-	showOverMain()
-	{
+	showOverMain () {
 		this.show(venus.main_obj);
 
 		return this;
@@ -90,10 +81,10 @@ class VenusLoading
 	* Hides the loading screen
 	* @return {this}
 	*/
-	hide()
-	{
-		if(!this.obj)
+	hide () {
+		if (!this.obj) {
 			return;
+		}
 
 		this.hideObj();
 
@@ -103,8 +94,7 @@ class VenusLoading
 	/**
 	* @private
 	*/
-	hideObj()
-	{
+	hideObj () {
 		this.obj.hide();
 	}
 
@@ -112,8 +102,7 @@ class VenusLoading
 	* Shows a small loading icon
 	* @param {string|object} element The element inside which the icon is shown
 	*/
-	showIcon(element)
-	{
+	showIcon (element) {
 		venus.get(element).addClass('loading-small').show();
 	}
 
@@ -121,8 +110,7 @@ class VenusLoading
 	* Hides a loading icon
 	* @param {string|object} element The element inside which the icon was shown
 	*/
-	hideIcon(element)
-	{
+	hideIcon (element) {
 		venus.get(element).removeClass('loading-small').hide();
 	}
 
@@ -130,8 +118,7 @@ class VenusLoading
 	* Shows a small loading icon over an input control
 	* @param {string|object} input The input control
 	*/
-	showInput(input)
-	{
+	showInput (input) {
 		venus.get(input).addClass('loading-input');
 	}
 
@@ -139,9 +126,7 @@ class VenusLoading
 	* Hides the loading icon over an input control
 	* @param {string|object} input The input control
 	*/
-	hideInput(input)
-	{
+	hideInput (input) {
 		venus.get(input).removeClass('loading-input');
 	}
-
 }

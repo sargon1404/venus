@@ -2,17 +2,12 @@
 * The Venus Inline Class
 * @author Venus-CMS
 */
-class VenusInline
-{
-
-	constructor()
-	{
+class VenusInline {
+	constructor () {
 		this.ready_funcs = [];
 	}
 
-	ready(func)
-	{
+	ready (func) {
 		this.ready_funcs.push(func);
 	}
-
 }

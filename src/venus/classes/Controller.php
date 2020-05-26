@@ -82,7 +82,11 @@ abstract class Controller extends \Mars\Controller
 		$this->dir = $this->document->dir;
 		$this->dir_url = $this->document->dir_url;
 		$this->base_url = $this->document->url;
-		$this->url = $this->app->uri->build($this->base_url, [$this->app->config->controller_param => $this->name]);
+		$this->url = $this->base_url;
+
+		if ($this->name != $this->document->name) {
+			$this->url = $this->app->uri->build($this->base_url, [$this->app->config->controller_param => $this->name]);
+		}
 	}
 
 	/**

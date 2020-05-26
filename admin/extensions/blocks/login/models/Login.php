@@ -28,7 +28,7 @@ class Login extends \Venus\Admin\Model
 	/**
 	* @internal
 	*/
-	public string $prefix = 'admin_block_login';
+	public string $prefix = 'admin_block_login_';
 
 
 	/**

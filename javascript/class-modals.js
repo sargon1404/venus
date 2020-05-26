@@ -2,15 +2,12 @@
 * The Modals Class
 * @author Venus-CMS
 */
-class VenusModals
-{
-
+class VenusModals {
 	/**
-	* @property {bool} are_enabled True if modals are enabled
+	* @property {bool} enabled True if modals are enabled
 	*/
-	constructor()
-	{
-		this.are_enabled = false;
+	constructor () {
+		this.enabled = false;
 	}
 
 	/**
@@ -18,21 +15,18 @@ class VenusModals
 	* @param {string|object} [element] Optional element over which the tooltips will be shown. If not specified, document is used
 	* @return {this}
 	*/
-	enable(element)
-	{
-		if(!element)
-		{
-			if(this.are_enabled)
+	enable (element) {
+		if (!element) {
+			if (this.enabled) {
 				return this;
+			}
 		}
 
-		this.are_enabled = true;
+		this.enabled = true;
 
-		var self = this;
-		venus.ready(function(){
-
+		let self = this;
+		venus.ready(function () {
 			self.init(element);
-
 		});
 
 		return this;
@@ -44,63 +38,52 @@ class VenusModals
 	* @param {string|object} [element] Optional element over which the alerts will be enabled. If not specified, document is used
 	* @private
 	*/
-	init(element)
-	{
-		venus.getSelector('[data-confirm]').each(function(){
-
-			var obj = jQuery(this);
-			obj.off('click').click(function(e){
-
+	init (element) {
+		venus.getSelector('[data-confirm]').each(function () {
+			let obj = jQuery(this);
+			obj.off('click').click(function (e) {
 				e.preventDefault();
 
-				var title = obj.attr('data-title') || null;
-				var text = obj.attr('data-confirm');
+				let title = obj.attr('data-title') || null;
+				let text = obj.attr('data-confirm');
 
-				venus.confirm.open(text, function(){
-
+				venus.confirm.open(text, function () {
 					obj.off('click');
 					obj[0].click();
-
 				}, null, {title: title});
-
 			});
-
 		});
 	}
-
 }
 
 /**
 * The Modal Class
 * @author Venus-CMS
 */
-class VenusModal
-{
-
-	constructor()
-	{
+class VenusModal {
+	constructor () {
 		this.overlay_obj = null;
 		this.obj = null;
 		this.modal = null;
 		this.buttons = [];
 
-		this.message = new VenusMessageModal;
-		this.error = new VenusErrorModal;
-		this.warning = new VenusWarningModal;
-		this.notification = new VenusNotificationModal;
-		this.confirm = new VenusConfirmModal;
+		this.message = new VenusMessageModal();
+		this.error = new VenusErrorModal();
+		this.warning = new VenusWarningModal();
+		this.notification = new VenusNotificationModal();
+		this.confirm = new VenusConfirmModal();
 	}
 
 	/**
 	* Inits the modal
 	* @private
 	*/
-	init()
-	{
-		if(this.obj)
+	init () {
+		if (this.obj) {
 			return;
+		}
 
-		var html = '\
+		let html = '\
 			<div id="modals-overlay">\
 				<div id="modals">\
 					<div id="modal">\
@@ -128,17 +111,17 @@ class VenusModal
 			icon: this.obj.find('.modal-icon'),
 			text: this.obj.find('.modal-text'),
 			buttons: this.obj.find('.modal-buttons')
-		}
+		};
 
-		this.obj.click(function(e){
-			e.stopPropagation()
+		this.obj.click(function (e) {
+			e.stopPropagation();
 		});
 
-		//close the modal if the overlay is clicked
-		var self = this;
-		this.overlay_obj.click(function(e){
-				self.close();
-				e.stopPropagation()
+		// close the modal if the overlay is clicked
+		let self = this;
+		this.overlay_obj.click(function (e) {
+			self.close();
+			e.stopPropagation();
 		});
 
 		this.overlay_obj.hide();
@@ -153,8 +136,7 @@ class VenusModal
 	* @param {array} [buttons] The modal's buttons. Array in the format: [{value: <value>, on_click: <on_click>, class_name: <class_name>}]
 	* @return {this}
 	*/
-	open(text, class_name, options, buttons)
-	{
+	open (text, class_name, options, buttons) {
 		this.init();
 
 		this.set(text, class_name, options, buttons);
@@ -168,8 +150,7 @@ class VenusModal
 	* Sets the modal's data
 	* @private
 	*/
-	set(text, class_name, options, buttons)
-	{
+	set (text, class_name, options, buttons) {
 		this.buttons = [];
 
 		class_name = class_name || 'modal';
@@ -178,8 +159,9 @@ class VenusModal
 		options.title = options.title || '&nbsp;';
 		options.icon = options.icon || '';
 
-		if(options.icon)
+		if (options.icon) {
 			options.icon = '<img src="' + venus.theme.getImage(options.icon, 'modals') + '" />';
+		}
 
 		this.obj.prop('class', class_name);
 		this.modal.icon.html(options.icon);
@@ -188,10 +170,12 @@ class VenusModal
 		this.modal.buttons.html(this.getButtons(buttons));
 		this.prepareButtons();
 
-		if(options.width)
+		if (options.width) {
 			this.obj.width(options.width);
-		if(options.height)
+		}
+		if (options.height) {
 			this.obj.height(options.height);
+		}
 	}
 
 	/**
@@ -199,10 +183,9 @@ class VenusModal
 	* @return {array}
 	* @private
 	*/
-	getDefaultButtons()
-	{
-		var self = this;
-		return [{value: venus.lang.strings.ok, on_click: function(){self.close()}}];
+	getDefaultButtons () {
+		let self = this;
+		return [{value: venus.lang.strings.ok, on_click: function () { self.close(); }}];
 	}
 
 	/**
@@ -210,22 +193,20 @@ class VenusModal
 	* @return {string}
 	* @private
 	*/
-	getButtons(buttons)
-	{
-		if(!buttons)
+	getButtons (buttons) {
+		if (!buttons) {
 			return '';
+		}
 
-		var html = '';
-		var index = 0;
-		for(var i = 0; i < buttons.length; i++)
-		{
-			var id = venus.generateId('modal-button');
-			var button = buttons[i];
+		let html = '';
+		let index = 0;
+		for (let i = 0; i < buttons.length; i++) {
+			let id = venus.generateId('modal-button');
+			let button = buttons[i];
 
-			html+= '<input type="button" id="' + id + '" value="' + button.value + '">';
+			html += '<input type="button" id="' + id + '" value="' + button.value + '">';
 
-			if(button.on_click)
-			{
+			if (button.on_click) {
 				this.buttons[index] = {
 					id: id,
 					on_click: button.on_click
@@ -241,14 +222,13 @@ class VenusModal
 	* Prepares the buttons; sets the onclick events
 	* @private
 	*/
-	prepareButtons()
-	{
-		if(!this.buttons.length)
+	prepareButtons () {
+		if (!this.buttons.length) {
 			return;
+		}
 
-		for(var i = 0; i < this.buttons.length; i++)
-		{
-			var button = this.buttons[i];
+		for (let i = 0; i < this.buttons.length; i++) {
+			let button = this.buttons[i];
 
 			venus.get(button.id).click(button.on_click);
 		}
@@ -258,10 +238,10 @@ class VenusModal
 	* Displays the currently opened modal
 	* @private
 	*/
-	show()
-	{
-		if(!this.obj)
+	show () {
+		if (!this.obj) {
 			return;
+		}
 
 		this.showObj();
 	}
@@ -269,8 +249,7 @@ class VenusModal
 	/**
 	* @private
 	*/
-	showObj()
-	{
+	showObj () {
 		this.overlay_obj.show();
 		this.obj.show();
 	}
@@ -279,10 +258,10 @@ class VenusModal
 	* Closes the currently opened modal
 	* @return {this}
 	*/
-	close()
-	{
-		if(!this.obj)
+	close () {
+		if (!this.obj) {
 			return;
+		}
 
 		this.hideObj();
 
@@ -292,10 +271,8 @@ class VenusModal
 	/**
 	* @private
 	*/
-	hideObj()
-	{
+	hideObj () {
 		this.obj.hide();
 		this.overlay_obj.hide();
 	}
-
 }

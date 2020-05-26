@@ -19,11 +19,8 @@
 * @property {string} assets_url The url to the assets dir
 * @property {string} utils_url The url to the utils dir
 */
-class Venus
-{
-
-	constructor()
-	{
+class Venus {
+	constructor () {
 		this.config = {};
 		this.lang = {strings: {}};
 		this.device = 'pc';
@@ -37,10 +34,11 @@ class Venus
 		this.id_index = 0;
 		this.keep_alive_interval_handle = 0;
 
-		//read the ready_funcs from the inline venus object, if defined
+		// read the ready_funcs from the inline venus object, if defined
 		this.ready_funcs = [];
-		if(venus)
+		if (venus) {
 			this.ready_funcs = venus.ready_funcs;
+		}
 	}
 
 	/**
@@ -48,8 +46,7 @@ class Venus
 	* @param {function} func The function to execute
 	* @return {this}
 	*/
-	ready(func)
-	{
+	ready (func) {
 		jQuery(document).ready(func);
 
 		return this;
@@ -61,10 +58,10 @@ class Venus
 	* @param {string} text Text to display
 	* @return {this}
 	*/
-	log(data, text)
-	{
-		if(text)
+	log (data, text) {
+		if (text) {
 			console.log(text);
+		}
 
 		console.log(data);
 		console.log('----------------------------------------');
@@ -75,27 +72,23 @@ class Venus
 	/**
 	* Prepares the venus object
 	*/
-	prepare()
-	{
-		var self = this;
+	prepare () {
+		let self = this;
 
-		this.ready(function(){
-
-			//set the content/contentInner/main objects for easy access
+		this.ready(function () {
+			// set the content/contentInner/main objects for easy access
 			self.content_obj = self.get('content');
 			self.content_inner_obj = self.get('content-inner');
 			self.main_obj = self.getTag('main');
-			if(!self.main_obj.length)
+			if (!self.main_obj.length) {
 				self.main_obj = self.get('main');
-
+			}
 		});
 
-		jQuery(document).click(function(){
-
-			//hide the populate popup on click
+		jQuery(document).click(function () {
+			// hide the populate popup on click
 			self.populate.close();
 			self.list.close();
-
 		});
 	}
 
@@ -103,35 +96,36 @@ class Venus
 	* Inits the tooltips/modals
 	* @param {string|object} [element] Optional element over which the tooltips/modals will be displayed. If not specified, document is used
 	*/
-	initHtml(element)
-	{
-		if(this.tooltips.are_enabled)
+	initHtml (element) {
+		if (this.tooltips.are_enabled) {
 			this.tooltips.init(element);
+		}
 
-		if(this.modals.are_enabled)
+		if (this.modals.are_enabled) {
 			this.modals.init(element);
+		}
 	}
 
 	/**
 	* Returns the name of the browser the user is using.
 	* @return The browser's name [firefox | chrome| ie | opera | safari | other]
 	*/
-	getBrowser()
-	{
-		if(navigator.userAgent.toLowerCase().search('chrome') != -1)
+	getBrowser () {
+		if (navigator.userAgent.toLowerCase().search('chrome') != -1) {
 			return 'chrome';
-		else if(navigator.userAgent.toLowerCase().search('firefox') != -1)
+		} else if (navigator.userAgent.toLowerCase().search('firefox') != -1) {
 			return 'firefox';
-		else if(navigator.userAgent.toLowerCase().search('msie') != -1)
+		} else if (navigator.userAgent.toLowerCase().search('msie') != -1) {
 			return 'ie';
-		else if(navigator.userAgent.toLowerCase().search('trident') != -1)
+		} else if (navigator.userAgent.toLowerCase().search('trident') != -1) {
 			return 'ie';
-		else if(navigator.userAgent.toLowerCase().search('opera') != -1)
+		} else if (navigator.userAgent.toLowerCase().search('opera') != -1) {
 			return 'opera';
-		else if(navigator.userAgent.toLowerCase().search('safari') != -1)
+		} else if (navigator.userAgent.toLowerCase().search('safari') != -1) {
 			return 'safari';
-		else
+		} else {
 			return 'other';
+		}
 	}
 
 	/**
@@ -139,14 +133,14 @@ class Venus
 	* @param {string} [prefix] A prefix to use, if any
 	* @return {string} The unique id
 	*/
-	generateId(prefix)
-	{
-		this.id_index++;
+	generateId (prefix) {
+		this.id_index += 1;
 
-		if(prefix)
+		if (prefix) {
 			prefix = prefix + '-';
-		else
+		} else {
 			prefix = '';
+		}
 
 		return prefix + this.randStr() + '-' + this.id_index;
 	}
@@ -155,9 +149,8 @@ class Venus
 	* Returns a random string
 	* @return {string} The random string
 	*/
-	randStr()
-	{
-		var str = Math.random().toString(36);
+	randStr () {
+		let str = Math.random().toString(36);
 		str = str.substring(2, str.length);
 
 		return str;
@@ -169,8 +162,7 @@ class Venus
 	* @param {int} The max interval
 	* @return {int} The random number
 	*/
-	randInt(min, max)
-	{
+	randInt (min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
@@ -179,8 +171,7 @@ class Venus
 	* @param {mixed} data The data to encode
 	* @return The encoded content
 	*/
-	encode(data)
-	{
+	encode (data) {
 		return JSON.stringify(data);
 	}
 
@@ -189,12 +180,12 @@ class Venus
 	* @param {string} data The data to decode
 	* @return mixed The decoded json data
 	*/
-	decode(data)
-	{
-		if(typeof data == 'string')
+	decode (data) {
+		if (typeof data == 'string') {
 			return JSON.parse(data);
-		else
+		} else {
 			return data;
+		}
 	}
 
 	/**
@@ -202,10 +193,10 @@ class Venus
 	* @param {string|object} id The object's id
 	* @return object The jquery object
 	*/
-	get(id)
-	{
-		if(typeof id == 'string')
+	get (id) {
+		if (typeof id == 'string') {
 			return jQuery('#' + id);
+		}
 
 		return jQuery(id);
 	}
@@ -215,10 +206,10 @@ class Venus
 	* @param {string|object} id The object's id
 	* @return object The DOM object
 	*/
-	getDom(id)
-	{
-		if(typeof id == 'string')
+	getDom (id) {
+		if (typeof id == 'string') {
 			return document.getElementById(id);
+		}
 
 		return id;
 	}
@@ -228,8 +219,7 @@ class Venus
 	* @param {string} tag The tag to search for
 	* @return object The object(s)
 	*/
-	getTag(tag)
-	{
+	getTag (tag) {
 		return jQuery(tag);
 	}
 
@@ -239,12 +229,12 @@ class Venus
 	* @param {string|object} element The element to restrict the search to
 	* @return object The jquery object
 	*/
-	getSelector(selector, element)
-	{
-		if(element)
+	getSelector (selector, element) {
+		if (element) {
 			return this.get(element).find(selector);
-		else
+		} else {
 			return jQuery(selector);
+		}
 	}
 
 	/**
@@ -252,9 +242,8 @@ class Venus
 	* @param {string|object} id The id
 	* @return bool Returns true if the object is visible
 	*/
-	isVisible(id)
-	{
-		return this.get(id).is(":visible");
+	isVisible (id) {
+		return this.get(id).is(':visible');
 	}
 
 	/**
@@ -262,14 +251,14 @@ class Venus
 	* @param {string} id The id
 	* @return bool Returns true if the object exists
 	*/
-	exists(id)
-	{
-		var obj = this.get(id);
+	exists (id) {
+		let obj = this.get(id);
 
-		if(obj.length)
+		if (obj.length) {
 			return true;
-		else
+		} else {
 			return false;
+		}
 	}
 
 	/**
@@ -277,8 +266,7 @@ class Venus
 	* @param {string} text The text to trim
 	* @return {string} The trimmed text
 	*/
-	trim(text)
-	{
+	trim (text) {
 		text = text.replace(/^\s+/, '');
 		text = text.replace(/\s+$/, '');
 
@@ -290,9 +278,8 @@ class Venus
 	* @param {string} text The text to sanitize
 	* @return {string} The sanitized text
 	*/
-	sanitize(text)
-	{
-		return text.replace("'", "\\'");
+	sanitize (text) {
+		return text.replace('\'', '\\\'');
 	}
 
 	/**
@@ -300,8 +287,7 @@ class Venus
 	* @param {string} text The text to convert
 	* @return {string} The converted text
 	*/
-	htmlspecialchars(text)
-	{
+	htmlspecialchars (text) {
 		text = text.replace(/&/g, '&amp;');
 		text = text.replace(/"/g, '&quot;');
 		text = text.replace(/</g, '&lt;');
@@ -317,13 +303,12 @@ class Venus
 	* @param {string} text The text to convert
 	* @return {string} The converted text
 	*/
-	htmlspecialcharsDecode(text)
-	{
+	htmlspecialcharsDecode (text) {
 		text = text.replace(/&amp;/g, '&');
 		text = text.replace(/&quot;/g, '"');
 		text = text.replace(/&lt;/g, '<');
 		text = text.replace(/&gt;/g, '>');
-		text = text.replace(/&#39;/g, "'");
+		text = text.replace(/&#39;/g, '\'');
 		text = text.replace(/&#x2F;/g, '/');
 
 		return text;
@@ -335,10 +320,10 @@ class Venus
 	* @param {string} part The part to append
 	* @return {string}
 	*/
-	appendText(text, part)
-	{
-		if(!part)
+	appendText (text, part) {
+		if (!part) {
 			return text;
+		}
 
 		return text + '-' + part;
 	}
@@ -347,8 +332,7 @@ class Venus
 	* Redirects to url
 	* @param {string} url The url to redirect to
 	*/
-	redirect(url)
-	{
+	redirect (url) {
 		window.location = url;
 	}
 
@@ -357,8 +341,7 @@ class Venus
 	* @param {string} id The id of the element to jump to
 	* @return {this}
 	*/
-	jump(id)
-	{
+	jump (id) {
 		window.location.href = '#' + id;
 		window.location.hash = id;
 
@@ -371,32 +354,34 @@ class Venus
 	* @param {string|object} obj The object to get the position for
 	* @return {object} The object's position {x, y}
 	*/
-	getPosition(element, obj)
-	{
+	getPosition (element, obj) {
 		element = this.get(element);
 
-		var pos = element.offset();
-		var x = pos.left;
-		var y = pos.top + element.outerHeight();
+		let pos = element.offset();
+		let x = pos.left;
+		let y = pos.top + element.outerHeight();
 
-		if(!obj)
+		if (!obj) {
 			return {x: x, y: y};
+		}
 
 		obj = this.get(obj);
 
-		//move obj to a remote position, show it, get the outerWidth() then hide it
+		// move obj to a remote position, show it, get the outerWidth() then hide it
 		obj.css({left: -9999, top: -9999});
 		obj.show();
 
-		var width = obj.outerWidth();
-		var height = obj.outerHeight();
+		let width = obj.outerWidth();
+		let height = obj.outerHeight();
 
 		obj.hide();
 
-		if(x + width > jQuery(window).width())
+		if (x + width > jQuery(window).width()) {
 			x = pos.left - width + element.outerWidth();
-		if(y + height > jQuery(window).height())
+		}
+		if (y + height > jQuery(window).height()) {
 			y = pos.top - height;
+		}
 
 		return {x: x, y: y};
 	}
@@ -406,21 +391,15 @@ class Venus
 	* @param {int} minutes The number of minutes
 	* @return {int} The id returned by setInterval
 	*/
-	keepAlive(minutes)
-	{
-		if(this.keep_alive_interval_handle)
+	keepAlive (minutes) {
+		if (this.keep_alive_interval_handle) {
 			return this.keep_alive_interval_handle;
+		}
 
-		var miliseconds = minutes * 60000;
-
-		this.keep_alive_interval_handle = setInterval(function(){
-
-			var url = venus.utils_url + 'keep_alive.php';
-			venus.ajax.getUrl(url);
-
-		}, miliseconds);
+		this.keep_alive_interval_handle = setInterval(function () {
+			venus.ajax.getUrl(venus.utils_url + 'keep_alive.php');
+		}, minutes * 60000);
 
 		return this.keep_alive_interval_handle;
 	}
-
 }

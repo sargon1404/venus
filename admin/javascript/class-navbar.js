@@ -2,19 +2,16 @@
 * The Navbar Class
 * @author Venus-CMS
 */
-class VenusNavbar
-{
-
-	constructor()
-	{
+class VenusNavbar {
+	constructor () {
 		this.obj = null;
 		this.top = null;
 		this.sticky = false;
 		this.confirm_strings = {};
 
-		var self = this;
+		let self = this;
 
-		venus.ready(function() {
+		venus.ready(function () {
 			self.obj = venus.get('navbar');
 			self.top = self.obj.offset().top;
 		});
@@ -24,19 +21,16 @@ class VenusNavbar
 	* Automatically stickies the navbar
 	* @return {this}
 	*/
-	auto()
-	{
-		var self = this;
+	auto () {
+		let self = this;
 
-		//fix the navbar on scroll
-		venus.ready(function() {
-
-			jQuery(this).on('scroll', function(){
+		// make the navbar sticky on scroll
+		venus.ready(function () {
+			jQuery(this).on('scroll', function () {
 				self.toggle();
 			});
 
 			self.toggle();
-
 		});
 
 		return this;
@@ -46,21 +40,15 @@ class VenusNavbar
 	* Fixates the navbar if the scrollbar is below it
 	* @private
 	*/
-	toggle()
-	{
-		if(window.scrollY > this.top)
-		{
-			if(!this.sticky)
-			{
+	toggle () {
+		if (window.scrollY > this.top) {
+			if (!this.sticky) {
 				this.sticky = true;
 				venus.list.close();
 				this.stick();
 			}
-		}
-		else
-		{
-			if(this.sticky)
-			{
+		} else {
+			if (this.sticky) {
 				this.sticky = false;
 				venus.list.close();
 				this.unstick();
@@ -72,8 +60,7 @@ class VenusNavbar
 	* Fixates the navbar
 	* @private
 	*/
-	stick()
-	{
+	stick () {
 		this.obj.addClass('sticky');
 	}
 
@@ -81,8 +68,7 @@ class VenusNavbar
 	* Unsticks the navbar
 	* @private
 	*/
-	unstick()
-	{
+	unstick () {
 		this.obj.removeClass('sticky');
 	}
 
@@ -92,9 +78,8 @@ class VenusNavbar
 	* @param {event} event The event
 	* @private
 	*/
-	openHistory(element, event)
-	{
-		venus.list.toggle('history-list', element, event)
+	openHistory (element, event) {
+		venus.list.toggle('history-list', element, event);
 	}
 
 	/**
@@ -104,9 +89,8 @@ class VenusNavbar
 	* @param {event} event The event
 	* @private
 	*/
-	openRedirect(id, element, event)
-	{
-		venus.list.toggle(id, venus.get(element).parent(), event)
+	openRedirect (id, element, event) {
+		venus.list.toggle(id, venus.get(element).parent(), event);
 	}
 
 	/**
@@ -115,23 +99,14 @@ class VenusNavbar
 	* @param {event} event The event
 	* @private
 	*/
-	setRedirect(button, name, event)
-	{
-		if(event)
+	setRedirect (button, name, event) {
+		if (event) {
 			event.stopPropagation();
+		}
 
 		venus.list.close();
 		venus.get(button).click();
 	}
-
-
-
-
-
-
-
-
-
 
 	/**
 	* Submits the navbar form
@@ -141,31 +116,25 @@ class VenusNavbar
 	* @param {string} [ids_name] The name of the IDS checkboxes, if any
 	* @param {string|object} [error_element] The element to which the error_tooltip will be attached,if any,if no ids_name is checked
 	*/
-	submit(action, default_action, ajax, ids_name, error_element, event)
-	{
-		if(this.confirm_strings)
-		{
-			var strings = this.confirm_strings[action];
-			if(strings)
-			{
+	submit (action, default_action, ajax, ids_name, error_element, event) {
+		if (this.confirm_strings) {
+			let strings = this.confirm_strings[action];
+			if (strings) {
 				this.confirm(action, default_action, ajax, ids_name, error_element, event, strings);
 				return;
 			}
 		}
 
-		this.submit_form(action, default_action, ajax, ids_name, error_element, event);
+		this.submitForm(action, default_action, ajax, ids_name, error_element, event);
 	}
 
 	/**
 	* Displays the confirm box if one of the navbar buttons need it
 	* @private
 	*/
-	confirm(action, default_action, ajax, ids_name, error_element, event, strings)
-	{
-		if(ids_name && error_element)
-		{
-			if(!this.has_checked_ids(ids_name))
-			{
+	confirm (action, default_action, ajax, ids_name, error_element, event, strings) {
+		if (ids_name && error_element) {
+			if (!this.hasCheckedIds(ids_name)) {
 				venus.tooltip_error.display(error_element);
 				event.stopPropagation();
 
@@ -173,13 +142,11 @@ class VenusNavbar
 			}
 		}
 
-		var self = this;
-		venus.confirm.open(strings.text, strings.title, function(){
-
-			self.submit_form(action, default_action, ajax, ids_name, error_element, event);
+		let self = this;
+		venus.confirm.open(strings.text, strings.title, function () {
+			self.submitForm(action, default_action, ajax, ids_name, error_element, event);
 
 			venus.confirm.close();
-
 		});
 	}
 
@@ -187,88 +154,77 @@ class VenusNavbar
 	* Actually submits the navbar form
 	* @private
 	*/
-	submit_form(action, default_action, ajax, ids_name, error_element, event)
-	{
-		var form_obj = venus.get('admin-form');
-		var action_obj = venus.get('admin-action');
+	submitForm (action, default_action, ajax, ids_name, error_element, event) {
+		let form_obj = venus.get('admin-form');
+		let action_obj = venus.get('admin-action');
 
-		//check the form's validity
-		if(!form_obj[0].checkValidity())
-		{
+		// check the form's validity
+		if (!form_obj[0].checkValidity()) {
 			venus.tab.switch(1);
 			venus.get('admin-form-submit').click();
 
 			return;
 		}
 
-		//set the action and default action
+		// set the action and default action
 		action_obj.val(action);
-		if(default_action)
+		if (default_action) {
 			venus.get('admin-form-action').val(default_action);
+		}
 
-		if(ids_name)
-		{
-			if(this.has_checked_ids(ids_name))
-			{
-				if(ajax)
-				{
+		if (ids_name) {
+			if (this.hasCheckedIds(ids_name)) {
+				if (ajax) {
 					ajax = venus.ui.get_ajax_properties(ajax);
 
-					this.post_form(form_obj, ajax.element, ajax.on_success, ajax.on_error, ajax.extra_data);
-				}
-				else
+					this.postForm(form_obj, ajax.element, ajax.on_success, ajax.on_error, ajax.extra_data);
+				} else {
 					form_obj.submit();
-			}
-			else if(error_element)
-			{
+				}
+			} else if (error_element) {
 				venus.tooltip_error.display(error_element);
 				event.stopPropagation();
 			}
-		}
-		else
+		} else {
 			form_obj.submit();
+		}
 	}
 
-	post_form(form, element, on_success, on_error, post_extra_data)
-	{
-		var self = this;
+	postForm (form, element, on_success, on_error, post_extra_data) {
+		let self = this;
 
-		self.post_form_start();
+		self.postFormStart();
 
-		venus.ajax.post_form(form, function(response){
-
-			//if we have an element field specified in the response, use it as element
-			if(response.element)
+		venus.ajax.postForm(form, function (response) {
+			// if we have an element field specified in the response, use it as element
+			if (response.element) {
 				element = response.element;
+			}
 
-			venus.ajax.handle(response, element, function(data){
-
-				if(on_success)
+			venus.ajax.handle(response, element, function (data) {
+				if (on_success) {
 					on_success(data);
+				}
 
 				venus.messages.add(data.message);
 				self.post_form_end();
-
-			}, function(data){
-
-				if(on_error)
+			}, function (data) {
+				if (on_error) {
 					on_error(data);
+				}
 
 				venus.errors.add(data.error);
-				self.post_form_end();
-
+				self.postFormEnd();
 			});
 		}, null, post_extra_data);
 	}
 
-	post_form_start()
-	{
+	postFormStart () {
 		venus.loading.show_icon('admin-navbar-buttons-loading');
 		venus.get('admin-navbar-buttons-action').addClass('disabled');
 	}
 
-	post_form_end()
-	{
+	postFormEnd () {
 		venus.loading.hide_icon('admin-navbar-buttons-loading');
 		venus.get('admin-navbar-buttons-action').removeClass('disabled');
 	}
@@ -277,22 +233,17 @@ class VenusNavbar
 	* Returns true if there are Ids checkboxes checked
 	* @private
 	*/
-	has_checked_ids(ids_name)
-	{
-		var ids_checked = false;
-		var objs = jQuery('input[type="checkbox"][name="' + ids_name + '[]'  + '"]').each(function(){
-
-			if(jQuery(this).prop('checked'))
-			{
+	hasCheckedIds (ids_name) {
+		let ids_checked = false;
+		let objs = jQuery('input[type="checkbox"][name="' + ids_name + '[]' + '"]').each(function () {
+			if (jQuery(this).prop('checked')) {
 				ids_checked = true;
 				return false;
 			}
 
 			return true;
-
 		});
 
 		return ids_checked;
 	}
-
 }

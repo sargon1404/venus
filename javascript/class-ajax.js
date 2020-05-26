@@ -2,16 +2,13 @@
 * The Ajax Class
 * @author Venus-CMS
 */
-class VenusAjax
-{
-
+class VenusAjax {
 	/**
 	* Default ajax success function
 	* @param {mixed} response The response returned by the ajax call
 	* @private
 	*/
-	onSuccess(response)
-	{
+	onSuccess (response) {
 		venus.loading.hide();
 	}
 
@@ -19,10 +16,10 @@ class VenusAjax
 	* Default ajax error function
 	* @private
 	*/
-	onError(error)
-	{
-		if(!error || typeof error == 'object')
+	onError (error) {
+		if (!error || typeof error == 'object') {
 			error = venus.lang.strings.ajax_error;
+		}
 
 		venus.loading.hide();
 
@@ -32,10 +29,10 @@ class VenusAjax
 	/**
 	@private
 	*/
-	getOnSuccess(on_success)
-	{
-		if(on_success)
+	getOnSuccess (on_success) {
+		if (on_success) {
 			return on_success;
+		}
 
 		return this.onSuccess;
 	}
@@ -43,10 +40,10 @@ class VenusAjax
 	/**
 	@private
 	*/
-	getOnError(on_error)
-	{
-		if(on_error)
-			if(on_error)
+	getOnError (on_error) {
+		if (on_error) {
+			return on_error;
+		}
 
 		return this.onError;
 	}
@@ -60,8 +57,7 @@ class VenusAjax
 	* @param {function} [on_error] The function to be called on error
 	* @return {this}
 	*/
-	send(url, data, type, on_success, on_error)
-	{
+	send (url, data, type, on_success, on_error) {
 		jQuery.ajax({
 			url: url,
 			data: data,
@@ -80,8 +76,7 @@ class VenusAjax
 	* @param {function} [on_error] The function to be called on error
 	* @return {this}
 	*/
-	getUrl(url, on_success, on_error)
-	{
+	getUrl (url, on_success, on_error) {
 		return this.send(url, null, 'GET', on_success, on_error);
 	}
 
@@ -93,8 +88,7 @@ class VenusAjax
 	* @param {function} [on_error] The function to be called on error
 	* @return {this}
 	*/
-	postUrl(url, data, on_success, on_error)
-	{
+	postUrl (url, data, on_success, on_error) {
 		return this.send(url, data, 'POST', on_success, on_error);
 	}
 
@@ -106,11 +100,10 @@ class VenusAjax
 	* @param {object} [extra_data] Extra data to send
 	* @return {this}
 	*/
-	postForm(form, on_success, on_error, extra_data)
-	{
-		var form_obj = venus.get(form);
-		var url = form_obj.attr('action');
-		var data = venus.html.getForm(form_obj, extra_data);
+	postForm (form, on_success, on_error, extra_data) {
+		form = venus.get(form);
+		let url = form.attr('action');
+		let data = venus.html.getForm(form, extra_data);
 
 		jQuery.ajax({
 			url: url,
@@ -132,8 +125,7 @@ class VenusAjax
 	* @param {function} [on_error] The function to be called on error
 	* @return {this}
 	*/
-	uploadToUrl(url, data, on_success, on_progress, on_error)
-	{
+	uploadToUrl (url, data, on_success, on_progress, on_error) {
 		jQuery.ajax({
 			url: url,
 			data: data,
@@ -142,17 +134,15 @@ class VenusAjax
 			contentType: false,
 			success: this.getOnSuccess(on_success),
 			error: this.getOnError(on_error),
-			xhr: function()
-			{
-				var xhr = new XMLHttpRequest;
+			xhr: function () {
+				let xhr = new XMLHttpRequest();
 
-				xhr.upload.addEventListener('progress', function(event){
+				xhr.upload.addEventListener('progress', function (event) {
+					let perc = Math.round(event.loaded * 100 / event.total);
 
-					var perc = Math.round(event.loaded * 100 / event.total);
-
-					if(on_progress)
+					if (on_progress) {
 						on_progress(perc);
-
+					}
 				}, false);
 
 				return xhr;
@@ -168,9 +158,8 @@ class VenusAjax
 	* @param {array|object} data The data to send
 	* @return {string} The script's url
 	*/
-	getScriptUrl(name, data)
-	{
-		var url = venus.uri.build(venus.assets.url + 'ajax.php', {ajax_name: name});
+	getScriptUrl (name, data) {
+		let url = venus.uri.build(venus.assets.url + 'ajax.php', {ajax_name: name});
 
 		return venus.uri.build(url, data);
 	}
@@ -182,11 +171,8 @@ class VenusAjax
 	* @param {function} [on_error] The function to be called on error
 	* @return {this}
 	*/
-	get(name, on_success, on_error)
-	{
-		var url = this.getScriptUrl(name);
-
-		this.getUrl(url, on_success, on_error);
+	get (name, on_success, on_error) {
+		this.getUrl(this.getScriptUrl(name), on_success, on_error);
 
 		return this;
 	}
@@ -199,11 +185,8 @@ class VenusAjax
 	* @param {function} [on_error] The function to be called on error
 	* @return {this}
 	*/
-	post(name, data, on_success, on_error)
-	{
-		var url = this.getScriptUrl(name);
-
-		this.postUrl(url, data, on_success, on_error);
+	post (name, data, on_success, on_error) {
+		this.postUrl(this.getScriptUrl(name), data, on_success, on_error);
 
 		return this;
 	}
@@ -217,11 +200,8 @@ class VenusAjax
 	* @param {function} [on_error] The function to be called on error
 	* @return {this}
 	*/
-	upload(name, data, on_success, on_progress, on_error)
-	{
-		var url = this.getScriptUrl(name);
-
-		return this.uploadToUrl(url, data, on_success, on_progress, on_error);
+	upload (name, data, on_success, on_progress, on_error) {
+		return this.uploadToUrl(this.getScriptUrl(name), data, on_success, on_progress, on_error);
 	}
 
 	/**
@@ -235,25 +215,25 @@ class VenusAjax
 	* @param {method} [method] The method: GET|POST
 	* @return {this}
 	*/
-	update(url, element, data, on_success, on_error, resize_dialog, method)
-	{
-		if(!element)
+	update (url, element, data, on_success, on_error, resize_dialog, method) {
+		if (!element) {
 			element = venus.main_obj;
-		if(!method)
+		}
+		if (!method) {
 			method = 'GET';
+		}
 
 		venus.loading.show(element);
 
-		var self = this;
-		this.send(url, data, method ,function(response){
-
+		let self = this;
+		this.send(url, data, method, function (response) {
 			self.handle(response, element, on_success, on_error);
 
-			if(resize_dialog)
+			if (resize_dialog) {
 				venus.dialog.resize();
+			}
 
 			venus.loading.hide();
-
 		});
 
 		return this;
@@ -262,21 +242,15 @@ class VenusAjax
 	/**
 	* Alias of update. Will update the venus.content_obj element
 	*/
-	updateContent(url, data, on_success, on_error, resize_dialog)
-	{
-		this.update(url, venus.content_obj, data, on_success, on_error, resize_dialog);
-
-		return this;
+	updateContent (url, data, on_success, on_error, resize_dialog) {
+		return this.update(url, venus.content_obj, data, on_success, on_error, resize_dialog);
 	}
 
 	/**
 	* Alias of update. Will update the venus.main_obj element
 	*/
-	updateMain(url, element, data, on_success, on_error, resize_dialog)
-	{
-		this.update(url, venus.main_obj, data, on_success, on_error, resize_dialog);
-
-		return this;
+	updateMain (url, element, data, on_success, on_error, resize_dialog) {
+		return this.update(url, venus.main_obj, data, on_success, on_error, resize_dialog);
 	}
 
 	/**
@@ -289,11 +263,8 @@ class VenusAjax
 	* @param {bool} resize_dialog If true, will call venus.dialog.resize. Usefull, if the call is made from inside a dialog
 	* @return {this}
 	*/
-	updatePost(url, element, data, on_success, on_error, resize_dialog)
-	{
-		this.update(url, element, data, on_success, on_error, resize_dialog, 'POST');
-
-		return this;
+	updatePost (url, element, data, on_success, on_error, resize_dialog) {
+		return this.update(url, element, data, on_success, on_error, resize_dialog, 'POST');
 	}
 
 	/**
@@ -305,55 +276,53 @@ class VenusAjax
 	* @param {function} [on_before_update] Function to be called before the html content is updated
 	* @param {function} [on_after_update] Function to be called after the html content is updated
 	*/
-	handle(response, element, on_success, on_error, on_before_update, on_after_update)
-	{
-		var html = '';
+	handle (response, element, on_success, on_error, on_before_update, on_after_update) {
+		let html = '';
 
-		try
-		{
-			if(venus.debug)
+		try {
+			if (venus.debug) {
 				venus.log(response, 'Ajax Response');
+			}
 
-			var data = venus.decode(response);
+			let data = venus.decode(response);
 
-			if(venus.debug)
+			if (venus.debug) {
 				venus.log(data, 'Ajax Response Data');
+			}
 
-			if(data.ok)
-			{
+			if (data.ok) {
 				html = data.html;
 
-				if(element)
-				{
-					if(on_before_update)
+				if (element) {
+					if (on_before_update) {
 						on_before_update(data);
+					}
 
-					if(html)
-					{
+					if (html) {
 						venus.get(element).html(html);
 
-						//init the tooltips/modals over element
+						// init the tooltips/modals over element
 						venus.initHtml(element);
 					}
 
-					if(on_after_update)
+					if (on_after_update) {
 						on_after_update(data);
+					}
 
-					if(on_success)
+					if (on_success) {
 						on_success(data);
+					}
+				}
+			} else {
+				if (on_error) {
+					on_error(data);
 				}
 			}
-			else
-			{
-				if(on_error)
-					on_error(data);
-			}
-		}
-		catch(err)
-		{
-			//probably invalid json code
-			if(venus.debug)
+		} catch (err) {
+			// probably invalid json code
+			if (venus.debug) {
 				venus.log(err, 'Invalid json code');
+			}
 
 			this.on_error(venus.lang.strings.ajax_json_error);
 		}
@@ -362,16 +331,14 @@ class VenusAjax
 	/**
 	* Alias for handle. Will use the content element as element
 	*/
-	handleContent(response, on_success, on_error, on_before_update, on_after_update)
-	{
+	handleContent (response, on_success, on_error, on_before_update, on_after_update) {
 		this.handle(response, venus.content_obj, on_success, on_error, on_before_update, on_after_update);
 	}
 
 	/**
 	* Alias for handle. Will use the main element as element
 	*/
-	handleMain(response, on_success, on_error, on_before_update, on_after_update)
-	{
+	handleMain (response, on_success, on_error, on_before_update, on_after_update) {
 		this.handle(response, venus.main_obj, on_success, on_error, on_before_update, on_after_update);
 	}
 
@@ -379,21 +346,19 @@ class VenusAjax
 	* Handles an ajax alert
 	* @param {string} response The response returned by an ajax call
 	*/
-	handleAlert(response)
-	{
-		var data = venus.decode(response);
+	handleAlert (response) {
+		let data = venus.decode(response);
 
-		if(data.ok)
-		{
-			if(data.message)
+		if (data.ok) {
+			if (data.message) {
 				venus.messages.add(data.message);
-			else if(data.warning)
+			} else if (data.warning) {
 				venus.messages.add(data.warning);
-			else if(data.notification)
+			} else if (data.notification) {
 				venus.messages.add(data.notification);
-		}
-		else
+			}
+		} else {
 			venus.errors.add(data.error);
+		}
 	}
-
 }

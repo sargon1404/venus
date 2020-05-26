@@ -2,26 +2,25 @@
 * The Uri Class
 * @author Venus-CMS
 */
-class VenusUri
-{
-
+class VenusUri {
 	/**
 	* Builds an url by appending params to url
 	* @param {string} url The url
 	* @param {mixed} params The params to append to url
 	* @return {string} The url
 	*/
-	build(url, params)
-	{
-		if(!params)
+	build (url, params) {
+		if (!params) {
 			return url;
+		}
 
-		if(url.indexOf('?') == -1)
-			url+= '?';
-		else
-			url+= '&';
+		if (!url.includes('?')) {
+			url += '?';
+		} else {
+			url += '&';
+		}
 
-		url+= this.buildParams(params);
+		url += this.buildParams(params);
 
 		return url;
 	}
@@ -31,8 +30,7 @@ class VenusUri
 	* @param {mixed} params The params to build
 	* @return {string} The query string
 	*/
-	buildParams(params)
-	{
+	buildParams (params) {
 		return jQuery.param(params);
 	}
 
@@ -41,12 +39,12 @@ class VenusUri
 	* @param {string} url The url
 	* @return {string} The url with www.
 	*/
-	addWww(url)
-	{
-		var scheme = this.getScheme(url);
+	addWww (url) {
+		let scheme = this.getScheme(url);
 
-		if(url.indexOf(scheme + '://www.') == 0)
+		if (url.includes(scheme + '://www.')) {
 			return url;
+		}
 
 		return scheme + '://www.' + url.slice(scheme.length + 3);
 	}
@@ -56,9 +54,8 @@ class VenusUri
 	* @param {string} url The url
 	* @return {string} The url without www.
 	*/
-	stripWww(url)
-	{
-		var scheme = this.getScheme(url);
+	stripWww (url) {
+		let scheme = this.getScheme(url);
 
 		return url.replace(scheme + '://www.', scheme + '://');
 	}
@@ -68,15 +65,15 @@ class VenusUri
 	* @param {string} url The url to redirect to
 	* @return {string} The url
 	*/
-	convert(url)
-	{
-		var current_url = window.location.href;
-		var scheme = this.getScheme(current_url);
+	convert (url) {
+		let current_url = window.location.href;
+		let scheme = this.getScheme(current_url);
 
-		if(current_url.indexOf(scheme + '://www.') == 0)
+		if (current_url.inclues(scheme + '://www.')) {
 			return this.addWww(url);
-		else
+		} else {
 			return this.stripWww(url);
+		}
 	}
 
 	/**
@@ -84,13 +81,11 @@ class VenusUri
 	* @param {string} url The url
 	* @return {string} The scheme
 	*/
-	getScheme(url)
-	{
-		var scheme = 'http';
-		if(url.indexOf('https://') == 0)
-			scheme = 'https';
+	getScheme (url) {
+		if (url.includes('https://')) {
+			return 'https';
+		}
 
-		return scheme;
+		return 'http';
 	}
-
 }

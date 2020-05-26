@@ -2,26 +2,22 @@
 * The Html Class
 * @author Venus-CMS
 */
-class VenusHtml
-{
-
+class VenusHtml {
 	/**
 	* Returns a FormData object
 	* @param {string|object} form The form
 	* @param {object} [data] Extra data to append to the form, if any
 	* @return {FormData} The FormData object
 	*/
-	getForm(form, data)
-	{
-		var form_data = new FormData;
-		if(form)
+	getForm (form, data) {
+		let form_data = new FormData();
+		if (form) {
 			form_data = new FormData(form[0]);
+		}
 
-		if(data)
-		{
-			for(var key in data)
-			{
-				var val = data[key];
+		if (data) {
+			for (let key in data) {
+				let val = data[key];
 
 				form_data.append(key, val);
 			}
@@ -35,8 +31,7 @@ class VenusHtml
 	* @param {string|object} form The form to submit
 	* @return {this}
 	*/
-	submitForm(form)
-	{
+	submitForm (form) {
 		venus.get(form).submit();
 
 		return this;
@@ -48,8 +43,7 @@ class VenusHtml
 	* @param {object} form The object to append
 	* @return {this}
 	*/
-	addToForm(form, obj)
-	{
+	addToForm (form, obj) {
 		venus.get(form).append(obj);
 
 		return this;
@@ -61,8 +55,7 @@ class VenusHtml
 	* @param {string} value The value of the hidden field
 	* @return {object}
 	*/
-	getFormHidden(name, value)
-	{
+	getFormHidden (name, value) {
 		return jQuery('<input>').attr({
 			type: 'hidden',
 			name: name,
@@ -78,26 +71,25 @@ class VenusHtml
 	* @param {string|array} value The value(s) of the hidden field to append
 	* @return {this}
 	*/
-	addFormHidden(form, names, values)
-	{
-		if(typeof names == 'string' && typeof values == 'string')
+	addFormHidden (form, names, values) {
+		if (typeof names == 'string' && typeof values == 'string') {
 			return this.addToForm(form, this.getFormHidden(names, values));
+		}
 
-		for(var i in values)
-		{
-			var name = '';
-			var value = values[i];
+		for (let i in values) {
+			let name = '';
+			let value = values[i];
 
-			if(typeof names == 'string')
+			if (typeof names == 'string') {
 				name = names + '[' + i + ']';
-			else
+			} else {
 				name = names[i];
+			}
 
 			this.addToForm(form, this.getFormHidden(name, value));
 		}
 
 		return this;
-
 	}
 
 	/**
@@ -105,8 +97,7 @@ class VenusHtml
 	* @param {string|object} element The element
 	* @return {bool}
 	*/
-	isChecked(element)
-	{
+	isChecked (element) {
 		return venus.get(element).prop('checked');
 	}
 
@@ -115,8 +106,7 @@ class VenusHtml
 	* @param {string|object} element The element to check
 	* @return {this}
 	*/
-	check(element)
-	{
+	check (element) {
 		this.checked(element, true);
 
 		return this;
@@ -127,8 +117,7 @@ class VenusHtml
 	* @param {string|object} element The element to uncheck
 	* @return {this}
 	*/
-	uncheck(element)
-	{
+	uncheck (element) {
 		this.checked(element, false);
 
 		return this;
@@ -140,8 +129,7 @@ class VenusHtml
 	* @param {bool} checked The checked status
 	* @return {this}
 	*/
-	checked(element, checked)
-	{
+	checked (element, checked) {
 		venus.get(element).prop(checked, checked);
 
 		return this;
@@ -153,18 +141,17 @@ class VenusHtml
 	* @param {boolean|string|object} checked If true will check the checkboxes, if false will uncheck it. Can also be an element (string|object)
 	* @return {this}
 	*/
-	toggle(name, checked)
-	{
+	toggle (name, checked) {
 		name = name + '[]';
 
-		if(typeof checked != 'boolean')
+		if (typeof checked != 'boolean') {
 			checked = this.isChecked(checked);
+		}
 
-		venus.getTag('input[type="checkbox"][name="' + name + '"]').each(function(){
+		venus.getTag('input[type="checkbox"][name="' + name + '"]').each(function () {
 			venus.get(this).prop('checked', checked);
 		});
 
 		return this;
 	}
-
 }

@@ -35,7 +35,7 @@ class User extends Command
 			$this->errorArguments($args);
 		}
 
-		$user = new \Venus\User;
+		$user = new \Venus\User(null);
 		$user->skipValidationRule('ip');
 
 		$user->username = $username;

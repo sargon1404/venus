@@ -2,17 +2,14 @@
 * The Menu Class
 * @author Venus-CMS
 */
-class VenusMenu
-{
-
+class VenusMenu {
 	/**
 	* Toggles a mobile menu
 	* @param {string} menu_id The id of the menu
 	* @return {this}
 	*/
-	toggle(menu_id)
-	{
-		var obj = venus.get(menu_id + '-container');
+	toggle (menu_id) {
+		let obj = venus.get(menu_id + '-container');
 
 		this.toggleObj(obj);
 
@@ -22,8 +19,7 @@ class VenusMenu
 	/**
 	* @private
 	*/
-	toggleObj(obj)
-	{
+	toggleObj (obj) {
 		obj.toggle();
 	}
 
@@ -32,26 +28,22 @@ class VenusMenu
 	* @param {string} menu_id The id of the menu
 	* @return {this}
 	*/
-	build(menu_id)
-	{
-		var self = this;
-		venus.get(menu_id).find('li').each(function(){
+	build (menu_id) {
+		let self = this;
 
-			jQuery(this).click(function(e){
+		venus.get(menu_id).find('li').each(function () {
+			jQuery(this).click(function (e) {
+				let href = jQuery(this).children('a').first().attr('href');
 
-				var href = jQuery(this).children('a').first().attr('href');
-
-				if(href == '' || href == '#' || href == 'javascript:void(0)')
-				{
-					//open the menu only if we're having a real url
-					jQuery(this).children('ul').each(function(){
+				if (href == '' || href == '#' || href == 'javascript:void(0)') {
+					// open the menu only if we're having a real url
+					jQuery(this).children('ul').each(function () {
 						self.toggleChildObj(jQuery(this));
 					});
 				}
 
 				e.stopPropagation();
 			});
-
 		});
 
 		return this;
@@ -60,9 +52,7 @@ class VenusMenu
 	/**
 	* @private
 	*/
-	toggleChildObj(obj)
-	{
+	toggleChildObj (obj) {
 		obj.toggle();
 	}
-
 }

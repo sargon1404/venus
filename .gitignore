@@ -1,4 +1,5 @@
 config.php
+package.json
 
 cache/css/*
 !cache/css/index.htm

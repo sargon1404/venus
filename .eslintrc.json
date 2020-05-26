@@ -1,0 +1,41 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 11
+    },
+    "rules": {
+    	  "no-multi-str": 0,
+    	  "no-tabs": 0,
+    	  "no-undef": 0,
+    	  "no-unused-vars": 0,
+    	  "prefer-const": 0,
+    	  "no-var": 1,
+    	  "camelcase": 0,
+    	  "eqeqeq": 0,
+    	  "object-curly-spacing": 0,
+        "indent": [
+            "error",
+            "tab"
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
+}
