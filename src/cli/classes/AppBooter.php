@@ -7,7 +7,8 @@
 namespace Venus\Cli;
 
 use Venus\Cli;
-use Venus\Admin\System\{Language, Plugins};
+use Venus\Admin\System\Language;
+use Venus\Admin\System\Plugins;
 use Venus\Cli\System\Output;
 
 /**

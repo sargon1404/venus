@@ -8,7 +8,10 @@ namespace Venus\System;
 
 use Mars\Templates;
 use Venus\App;
-use Venus\Output\{Menu, Announcements, Breadcrumbs, Banners};
+use Venus\Output\Menu;
+use Venus\Output\Announcements;
+use Venus\Output\Breadcrumbs;
+use Venus\Output\Banners;
 
 /**
 * The System's Theme Class

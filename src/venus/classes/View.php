@@ -14,6 +14,8 @@ use Mars\Controller;
 */
 abstract class View extends \Mars\View
 {
+	use MvcTrait;
+
 	/**
 	* @var string $base_url The base url of the controller to which the view belongs.
 	*/
@@ -28,11 +30,6 @@ abstract class View extends \Mars\View
 	* @var string $images_url Alias for $this->app->images_url
 	*/
 	public string $images_url = '';
-
-	/**
-	* @var string $prefix Prefix to be used when calling plugins
-	*/
-	public string $prefix = '';
 
 	/**
 	* @var string $prefix_output Prefix to be used when calling plugins in the templates
@@ -68,8 +65,8 @@ abstract class View extends \Mars\View
 		$this->url = $this->controller->url;
 		$this->base_url = $this->controller->base_url;
 
-		$this->prefix = $this->getPrefix();
-		$this->prefix_output = $this->prefix . '_output';
+		$this->prefix = $this->getPrefix('view');
+		$this->prefix_output = $this->prefix . 'output_';
 
 		$this->images_url = $this->app->images_url;
 	}

@@ -12,10 +12,7 @@ namespace Venus;
 */
 abstract class Model extends \Mars\Model
 {
-	/**
-	* @var string $prefix Prefix to be used when calling plugins
-	*/
-	public string $prefix = '';
+	use MvcTrait;
 
 	/**
 	* @internal

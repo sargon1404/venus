@@ -1,5 +1,7 @@
 <?php
-if(!defined('VENUS')) die;
+if (!defined('VENUS')) {
+	die;
+}
 
 $this->init_mobile = true;
 $this->for_mobile = true;

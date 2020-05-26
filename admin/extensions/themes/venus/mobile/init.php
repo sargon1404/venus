@@ -1,6 +1,7 @@
 <?php
-if(!defined('VENUS'))
+if (!defined('VENUS')) {
 	die('VENUS not defined');
+}
 
 $this->mobile_css_dir = true;
 

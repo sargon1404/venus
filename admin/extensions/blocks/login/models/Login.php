@@ -7,13 +7,10 @@
 
 namespace Cms\Admin\Blocks\Login\Models;
 
-use \Venus\App;
-use \Venus\Admin\Languages;
-use \Venus\Admin\Extensions\Info;
-use \Venus\Admin\Helpers\Bruteforce;
-
-if(!defined('VENUS')) die;
-
+use Venus\App;
+use Venus\Admin\Languages;
+use Venus\Admin\Extensions\Info;
+use Venus\Admin\Helpers\Bruteforce;
 
 /**
 * The Admin Login Model Class
@@ -25,10 +22,11 @@ class Login extends \Venus\Admin\Model
 	* @var Bruteforce $bruteforce The bruteforce object
 	*/
 	public Bruteforce $bruteforce;
+
 	/**
 	* @internal
 	*/
-	public string $prefix = 'admin_block_login_';
+	public string $prefix = 'admin_block_login';
 
 
 	/**
@@ -49,24 +47,20 @@ class Login extends \Venus\Admin\Model
 	{
 		$user = $this->app->user->login($username, $password);
 
-		if($user)
-		{
+		if ($user) {
 			//delete previous invalid login attempts
 			$this->bruteforce->delete($this->app->ip, $user->uid);
 
 			//log the login
-			$log_insert_array =
-			[
+			$log_insert_array = [
 				'uid' => (int)$user->uid,
-				'ip' => $this->app->user->ip,
-				'useragent' => $this->app->user->useragent,
+				'ip' => $this->app->ip,
+				'useragent' => $this->app->useragent,
 				'timestamp' => $this->app->db->unixTimestamp()
 			];
 
 			$this->app->db->insert('venus_administrators_logins', $log_insert_array);
-		}
-		else
-		{
+		} else {
 			//record the failed login attempt
 			$this->bruteforce->insert($this->app->ip, $this->app->user->getUidByUsername($username));
 		}
@@ -83,7 +77,7 @@ class Login extends \Venus\Admin\Model
 		$list = [];
 
 		$languages = new Languages;
-		foreach($languages as $lang) {
+		foreach ($languages as $lang) {
 			$info = $lang->getInfo();
 
 			$list[$lang->name] = $info['title'];
@@ -91,5 +85,4 @@ class Login extends \Venus\Admin\Model
 
 		return $list;
 	}
-
 }

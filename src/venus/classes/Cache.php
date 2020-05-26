@@ -129,7 +129,7 @@ class Cache extends \Mars\Cache
 		$this->update('users_banned_count', $users_banned_count, 'frontend');
 
 		return $this;
-	}	
+	}
 
 	/**
 	* Builds the banners cache
@@ -228,7 +228,8 @@ class Cache extends \Mars\Cache
 	public function buildMenu()
 	{
 		global $venus;
-		var_dump("cache-build-menu");die;
+		var_dump("cache-build-menu");
+		die;
 		$menu_count = $this->app->db->count('venus_menu', 'WHERE status = 1');
 		$menu_entries_count = $this->app->db->count('venus_menu_entries', 'WHERE status = 1');
 

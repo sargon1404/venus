@@ -131,4 +131,4 @@ return [
 	'short_day4' => "Thu",
 	'short_day5' => "Fri",
 	'short_day6' => "Sat"
-];	
+];

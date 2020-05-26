@@ -8,16 +8,16 @@ chdir('..');
 require('src/admin/boot.php');
 
 try {
-	$block_name = $app->request->value($app->config->block_param);	
+	$block_name = $app->request->value($app->config->block_param);
 
 	if (!$app->session->get('admin')) {
-		$block_name = 'login';		
+		$block_name = 'login';
 	} else {
 		if (!$block_name) {
 			$block_name = 'index';
-		}	
+		}
 	}
-
+$block_name = 'login';
 	$app->document = new Block($block_name);
 
 	$app->start();

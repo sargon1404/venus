@@ -7,9 +7,6 @@
 
 namespace Cms\Admin\Blocks\Login\Views;
 
-if(!defined('VENUS')) die;
-
-
 /**
 * The Admin Login View Class
 */
@@ -19,8 +16,7 @@ class Login extends \Venus\Admin\View
 	/**
 	* @internal
 	*/
-	public string $prefix = 'admin_block_login_';
-
+	public string $prefix = 'admin_block_login';
 
 	/**
 	* Displays the login form
@@ -28,11 +24,11 @@ class Login extends \Venus\Admin\View
 	public function index()
 	{
 		$this->referrer_url = '';
-		if(!empty($_SERVER['HTTP_REFERER']))
-		{
+		if (!empty($_SERVER['HTTP_REFERER'])) {
 			$this->referrer_url = $_SERVER['HTTP_REFERER'];
-			if(!$this->app->uri->isLocal($this->referrer_url))
+			if (!$this->app->uri->isLocal($this->referrer_url)) {
 				$this->referrer_url = '';
+			}
 		}
 
 		$this->default_language = $this->app->config->lang;
@@ -40,5 +36,4 @@ class Login extends \Venus\Admin\View
 
 		$this->app->plugins->run($this->prefix . 'index', $this);
 	}
-
 }

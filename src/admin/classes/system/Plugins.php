@@ -17,5 +17,4 @@ class Plugins extends \Venus\System\Plugins
 	* @var string $scope The scope where the plugins will be loaded
 	*/
 	protected string $scope = 'admin';
-
 }

@@ -265,7 +265,6 @@ class User extends Item
 
 	public function deleteUsergroups()
 	{
-
 	}
 
 	/**

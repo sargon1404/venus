@@ -63,7 +63,7 @@ class Help extends Command
 		}
 
 		$list = [];
-		foreach($options as $key => $val) {
+		foreach ($options as $key => $val) {
 			$list[] = [$key, $val];
 		}
 
@@ -107,5 +107,4 @@ class Help extends Command
 	{
 		$this->print($text, '', 5);
 	}
-
 }

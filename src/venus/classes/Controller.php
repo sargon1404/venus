@@ -12,6 +12,8 @@ namespace Venus;
 */
 abstract class Controller extends \Mars\Controller
 {
+	use MvcTrait;
+
 	/**
 	* @var string $name The name of the controller
 	*/
@@ -46,11 +48,6 @@ abstract class Controller extends \Mars\Controller
 	* @var array $params The document's params
 	*/
 	public array $params = [];
-
-	/**
-	* @var string $prefix Prefix to be used when calling plugins. Defaults to the document's name
-	*/
-	public string $prefix = '';
 
 	/**
 	* Builds the controller
@@ -195,5 +192,4 @@ abstract class Controller extends \Mars\Controller
 
 		return $this->view;
 	}
-
 }

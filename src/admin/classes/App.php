@@ -144,7 +144,7 @@ class App extends \Venus\App
 	*/
 	public function redirect404()
 	{
-		$this->redirectForce($this->admin_url . '404.php');
+		$this->redirect($this->admin_url . '404.php');
 	}
 
 	/**
