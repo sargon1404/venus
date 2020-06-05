@@ -1,0 +1,55 @@
+<?php
+namespace venus;
+
+if(!defined('VENUS')) die;
+
+
+class AdminLanguagesAvailableController extends \venus\admin\blocks\controllers\extensions\Available
+{
+
+	/**
+	* Displays the available languages
+	*/
+	public function index()
+	{
+		global $venus;
+		if(!is_writable($this->model->get_root_dir()))
+			$this->warnings->add(l('languages_warning1'));
+
+		return parent::_index();
+	}
+
+
+
+
+
+
+
+
+
+	public function list()
+	{
+		return $this->_list();
+	}
+
+	public function install()
+	{
+		return $this->_install();
+	}
+
+	public function insert()
+	{
+		return $this->_insert();
+	}
+
+	public function delete()
+	{
+		return $this->_delete();
+	}
+
+	public function upload()
+	{
+		return $this->_upload();
+	}
+
+}

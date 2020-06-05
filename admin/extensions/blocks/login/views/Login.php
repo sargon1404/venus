@@ -23,7 +23,7 @@ class Login extends \Venus\Admin\View
 	*/
 	public function index()
 	{
-		$this->referrer_url = '';
+		$this->referrer_url = $this->app->full_url;
 		if (!empty($_SERVER['HTTP_REFERER'])) {
 			$this->referrer_url = $_SERVER['HTTP_REFERER'];
 			if (!$this->app->uri->isLocal($this->referrer_url)) {
@@ -34,6 +34,6 @@ class Login extends \Venus\Admin\View
 		$this->default_language = $this->app->config->lang;
 		$this->languages = $this->model->getLanguages();
 
-		$this->app->plugins->run($this->prefix . 'index', $this);
+		$this->plugins->run($this->prefix . 'index', $this);
 	}
 }

@@ -486,7 +486,7 @@ class Html extends \Venus\Html
 				$page_title = reset($selected);
 			} else {
 				$pid = $selected;
-				$page_title = (string)$this->app->db->selectResult('venus_pages', 'title', ['pid' => (int)$pid]);
+				$page_title = (string)$this->app->db->selectResult('venus_pages', 'title', ['pid' => $pid]);
 			}
 		}
 

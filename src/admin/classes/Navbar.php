@@ -35,9 +35,9 @@ class Navbar
 	public array $links = [];
 
 	/**
-	* @var int $links_index The index of the selected link
+	* @var string $links_index The index of the selected link
 	*/
-	public int $links_index = -1;
+	public string $links_index = '';
 
 	/**
 	* @var array $buttons The navbar's buttons
@@ -152,10 +152,10 @@ class Navbar
 	* 'text' => The link's text
 	* 'permission' => The required permission for the link to be visible
 	* @param array $links Array containing the navbar links
-	* @param int $links_index The index of the currently selected navbar link
+	* @param string $links_index The index of the currently selected navbar link
 	* @return $this
 	*/
-	public function setLinks(array $links, int $links_index = 0)
+	public function setLinks(array $links, string $links_index)
 	{
 		$this->app->plugins->run('admin_navbar_set_links', $links, $links_index, $this);
 

@@ -17,6 +17,38 @@ class Controls
 	use \Venus\AppTrait;
 
 	/**
+	* @var string $session The session key where the session data is stored
+	*/
+	protected string $session_key = 'controls';
+
+	/**
+	* @var string $session The name under which the controls values will be saved in the session
+	*/
+	protected string $session = '';
+
+	/**
+	* @var string $url The url of the controls form
+	*/
+	protected string $base_url = '';
+
+	/**
+	* @var array $filter_array Array storing the filters list
+	*/
+	protected array $filter_array = [];
+
+	/**
+	* @var array $order_array Array storing the orders list
+	*/
+	protected array $order_array = [];
+
+	/**
+	* @var string $order_default_value The default order value to be returned, if no order control is selected
+	*/
+	protected string $order_default_value = '';
+
+
+
+	/**
 	*	@var bool $build_filters_html If true, will built the html for the filter controls. If the filters are not needed, should be set to false
 	*/
 	public bool $build_filters_html = true;
@@ -46,30 +78,6 @@ class Controls
 	*/
 	public string $filter_ignore_value = '-1';
 
-	/**
-	* @var string $filter_delimitator The delimitator used when building sql where/having clauses
-	*/
-	public string $filter_delimitator = ' AND ';
-
-	/**
-	* @var string $filter_button The text of the filter button
-	*/
-	public string $filter_button = '';
-
-	/**
-	* @var string $filter_reset_button The text of the filter reset button
-	*/
-	public string $filter_reset_button = '';
-
-	/**
-	* @var array $filter_skip Array with the filter options which will be shown; but skipped when returning the sql code
-	*/
-	public array $filter_skip = [];
-
-	/**
-	* @var string $filter_show_reset_button If true will show the reset button
-	*/
-	public bool $filter_show_reset_button = true;
 
 	/**
 	* @var string $filter_javascript_function javascript function to be executed when the filter button is clicked
@@ -80,16 +88,6 @@ class Controls
 	* @var string $filter_reset_javascript_function javascript function to be executed when the filter reset button is clicked
 	*/
 	public string $filter_reset_javascript_function = 'venus.controls.filter_reset()';
-
-	/**
-	* @var string $order_button The text of the order button
-	*/
-	public string $order_button = '';
-
-	/**
-	* @var string $order_reset_button The text of the order reset button
-	*/
-	public string $order_reset_button = '';
 
 	/**
 	* @var array $order_skip Array with the order options which will be shown; but skipped when returning the sql code
@@ -151,75 +149,9 @@ class Controls
 	*/
 	public int $total_items = 0;
 
-	/**
-	* @var string $sql The sql code generated
-	*/
-	public string $sql = '';
 
-	/**
-	* @var string $where_sql The where_sql
-	*/
-	public string $where_sql = '';
 
-	/**
-	* @var string $having_sql The having_sql
-	*/
-	public string $having_sql = '';
 
-	/**
-	* @var string $having_sql The order_sql
-	*/
-	public string $order_sql = '';
-
-	/**
-	* @var string $limit_sql The limit_sql
-	*/
-	public string $limit_sql = '';
-
-	/**
-	* @var string $order_limit_sql The limit_sql
-	*/
-	public string $order_limit_sql = '';
-
-	/**
-	* @var string $session The session key where the session data is stored
-	*/
-	protected string $session_key = 'controls';
-
-	/**
-	* @var string $session The name under which the controls values will be saved in the session
-	*/
-	protected string $session = '';
-
-	/**
-	* @var string $base_url The url of the controls form
-	*/
-	protected string $base_url = '';
-
-	/**
-	* @var string $ajax_url The url used for ajax requests [pagination, order]
-	*/
-	protected string $ajax_url = '';
-
-	/**
-	* @var array $filter_array Array storing the filters list
-	*/
-	protected array $filter_array = [];
-
-	/**
-	* @var array $filter_extra_where Extra conditions to apply to the filter's sql where clause
-	*/
-	protected array $filter_extra_where = [];
-
-	/**
-	* @var array $order_array Array storing the orders list
-	*/
-	protected array $order_array = [];
-
-	/**
-	* @var string $order_default_value The default order value to be returned, if no order control is selected
-	*/
-	protected string $order_default_value = '';
 
 	/**
 	* @var string $pagination_table The database table from where the total items for the pagination are read
@@ -229,7 +161,7 @@ class Controls
 	/**
 	* @var array $pagination_joins Array with joins to add to the pagination's sql code
 	*/
-	protected string $pagination_joins = '';
+	protected array $pagination_joins = [];
 
 	/**
 	* @var int $pagination_items_count The total number of items. Instead of specifying the pagination table/joins, the total items can be set instead
@@ -278,14 +210,9 @@ class Controls
 	{
 		$this->app = $this->getApp();
 
-		$this->app->lang->loadFile('controls');
-
-		$this->filter_button = App::__('controls_filter_button');
-		$this->filter_reset_button = App::__('controls_reset_button');
-		$this->order_button = App::__('controls_order_button');
-		$this->order_reset_button = App::__('controls_reset_button');
-		$this->items_per_page_button = App::__('controls_display_button');
 		$this->items_per_page = $this->app->config->items_per_page;
+
+		$this->session_key = $this->app->session->getPrefix() . $this->session_key;
 
 		$this->sessionInit();
 	}
@@ -297,8 +224,8 @@ class Controls
 	*/
 	protected function sessionInit()
 	{
-		if (!isset($_SESSION['venus'][$this->session_key])) {
-			$_SESSION['venus'][$this->session_key] = [];
+		if (!isset($_SESSION[$this->session_key])) {
+			$_SESSION[$this->session_key] = [];
 		}
 	}
 
@@ -307,8 +234,8 @@ class Controls
 	*/
 	protected function sessionInitKey()
 	{
-		if (!isset($_SESSION['venus'][$this->session_key][$this->session])) {
-			$_SESSION['venus'][$this->session_key][$this->session] = [];
+		if (!isset($_SESSION[$this->session_key][$this->session])) {
+			$_SESSION[$this->session_key][$this->session] = [];
 		}
 	}
 
@@ -319,11 +246,11 @@ class Controls
 	*/
 	protected function sessionGetAll($not_set = [])
 	{
-		if (!isset($_SESSION['venus'][$this->session_key][$this->session])) {
+		if (!isset($_SESSION[$this->session_key][$this->session])) {
 			return $not_set;
 		}
 
-		return $_SESSION['venus'][$this->session_key][$this->session];
+		return $_SESSION[$this->session_key][$this->session];
 	}
 
 	/**
@@ -332,7 +259,7 @@ class Controls
 	*/
 	protected function sessionMergeAll(array $options)
 	{
-		$_SESSION['venus'][$this->session_key][$this->session] = $options + $_SESSION['venus'][$this->session_key][$this->session];
+		$_SESSION[$this->session_key][$this->session] = $options + $_SESSION[$this->session_key][$this->session];
 	}
 
 	/**
@@ -342,7 +269,7 @@ class Controls
 	*/
 	protected function sessionIsSet(string $name) : bool
 	{
-		return isset($_SESSION['venus'][$this->session_key][$this->session][$name]);
+		return isset($_SESSION[$this->session_key][$this->session][$name]);
 	}
 
 	/**
@@ -353,11 +280,11 @@ class Controls
 	*/
 	protected function sessionGet(string $name, $not_set = [])
 	{
-		if (!isset($_SESSION['venus'][$this->session_key][$this->session][$name])) {
+		if (!isset($_SESSION[$this->session_key][$this->session][$name])) {
 			return $not_set;
 		}
 
-		return $_SESSION['venus'][$this->session_key][$this->session][$name];
+		return $_SESSION[$this->session_key][$this->session][$name];
 	}
 
 	/**
@@ -367,30 +294,39 @@ class Controls
 	*/
 	protected function sessionSet(string $name, string $value)
 	{
-		$_SESSION['venus'][$this->session_key][$this->session][$name] = $value;
+		$_SESSION[$this->session_key][$this->session][$name] = $value;
 	}
 
 	/***************SET METHODS**********************************/
 
 	/**
-	* Sets the session name and the base url
+	* Returns the control data
+	* @return array
+	*/
+	public function get() : array
+	{
+		$data = [
+			'where' => $this->getWhere()
+		];
+
+		return $data;
+	}
+
+	/**
+	* Sets the filter & order options
 	* @param string $session Unique identifier of the page where the controls will be displayed
-	* @param string $base_url The url of the form. If empty $this->app->url is used
-	* @param string $ajax_url The url used for ajax requests [pagination, order]. If empty $this->app->url is used
+	* @param string $url The url of the controls form
+	* @param array $options The control options
 	* @return $this
 	*/
-	public function set(string $session, string $base_url = '', string $ajax_url = '')
+	public function set(string $session, string $url, array $options)
 	{
-		if (!$base_url) {
-			$base_url = $this->app->url;
-		}
-		if (!$ajax_url) {
-			$ajax_url = $this->app->url;
-		}
-
 		$this->session = $session;
-		$this->base_url = $base_url;
-		$this->ajax_url = $ajax_url;
+		$this->url = $url;
+
+		$this->filter_array = $options['filter'] ?? [];
+		$this->order_array = $options['order'] ?? [];
+		$this->order_default_value = $options['default_order'] ?? '';
 
 		$this->sessionInitKey();
 
@@ -413,25 +349,11 @@ class Controls
 	* 5 => having_field  If specified, will return the filter in a HAVING claused rather than in WHERE. Useful, if custom sql code must be speficied
 
 	* @param array $filter_array Array defining the filter options
-	* @param array $filter_extra_where Extra where conditions, if any
 	* @return $this
 	*/
-	public function setFilterOptions(array $filter_array, array $filter_extra_where = [])
+	public function setFilterOptions(array $filter_array)
 	{
 		$this->filter_array = $filter_array;
-		$this->filter_extra_where = $filter_extra_where;
-
-		return $this;
-	}
-
-	/**
-	* Sets the filter options which are to be skipped when generating the sql code in setOptions(). Must be called before setOptions()
-	* @param array $filter_skip Array with filter options to skip when generating the returned sql code
-	* @return $this
-	*/
-	public function skipFilterOptions(array $filter_skip)
-	{
-		$this->filter_skip = $filter_skip;
 
 		return $this;
 	}
@@ -455,31 +377,8 @@ class Controls
 		return $this;
 	}
 
-	/**
-	* Sets the order options which are to be skipped when generating the sql code in setOptions(). Must be called before setOptions()
-	* @param array $order_skip Array with order options to skip when generating the returned sql code
-	* @return $this
-	*/
-	public function skipOrderOptions(array $order_skip)
-	{
-		$this->order_skip = $order_skip;
 
-		return $this;
-	}
 
-	/**
-	* Sets the pagination options
-	* @param string $pagination_table The database table from where the total items for the pagination are read. The filter sql is applied when determining the total items.
-	* @param array $pagination_joins Array with joins to add to the pagination's sql code. Format: filter_name=>[sql_join_code, only_if_filter, ignore_value]. The {VALUE} keyword is replaced in the sql_join_code with the filter value of filter_name, if specified. If 'only_if_filter' is true will add the join code only if the filter value <> ignore_value
-	* @return $this
-	*/
-	public function setPagination(string $pagination_table, array $pagination_joins = [])
-	{
-		$this->pagination_table = $pagination_table;
-		$this->pagination_joins = $pagination_joins;
-
-		return $this;
-	}
 
 	/**
 	* Instead of specifying the pagination table/joins, the total items can be set instead
@@ -491,6 +390,69 @@ class Controls
 		$this->pagination_items_count = $pagination_items_count;
 
 		return $this;
+	}
+
+	/**
+	* Returns the WHERE conditions of the controls
+	* @return array
+	*/
+	protected function getWhere() : array
+	{
+		if ($this->filter_array) {
+			return [];
+		}
+
+		$where_array = [];
+
+		foreach ($this->filter_array as $name => $field) {
+			if (!$this->sessionIsSet($name)) {
+				continue;
+			}
+			die("oooo");
+		}
+		die;
+		if ($this->filter_array) {
+			$sql_array = [];
+
+			foreach ($this->filter_array as $name => $field) {
+				if (in_array($name, $this->filter_skip)) {
+					continue;
+				}
+				if (!$this->sessionIsSet($name)) {
+					continue;
+				}
+				if (!empty($field[5])) {
+					continue;
+				}
+
+				$value = $this->getValue($name);
+				$db_field = $field[0];
+				$comparison_type = $field[1];
+				$filter_type = $field[2];
+				$value_filter_type = $field[4] ?? '';
+
+				if ($filter_type == 'input') {
+					if (!$value) {
+						continue;
+					}
+				}
+
+				$sql_array[$db_field] = [$this->app->filter->value($value, $value_filter_type), $comparison_type];
+			}
+			var_dump($sql_array);
+			die;
+			$where_sql = trim($this->app->db->getWhere($sql_array, $this->filter_ignore_value, true, $this->filter_delimitator));
+		}
+
+		if (trim($this->filter_extra_where)) {
+			if ($where_sql) {
+				$where_sql.= $this->filter_delimitator . $this->filter_extra_where;
+			} else {
+				$where_sql = 'WHERE ' . $this->filter_extra_where;
+			}
+		}
+
+		return $where_sql;
 	}
 
 	/**
@@ -519,7 +481,7 @@ class Controls
 		if ($build_top_controls) {
 			$this->buildControlsTop();
 		}
-
+		die("nnnn");
 		if ($build_sql) {
 			$where_sql = $this->getWhereSql();
 			$having_sql = $this->getHavingSql($having_fields);

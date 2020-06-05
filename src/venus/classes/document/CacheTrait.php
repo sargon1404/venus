@@ -42,6 +42,6 @@ trait CacheTrait
 			'cached' => $this->content
 		];
 
-		$this->app->db->updateById($this->getTable(), $update_array, $this->getIdName(), $this->getId());
+		$this->app->db->updateById($this->getTable(), $update_array, $this->getId(), $this->getIdName());
 	}
 }

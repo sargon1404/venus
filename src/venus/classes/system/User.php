@@ -165,8 +165,8 @@ class User extends \Venus\User
 	*/
 	protected function deleteSession()
 	{
-		$this->session->unset('uid');
 		$this->session->unset('user');
+		$this->session->unset('user_id');
 		$this->session->unset('usergroups');
 		$this->session->unset('usergroups_timestamp');
 		$this->session->unset('session_timestamp');
@@ -199,23 +199,23 @@ class User extends \Venus\User
 
 		$user = null;
 
-		if ($this->session->get('uid')) {
+		if ($this->session->get('user_id')) {
 			$user = $this->session->get('user', true);
 		} elseif ($this->app->config->login_remember_me) {
 			$user_data = $this->app->request->readCookie($this->cookie_name);
 
 			if ($user_data) {
-				$user = $this->getByUid($user_data['uid']);
+				$user = $this->getById($user_data['user_id']);
 
 				if ($user) {
 					//check if the keys match
-					if ($this->checkLoginKey($user->uid, $user_data['key'])) {
+					if ($this->checkLoginKey($user->id, $user_data['key'])) {
 						//reset the login key
-						$new_key = $this->updateLoginKey($user->uid, $user_data['key']);
+						$new_key = $this->updateLoginKey($user->id, $user_data['key']);
 
-						$this->writeUserCookie($user->uid, $new_key);
+						$this->writeUserCookie($user->id, $new_key);
 
-						$this->session->set('uid', $user->uid);
+						$this->session->set('user_id', $user->id);
 						$this->session->set('user', $user, true);
 					} else {
 						$user = null;
@@ -273,16 +273,16 @@ class User extends \Venus\User
 			$this->session->set('usergroups_timestamp', time());
 		}
 
-		$this->usergroup = $this->usergroups->find($this->ugid);
+		$this->usergroup = $this->usergroups->find($this->usergroup_id);
 
-		$this->ugids = $this->usergroups->getUgids();
+		$this->usergroup_ids = $this->usergroups->getIds();
 
 		if (!$this->isUsergroupEnabled()) {
 			$this->logout();
 			return;
 		}
 
-		if ($this->ugid == APP::USERGROUPS['guests']) {
+		if ($this->usergroup_id == APP::USERGROUPS['guests']) {
 			$this->username = $this->usergroup->username;
 		}
 	}
@@ -290,10 +290,10 @@ class User extends \Venus\User
 	/**
 	* Do nothing if called, the usergroups are already loaded in prepare_usergroups
 	* @see \Venus\User::loadUsergroups()
-	* @param bool $include_primary_ugid
+	* @param bool $include_primary_usergroup_id
 	* @return $this
 	*/
-	public function loadUsergroups(bool $include_primary_ugid = true)
+	public function loadUsergroups(bool $include_primary_usergroup_id = true)
 	{
 		return $this;
 	}
@@ -327,7 +327,7 @@ class User extends \Venus\User
 	*/
 	protected function prepareModerator()
 	{
-		if (!$this->uid) {
+		if (!$this->id) {
 			return;
 		}
 
@@ -345,7 +345,7 @@ class User extends \Venus\User
 			return;
 		}
 
-		$permissions_array = $this->app->db->select($this->getModeratorPermissionsTable(), '*', ['uid' => (int)$this->uid]);
+		$permissions_array = $this->app->db->select($this->getModeratorPermissionsTable(), '*', ['user_id' => $this->id]);
 		foreach ($permissions_array as $perm) {
 			$data = ['publish' => $perm->publish, 'edit' => $perm->edit, 'delete' => $perm->delete];
 			if ($perm->bid) {
@@ -415,14 +415,14 @@ class User extends \Venus\User
 
 	/**
 	* Logs the user
-	* @param int $uid The id of the user to login
+	* @param int $id The id of the user to login
 	* @param bool $remember_me If true the login will remember the user by writing the user cookie
 	* @param object $user The user object. Is written even if the login fails [out]
 	* @return mixed Returns an User object with the user's data if he can login, false otherwise
 	*/
-	public function loginByUid(int $uid, bool $remember_me = false, &$user = null)
+	public function loginById(int $id, bool $remember_me = false, &$user = null)
 	{
-		$user = $this->getByUid($uid);
+		$user = $this->getById($id);
 		if (!$user) {
 			return false;
 		}
@@ -451,12 +451,12 @@ class User extends \Venus\User
 
 		//generate a new login key
 		if ($remember_me) {
-			$this->resetLoginKey($user->uid);
+			$this->resetLoginKey($user->id);
 		}
 
 		//set the session data
-		$this->session->set('uid', $user->uid);
 		$this->session->set('user', $user, true);
+		$this->session->set('user_id', $user->id);
 		$this->session->set('session_timestamp', time());
 	}
 
@@ -465,11 +465,11 @@ class User extends \Venus\User
 	*/
 	public function logout()
 	{
-		if (!$this->uid) {
+		if (!$this->id) {
 			return;
 		}
 
-		$this->deleteLoginKey($this->uid);
+		$this->deleteLoginKey($this->id);
 
 		$this->deleteSession();
 		$this->deleteUserCookie();
@@ -500,18 +500,18 @@ class User extends \Venus\User
 
 	/**
 	* Checks if a login key is valid
-	* @param int $uid The user's id
+	* @param int $id The user's id
 	* @param string $key The login key to check for
 	* @return bool
 	*/
-	protected function checkLoginKey(int $uid, string $key) : bool
+	protected function checkLoginKey(int $id, string $key) : bool
 	{
 		$table = $this->getLoginKeysTable();
 		$key = $this->hashLoginKey($key);
 
-		$sql = "SELECT COUNT(*) FROM {$table} WHERE uid = :uid AND key_crc = CRC32(:key) AND `key` = :key AND scope = :scope AND valid_timestamp > UNIX_TIMESTAMP()";
+		$sql = "SELECT COUNT(*) FROM {$table} WHERE user_id = :id AND key_crc = CRC32(:key) AND `key` = :key AND scope = :scope AND valid_timestamp > UNIX_TIMESTAMP()";
 
-		$this->app->db->readQuery($sql, ['uid' => $uid, 'key' => $key, 'scope' => static::$login_keys_scope]);
+		$this->app->db->readQuery($sql, ['id' => $id, 'key' => $key, 'scope' => static::$login_keys_scope]);
 		$count = $this->app->db->getCount();
 
 		if ($count) {
@@ -523,17 +523,17 @@ class User extends \Venus\User
 
 	/**
 	* Writes a login key to the database
-	* @param int $uid The user's id
+	* @param int $id The user's id
 	* @param string $key The key
 	*/
-	protected function writeLoginKey(int $uid, string $key)
+	protected function writeLoginKey(int $id, string $key)
 	{
-		$this->deleteLoginKey($uid);
+		$this->deleteLoginKey($id);
 
 		$key = $this->hashLoginKey($key);
 
 		$insert_array = [
-			'uid' => $uid,
+			'user_id' => $id,
 			'key' => $key,
 			'key_crc' => $this->app->db->crc32($key),
 			'ip' => $this->app->ip,
@@ -547,11 +547,11 @@ class User extends \Venus\User
 
 	/**
 	* Generates a new login key, updates the database, and returns it
-	* @param int $uid The user's id
+	* @param int $id The user's id
 	* @param string $old_key The old login key
 	* @return string The new login key
 	*/
-	protected function updateLoginKey(int $uid, string $old_key) : string
+	protected function updateLoginKey(int $id, string $old_key) : string
 	{
 		$key = $this->getLoginKey();
 		$new_key = $this->hashLoginKey($key);
@@ -565,22 +565,22 @@ class User extends \Venus\User
 			'valid_timestamp' => time() + (60 * $this->cookie_expires)
 		];
 
-		$this->app->db->update($this->getLoginKeysTable(), $update_array, ['uid' => $uid, 'key_crc' => $this->app->db->crc32($old_key), 'key' => $old_key, 'scope' => static::$login_keys_scope], 1);
+		$this->app->db->update($this->getLoginKeysTable(), $update_array, ['user_id' => $id, 'key_crc' => $this->app->db->crc32($old_key), 'key' => $old_key, 'scope' => static::$login_keys_scope], 1);
 
 		return $key;
 	}
 
 	/**
 	* Deletes a login key from the database
-	* @param int $uid The user's id
+	* @param int $id The user's id
 	* @param string $key The key to delete. If empty, deletes the key found in the user cookie
 	*/
-	protected function deleteLoginKey(int $uid, string $key = '')
+	protected function deleteLoginKey(int $id, string $key = '')
 	{
 		if (!$key) {
 			$user_data = $this->app->request->readCookie($this->cookie_name);
 			if ($user_data) {
-				if ($user_data['uid'] == $uid) {
+				if ($user_data['user_id'] == $id) {
 					$key = $user_data['key'];
 				}
 			}
@@ -590,22 +590,19 @@ class User extends \Venus\User
 			return;
 		}
 
-		$table = $this->getLoginKeysTable();
-		$key = $this->hashLoginKey($key);
-
-		$this->app->db->delete($table, ['uid' => $uid, 'key_crc' => $this->app->db->crc32($key), 'key' => $key, 'scope' => static::$login_keys_scope], 1);
+		$this->app->db->delete($this->getLoginKeysTable(), ['user_id' => $id, 'key_crc' => $this->app->db->crc32($key), 'key' => $key, 'scope' => static::$login_keys_scope], 1);
 	}
 
 	/**
 	* Resets the login key of an user
-	* @param int $uid The user's id
+	* @param int $id The user's id
 	*/
-	protected function resetLoginKey(int $uid)
+	protected function resetLoginKey(int $id)
 	{
 		$key = $this->getLoginKey();
 
-		$this->writeLoginKey($uid, $key);
-		$this->writeUserCookie($uid, $key);
+		$this->writeLoginKey($id, $key);
+		$this->writeUserCookie($id, $key);
 	}
 
 	/****************USER COOKIE METHODS**************************/
@@ -621,13 +618,13 @@ class User extends \Venus\User
 
 	/**
 	* Writes the user cookie
-	* @param int $uid The user's id
+	* @param int $id The user's id
 	* @param string $key The login key
 	*/
-	protected function writeUserCookie(int $uid, string $key)
+	protected function writeUserCookie(int $id, string $key)
 	{
 		$user_data = [
-			'uid' => $uid,
+			'user_id' => $id,
 			'key' => $key
 		];
 
@@ -648,11 +645,11 @@ class User extends \Venus\User
 	*/
 	public function reload()
 	{
-		if (!$this->uid) {
+		if (!$this->id) {
 			return $this;
 		}
 
-		$user = $this->getByUid($this->uid);
+		$user = $this->getById($this->id);
 
 		if (!$user || !$this->isEnabled() || !$this->isUsergroupEnabled()) {
 			$this->logout();
@@ -673,16 +670,16 @@ class User extends \Venus\User
 	*/
 	protected function processNotifications()
 	{
-		if (!$this->uid) {
+		if (!$this->id) {
 			return;
 		}
 
-		$notifications_array = $this->app->db->selectField($this->getNotificationsTable(), 'type', ['uid' => (int)$this->uid]);
+		$notifications_array = $this->app->db->selectField($this->getNotificationsTable(), 'type', ['user_id' => $this->id]);
 		if (!$notifications_array) {
 			return;
 		}
 
-		$this->app->db->deleteByIds($this->getNotificationsTable(), 'uid', $this->uid);
+		$this->app->db->deleteByIds($this->getNotificationsTable(), $this->id, 'user_id');
 
 		foreach ($notifications_array as $code) {
 			$this->processNotification($code);
@@ -719,8 +716,6 @@ class User extends \Venus\User
 		unset($user->password);
 
 		parent::assign($user);
-
-		$this->uid = (int)$this->uid;
 
 		return $this;
 	}

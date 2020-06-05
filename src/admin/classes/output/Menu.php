@@ -68,12 +68,12 @@ class Menu extends \Venus\Output\Menu
 	*/
 	protected function getAccesibleBlocks() : ?iterable
 	{
-		$uid = (int)$this->app->user->uid;
+		$user_id = $this->app->user->id;
 		$sql = "
 			SELECT name
 			FROM venus_administrators_permissions AS p
 			LEFT JOIN venus_admin_blocks AS b USING(bid)
-			WHERE p.uid = {$uid} AND view = 1 AND name <> ''";
+			WHERE p.user_id = {$user_id} AND view = 1 AND name <> ''";
 
 		$this->app->db->readQuery($sql);
 		$blocks = $this->app->db->getFields();

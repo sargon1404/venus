@@ -45,7 +45,7 @@ class Block extends \Venus\Block
 	* @see \Venus\Block::get()
 	* {@inheritDoc}
 	*/
-	protected function get($name) : object
+	protected function get($name)
 	{
 		$table = $this->getTable();
 
@@ -104,15 +104,15 @@ class Block extends \Venus\Block
 			return;
 		}
 
-		if (!$this->app->user->uid) {
+		if (!$this->app->user->id) {
 			return;
 		}
 
-		$permissions = $this->app->db->selectRow($this->getPermissionsTable(), '*', ['uid' => (int)$this->app->user->uid, 'bid' => (int)$this->bid], true);
+		$permissions = $this->app->db->selectRow($this->getPermissionsTable(), '*', ['user_id' => $this->app->user->id, 'bid' => $this->bid], true);
 
 		if ($permissions) {
-			unset($permissions['uid']);
-			unset($permissions['bid']);
+			unset($permissions['user_id']);
+			unset($permissions['block_id']);
 		} else {
 			$permissions = $this->app->user->getDefaultPermissions();
 

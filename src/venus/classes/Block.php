@@ -106,6 +106,8 @@ class Block extends \Venus\Extensions\Extension implements Document
 	public function __construct($name)
 	{
 		$this->app = $this->getApp();
+		$this->db = $this->app->db;
+		$this->validator = $this->app->validator;
 
 		$block = $this->get($name);
 		if (!$block) {

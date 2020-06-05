@@ -423,7 +423,7 @@ class Uri extends \Mars\Uri
 			//was the page data preloaded? If not, load it from the db
 			$page = $this->getPreloadedData('pages', $pid);
 			if (!$page) {
-				$page = $this->app->db->selectById('venus_pages', 'pid', $pid, 'pid, category, seo_alias, seo_slug');
+				$page = $this->app->db->selectById('venus_pages', $pid, 'pid, category, seo_alias, seo_slug');
 			}
 		}
 
@@ -533,7 +533,7 @@ class Uri extends \Mars\Uri
 
 			$tag = $this->getPreloadedData('tags', $tid);
 			if (!$tag) {
-				$tag = $this->app->db->selectById('venus_tags', 'tid', $tid, 'tid, seo_alias, seo_slug');
+				$tag = $this->app->db->selectById('venus_tags', $tid, 'tid, seo_alias, seo_slug');
 			}
 		}
 
@@ -542,23 +542,23 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the url of a user's profile
-	* @param mixed $user Either the users's data (array, object) or the user's ID. If data, these fields must be included: uid,username,seo_alias
+	* @param mixed $user Either the users's data (array, object) or the user's ID. If data, these fields must be included: id,username,seo_alias
 	* @return string The url
 	*/
 	public function getUser($user) : string
 	{
 		$user = $this->getUserData($user);
-		if (!$user || !$user->uid) {
+		if (!$user || !$user->id) {
 			return $this->getEmpty();
 		}
 
 		if (!$this->app->config->seo_enable) {
-			$url = $this->build($this->app->site_index, [$this->app->config->type_param => 'user', 'id' => $user->uid]);
+			$url = $this->build($this->app->site_index, [$this->app->config->type_param => 'user', 'id' => $user->id]);
 		} else {
 			$url = $this->app->site_url;
 
 			$search = ['{ALIAS}', '{ID}'];
-			$replace = [$user->seo_alias, $user->uid];
+			$replace = [$user->seo_alias, $user->id];
 
 			$url.= str_replace($search, $replace, $this->app->config->seo_user_url);
 		}
@@ -570,7 +570,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the url of a user's search by author page
-	* @param mixed $user Either the users's data (array, object) or the user's ID. If data, these fields must be included: uid,username,seo_alias
+	* @param mixed $user Either the users's data (array, object) or the user's ID. If data, these fields must be included: id,username,seo_alias
 	* @return string The url
 	*/
 	public function getAuthor($user) : string
@@ -580,12 +580,12 @@ class Uri extends \Mars\Uri
 			return $this->getEmpty();
 		}
 
-		return $this->getBlock($this->block_names['search'], '', ['uid' => $user->uid], [$user->seo_alias]);
+		return $this->getBlock($this->block_names['search'], '', ['user_id' => $user->id], [$user->seo_alias]);
 	}
 
 	/**
 	* Returns the user's data
-	* @param mixed $user Either the users's data (array, object) or the user's ID. If data, these fields must be included: uid,username,seo_alias
+	* @param mixed $user Either the users's data (array, object) or the user's ID. If data, these fields must be included: id,username,seo_alias
 	* @return object The user object
 	*/
 	protected function getUserData($user) : ?object
@@ -595,20 +595,20 @@ class Uri extends \Mars\Uri
 		}
 
 		if ($user instanceof \Venus\User\User) {
-			$user = $user->getData(['uid', 'seo_alias']);
+			$user = $user->getData(['id', 'seo_alias']);
 		}
 
 		if (is_array($user)) {
 			$user = new Item($user);
 		} elseif (!is_object($user)) {
-			$uid = (int)$user;
-			if (!$uid) {
+			$user_id = (int)$user;
+			if (!$user_id) {
 				return null;
 			}
 
-			$user = $this->getPreloadedData('users', $uid);
+			$user = $this->getPreloadedData('users', $user_id);
 			if (!$user) {
-				$user = $this->app->db->selectById('venus_users', 'uid', $uid, 'uid, seo_alias');
+				$user = $this->app->db->selectById('venus_users', $user_id, 'id, seo_alias');
 			}
 		}
 
@@ -642,16 +642,16 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the url from where a user can be edited in the admin
-	* @param int $uid The user's ID
+	* @param int $user_id The user's ID
 	* @return string The url
 	*/
-	public function getAdminUser(int $uid) : string
+	public function getAdminUser(int $user_id) : string
 	{
-		if (!$uid) {
+		if (!$user_id) {
 			return $this->getEmpty();
 		}
 
-		return $this->getAdminBlock('users', 'edit', ['id' => $uid]);
+		return $this->getAdminBlock('users', 'edit', ['id' => $user_id]);
 	}
 
 	/**
@@ -725,7 +725,7 @@ class Uri extends \Mars\Uri
 			return [];
 		}
 
-		$pages_data = $this->app->db->selectByIds('venus_pages', 'pid', $pids, '', '', 'pid, category, seo_alias, seo_slug');
+		$pages_data = $this->app->db->selectByIds('venus_pages', $pids, '', '', 'pid, category, seo_alias, seo_slug');
 
 		$this->preloaded_data['pages'] = $this->preloaded_data['pages'] + $pages_data;
 
@@ -743,7 +743,7 @@ class Uri extends \Mars\Uri
 			return [];
 		}
 
-		$tags_data = $this->app->db->selectByIds('venus_tags', 'tid', $tids, '', '', 'tid, seo_alias, seo_slug');
+		$tags_data = $this->app->db->selectByIds('venus_tags', $tids, '', '', 'tid, seo_alias, seo_slug');
 
 		$this->preloaded_data['tags'] = $this->preloaded_data['tags'] + $tags_data;
 
@@ -752,16 +752,16 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Preloads the users data required to build user urls for the specified user ids
-	* @param array $uids The user ids for which the data should be preloaded
+	* @param array $user_ids The user ids for which the data should be preloaded
 	* @return $this
 	*/
-	public function preloadUsers(array $uids)
+	public function preloadUsers(array $user_ids)
 	{
-		if (!$uids) {
+		if (!$user_ids) {
 			return [];
 		}
 
-		$users_data = $this->app->db->selectByIds('venus_users', 'uid', $uids, '', '', 'uid, seo_alias');
+		$users_data = $this->app->db->selectByIds('venus_users', $user_ids, '', '', 'id, seo_alias');
 
 		$this->preloaded_data['users'] = $this->preloaded_data['users'] + $users_data;
 

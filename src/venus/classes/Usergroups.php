@@ -14,11 +14,6 @@ class Usergroups extends Items
 	/**
 	* @internal
 	*/
-	protected static string $id_name = 'ugid';
-
-	/**
-	* @internal
-	*/
 	protected static string $table = 'venus_usergroups';
 
 	/**
@@ -46,22 +41,23 @@ class Usergroups extends Items
 	}
 
 	/**
-	* Returns the ugids of the usergroups as array
+	* Returns the ids of the usergroups as array
+	* @param array $ids Ignored
 	* @return array
 	*/
-	public function getUgids() : array
+	public function getIds($ids = []) : array
 	{
 		return $this->ids;
 	}
 
 	/**
 	* Finds a usergroup from the loaded groups. If nothing is found, returns the guests usergroup
-	* @param int $ugid The id of the usergroup to find
+	* @param int $id The id of the usergroup to find
 	* @return Usergroup The usergroup
 	*/
-	public function find(int $ugid) : Usergroup
+	public function find(int $id) : Usergroup
 	{
-		$usergroup = parent::find($ugid);
+		$usergroup = parent::find($id);
 		if (!$usergroup) {
 			$usergroup = $this->getGuests();
 		}
@@ -71,16 +67,16 @@ class Usergroups extends Items
 
 	/**
 	* Returns the data of an usergroup
-	* @param int $ugid The usergroup for which to return the data
+	* @param int $id The usergroup for which to return the data
 	* @return Usergroup The usergroup
 	*/
-	public function get(int $ugid) : Usergroup
+	public function get(int $id) : Usergroup
 	{
-		if ($ugid == APP::USERGROUPS['guests']) {
+		if ($id == APP::USERGROUPS['guests']) {
 			return $this->getGuests();
 		}
 
-		return $this->getObject($this->app->env->getUsergroup($ugid));
+		return $this->getObject($this->app->env->getUsergroup($id));
 	}
 
 	/**
@@ -112,29 +108,28 @@ class Usergroups extends Items
 	/**
 	* Loads all the usergroups an user belongs to
 	* @param User $user The user
-	* @param bool $include_primary_ugid If true will include the primary usergroup in the list of usergroups
+	* @param bool $include_primary_usergroup_id If true will include the primary usergroup in the list of usergroups
 	* @return $this
 	*/
-	public function loadByUser(User $user, bool $include_primary_ugid = true)
+	public function loadByUser(User $user, bool $include_primary_usergroup_id = true)
 	{
-		$uid = (int)$user->uid;
 		$usergroups_table = $this->getUserUsergroupsTable();
-		if (!$uid) {
+		if (!$user->id) {
 			return;
 		}
 
-		$ugids = $this->db->selectField($usergroups_table, 'ugid', ['uid' => $uid]);
-		if ($include_primary_ugid) {
-			$ugids = array_merge([(int)$user->ugid], $ugids);
+		$usergroup_ids = $this->db->selectField($usergroups_table, 'id', ['user_id' => $user->id]);
+		if ($include_primary_usergroup_id) {
+			$usergroup_ids = array_merge([$user->usergroup_id], $usergroup_ids);
 		}
-		$ugids = array_unique($ugids);
-		if (!$ugids) {
+		$usergroup_ids = array_unique($usergroup_ids);
+		if (!$usergroup_ids) {
 			return;
 		}
 
 		$usergroups = [];
-		foreach ($ugids as $ugid) {
-			$usergroups[] = $this->get($ugid);
+		foreach ($usergroup_ids as $usergroup_id) {
+			$usergroups[] = $this->get($usergroup_id);
 		}
 
 		$this->setData($usergroups, false);

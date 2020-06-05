@@ -157,6 +157,6 @@ class Environment
 			return 0;
 		}
 
-		return (int)$block->bid;
+		return $block->id;
 	}
 }

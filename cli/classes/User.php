@@ -11,11 +11,11 @@ class User extends Command
 	*/
 	protected array $actions = [
 		'create' => [
-							'create', 'Creates an user', ['--ugid' => 'The usergroup id'], ['user:create [--ugid=<usergroup_id>] <username> <password> <email>']
+							'create', 'Creates an user', ['--usergroup_id' => 'The usergroup id'], ['user:create [--usergroup_id=<usergroup_id>] <username> <password> <email>']
 						],
 		'update' => [
-							'update', 'Updates an user', ['--username' => 'The username', '--email' => 'The email', '--password' => 'The password', '--ugid' => 'The usergroup id'],
-							['user:update [--username=<username>] [--email=<email>] [--password=<password>] [--ugid=<usergroup_id>] <current_username>']
+							'update', 'Updates an user', ['--username' => 'The username', '--email' => 'The email', '--password' => 'The password', '--usergroup_id' => 'The usergroup id'],
+							['user:update [--username=<username>] [--email=<email>] [--password=<password>] [--usergroup_id=<usergroup_id>] <current_username>']
 						],
 		'delete' => [
 							'delete', 'Deletes an user', [], ['user:delete <username>']
@@ -42,8 +42,8 @@ class User extends Command
 		$user->password_clear = $password;
 		$user->email = $email;
 
-		if ($this->isOption('ugid')) {
-			$user->ugid = $this->getOption('ugid');
+		if ($this->isOption('usergroup_id')) {
+			$user->usergroup_id = (int)$this->getOption('usergroup_id');
 		}
 
 		if (!$user->insert()) {
@@ -71,7 +71,7 @@ class User extends Command
 
 		$user->skipValidationRule('ip');
 
-		$options = $this->getOptions(['username', 'email', 'ugid']);
+		$options = $this->getOptions(['username', 'email', 'usergroup_id']);
 		$user->bind($options);
 
 		if ($this->isOption('password')) {

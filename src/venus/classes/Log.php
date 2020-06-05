@@ -31,7 +31,7 @@ class Log extends \Mars\Log
 		$insert_data = [
 			'action' => $action,
 			'text' => $text,
-			'uid' => (int)$this->app->user->uid,
+			'user_id' => $this->app->user->id,
 			'ip' => $this->app->user->ip,
 			'query_string' => $_SERVER['QUERY_STRING'],
 			'timestamp' => $this->app->db->unixTimestamp()

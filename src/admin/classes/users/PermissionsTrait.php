@@ -72,14 +72,14 @@ trait PermissionsTrait
 	}
 
 	/**
-	* Adds an item to the list of items created by the current user. Will add it only if $created_by equals the uid of the current user
+	* Adds an item to the list of items created by the current user. Will add it only if $created_by equals the user_id of the current user
 	* @param string $item_id The item's id
 	* @param int $created_by The user who created the item
 	* @return $this
 	*/
 	public function addOwnItem(string $item_id, int $created_by)
 	{
-		if ($this->app->user->uid == $created_by) {
+		if ($this->app->user->id == $created_by) {
 			$this->own_item_ids[] = $item_id;
 		}
 
@@ -206,7 +206,7 @@ trait PermissionsTrait
 
 		if (isset($this->permissions_own[$permission])) {
 			if (!empty($this->permissions[$this->permissions_own[$permission]])) {
-				if ($created_by == $this->app->user->uid) {
+				if ($created_by == $this->app->user->id) {
 					return true;
 				}
 			}
@@ -259,6 +259,6 @@ trait PermissionsTrait
 			return [];
 		}
 
-		return $this->app->db->sql->select($id_field)->from($table)->whereIn($id_field, $item_ids)->where([$created_by_field => $this->app->user->uid])->getFields();
+		return $this->app->db->sql->select($id_field)->from($table)->whereIn($id_field, $item_ids)->where([$created_by_field => $this->app->user->id])->getFields();
 	}
 }

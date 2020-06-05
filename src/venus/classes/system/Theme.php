@@ -125,11 +125,11 @@ class Theme extends \Venus\Theme
 	*/
 	protected function getTid() : int
 	{
-		if ($this->app->user->uid && $this->app->user->theme) {
-			return (int)$this->app->user->theme;
+		if ($this->app->user->id && $this->app->user->theme) {
+			return $this->app->user->theme;
 		}
 
-		return (int)$this->app->config->theme_default;
+		return $this->app->config->theme_default;
 	}
 
 	/**

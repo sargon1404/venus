@@ -17,7 +17,7 @@ try {
 			$block_name = 'index';
 		}
 	}
-$block_name = 'login';
+
 	$app->document = new Block($block_name);
 
 	$app->start();

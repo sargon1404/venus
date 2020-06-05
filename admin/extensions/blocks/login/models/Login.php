@@ -49,11 +49,11 @@ class Login extends \Venus\Admin\Model
 
 		if ($user) {
 			//delete previous invalid login attempts
-			$this->bruteforce->delete($this->app->ip, $user->uid);
+			$this->bruteforce->delete($this->app->ip, $user->id);
 
 			//log the login
 			$log_insert_array = [
-				'uid' => (int)$user->uid,
+				'user_id' => $user->id,
 				'ip' => $this->app->ip,
 				'useragent' => $this->app->useragent,
 				'timestamp' => $this->app->db->unixTimestamp()
@@ -62,7 +62,7 @@ class Login extends \Venus\Admin\Model
 			$this->app->db->insert('venus_administrators_logins', $log_insert_array);
 		} else {
 			//record the failed login attempt
-			$this->bruteforce->insert($this->app->ip, $this->app->user->getUidByUsername($username));
+			$this->bruteforce->insert($this->app->ip, $this->app->user->getIdByUsername($username));
 		}
 
 		return $user;

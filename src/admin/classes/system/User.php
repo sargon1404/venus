@@ -87,8 +87,8 @@ class User extends \Venus\System\User
 	{
 		$user = null;
 
-		if ($this->app->session->get('uid')) {
-			$user = $this->getByUid($this->app->session->get('uid'));
+		if ($this->app->session->get('user_id')) {
+			$user = $this->getById($this->app->session->get('user_id'));
 			if (!$user) {
 				$this->logout();
 			}
@@ -96,17 +96,17 @@ class User extends \Venus\System\User
 			$user_data = $this->app->request->readCookie($this->cookie_name);
 
 			if ($user_data) {
-				$user = $this->getByUid($user_data['uid']);
+				$user = $this->getById($user_data['user_id']);
 
 				if ($user) {
 					//check if the keys match
-					if ($this->checkLoginKey($user->uid, $user_data['key'])) {
+					if ($this->checkLoginKey($user->id, $user_data['key'])) {
 						//reset the login key
-						$new_key = $this->updateLoginKey($user->uid, $user_data['key']);
+						$new_key = $this->updateLoginKey($user->id, $user_data['key']);
 
-						$this->writeUserCookie($user->uid, $new_key);
+						$this->writeUserCookie($user->id, $new_key);
 
-						$this->app->session->set('uid', (int)$user->uid);
+						$this->app->session->set('user_id', $user->id);
 						$this->app->session->set('admin', 1);
 					} else {
 						$user = null;
@@ -137,7 +137,7 @@ class User extends \Venus\System\User
 	*/
 	protected function prepareAdmin()
 	{
-		if (!$this->uid) {
+		if (!$this->id) {
 			return;
 		}
 
@@ -163,8 +163,8 @@ class User extends \Venus\System\User
 		$this->markup_tags = 'all';
 
 		$this->config = null;
-		if ($this->uid) {
-			$this->config = $this->app->db->selectById($this->getAdministratorsTable(), 'uid', $this->uid);
+		if ($this->id) {
+			$this->config = $this->app->db->selectById($this->getAdministratorsTable(), $this->id);
 		}
 
 		if ($this->config) {
@@ -202,11 +202,11 @@ class User extends \Venus\System\User
 		//reset the session id
 		$this->app->session->regenerateId();
 
-		$this->resetLoginKey($user->uid);
+		$this->resetLoginKey($user->id);
 
 		//set the session data
 		$this->app->session->set('admin', 1);
-		$this->app->session->set('uid', $user->uid);
+		$this->app->session->set('user_id', $user->id);
 		$this->app->session->set('session_timestamp', time());
 	}
 
@@ -216,12 +216,12 @@ class User extends \Venus\System\User
 	* @see \Venus\System\User::writeLoginKey()
 	* {@inheritDoc}
 	*/
-	protected function writeLoginKey(int $uid, string $key)
+	protected function writeLoginKey(int $id, string $key)
 	{
 		//delete all other login keys. Only allow one
-		$this->app->db->delete($this->getLoginKeysTable(), ['uid' => $uid, 'scope' => static::$login_keys_scope], 1);
+		$this->app->db->delete($this->getLoginKeysTable(), ['user_id' => $id, 'scope' => static::$login_keys_scope], 1);
 
-		parent::writeLoginKey($uid, $key);
+		parent::writeLoginKey($id, $key);
 	}
 
 	/****************SESSION METHODS**************************/
@@ -240,18 +240,18 @@ class User extends \Venus\System\User
 	/**
 	* Adds a user notification to the queue
 	* @param int $type The type of the notification. See file constans.php -> User notifications
-	* @param array $uids Array with the user ids of the users who will receaive the notification. If empty the current user is used
+	* @param array $ids Array with the user ids of the users who will receaive the notification. If empty the current user is used
 	* @return $this
 	*/
-	public function addNotification(int $type, array $uids = [])
+	public function addNotification(int $type, array $ids = [])
 	{
-		if (!$uids) {
-			$uids = [$this->uid];
+		if (!$ids) {
+			$ids = [$this->id];
 		}
 
-		foreach ($uids as $uid) {
+		foreach ($ids as $id) {
 			$replace_array = [
-				'uid' => (int)$uid,
+				'user_id' => $id,
 				'type' => $type,
 				'timestamp' => $this->app->db->unixTimestamp()
 			];

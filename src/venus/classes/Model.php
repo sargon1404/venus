@@ -6,6 +6,8 @@
 
 namespace Venus;
 
+use Venus\Helpers\Controls;
+
 /**
 * The Model Class
 * Implements the Model functionality of the MVC pattern

@@ -84,10 +84,10 @@ class Email
 		$user = $this->user;
 
 		$profile_url = $this->app->uri->getUser($user);
-		$admin_profile_url = $this->app->uri->getAdminUser($user->uid);
+		$admin_profile_url = $this->app->uri->getAdminUser($user->id);
 
-		$this->search = ['{USERNAME}', '{USERNAME_RAW}', '{UID}', '{EMAIL}', '{PROFILE_URL}', '{ADMIN_PROFILE_URL}', '{LOGIN_URL}', '{SITE_NAME}'];
-		$this->replace = [App::e($user->username), $user->username, $user->uid, App::e($user->email), App::e($profile_url), App::e($admin_profile_url), App::e($this->app->uri->getLogin()), App::e($this->app->config->site_name)];
+		$this->search = ['{USERNAME}', '{USERNAME_RAW}', '{USER_ID}', '{EMAIL}', '{PROFILE_URL}', '{ADMIN_PROFILE_URL}', '{LOGIN_URL}', '{SITE_NAME}'];
+		$this->replace = [App::e($user->username), $user->username, $user->id, App::e($user->email), App::e($profile_url), App::e($admin_profile_url), App::e($this->app->uri->getLogin()), App::e($this->app->config->site_name)];
 	}
 
 	/**
@@ -150,7 +150,7 @@ class Email
 	{
 		$user = $this->user;
 
-		$activation_url = $this->app->uri->getRegister('activate', ['uid' => (int)$user->uid, 'code' => $user->activation_code]);
+		$activation_url = $this->app->uri->getRegister('activate', ['user_id' => $user->id, 'code' => $user->activation_code]);
 		$activation_form_url = $this->app->uri->getRegister('activate_form');
 
 		$search = ['{ACTIVATION_URL}', '{ACTIVATION_FORM_URL}', '{ACTIVATION_CODE}'];
@@ -206,7 +206,7 @@ class Email
 	public function sendForgottenPasswordConfirmation(string $code)
 	{
 		$search = ['{RESET_PASSWORD_URL}'];
-		$replace = [e($this->app->uri->getLogin('reset_password', ['uid' => (int)$this->user->uid, 'code' => $code]))];
+		$replace = [e($this->app->uri->getLogin('reset_password', ['user_id' => $this->user->id, 'code' => $code]))];
 
 		$this->addSearchReplace($search, $replace);
 

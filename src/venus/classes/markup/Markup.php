@@ -236,10 +236,8 @@ abstract class Markup
 	* @param int $size The font size
 	* @return string
 	*/
-	protected function getSize(string $size) : string
+	protected function getSize(int $size) : string
 	{
-		$size = (int)$size;
-
 		if (!$size) {
 			return '<span>';
 		}

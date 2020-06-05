@@ -15,11 +15,6 @@ class Usergroup extends Item
 	/**
 	* @internal
 	*/
-	protected static string $id_name = 'ugid';
-
-	/**
-	* @internal
-	*/
 	protected static string $table = 'venus_usergroups';
 
 	/**

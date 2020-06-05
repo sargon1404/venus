@@ -13,9 +13,9 @@ namespace Venus;
 class User extends Item
 {
 	/**
-	* @var int $uid The user's id. 0 if he's a guest
+	* @var int $id The user's id. 0 if he's a guest
 	*/
-	public int $uid = 0;
+	public int $id = 0;
 
 	/**
 	* @var string $username The username of the user
@@ -38,9 +38,9 @@ class User extends Item
 	public string $email = '';
 
 	/**
-	* @var int $ugid The id of the primary usergroup the user belongs to
+	* @var int $usergroup_id The id of the primary usergroup the user belongs to
 	*/
-	public int $ugid = App::USERGROUPS['guests'];
+	public int $usergroup_id = App::USERGROUPS['guests'];
 
 	/**
 	* @var Usergroup $usergroup The primary usergroup of the user
@@ -53,9 +53,9 @@ class User extends Item
 	public Usergroups $usergroups;
 
 	/**
-	* @var array $ugid The ids of the usergroups the user belongs to
+	* @var array $usergroup_ids The ids of the usergroups the user belongs to
 	*/
-	public array $ugids = [];
+	public array $usergroup_ids = [];
 
 	/**
 	* @var int $timezone User's timezone
@@ -105,11 +105,6 @@ class User extends Item
 	/**
 	* @ignore
 	*/
-	protected static string $id_name = 'uid';
-
-	/**
-	* @ignore
-	*/
 	protected static string $table = 'venus_users';
 
 	/**
@@ -121,7 +116,7 @@ class User extends Item
 	* @var array $_ignore Custom properties which won't be inserted into the database
 	*/
 	protected static array $_ignore = [
-		'url', 'password_clear' ,'usergroup', 'ugids', 'usergroups', 'timezone_offset',
+		'url', 'password_clear' ,'usergroup', 'usergroup_ids', 'usergroups', 'timezone_offset',
 		'editor', 'markup_language', 'markup_tags',
 		'avatar_url', 'avatar_width', 'avatar_height', 'avatar_wh', 'avatar_html', 'avatar_type'
 	];
@@ -134,7 +129,7 @@ class User extends Item
 	{
 		parent::__construct($user);
 
-		$this->app->plugins->run('user_construct', $this, $uid);
+		$this->app->plugins->run('user_construct', $this);
 	}
 
 	/**
@@ -150,7 +145,7 @@ class User extends Item
 							  ],
 			'password_clear' => ['user_password_missing' => 'required', 'user_password_short' => ['min_chars', $this->app->config->users_min_password]],
 			'email' => ['user_email_missing' => 'required', 'user_email_invalid' => 'email', 'user_email_exists' => 'unique'],
-			'ugid' => ['user_usergroup_doesnt_exist' => [$this, 'validateUsergroup']],
+			'usergroup_id' => ['user_usergroup_doesnt_exist' => [$this, 'validateUsergroup']],
 			'registration_ip' => ['user_ip_to_many' => [$this, 'validateIp']]
 		];
 	}
@@ -170,12 +165,12 @@ class User extends Item
 
 	/**
 	* Validates the usergroup
-	* @param int $ugid The usergroup id
+	* @param int $usergroup_id The usergroup id
 	* @return bool
 	*/
-	public function validateUsergroup(int $ugid) : bool
+	public function validateUsergroup(int $usergroup_id) : bool
 	{
-		$usergroup = new Usergroup($ugid);
+		$usergroup = new Usergroup($usergroup_id);
 		return $usergroup->isValid();
 	}
 
@@ -204,7 +199,7 @@ class User extends Item
 	protected function getDefaultsArray() : array
 	{
 		return [
-			'ugid' => App::USERGROUPS['registered'],
+			'usergroup_id' => App::USERGROUPS['registered'],
 			'secret_key' => App::randStr(),
 
 			'status' => 1,
@@ -242,12 +237,12 @@ class User extends Item
 	*/
 	public function insert(bool $process = true, bool $keep_old_id = false) : int
 	{
-		$uid = parent::insert($process, $keep_old_id);
-		if ($uid) {
+		$user_id = parent::insert($process, $keep_old_id);
+		if ($user_id) {
 			$this->insertUsergroups();
 		}
 
-		return $uid;
+		return $user_id;
 	}
 
 	public function insertUsergroups()
@@ -278,38 +273,35 @@ class User extends Item
 
 	/**
 	* Loads a user
-	* @param mixed $fields The fields to return (string,array)
 	* @param array $where Sql where conditions
 	*/
-	protected function loadUser($fields = '*', array $where = [])
+	protected function loadUser(array $where = [])
 	{
-		$this->db->sql->select($fields)->from($this->getTable())->where($where)->limit(1);
+		$this->db->sql->select($this->fields)->from($this->getTable())->where($where)->limit(1);
 
 		$this->loadBySql();
 	}
 
 	/**
-	* Loads the user by uid
-	* @param int $uid The user's uid
-	* @param mixed $fields The fields to return (string,array)
-	* @return $this
+	* Loads the user by id
+	* @param int $id The user's id
+	* @return bool
 	*/
-	public function loadByUid(int $uid, $fields = '*')
+	public function loadById(int $id) : bool
 	{
-		$this->loadUser($fields, ['uid' => (int)$uid]);
+		$this->loadUser(['id' => $id]);
 
-		return $this;
+		return true;
 	}
 
 	/**
 	* Loads the user by username
 	* @param string $username The username
-	* @param mixed $fields The fields to return (string,array)
 	* @return $this
 	*/
-	public function loadByUsername(string $username, $fields = '*')
+	public function loadByUsername(string $username)
 	{
-		$this->loadUser($fields, ['username' => $username]);
+		$this->loadUser(['username' => $username]);
 
 		return $this;
 	}
@@ -317,28 +309,26 @@ class User extends Item
 	/**
 	* Loads the user by email
 	* @param string $email The email
-	* @param mixed $fields The fields to return (string,array)
 	* @return $this
 	*/
-	public function loadByEmail(string $email, $fields = '*')
+	public function loadByEmail(string $email)
 	{
-		$this->loadUser($fields, ['email' => $email]);
+		$this->loadUser(['email' => $email]);
 
 		return $this;
 	}
 
 	/**
-	* Returns an user, by uid
-	* @param int $uid The user's uid
-	* @param mixed $fields The fields to return (string|array)
+	* Returns an user, by id
+	* @param int $id The user's id
 	* @return User The user object or null if not found
 	*/
-	public function getByUid(int $uid, $fields = '*') : ?User
+	public function getById(int $id) : ?User
 	{
 		$user = new User;
-		$user->loadByUid($uid, $fields);
+		$user->loadById($id);
 
-		if (!$user->uid) {
+		if (!$user->id) {
 			return null;
 		}
 
@@ -348,15 +338,14 @@ class User extends Item
 	/**
 	* Returns an user, by username
 	* @param string $username The user's username
-	* @param mixed $fields The fields to return (string|array)
 	* @return User The user object or null if not found
 	*/
-	public function getByUsername(string $username, string $fields = '*') : ?User
+	public function getByUsername(string $username) : ?User
 	{
 		$user = new User;
-		$user->loadByUsername($username, $fields);
+		$user->loadByUsername($username);
 
-		if (!$user->uid) {
+		if (!$user->id) {
 			return null;
 		}
 
@@ -366,15 +355,14 @@ class User extends Item
 	/**
 	* Returns an user, by email
 	* @param string $email The user's email
-	* @param mixed $fields The fields to return (string|array)
 	* @return User The user object or null if not found
 	*/
-	public function getByEmail(string $email, string $fields = '*') : ?User
+	public function getByEmail(string $email) : ?User
 	{
 		$user = new User;
-		$user->loadByEmail($email, $fields);
+		$user->loadByEmail($email);
 
-		if (!$user->uid) {
+		if (!$user->id) {
 			return null;
 		}
 
@@ -386,12 +374,12 @@ class User extends Item
 	* @param string $username The user's username
 	* @return int The user's id
 	*/
-	public function getUidByUsername(string $username) : int
+	public function getIdByUsername(string $username) : int
 	{
 		$user = new User;
 		$user->loadByUsername($username);
 
-		return (int)$user->uid;
+		return $user->id;
 	}
 
 	/**
@@ -400,11 +388,11 @@ class User extends Item
 	*/
 	protected function prepare(string $avatar_type = 'image')
 	{
-		if (isset($this->ugid)) {
+		if (isset($this->usergroup_id)) {
 			$usergroups = new Usergroups;
 
-			$this->ugids = [$this->ugid];
-			$this->usergroup = $usergroups->get($this->ugid);
+			$this->usergroup_ids = [$this->usergroup_id];
+			$this->usergroup = $usergroups->get($this->usergroup_id);
 			//var_dump("usergroups!!!!");
 			//$this->usergroups = [$this->ugid => $this->usergroup];
 		}
@@ -417,10 +405,10 @@ class User extends Item
 
 	/**
 	* Loads all the usergroups the user belongs to
-	* @param bool $include_primary_ugid If true will include the primary usergroup in the list of usergroups
+	* @param bool $include_primary_usergroup_id If true will include the primary usergroup in the list of usergroups
 	* @return $this
 	*/
-	public function loadUsergroups(bool $include_primary_ugid = true)
+	public function loadUsergroups(bool $include_primary_usergroup_id = true)
 	{
 		static $loaded = false;
 		if ($loaded) {
@@ -429,13 +417,13 @@ class User extends Item
 
 		$this->usergroups = new Usergroups;
 
-		if ($this->uid) {
-			$this->usergroups->loadByUser($this, $include_primary_ugid);
+		if ($this->id) {
+			$this->usergroups->loadByUser($this, $include_primary_usergroup_id);
 		} else {
 			$this->usergroups->loadGuests();
 		}
 
-		$this->ugids = $this->usergroups->getUgids();
+		$this->usergroup_ids = $this->usergroups->getIds();
 
 		$loaded = true;
 
@@ -450,7 +438,7 @@ class User extends Item
 	*/
 	public function isEnabled() : bool
 	{
-		if ($this->uid == VENUS_SUPER_ADMIN_UID) {
+		if ($this->id == VENUS_SUPER_ADMIN_ID) {
 			return true;
 		}
 
@@ -495,7 +483,7 @@ class User extends Item
 	*/
 	public function isSuperAdmin() : bool
 	{
-		if ($this->uid == VENUS_SUPER_ADMIN_UID) {
+		if ($this->id == VENUS_SUPER_ADMIN_ID) {
 			return true;
 		}
 
@@ -513,7 +501,7 @@ class User extends Item
 		}
 
 		$this->loadUsergroups();
-		if (in_array(App::USERGROUPS['admins'], $this->ugids)) {
+		if (in_array(App::USERGROUPS['admins'], $this->usergroup_ids)) {
 			return true;
 		}
 
@@ -531,7 +519,7 @@ class User extends Item
 		}
 
 		$this->loadUsergroups();
-		if (in_array(App::USERGROUPS['moderators'], $this->ugids)) {
+		if (in_array(App::USERGROUPS['moderators'], $this->usergroup_ids)) {
 			return true;
 		}
 
@@ -622,9 +610,9 @@ class User extends Item
 
 		if ($this->avatar) {
 			return $this->app->uploads_url . 'avatars/' . $this->app->file->getSubdir($this->avatar, true) . $avatar_type . rawurlencode($this->avatar);
-		} elseif ($this->ugid) {
+		} elseif ($this->usergroup_id) {
 			if ($this->usergroup->avatar) {
-				return $this->usergroup->getAvatarUrl($this->ugid, $orig_avatar_type);
+				return $this->usergroup->getAvatarUrl($this->usergroup_id, $orig_avatar_type);
 			}
 		}
 
@@ -669,19 +657,11 @@ class User extends Item
 	/**************************OUTPUT METHODS******************************/
 
 	/**
-	* Outputs the user's uid
-	*/
-	public function outputUid()
-	{
-		echo App::e($this->uid);
-	}
-
-	/**
-	* Alias for output_uid
+	* Outputs the user's id
 	*/
 	public function outputId()
 	{
-		$this->outputUid();
+		echo App::e($this->id);
 	}
 
 	/**
@@ -705,7 +685,7 @@ class User extends Item
 	*/
 	public function outputUsergroupId()
 	{
-		echo App::e($this->usergroup->ugid);
+		echo App::e($this->usergroup->id);
 	}
 
 	/**

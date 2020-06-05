@@ -310,7 +310,7 @@ class Cache extends \Venus\Cache
 
 			$templates = App::serialize($theme->getTemplates());
 
-			$this->app->db->updateById('venus_themes', ['templates' => $templates], 'tid', $theme->tid);
+			$this->app->db->updateById('venus_themes', ['templates' => $templates], $theme->tid);
 		}
 
 		$this->cacheThemeDefault();
@@ -345,7 +345,7 @@ class Cache extends \Venus\Cache
 
 			$files = App::serialize($language->getFiles());
 
-			$this->app->db->updateById('venus_languages', ['files' => $files], 'lid', $language->lid);
+			$this->app->db->updateById('venus_languages', ['files' => $files], $language->lid);
 		}
 
 		$this->cacheLanguageDefault();
@@ -562,7 +562,7 @@ class Cache extends \Venus\Cache
 	{
 		global $venus;
 		if ($cids) {
-			$this->app->db->deleteByIds('venus_categories_cache', 'cid', $cids);
+			$this->app->db->deleteByIds('venus_categories_cache', $cids);
 
 			//delete from memcache, if enabled
 			if ($this->app->config->memcache_enable) {
@@ -581,7 +581,7 @@ class Cache extends \Venus\Cache
 				}
 
 				//delete the pages
-				$cat_data = $this->app->db->selectByIds('venus_categories', 'cid', $cids, '', '', 'cid, memcache_pages_pages');
+				$cat_data = $this->app->db->selectByIds('venus_categories', $cids, '', '', 'cid, memcache_pages_pages');
 
 				foreach ($cat_data as $cid => $memcache_pages_pages) {
 					$pages = $memcache_pages_pages;

@@ -124,7 +124,6 @@ class Tree
 		// The reason is,when we insert an item as the first item,as usually happens,when a new item is created,we update just it's data to max(position).
 		// If we set it's order as 1,we'll have to update the order of all existing items to position+1
 
-		$order = (int)$order;
 		if ($current_parent_is_int) {
 			$current_parent = (int)$current_parent;
 		}

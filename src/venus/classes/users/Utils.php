@@ -24,7 +24,7 @@ class Utils
 	*/
 	public function getUnsubscribeUrl(User $user) : string
 	{
-		return $this->app->uri->build($this->app->utils_url . 'unsubscribe.php', ['uid' => (int)$user->uid, 'key' => $user->secret_key]);
+		return $this->app->uri->build($this->app->utils_url . 'unsubscribe.php', ['user_id' => $user->id, 'key' => $user->secret_key]);
 	}
 
 	/**
@@ -43,13 +43,13 @@ class Utils
 		}
 
 		$insert_array = [
-			'uid' => (int)$user->uid,
+			'user_id' => $user->id,
 			'key' => $key,
 			'valid_timestamp' => $valid_timestamp
 		];
 
 		$this->app->db->insert('venus_users_autologin', $insert_array);
 
-		return $this->app->uri->build($this->app->utils_url . 'autologin.php', ['uid' => (int)$user->uid, 'key' => $key, 'url' => $redirect_url]);
+		return $this->app->uri->build($this->app->utils_url . 'autologin.php', ['user_id' => $user->id, 'key' => $key, 'url' => $redirect_url]);
 	}
 }

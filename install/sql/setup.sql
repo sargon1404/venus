@@ -25,11 +25,11 @@ create table venus_cache
 
 create table venus_sessions
 (
-	`sid`										varchar(40)								NOT NULL,
+	`id`										varchar(40)								NOT NULL,
 	`timestamp`								int unsigned							NOT NULL,
 	`data`									mediumtext								NOT NULL,
 
-	primary key(sid),
+	primary key(id),
 	index timestamp_index(`timestamp`)
 );
 
@@ -77,7 +77,7 @@ create table venus_bruteforce_users
 
 create table venus_usergroups
 (
-	`ugid`       							int unsigned auto_increment		NOT NULL,
+	`id`	       							int unsigned auto_increment		NOT NULL,
 	`title`         						varchar(255) 		 					NOT NULL,
 	`username`								varchar(255) 		 					NOT NULL,
 	`status`									tinyint									NOT NULL,
@@ -105,13 +105,13 @@ create table venus_usergroups
 	`modified_timestamp`					int unsigned							NOT NULL,
 	`modified_by`							int unsigned							NOT NULL,
 
-	primary key(ugid)
+	primary key(id)
 );
 
 create table venus_usergroups_permissions
 (
 	`type`									varchar(255)							NOT NULL,
-	`ugid`									int unsigned							NOT NULL,
+	`usergroup_id`							int unsigned							NOT NULL,
 	`view`									tinyint 									NOT NULL,
 	`add`										tinyint 									NOT NULL,
 	`publish`								tinyint 									NOT NULL,
@@ -123,15 +123,15 @@ create table venus_usergroups_permissions
 	`comment`								tinyint 									NOT NULL,
 	`rate`									tinyint 									NOT NULL,
 
-	index ugid_index(`ugid`)
+	index index_usergroup_id(`usergroup_id`)
 );
 
 create table venus_users
 (
-	`uid`                      		int unsigned auto_increment		NOT NULL,
+	`id`                      			int unsigned auto_increment		NOT NULL,
 	`username`              	 		varchar(255)   				   	NOT NULL,
 	`email`                   			varchar(255) 					 		NOT NULL,
-	`ugid`   								int unsigned					 		NOT NULL,
+	`usergroup_id`							int unsigned					 		NOT NULL,
 	`password`              	 		varchar(255)		   				NOT NULL,
 	`secret_key`							varchar(255)		   				NOT NULL,
 
@@ -175,25 +175,25 @@ create table venus_users
 	`last_comment`           			int unsigned							NOT NULL,
 	`last_rating`           			int unsigned							NOT NULL,
 
-	primary key(uid),
+	primary key(id),
 	index index_username(username(8)),
 	index index_email(email(8)),
 	index index_registration_ip(`registration_ip_crc`),
-	index index_ugid(`ugid`)
+	index index_ugid(`usergroup_id`)
 );
 
 create table venus_users_usergroups
 (
-	uid										int unsigned							NOT NULL,
-	ugid										int unsigned							NOT NULL,
+	user_id									int unsigned							NOT NULL,
+	usergroup_id							int unsigned							NOT NULL,
 
-	index index_uid(uid),
-	index index_ugid(ugid)
+	index index_user_id(user_id),
+	index index_usergroup_id(usergroup_id)
 );
 
 create table venus_users_login_keys
 (
-	`uid`										int unsigned							NOT NULL,
+	`user_id`								int unsigned							NOT NULL,
 	`key`										varchar(255)							NOT NULL,
 	`key_crc`								int unsigned							NOT NULL,
 	`ip`               					varchar(255)							NOT NULL,
@@ -201,26 +201,26 @@ create table venus_users_login_keys
 	`valid_timestamp`   					int unsigned							NOT NULL,
 	`scope`									varchar(255)							NOT NULL,
 
-	index login_index(`uid`, `key_crc`, `scope`(4)),
+	index login_index(`user_id`, `key_crc`, `scope`(4)),
 	index valid_index(`valid_timestamp`)
 );
 
 create table venus_users_notifications
 (
-	`uid`										int unsigned							NOT NULL,
+	`user_id`								int unsigned							NOT NULL,
 	`type`									smallint unsigned						NOT NULL,
 	`timestamp`								int unsigned							NOT NULL,
 
-	UNIQUE index uid_index(uid, type)
+	UNIQUE index user_id_index(user_id, type)
 );
 
 create table venus_users_autologin
 (
-	`uid`										int unsigned							NOT NULL,
+	`user_id`								int unsigned							NOT NULL,
 	`key`										varchar(255)							NOT NULL,
 	`valid_timestamp`						int unsigned							NOT NULL,
 
-	INDEX uid_index(uid, `key`(4)),
+	INDEX user_id_index(user_id, `key`(4)),
 	INDEX timestamp_index(`valid_timestamp`)
 );
 

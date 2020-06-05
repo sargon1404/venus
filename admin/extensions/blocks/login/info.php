@@ -1,4 +1,5 @@
 <?php
+
 return [
 	'title' => 'Login',
 	'author' => 'Adrian Răzvan Chiş',

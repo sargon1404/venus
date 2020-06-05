@@ -419,7 +419,7 @@ class Theme extends \Venus\Extensions\Extension
 
 		$key = $prefix . '_' . $type . '_width';
 
-		return (int)$this->params->$key;
+		return $this->params->$key;
 	}
 
 	/**
@@ -436,7 +436,7 @@ class Theme extends \Venus\Extensions\Extension
 
 		$key = $prefix . '_' . $type . '_height';
 
-		return (int)$this->param->$key;
+		return $this->param->$key;
 	}
 
 	/**************TEMPLATES METHODS**************************/
@@ -521,7 +521,7 @@ class Theme extends \Venus\Extensions\Extension
 	{
 		$code = $this->app->filter->trim($code);
 
-		$this->app->db->updateById($this->getTable(), ['inline_js' => App::serialize($code)], $this->getIdName(), $this->getId());
+		$this->app->db->updateById($this->getTable(), ['inline_js' => App::serialize($code)], $this->getId(), $this->getIdName());
 	}
 
 	/**
@@ -532,6 +532,6 @@ class Theme extends \Venus\Extensions\Extension
 	{
 		$code = $this->app->filter->trim($code);
 
-		$this->app->db->updateById($this->getTable(), ['inline_css' => App::serialize($code)], $this->getIdName(), $this->getId());
+		$this->app->db->updateById($this->getTable(), ['inline_css' => App::serialize($code)], $this->getId(), $this->getIdName());
 	}
 }

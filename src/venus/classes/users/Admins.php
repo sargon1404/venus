@@ -27,12 +27,12 @@ class Admins
 			return $emails;
 		}
 
-		$ugid = (int)App::USERGROUPS['admins'];
+		$ugid = App::USERGROUPS['admins'];
 
 		$this->app->db->readQuery("
 			SELECT username, email
 			FROM venus_users_usergroups as ug
-			LEFT JOIN venus_users as u USING(uid)
+			LEFT JOIN venus_users as u ON u.id = ug.user_id
 			WHERE ug.ugid = {$ugid} AND u.receaive_admin_emails = 1");
 
 		return $this->app->db->getList('username', 'email');

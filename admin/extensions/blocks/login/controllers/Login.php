@@ -12,12 +12,14 @@ use Venus\Admin\App;
 */
 class Login extends \Venus\Admin\Controller
 {
-
 	/**
 	* @internal
 	*/
 	public string $prefix = 'admin_block_login';
 
+	/**
+	* @internal
+	*/
 	protected array $validation_rules = [
 		'username' => ['login_err4' => 'required'],
 		'password' => ['login_err5' => 'required']
@@ -41,7 +43,7 @@ class Login extends \Venus\Admin\Controller
 			$this->outputIpError();
 		}
 
-		$this->app->plugins->run($this->prefix . 'index', $this);
+		$this->plugins->run($this->prefix . 'index', $this);
 
 		$this->view->render();
 	}
@@ -53,7 +55,8 @@ class Login extends \Venus\Admin\Controller
 	{
 		$username = $this->request->post('username');
 		$password = $this->request->post('password');
-		$uid = $this->app->user->getUidByUsername($username);
+		$user_id = $this->app->user->getIdByUsername($username);
+		var_dump($user_id);die;
 		$ip = $this->app->ip;
 
 		if ($this->model->bruteforce->isIpBlocked($ip)) {
@@ -65,7 +68,7 @@ class Login extends \Venus\Admin\Controller
 			}
 		}
 
-		$this->app->plugins->run($this->prefix . 'login', $username, $password, $this);
+		$this->plugins->run($this->prefix . 'login', $username, $password, $this);
 
 		if (!$this->validate()) {
 			return false;
@@ -85,7 +88,7 @@ class Login extends \Venus\Admin\Controller
 
 			$this->errors->add($error);
 
-			$this->app->plugins->run($this->prefix . 'login_failed', $this);
+			$this->plugins->run($this->prefix . 'login_failed', $this);
 
 			return false;
 		}
@@ -95,7 +98,7 @@ class Login extends \Venus\Admin\Controller
 
 		$redirect_url = $this->getRedirectUrl();
 
-		$this->app->plugins->run($this->prefix . 'login_success', $user, $redirect_url, $this);
+		$this->plugins->run($this->prefix . 'login_success', $user, $redirect_url, $this);
 
 		$this->app->redirect($redirect_url);
 
@@ -137,13 +140,13 @@ class Login extends \Venus\Admin\Controller
 			$redirect_url = $this->app->admin_index;
 		}
 
-		if ($redirect_url == $this->app->admin_url . 'login.php') {
+		if ($redirect_url == $this->app->uri->getAdminBlock('login')) {
 			$redirect_url = $this->app->admin_index;
 		}
 
 		$this->app->session->set('admin_referrer', '');
 
-		$redirect_url = $this->app->plugins->filter($this->prefix . 'get_redirect_url', $redirect_url);
+		$redirect_url = $this->plugins->filter($this->prefix . 'get_redirect_url', $redirect_url);
 
 		return $redirect_url;
 	}
@@ -211,7 +214,7 @@ class Login extends \Venus\Admin\Controller
 
 		$redirect_url = $this->app->site_index;
 
-		$redirect_url = $this->app->plugins->filter($this->prefix . 'logout', $redirect_url);
+		$redirect_url = $this->plugins->filter($this->prefix . 'logout', $redirect_url);
 
 		$this->app->redirectForce($redirect_url);
 	}

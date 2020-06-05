@@ -52,11 +52,11 @@ class Language extends \Venus\Language
 	*/
 	protected function getLid() : int
 	{
-		if ($this->app->user->uid && $this->app->user->lang) {
-			return (int)$this->app->user->lang;
+		if ($this->app->user->id && $this->app->user->lang) {
+			return $this->app->user->lang;
 		}
 
-		return (int)$this->app->config->language_default;
+		return $this->app->config->language_default;
 	}
 
 	/**

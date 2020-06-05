@@ -36,24 +36,24 @@ class Language extends \Venus\Language
 	*/
 	protected function getLanguageId() : int
 	{
-		return (int)$this->user->lang;
+		return $this->user->lang;
 	}
 
 	/**
 	* Returns the language
-	* @param int $lid The id of the language
+	* @param int $language_id The id of the language
 	* @return object The language
 	*/
-	protected function get(int $lid) : object
+	protected function get(int $language_id) : object
 	{
-		if ($this->user->uid == $this->app->user->uid) {
-			return parent::get($lid);
+		if ($this->user->id == $this->app->user->id) {
+			return parent::get($language_id);
 		}
 
-		if ($lid == $this->app->config->language_default) {
+		if ($language_id == $this->app->config->language_default) {
 			return $this->getDefault();
 		} else {
-			return $this->getRow($lid);
+			return $this->getRow($language_id);
 		}
 	}
 }
