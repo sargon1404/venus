@@ -56,14 +56,13 @@ class Login extends \Venus\Admin\Controller
 		$username = $this->request->post('username');
 		$password = $this->request->post('password');
 		$user_id = $this->app->user->getIdByUsername($username);
-		var_dump($user_id);die;
 		$ip = $this->app->ip;
 
 		if ($this->model->bruteforce->isIpBlocked($ip)) {
 			$this->outputIpError();
 		}
-		if ($uid) {
-			if ($this->model->bruteforce->isUserBlocked($uid)) {
+		if ($user_id) {
+			if ($this->model->bruteforce->isUserBlocked($user_id)) {
 				$this->outputUserError();
 			}
 		}
@@ -80,7 +79,7 @@ class Login extends \Venus\Admin\Controller
 			if ($this->model->bruteforce->isIpBlocked($ip)) {
 				$this->outputIpError();
 			}
-			if ($this->model->bruteforce->isUserBlocked($uid)) {
+			if ($this->model->bruteforce->isUserBlocked($user_id)) {
 				$this->outputUserError();
 			}
 

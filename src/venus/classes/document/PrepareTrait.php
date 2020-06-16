@@ -32,8 +32,9 @@ trait PrepareTrait
 			if (!$this->seo_title) {
 				$this->seo_title = $this->title;
 			}
-
-			$this->link_attributes = $this->app->html->linkAttributes($this->seo_title, $this->seo_target, $this->seo_rel);
+			var_dump('html->aAttributes');
+			die;
+			$this->link_attributes = $this->app->html->aAttributes($this->seo_title, $this->seo_target, $this->seo_rel);
 		}
 
 		if (isset($this->seo_image_alt)) {

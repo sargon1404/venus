@@ -41,7 +41,7 @@ class Login extends \Venus\Admin\Model
 	* Logins the user
 	* @param string $username The username
 	* @param string $password The password
-	* @return mixed The user object if the login is succesful, false otheriwse
+	* @return bool|User The user object if the login is succesful, false otheriwse
 	*/
 	public function login($username, $password)
 	{

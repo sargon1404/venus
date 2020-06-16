@@ -343,7 +343,7 @@ class Html extends \Venus\Html
 	*/
 	public function selectCategory(string $name, int $selected_category = 0, array $exclude_cids = [], bool $required = false, bool $show_no_change = false, bool $show_root = true, bool $return_only_options = false) : string
 	{
-		$categories = $this->app->db->selectArrayWithKey('venus_categories', 'cid', 'cid, title, parent, level', [], 'position');
+		$categories = $this->app->db->selectArrayWithKey('venus_categories', 'id', 'id, title, parent, level', [], 'position');
 
 		$options = $this->getTreeOptions($categories, $exclude_cids, $show_no_change, $show_root);
 
@@ -453,7 +453,7 @@ class Html extends \Venus\Html
 	/**
 	* Builds a page select area
 	* @param string $name The name of the control. If empty page_select will be used
-	* @param mixed $selected The id of the page that should be selected by default, if the param is an int/string; If the param is an array, the title will be read from the first element of the array
+	* @param int|string|array $selected The id of the page that should be selected by default, if the param is an int/string; If the param is an array, the title will be read from the first element of the array
 	* @param bool $required True if the field is required
 	* @param string $placeholder Placeholder text
 	* @param bool $onkeyup If true, will show the page options on keyup

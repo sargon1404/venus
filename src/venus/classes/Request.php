@@ -146,7 +146,7 @@ class Request extends \Mars\Request
 	* @param string $name The name of the variable
 	* @param bool $return_timestamp If true will return a timestamp. If false, will return a mysql datetime
 	* @param bool $adjust_timestamp If true and $return_timestamp is true, will return the timestamp adjusted to UTC
-	* @return mixed The timestamp
+	* @return int|string The timestamp
 	*/
 	public function getDatetime(string $name, bool $return_timestamp = true, bool $adjust_timestamp = true)
 	{
@@ -161,7 +161,7 @@ class Request extends \Mars\Request
 	* @param string $name The name of the variable
 	* @param bool $return_timestamp If true will return a timestamp. If false, will return a mysql datetime
 	* @param bool $adjust_timestamp If true and $return_timestamp is true will return the timestamp adjusted to UTC
-	* @return mixed The timestamp
+	* @return int|string The timestamp
 	*/
 	public function getDate(string $name, bool $return_timestamp = true, bool $adjust_timestamp = true)
 	{

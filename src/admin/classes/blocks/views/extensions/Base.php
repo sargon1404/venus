@@ -14,8 +14,6 @@ use venus\Controller;
 */
 abstract class Base extends \Venus\Admin\Blocks\Views\Base
 {
-
-
 	/**
 	* Prepares an install/edit form for display
 	*/

@@ -457,7 +457,7 @@ class App extends \Mars\App
 
 	/**
 	* Sends a mail
-	* @param mixed $to The address(es) where the mail will be sent (string,array)
+	* @param string|array $to The address(es) where the mail will be sent
 	* @param string $subject The subject of the mail
 	* @param string $message The body of the mail
 	* @param string $from The email adress from which the email will be send. By default $app->config->mail_from is used

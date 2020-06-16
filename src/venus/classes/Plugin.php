@@ -48,7 +48,7 @@ class Plugin extends \Venus\Extensions\Extension
 
 	/**
 	* Builds the plugin
-	* @param mixed $plugin The plugin's data or id
+	* @param id|array|object $plugin The plugin's data or id
 	*/
 	public function __construct($plugin = 0)
 	{

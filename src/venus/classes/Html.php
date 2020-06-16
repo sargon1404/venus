@@ -176,7 +176,7 @@ class Html extends \Mars\Html
 	/**
 	* Returns a control from where the user will be able to select the timezone
 	* @param string $name The name of the select control
-	* @param mixed $selected The name of the option that should be selected
+	* @param string $selected The name of the option that should be selected
 	* @param bool $required If true,it will be a required control
 	* @return string The html code
 	*/

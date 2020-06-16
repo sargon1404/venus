@@ -124,7 +124,7 @@ class Javascript extends \Mars\Document\Javascript
 	* @oaram string $name The name of the heme
 	* @param string $location The location of the url [head|footer]
 	* @param int $priority The url's output priority. The higher, the better
-	* @param mixed $version If string, will add the specified version. If true, will add the configured version param to the url
+	* @param bool|string $version If string, will add the specified version. If true, will add the configured version param to the url
 	* @return $this
 	*/
 	public function loadTheme(string $name, string $location = 'head', int $priority = 5000, $version = true)

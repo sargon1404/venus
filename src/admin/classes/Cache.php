@@ -345,7 +345,7 @@ class Cache extends \Venus\Cache
 
 			$files = App::serialize($language->getFiles());
 
-			$this->app->db->updateById('venus_languages', ['files' => $files], $language->lid);
+			$this->app->db->updateById('venus_languages', ['files' => $files], $language->id);
 		}
 
 		$this->cacheLanguageDefault();
@@ -365,7 +365,7 @@ class Cache extends \Venus\Cache
 		$language = new Language;
 		$this->update('language_default', $language->getRow($this->app->config->language_default), 'frontend', true);
 	}
-	
+
 	/**
 	* Builds the plugins cache
 	* @return $this
@@ -377,13 +377,13 @@ class Cache extends \Venus\Cache
 
 		$this->update('plugins', '', 'frontend');
 		$this->update('plugins', '', 'admin');
-		
+
 		$this->update('plugins_count', $plugins_count, 'frontend');
 		$this->update('plugins_count', $plugins_count, 'admin');
 
 		$this->update('plugins_extensions_skip', '', 'frontend');
 		$this->update('plugins_extensions_skip', '', 'admin');
-		
+
 		$this->update('plugins_extensions_count', $plugins_extensions_count, 'frontend');
 		$this->update('plugins_extensions_count', $plugins_extensions_count, 'admin');
 
@@ -406,11 +406,11 @@ class Cache extends \Venus\Cache
 				$perm_array[$pl] = $perm->$pl;
 			}
 
-			$permissions[$perm->type][$perm->ugid] = $perm_array;
+			$permissions[$perm->type][$perm->usergroup_id] = $perm_array;
 		}
 
-		$guests = $this->app->db->selectRow('venus_usergroups', '*', ['ugid' => APP::USERGROUPS['guests']]);
-		$usergroups = $this->app->db->selectWithKey('venus_usergroups', 'ugid');
+		$guests = $this->app->db->selectRow('venus_usergroups', '*', ['id' => APP::USERGROUPS['guests']]);
+		$usergroups = $this->app->db->selectWithKey('venus_usergroups', 'id');
 
 		$this->app->plugins->run('admin_cache_build_usergroups', $usergroups, $this);
 
@@ -581,7 +581,7 @@ class Cache extends \Venus\Cache
 				}
 
 				//delete the pages
-				$cat_data = $this->app->db->selectByIds('venus_categories', $cids, '', '', 'cid, memcache_pages_pages');
+				$cat_data = $this->app->db->selectByIds('venus_categories', $cids, 'id, memcache_pages_pages');
 
 				foreach ($cat_data as $cid => $memcache_pages_pages) {
 					$pages = $memcache_pages_pages;

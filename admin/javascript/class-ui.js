@@ -32,7 +32,7 @@ class VenusAdminUi extends VenusUi {
 	}
 
 	/**
-	* Sets the confirm strings used in the navbar/quick action/form action
+	* Sets the confirm strings used in the navbar/actions list/actions form
 	* @param {array} strings The strings
 	*/
 	setConfirmStrings (strings) {
@@ -169,17 +169,17 @@ class VenusAdminUi extends VenusUi {
 	}
 
 	/**
-	* Displays the confirm box if one of the quick action links need it; uses ajax, if marked, to make the call or submits the form otherwise
+	* Displays the confirm box if one of the actions list links need it; uses ajax, if marked, to make the call or submits the form otherwise
 	* @private
 	*/
-	quickAction (item_id, action, ajax, use_redirect, obj) {
+	doListAction (item_id, action, ajax, use_redirect, obj) {
 		let self = this;
 
 		if (this.confirm_strings.quick) {
 			let strings = this.confirm_strings.quick[action];
 			if (strings) {
 				venus.confirm.open(strings.text, strings.title, function () {
-					self.handle_quick_action(item_id, action, ajax, use_redirect, obj);
+					self.handleListAction(item_id, action, ajax, use_redirect, obj);
 
 					venus.confirm.close();
 				});
@@ -188,7 +188,7 @@ class VenusAdminUi extends VenusUi {
 			}
 		}
 
-		this.handleQuickAction(item_id, action, ajax, use_redirect, obj);
+		this.handleListAction(item_id, action, ajax, use_redirect, obj);
 
 		return false;
 	}
@@ -196,7 +196,7 @@ class VenusAdminUi extends VenusUi {
 	/**
 	* @private
 	*/
-	handleQuickAction (item_id, action, ajax, use_redirect, obj) {
+	handleListAction (item_id, action, ajax, use_redirect, obj) {
 		let url = venus.get(obj).attr('href');
 
 		if (use_redirect) {
@@ -207,9 +207,9 @@ class VenusAdminUi extends VenusUi {
 		if (ajax) {
 			ajax = this.getAjaxProperties(ajax);
 
-			this.post_quick_action(item_id, url, ajax.element, 'item-quick-action-' + item_id, ajax.on_success, ajax.on_error);
+			this.postListAction(item_id, url, ajax.element, 'item-actions-list-' + item_id, ajax.on_success, ajax.on_error);
 		} else {
-			this.submit_multi_form(url);
+			this.submitMultiForm(url);
 		}
 	}
 
@@ -225,7 +225,7 @@ class VenusAdminUi extends VenusUi {
 	}
 
 	/**
-	* Returns the available ajax properties available for quick actions/form actions
+	* Returns the available ajax properties available for actions list/actions forms
 	* @private
 	*/
 	getAjaxProperties (ajax) {
@@ -238,10 +238,10 @@ class VenusAdminUi extends VenusUi {
 	}
 
 	/**
-	* Posts the quick action form using ajax
+	* Posts the list action form using ajax
 	* @private
 	*/
-	postQuickAction (item_id, url, element, disable_element, on_success, on_error) {
+	postListAction (item_id, url, element, disable_element, on_success, on_error) {
 		let form = venus.get('admin-multi-ajax-form');
 		form.attr('action', url);
 

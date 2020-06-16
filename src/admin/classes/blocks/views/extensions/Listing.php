@@ -49,7 +49,7 @@ abstract class Listing extends Base
 
 		$this->plugins->run($this->prefix . 'index', $this);
 	}
-	
+
 	/**
 	* Prepares the items for display
 	*/
@@ -65,56 +65,46 @@ abstract class Listing extends Base
 
 		$this->plugins->run($this->prefix . 'prepare_items', $this->items, $this);
 	}
-	
+
 	/**
 	* Prepares a single item for display
 	* @param object $item The item to prepare
 	*/
 	protected function prepareItem(object $item)
 	{
-		var_dump($item);
-		die;
-		$item->id = $item->getId();
-		$id = $item->id;
-		var_dump($id);
-		die;
-		$this->app->user->addOwnItem($id, $item->created_by);
+		$this->app->user->addOwnItem($item->id, $item->created_by);
 
 		$item->edit_url = 'javascript:void(0)';
-		if ($venus->user->can('edit', $id)) {
-			$item->edit_url = $this->getItemUrl($id, 'edit');
+		if ($this->app->user->can('edit', $item->id)) {
+			$item->edit_url = $this->getItemUrl($item->id, 'edit');
 		}
 
-		$item->quick_action = $this->get_quick_actions($id, $this->get_item_quick_actions($item));
-		$item->form_action = $this->get_form_actions($id, $this->get_item_form_actions($item));
+		$item->actions_list = $this->actions->getList($item->id, $this->getActionsListOptions($item));
+		$item->actions_form = $this->getFormActionsList($item->id, $this->getActionsFormOptions($item));
 
 		$this->plugins->run($this->prefix . 'prepare_item', $item, $this);
 	}
 
 	/**
-	* Returns the Quick Action options which can be performed on $item
+	* Returns the actions list options which can be performed on $item
 	* @param object $item The item
 	* @return array
 	*/
-	public function get_item_quick_actions($item)
+	protected function getActionsListOptions($item) : array
 	{
-		global $venus;
-		$id = $item->id;
-
-		$quick_actions =
-		[
-			['edit', $this->get_item_url($id, 'edit'), false, 'edit', 'action_edit', true],
-			['disable', $this->get_item_url($id, 'disable', true), true, 'publish', 'action_disable'],
-			['uninstall', $this->get_item_url($id, 'uninstall', true), true, 'delete', 'action_uninstall']
+		$options = [
+			'edit' => ['url' => $this->getItemUrl($item->id, 'edit'), 'permission' => 'edit', 'tooltip' => 'action_edit'],
+			'status' => ['url' => $this->getItemUrl($item->id, 'disable', true), 'permission' => 'publish', 'tooltip' => 'action_disable', 'ajax' => true],
+			'uninstall' => ['url' => $this->getItemUrl($item->id, 'uninstall', true), 'permission' => 'delete', 'tooltip' => 'action_uninstall', 'ajax' => true]
 		];
 
 		if (!$item->status) {
-			$quick_actions[1] = ['enable', $this->get_item_url($id, 'enable', true), true, 'publish', 'action_enable'];
+			$options['status'] = ['url' => $this->getItemUrl($item->id, 'enable', true), 'permission' => 'publish', 'tooltip' => 'action_enable', 'ajax' => true];
 		}
 
-		$venus->plugins->run($this->prefix . 'get_item_quick_actions', $this, $item, $quick_actions);
+		$this->plugins->run($this->prefix . 'get_actions_list_options', $item, $options, $this);
 
-		return $quick_actions;
+		return $options;
 	}
 
 	/**
@@ -122,7 +112,7 @@ abstract class Listing extends Base
 	* @param object $item The item
 	* @return array
 	*/
-	public function get_item_quick_actions_edit($item)
+	protected function get_item_quick_actions_edit($item) : array
 	{
 		global $venus;
 		$id = $item->id;
@@ -143,30 +133,26 @@ abstract class Listing extends Base
 	}
 
 	/**
-	* Returns the Form Action options which can be performed on $item
+	* Returns the actions form options which can be performed on $item
 	* @param object $item The item
 	* @return array
 	*/
-	public function get_item_form_actions($item)
+	protected function getActionsFormOptions($item) : array
 	{
-		global $venus;
-		$id = $item->id;
-
-		$form_options =
-		[
-			['edit', false, 'edit', 'action_edit'],
-			['export', false, 'view', 'action_export'],
-			['disable', true, 'publish', 'action_disable'],
-			['uninstall', true, 'delete', 'action_uninstall']
+		$options = [
+			'edit' => ['text' => 'action_edit', 'permission' => 'edit'],
+			'export' => ['text' => 'action_export', 'permission' => 'view'],
+			'status' => ['text' => 'action_disable', 'action' => 'disable', 'permission' => 'publish', 'ajax' => true],
+			'uninstall' => ['text' => 'action_disable', 'permission' => 'delete', 'ajax' => true]
 		];
 
 		if (!$item->status) {
-			$form_options[2] = ['enable', true, 'publish', 'action_enable'];
+			$options['status'] = ['text' => 'action_enable', 'action' => 'enable', 'permission' => 'publish', 'ajax' => true];
 		}
 
-		$venus->plugins->run($this->prefix . 'get_item_form_action', $this, $item, $form_options);
+		$this->plugins->run($this->prefix . 'get_actions_form_options', $item, $options, $this);
 
-		return $form_options;
+		return $options;
 	}
 
 	public function item()

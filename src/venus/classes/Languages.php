@@ -15,11 +15,6 @@ class Languages extends Items
 	/**
 	* @internal
 	*/
-	protected static string $id_name = 'lid';
-
-	/**
-	* @internal
-	*/
 	protected static string $table = 'venus_languages';
 
 	/**
@@ -36,7 +31,7 @@ class Languages extends Items
 		$table = $this->getTable();
 		$fields.= ',p.name as parent_name, p.files as parent_files';
 
-		$sql = $this->db->sql->select($fields)->from($table, 'l')->leftJoin($table . ' AS p', '', 'l.parent = p.lid')->where($where)->orderBy($order_by, $order)->limit($limit, $limit_offset);
+		$sql = $this->db->sql->select($fields)->from($table, 'l')->leftJoin($table . ' AS p', '', 'l.parent_id = p.id')->where($where)->orderBy($order_by, $order)->limit($limit, $limit_offset);
 
 		return $this->loadBySql($sql);
 	}

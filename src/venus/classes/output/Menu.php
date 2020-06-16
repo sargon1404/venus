@@ -31,7 +31,7 @@ class Menu
 	*/
 	public function output(string $menu_name = 'main', bool $for_mobile = true)
 	{
-		$ugid = $this->app->user->ugid;
+		$usergroup_id = $this->app->user->usergroup_id;
 
 		$this->icon_width = $this->app->theme->getImageWidth('menu');
 		$this->icon_height = $this->app->theme->getImageHeight('menu');
@@ -56,8 +56,8 @@ class Menu
 		//do we have the output in the cache? If so, output it
 		if ($this->app->cache->menu_output) {
 			$menu_output = unserialize($this->app->cache->menu_output);
-			if (isset($menu_output[$menu_id][$ugid])) {
-				$output = $menu_output[$menu_id][$ugid];
+			if (isset($menu_output[$menu_id][$usergroup_id])) {
+				$output = $menu_output[$menu_id][$usergroup_id];
 				$this->outputMenu($menu_name, $for_mobile, $output);
 
 				return;
@@ -76,7 +76,7 @@ class Menu
 			$menu_output = unserialize($this->app->cache->menu_output);
 		}
 
-		$menu_output[$menu_id][$ugid] = $output;
+		$menu_output[$menu_id][$usergroup_id] = $output;
 
 		$this->app->cache->update('menu_output', $menu_output, null, true);
 

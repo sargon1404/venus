@@ -125,8 +125,8 @@ class Theme extends \Venus\Theme
 	*/
 	protected function getTid() : int
 	{
-		if ($this->app->user->id && $this->app->user->theme) {
-			return $this->app->user->theme;
+		if ($this->app->user->id && $this->app->user->theme_id) {
+			return $this->app->user->theme_id;
 		}
 
 		return $this->app->config->theme_default;
@@ -550,7 +550,7 @@ class Theme extends \Venus\Theme
 
 	/**
 	* Outputs the url of a category
-	* @param mixed $category Either the category's id or the category's data (array, object).
+	* @param int|array|object $category Either the category's id or the category's data (array/object).
 	* @param int $page_no The category's page number
 	*/
 	public function outputCategoryUrl($category, int $page_no = 0)
@@ -560,7 +560,7 @@ class Theme extends \Venus\Theme
 
 	/**
 	* Outputs the url of a block
-	* @param mixed $block The block's id (int) or the block's name (string) or the block's data (array,object).
+	* @param int|string|array|object $block The block's id (int) or the block's name (string) or the block's data (array/object).
 	* @param int $action The action to perform, if any
 	* @param array $params Array containing the params to append to the url, if any, specified as name => value
 	* @param array $seo_extra Extra seo parts to be inclued in the url
@@ -573,7 +573,7 @@ class Theme extends \Venus\Theme
 
 	/**
 	* Outputs the url of a page
-	* @param mixed $page The page's id (int) or the page's data (array, object)
+	* @param int|array|object $page The page's id (int) or the page's data (array/object)
 	* @param int $page_no The page's page number
 	*/
 	public function outputPageUrl($page, int $page_no = 0)

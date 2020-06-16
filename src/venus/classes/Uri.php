@@ -309,7 +309,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the url of a block
-	* @param mixed $block The block's id (int) or the block's name (string) or the block's data (int,array,object).
+	* @param int|string|array|object $block The block's id (int) or the block's name (string) or the block's data (array/object)
 	* @param int $action The action to perform, if any
 	* @param array $params Array containing the params to append to the url, if any, specified as name => value
 	* @param array $seo_extra Extra seo parts to be inclued in the url
@@ -351,7 +351,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the block's data
-	* @param mixed $block The block's id (int) or the block's name (string) or the block's data (array,object).
+	* @param int|string|array|object $block The block's id (int) or the block's name (string) or the block's data (array/object).
 	* @return object The block object
 	*/
 	protected function getBlockData($block) : ?object
@@ -378,7 +378,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the url of a page
-	* @param mixed $page The page's id (int) or the page's data (array, object). If data, must include fields: pid,category,seo_alias,seo_slug if array
+	* @param int|array|object $page The page's id (int) or the page's data (array, object). If data, must include fields: id,category,seo_alias,seo_slug
 	* @param int $page_no The page's page number
 	* @param bool $return_base_url If true, will return the base url, with the page number *not* replaced. Usefull when building pagination urls
 	* @return string The url
@@ -399,7 +399,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the block's data
-	* @param mixed $page The page's id (int) or the page's data (array, object). If data, must include fields: pid,category,seo_alias,seo_slug if array
+	* @param int|array|object $page The page's id (int) or the page's data (array, object). If data, must include fields: id,category,seo_alias,seo_slug if array
 	* @return object The page object
 	*/
 	protected function getPageData($page) : ?object
@@ -432,7 +432,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the url of a category
-	* @param mixed $category Either the category's id or the category's data (array, object). If data, must include fields: cid,category_seo_alias,category_seo_slug
+	* @param int|array|object $category Either the category's id or the category's data (array/object). If data, must include fields: id,category_seo_alias,category_seo_slug
 	* @param int $page_no The category's page number
 	* @param bool $return_base_url If true, will return the base url, with the page number *not* replaced. Usefull when building pagination urls
 	* @return string The url
@@ -458,7 +458,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the category's data
-	* @param mixed $category Either the category's id or the category's data (array, object). If data, must include fields: cid,category_seo_alias,category_seo_slug
+	* @param int|array|object $category Either the category's id or the category's data (array, object). If data, must include fields: id,category_seo_alias,category_seo_slug
 	* @return object The category object
 	*/
 	protected function getCategoryData($category) : ?object
@@ -489,7 +489,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the url of a tag
-	* @param mixed $tag Either the tag's data (array, object) or the tag's ID. If data, must include fields: tid,tag_seo_alias,tag_seo_slug
+	* @param int|array|object $tag Either the tag's data (array/object) or the tag's ID. If data, must include fields: id,tag_seo_alias,tag_seo_slug
 	* @param int $page_no The tag's page number
 	* @param bool $return_base_url If true, will return the base url, with the page number *not* replaced. Usefull when building pagination urls
 	* @return string The url
@@ -510,7 +510,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the tag's data
-	* @param mixed $tag Either the tag's data (array, object) or the tag's ID. If data, must include fields: tid,tag_seo_alias,tag_seo_slug
+	* @param int|array|object $tag Either the tag's data (array/object) or the tag's ID. If data, must include fields: id,tag_seo_alias,tag_seo_slug
 	* @return object The tag object
 	*/
 	protected function getTagData($tag) : ?object
@@ -542,7 +542,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the url of a user's profile
-	* @param mixed $user Either the users's data (array, object) or the user's ID. If data, these fields must be included: id,username,seo_alias
+	* @param int|array|object $user Either the users's data (array/object) or the user's ID. If data, these fields must be included: id,username,seo_alias
 	* @return string The url
 	*/
 	public function getUser($user) : string
@@ -570,7 +570,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the url of a user's search by author page
-	* @param mixed $user Either the users's data (array, object) or the user's ID. If data, these fields must be included: id,username,seo_alias
+	* @param int|array|object $user Either the users's data (array/object) or the user's ID. If data, these fields must be included: id,username,seo_alias
 	* @return string The url
 	*/
 	public function getAuthor($user) : string
@@ -585,7 +585,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Returns the user's data
-	* @param mixed $user Either the users's data (array, object) or the user's ID. If data, these fields must be included: id,username,seo_alias
+	* @param int|array|object $user Either the users's data (array/object) or the user's ID. If data, these fields must be included: id,username,seo_alias
 	* @return object The user object
 	*/
 	protected function getUserData($user) : ?object

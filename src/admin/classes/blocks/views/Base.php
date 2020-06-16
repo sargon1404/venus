@@ -16,7 +16,6 @@ abstract class Base extends \Venus\Admin\View
 	*/
 	public string $lang_prefix = '';
 
-
 	/**
 	* Prepares the items for listing
 	*/

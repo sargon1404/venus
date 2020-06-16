@@ -67,12 +67,12 @@ create table venus_bruteforce_ips
 
 create table venus_bruteforce_users
 (
-	`uid`               					int unsigned							NOT NULL,
+	`user_id`								int unsigned							NOT NULL,
 	`attempts`        					smallint unsigned						NOT NULL,
 	`timestamp`   							int unsigned							NOT NULL,
 	`scope`									varchar(255)							NOT NULL,
 
-	index user_index(uid, `scope`(4))
+	index user_index(user_id, `scope`(4))
 );
 
 create table venus_usergroups
@@ -145,8 +145,8 @@ create table venus_users
 	`new_password_code`     	 		varchar(255) 				 			NOT NULL,
 	`note`									varchar(2048)							NOT NULL,
 
-	`lang`                				int unsigned							NOT NULL,
-	`theme`             					int unsigned							NOT NULL,
+	`language_id`							int unsigned							NOT NULL,
+	`theme_id`								int unsigned							NOT NULL,
 	`timezone`         			 		varchar(255)  							NOT NULL,
 	`avatar`            					varchar(255)							NOT NULL,
 
@@ -280,8 +280,8 @@ create table venus_cron
 
 create table venus_languages
 (
-	`lid`                 				int unsigned auto_increment		NOT NULL,
-	`parent`									int unsigned							NOT NULL,
+	`id`										int unsigned auto_increment		NOT NULL,
+	`parent_id`								int unsigned							NOT NULL,
 	`title`           					varchar(255)      					NOT NULL,
 	`name`           						varchar(255)      					NOT NULL,
 	`status`									tinyint unsigned						NOT NULL,
@@ -298,7 +298,6 @@ create table venus_languages
 	`timestamp_format`     				varchar(255)             			NOT NULL,
 	`date_format`     					varchar(255)             			NOT NULL,
 	`time_format`     					varchar(255)             			NOT NULL,
-	`birthday_format`   					varchar(255)             			NOT NULL,
 
 	`date_picker_format`					varchar(255)             			NOT NULL,
 	`time_picker_format`					varchar(255)             			NOT NULL,
@@ -313,7 +312,7 @@ create table venus_languages
 	`modified_timestamp`					int unsigned							NOT NULL,
 	`modified_by`							int unsigned							NOT NULL,
 
-	primary key(lid)
+	primary key(id)
 );
 
 create table venus_themes
@@ -352,15 +351,15 @@ create table venus_themes
 
 create table venus_administrators
 (
-	`uid`										int   				unsigned			NOT NULL,
+	`user_id`								int   				unsigned			NOT NULL,
 	`filter`									tinyint				unsigned			NOT NULL,
 	`editor`									varchar(255)					   	NOT NULL,
-	index uid_index(uid)
+	index user_id_index(user_id)
 );
 
 create table venus_administrators_permissions
 (
-	`uid`										int   				unsigned			NOT NULL,
+	`user_id`								int   				unsigned			NOT NULL,
 	`bid`										int   				unsigned			NOT NULL,
 	`view`									tinyint									NOT NULL,
 	`add`										tinyint									NOT NULL,
@@ -370,12 +369,12 @@ create table venus_administrators_permissions
 	`edit_own`								tinyint									NOT NULL,
 	`delete`									tinyint									NOT NULL,
 	`delete_own`							tinyint									NOT NULL,
-	index uid_index(uid,bid)
+	index user_id_index(user_id)
 );
 
 create table venus_administrators_logins
 (
-	`uid`										int unsigned							NOT NULL,
+	`user_id`								int unsigned							NOT NULL,
 	`ip`         							varchar(255)							NOT NULL,
 	`useragent`								varchar(255)							NOT NULL,
 	`timestamp`   							int unsigned							NOT NULL,

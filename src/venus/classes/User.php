@@ -68,14 +68,14 @@ class User extends Item
 	public int $timezone_offset = 0;
 
 	/**
-	* @var int $lang The user's language
+	* @var int $language_id The user's language
 	*/
-	public int $lang = 0;
+	public int $language_id = 0;
 
 	/**
-	* @var int $theme The user's theme
+	* @var int $theme_id The user's theme
 	*/
-	public int $theme = 0;
+	public int $theme_id = 0;
 
 	/**
 	* @var string $editor The editor type: bbcode/html/textarea
@@ -112,10 +112,12 @@ class User extends Item
 	*/
 	protected static string $usergroups_table = 'venus_users_usergroups';
 
+	protected static array $store = ['username', 'email', 'avatar'];
+
 	/**
 	* @var array $_ignore Custom properties which won't be inserted into the database
 	*/
-	protected static array $_ignore = [
+	protected static array $ignore = [
 		'url', 'password_clear' ,'usergroup', 'usergroup_ids', 'usergroups', 'timezone_offset',
 		'editor', 'markup_language', 'markup_tags',
 		'avatar_url', 'avatar_width', 'avatar_height', 'avatar_wh', 'avatar_html', 'avatar_type'
@@ -123,7 +125,7 @@ class User extends Item
 
 	/**
 	* Builds the user
-	* @param mixed $user The user's id/data
+	* @param int|array|object $user The user's id/data
 	*/
 	public function __construct($user = 0)
 	{
@@ -205,8 +207,8 @@ class User extends Item
 			'status' => 1,
 			'activated' => 1,
 
-			'lang' => 0,
-			'theme' => 0,
+			'language_id' => 0,
+			'theme_id' => 0,
 			'timezone' => '',
 
 			'receaive_pms' => 1,
@@ -245,10 +247,29 @@ class User extends Item
 		return $user_id;
 	}
 
+	/**
+	* {@inheritDocs}
+	*/
+	public function update(bool $process = true) : bool
+	{
+		//don't use the username/email validation rules if the username/email hasn't changed
+		if (!$this->canUpdate('username')) {
+			$this->skipValidationRule('username');
+		}
+		if (!$this->canUpdate('email')) {
+			$this->skipValidationRule('email');
+		}
+
+		return parent::update($process);
+	}
+
 	public function insertUsergroups()
 	{
 	}
 
+	/**
+	* {@inheritDocs}
+	*/
 	public function delete() : int
 	{
 		$rows = parent::delete();

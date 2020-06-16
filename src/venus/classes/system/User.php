@@ -400,7 +400,7 @@ class User extends \Venus\User
 	* @param string $password The password of the user
 	* @param bool $remember_me If true the login will remember the user
 	* @param object $user The user object. Is written even if the login fails [out]
-	* @return mixed Returns an User object with the user's data if he can login, false otherwise
+	* @return bool|User Returns an User object with the user's data if he can login, false otherwise
 	*/
 	public function login($username, $password, $remember_me = false, &$user = null)
 	{
@@ -418,7 +418,7 @@ class User extends \Venus\User
 	* @param int $id The id of the user to login
 	* @param bool $remember_me If true the login will remember the user by writing the user cookie
 	* @param object $user The user object. Is written even if the login fails [out]
-	* @return mixed Returns an User object with the user's data if he can login, false otherwise
+	* @return bool|User Returns an User object with the user's data if he can login, false otherwise
 	*/
 	public function loginById(int $id, bool $remember_me = false, &$user = null)
 	{

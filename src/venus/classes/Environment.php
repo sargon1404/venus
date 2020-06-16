@@ -30,20 +30,20 @@ class Environment
 
 	/**
 	* Returns an (cached) usergroup
-	* @param int $ugid The usergroup's id
+	* @param int $id The usergroup's id
 	* @return object The usergroup
 	*/
-	public function getUsergroup(int $ugid) : ?object
+	public function getUsergroup(int $id) : ?object
 	{
-		if (!$ugid) {
-			$ugid = APP::USERGROUPS['guests'];
+		if (!$id) {
+			$id = APP::USERGROUPS['guests'];
 		}
 
 		$usergroup = null;
 		$usergroups = $this->getUsergroups();
 
-		if (isset($usergroups[$ugid])) {
-			$usergroup = $usergroups[$ugid];
+		if (isset($usergroups[$id])) {
+			$usergroup = $usergroups[$id];
 		}
 
 		return $usergroup;

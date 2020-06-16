@@ -222,7 +222,7 @@ trait PermissionsTrait
 	* @param string $table The database table
 	* @param string $id_field The database id column
 	* @param string $created_by_field The created by columnOnly those items with $created_by_field matching the user's id will be kept in $item_ids
-	* @return mixed Returns false,if the user doesn't have the permission set, the list of IDs if he has
+	* @return bool|array Returns false,if the user doesn't have the permission set, the list of IDs if he has
 	*/
 	protected function canDoOnCreatedItems(string $permission, array &$item_ids, string $table, string $id_field, string $created_by_field = 'created_by')
 	{

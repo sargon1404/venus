@@ -215,7 +215,7 @@ class Theme extends \Venus\Extensions\Extension
 
 	/**
 	* Builds the current theme object
-	* @param mixed $theme The theme's id/data
+	* @param int|array|object $theme The theme's id/data
 	*/
 	public function __construct($theme = 0)
 	{

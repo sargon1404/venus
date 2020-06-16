@@ -39,9 +39,9 @@ abstract class Model extends \Venus\Model
 	{
 		$table = $this->getUsergroupsTable();
 
-		$this->db->readQuery("SELECT ugid, title FROM {$table} WHERE ugid <> " . App::USERGROUPRS['guests'] . " ORDER BY title");
+		$this->db->readQuery("SELECT id, title FROM {$table} WHERE id <> " . App::USERGROUPRS['guests'] . " ORDER BY title");
 
-		return $this->db->getList('ugid', 'title');
+		return $this->db->getList('id', 'title');
 	}
 
 	/**
@@ -53,7 +53,7 @@ abstract class Model extends \Venus\Model
 	{
 		$table = $this->getCategoriesTable();
 
-		$categories_array = $this->db->selectWithKey($table, 'cid', 'cid, title, level', [], 'position');
+		$categories_array = $this->db->selectWithKey($table, 'id', 'id, title, level', [], 'position');
 		if ($add_uncategorized) {
 			$categories_array = [0 => ['cid' => 0, 'title' => l('uncategorized'), 'level' => 0]] + $categories_array;
 		}

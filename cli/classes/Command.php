@@ -96,15 +96,32 @@ class Command extends Base
 		}
 	}
 
+	/**
+	* Prints an info text
+	*/
+	public function printInfo(string $text)
+	{
+		$this->newline();
+
+		$this->print($text, $this->getColor('info'));
+	}
+
+	/**
+	* Prints a newline
+	*/
 	public function newline()
 	{
 		echo "\n";
 	}
 
+	/**
+	* Prints the done message
+	*/
 	public function done()
 	{
 		$this->newline();
 		$this->print("Done", '1;33');
+		$this->newline();
 	}
 
 	/**

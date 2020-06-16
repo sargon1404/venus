@@ -143,15 +143,15 @@ class Bruteforce
 	/**
 	* Determines if the IP or the user are blocked
 	* @param string $ip The IP
-	* @param int $uid The user's ID
+	* @param int $user_id The user's ID
 	* @return bool
 	*/
-	public function isBlocked(string $ip, int $uid) : bool
+	public function isBlocked(string $ip, int $user_id) : bool
 	{
 		if ($this->ipIsBlocked($ip)) {
 			return true;
 		}
-		if ($this->userIsBlocked($uid)) {
+		if ($this->userIsBlocked($user_id)) {
 			return true;
 		}
 
@@ -183,16 +183,16 @@ class Bruteforce
 
 	/**
 	* Determins if an user is blocked
-	* @param int $uid The user ID
+	* @param int $user_id The user ID
 	* @return bool
 	*/
-	public function isUserBlocked(int $uid) : bool
+	public function isUserBlocked(int $user_id) : bool
 	{
-		if (!$uid) {
+		if (!$user_id) {
 			return false;
 		}
 
-		$this->data = $this->getAttemptsByUid($uid);
+		$this->data = $this->getAttemptsByUserId($user_id);
 		if (!$this->data) {
 			return false;
 		}
@@ -232,12 +232,12 @@ class Bruteforce
 
 	/**
 	* Returns the invalid attempts data originating from an user
-	* @param string $uid The user's ID
+	* @param string $user_id The user's ID
 	* @return object The data
 	*/
-	public function getAttemptsByUid(int $uid) : ?object
+	public function getAttemptsByUserId(int $user_id) : ?object
 	{
-		$this->deleteExpiredByUid();
+		$this->deleteExpiredByUserId();
 
 		$table = $this->getUsersTable();
 
@@ -245,7 +245,7 @@ class Bruteforce
 			"
 			SELECT attempts, UNIX_TIMESTAMP() - `timestamp` as last
 			FROM {$table}
-			WHERE uid = {$uid} AND scope = :scope",
+			WHERE user_id = {$user_id} AND scope = :scope",
 			['scope' => $this->scope]
 		);
 
@@ -255,10 +255,10 @@ class Bruteforce
 	/**
 	* Inserts an invalid attempt into the database
 	* @param string $ip The IP
-	* @param int $uid The user id
+	* @param int $user_id The user id
 	* @return $this
 	*/
-	public function insert(string $ip, int $uid = 0)
+	public function insert(string $ip, int $user_id = 0)
 	{
 		$ips_table = $this->getIpsTable();
 		$users_table = $this->getUsersTable();
@@ -273,15 +273,15 @@ class Bruteforce
 			$this->app->db->writeQuery("INSERT INTO {$ips_table} VALUES(:ip, CRC32(:ip), 1, UNIX_TIMESTAMP(), :scope)", ['ip' => $ip, 'scope' => $this->scope]);
 		}
 
-		if (!$uid) {
+		if (!$user_id) {
 			return $this;
 		}
 
 		//insert the user's invalid attempt
-		if ($this->app->db->count($users_table, ['uid' => $uid, 'scope' => $this->scope])) {
-			$this->app->db->writeQuery("UPDATE {$users_table} SET attempts = attempts + 1, `timestamp` = UNIX_TIMESTAMP() WHERE uid = {$uid} AND scope = :scope", ['scope' => $this->scope]);
+		if ($this->app->db->count($users_table, ['user_id' => $user_id, 'scope' => $this->scope])) {
+			$this->app->db->writeQuery("UPDATE {$users_table} SET attempts = attempts + 1, `timestamp` = UNIX_TIMESTAMP() WHERE user_id = {$user_id} AND scope = :scope", ['scope' => $this->scope]);
 		} else {
-			$this->app->db->writeQuery("INSERT INTO {$users_table} VALUES({$uid}, 1, UNIX_TIMESTAMP(), :scope)", ['scope' => $this->scope]);
+			$this->app->db->writeQuery("INSERT INTO {$users_table} VALUES({$user_id}, 1, UNIX_TIMESTAMP(), :scope)", ['scope' => $this->scope]);
 		}
 
 		return $this;
@@ -294,7 +294,7 @@ class Bruteforce
 	public function deleteExpired()
 	{
 		$this->deleteExpiredByIp();
-		$this->deleteExpiredByUid();
+		$this->deleteExpiredByUserId();
 	}
 
 	/**
@@ -312,7 +312,7 @@ class Bruteforce
 	* Deletes all user expired attempts
 	* @return $this
 	*/
-	public function deleteExpiredByUid()
+	public function deleteExpiredByUserId()
 	{
 		$this->deleteExpiredFromTable($this->getUsersTable(), $this->user_block_seconds);
 
@@ -332,12 +332,12 @@ class Bruteforce
 	/**
 	* Deletes all attempts originating from an IP & an user from the table
 	* @param string $ip The IP
-	* @param string $uid The user's id
+	* @param string $user_id The user's id
 	*/
-	public function delete(string $ip, int $uid)
+	public function delete(string $ip, int $user_id)
 	{
 		$this->deleteIp($ip);
-		$this->deleteUid($uid);
+		$this->deleteUserId($user_id);
 	}
 
 	/**
@@ -358,16 +358,16 @@ class Bruteforce
 
 	/**
 	* Deletes all attempts originating from an user from the table
-	* @param string $uid The user's id
+	* @param string $user_id The user's id
 	*/
-	public function deleteUid(int $uid)
+	public function deleteUserId(int $user_id)
 	{
 		$table = $this->getUsersTable();
 
 		$this->app->db->writeQuery(
 			"
 			DELETE FROM {$table}
-			WHERE uid = {$uid} AND scope = :scope",
+			WHERE user_id = {$user_id} AND scope = :scope",
 			['scope' => $this->scope]
 		);
 	}

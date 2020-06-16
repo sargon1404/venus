@@ -46,7 +46,7 @@ class Cache extends Command
 	*/
 	public function libraries()
 	{
-		$this->info('Building libraries...');
+		$this->printInfo('Building libraries...');
 
 		$cache = new \Venus\Admin\Cache;
 		$cache->buildLibraries();
@@ -59,7 +59,7 @@ class Cache extends Command
 	*/
 	public function css()
 	{
-		$this->info('Building css code...');
+		$this->printInfo('Building css code...');
 
 		$this->app->cache->buildCss();
 
@@ -71,7 +71,7 @@ class Cache extends Command
 	*/
 	public function cssFrontend()
 	{
-		$this->info('Building frontend css code...');
+		$this->printInfo('Building frontend css code...');
 
 		$this->app->cache->buildCssFrontend();
 
@@ -83,7 +83,7 @@ class Cache extends Command
 	*/
 	public function cssAdmin()
 	{
-		$this->info('Building admin css code...');
+		$this->printInfo('Building admin css code...');
 
 		$this->app->cache->buildCssAdmin();
 
@@ -95,7 +95,7 @@ class Cache extends Command
 	*/
 	public function javascript()
 	{
-		$this->info('Building javascript code...');
+		$this->printInfo('Building javascript code...');
 
 		$this->app->cache->buildJavascript();
 
@@ -107,7 +107,7 @@ class Cache extends Command
 	*/
 	public function javascriptFrontend()
 	{
-		$this->info('Building frontend javascript code...');
+		$this->printInfo('Building frontend javascript code...');
 
 		$this->app->cache->buildJavascriptFrontend();
 
@@ -119,7 +119,7 @@ class Cache extends Command
 	*/
 	public function javascriptAdmin()
 	{
-		$this->info('Building admin javascript code...');
+		$this->printInfo('Building admin javascript code...');
 
 		$this->app->cache->buildJavascriptAdmin();
 
@@ -131,7 +131,7 @@ class Cache extends Command
 	*/
 	public function languages()
 	{
-		$this->info('Building the languages cache...');
+		$this->printInfo('Building the languages cache...');
 
 		$this->app->cache->buildLanguages();
 
@@ -143,7 +143,7 @@ class Cache extends Command
 	*/
 	public function themes()
 	{
-		$this->info('Building the themes cache...');
+		$this->printInfo('Building the themes cache...');
 
 		$this->app->cache->buildThemes();
 
@@ -155,7 +155,7 @@ class Cache extends Command
 	*/
 	public function plugins()
 	{
-		$this->info('Building the plugins cache...');
+		$this->printInfo('Building the plugins cache...');
 
 		$this->app->cache->buildPlugins();
 
@@ -167,7 +167,7 @@ class Cache extends Command
 	*/
 	public function usergroups()
 	{
-		$this->info('Building the usergroups cache...');
+		$this->printInfo('Building the usergroups cache...');
 
 		$this->app->cache->buildUsergroups();
 

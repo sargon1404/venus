@@ -160,7 +160,7 @@ abstract class View extends \Mars\View
 	* Builds the url of an item appending $action and $params to the view's $url
 	* @param string $item_id The item's id
 	* @param string $action The action to perform, if any
-	* @param bool $is_multi If false, the item's name will be read from $this->_id. If true, it will be read from $this->_ids and '[]' will be appended.
+	* @param bool $is_multi If false, the item's name will be read from $this->item_id. If true, it will be read from $this->item_ids and '[]' will be appended.
 	* @param string $return_route The return route, if any
 	* @param array $params Array containing the values to be appended. Specified as name => value
 	* @param bool $convert If true, will convert the returned url to http/https based on the ssl_enable setting

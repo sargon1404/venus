@@ -15,11 +15,6 @@ class Actions
 	use \Venus\AppTrait;
 
 	/**
-	* @var string $forms The html code of the generated forms
-	*/
-	protected string $forms = '';
-
-	/**
 	* Builds an actions list from $links
 	* The supported params for $links are:
 	* 'permission' => The permission, if any, the user must have to have the link displayed
@@ -30,7 +25,7 @@ class Actions
 	* 'tooltip' => The tooltip text
 	* 'redirect' => If true, will redirect to url, without any extra processing
 	* 'on_click' => On click code to execute; if specified, will override all other ajax settings
-	* @param string $item_id The id of the item associated with this quick action list
+	* @param string $item_id The id of the item associated with this action list
 	* @param array $links Array with the entries for the quick action list. Each entry must be in the format: action => [param1 => 'value', param2 => 'value']
 	* @return string The html code
 	*/
@@ -40,9 +35,9 @@ class Actions
 			return '';
 		}
 
-		$item_id = $this->escape->id($item_id);
+		$item_id = $this->app->escape->id($item_id);
 
-		$html = '<div class="actions-list" id="item-quick-action-' . $item_id . '">' . "\n";
+		$html = '<div class="actions-list" id="item-actions-list-' . $item_id . '">' . "\n";
 		$html.= '<ul class="list">' . "\n";
 
 		$index = 0;
@@ -54,17 +49,17 @@ class Actions
 			}
 
 			$link['ajax'] = $link['ajax'] ?? false;
-			$link['alt'] = $link['alt'] ?? $action;
 			$link['icon'] = $link['icon'] ?? '';
 			$link['tooltip'] = $link['tooltip'] ?? '';
-			$link['redirect'] = (int)$link['icon'] ?? 0;
+			$link['alt'] = $link['alt'] ?? (isset($link['tooltip']) ? App::__($link['tooltip']) : $action);
+			$link['redirect'] = $link['redirect'] ?? 0;
 			$link['on_click'] = $link['on_click'] ?? '';
 
 			if (!$link['icon']) {
 				$link['icon'] = $this->app->theme->images_url . 'buttons/' . $action . '_small.png';
 			}
 			if ($link['tooltip']) {
-				$link['tooltip'] = ' data-tooltip="' . App::e(nl2br(App::estr($link['tooltip']))) . '"';
+				$link['tooltip'] = ' data-tooltip="' . App::__(nl2br(App::estr($link['tooltip']))) . '"';
 			}
 
 			$action = App::ejs($action);
@@ -87,11 +82,11 @@ class Actions
 					$link['ajax'] = (int)$link['ajax'];
 				}
 
-				$link['url'] = App::e($link['url']);
-				$link['on_click'] = " onclick=\"return venus.ui.quick_action('{$item_id}', '{$action}', {$link['ajax']}, {$link['redirect']}, this)\"";
+				$link['url'] = App::__($link['url']);
+				$link['on_click'] = " onclick=\"return venus.ui.doListAction('{$item_id}', '{$action}', {$link['ajax']}, {$link['redirect']}, this)\"";
 			}
 
-			$html.= '<li><a href="' . $link['url'] . '"' . $link['on_click'] . $link['tooltip'] . '><img src="' . App::e($link['icon']) . '" alt="' . App::e($link['alt']) . '" /></a></li>' . "\n";
+			$html.= '<li><a href="' . $link['url'] . '"' . $link['on_click'] . $link['tooltip'] . '><img src="' . App::__($link['icon']) . '" alt="' . App::__($link['alt']) . '" /></a></li>' . "\n";
 		}
 
 		$html.= '</ul>' . "\n";
@@ -166,7 +161,7 @@ class Actions
 				}
 			}
 
-			$html.= '<option value="' . App::e($action) . '" data-ajax="' . $option['ajax'] . '">' . App::estr($option['text']) . '</option>' . "\n";
+			$html.= '<option value="' . App::__($action) . '" data-ajax="' . $option['ajax'] . '">' . App::estr($option['text']) . '</option>' . "\n";
 		}
 		if (!$index) {
 			return '';

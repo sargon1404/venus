@@ -15,14 +15,14 @@ class Language extends \Venus\Extensions\Extension
 	use \Mars\Language;
 
 	/**
-	* @var int $lid The id of the language
+	* @var int $id The id of the language
 	*/
-	public int $lid = 0;
+	public int $id = 0;
 
 	/**
-	* @var int $parent The id of the parent language, if any
+	* @var int $parent_id The id of the parent language, if any
 	*/
-	public int $parent = 0;
+	public int $parent_id = 0;
 
 	/**
 	* @var string $parent_name The name of the language's parent language, if any
@@ -57,16 +57,11 @@ class Language extends \Venus\Extensions\Extension
 	/**
 	* @internal
 	*/
-	protected static string $id_name = 'lid';
-
-	/**
-	* @internal
-	*/
 	protected static string $table = 'venus_languages';
 
 	/**
 	* Builds the language object
-	* @param mixed $language The language's id/data
+	* @param id|array|object $language The language's id/data
 	*/
 	public function __construct($language = 0)
 	{
@@ -95,18 +90,18 @@ class Language extends \Venus\Extensions\Extension
 
 	/**
 	* Returns the data from the database
-	* @param int $lid The language's id
+	* @param int $id The language's id
 	* @return object
 	*/
-	public function getRow(int $lid) : object
+	public function getRow(int $id) : object
 	{
 		$table = $this->getTable();
 
 		$this->app->db->readQuery("
 			SELECT l.*, p.name as parent_name, p.files as parent_files
 			FROM {$table} as l
-			LEFT JOIN {$table} as p ON l.parent = p.lid
-			WHERE l.lid = {$lid} AND l.status = 1");
+			LEFT JOIN {$table} as p ON l.parent_id = p.id
+			WHERE l.id = {$id} AND l.status = 1");
 
 		return $this->app->db->getRow();
 	}
@@ -164,7 +159,7 @@ class Language extends \Venus\Extensions\Extension
 		$file = $file . '.php';
 		$strings = [];
 
-		if ($this->parent) {
+		if ($this->parent_id) {
 			//load the file of the parent language
 			if ($this->parentFileExists($file)) {
 				$this->loadFilename($this->parent_dir . $file);
@@ -188,7 +183,7 @@ class Language extends \Venus\Extensions\Extension
 		$file = $file . '.php';
 
 		$strings = [];
-		if ($this->parent) {
+		if ($this->parent_id) {
 			if ($this->parentFileExists($file)) {
 				$strings = include($this->parent_dir . $file);
 			}
@@ -213,7 +208,7 @@ class Language extends \Venus\Extensions\Extension
 		$loaded = false;
 		$file = App::DIRS['extensions'] . '/' . App::sl($dir) . App::sl($name) . $file . '.php';
 
-		if ($this->parent) {
+		if ($this->parent_id) {
 			//check if the parent language has the file we're looking for
 			if ($this->parentFileExists($file)) {
 				$this->loadFilename($this->parent_dir . $file);

@@ -56,11 +56,11 @@ class Time extends \Mars\Time
 	* Converts a date time pattern to a timestamp/msqyl datetime
 	* @param string $date The date value Eg: 05/10/2012
 	* @param string $time The time value eg: 06:23:34
-	* @param bool $return_timestamp If true will return a timestamp. If false will return a mysql datetime
+	* @param bool $return_timestamp If true will return a timestamp. If false will return a mysql datetime (string)
 	* @param bool $adjust_timestamp If true and $return_timestamp is true will return the timestamp adjusted to UTC
 	* @param string $date_pattern The pattern of the date value Eg: mm/dd/yyyy. If empty, $this->app->lang->date_picker_format is used
 	* @param string $time_pattern The pattern of the time value Eg: hh:mm:ss. If empty, $this->app->lang->time_picker_format is used
-	* @return mixed Returns a timestamp or a mysql dateime based on $return_timestamp
+	* @return int|string Returns a timestamp or a mysql datetime based on $return_timestamp
 	*/
 	public function toDatetime(string $date, string $time, bool $return_timestamp = true, bool $adjust_timestamp = true, string $date_pattern = '', string $time_pattern = '')
 	{
@@ -131,10 +131,10 @@ class Time extends \Mars\Time
 	/**
 	* Converts a date pattern to a timestamp/mysql date
 	* @param string $date The date value Eg: 05/10/2012
-	* @param bool $return_timestamp If true will return a timestamp. If false will return a mysql datetime
+	* @param bool $return_timestamp If true will return a timestamp. If false will return a mysql datetime (string)
 	* @param bool $adjust_timestamp If true and $return_timestamp is true will return the timestamp adjusted to UTC
 	* @param string $date_pattern The pattern of the date value Eg: mm/dd/yyyy. If empty, $this->app->lang->date_picker_format is used
-	* @return mixed Returns a timestamp or a mysql dateime based on $return_timestamp
+	* @return int|string Returns a timestamp or a mysql dateime based on $return_timestamp
 	*/
 	public function toDate(string $date, bool $return_timestamp = true, bool $adjust_timestamp = true, string $date_pattern = '')
 	{

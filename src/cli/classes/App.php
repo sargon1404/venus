@@ -30,7 +30,7 @@ class App extends \Venus\Admin\App
 
 	/**
 	* @see \Venus\App::checkInstalled
-	* {@inheritdoc}
+	* {@inheritDoc}
 	*/
 	protected function checkInstalled()
 	{
@@ -38,7 +38,7 @@ class App extends \Venus\Admin\App
 
 	/**
 	* @see \Venus\App::checkOffline
-	* {@inheritdoc}
+	* {@inheritDoc}
 	*/
 	public function checkOffline()
 	{

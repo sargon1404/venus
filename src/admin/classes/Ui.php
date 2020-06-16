@@ -250,7 +250,7 @@ class Ui extends \Venus\Ui
 		//output the required javascript
 		$html = '<script type="text/javascript">//<![CDATA[
 					var permissions = ' . $venus->javascript->toArray($js_permissions) . ';
-					var perm = new venus_admin_permissions(permissions,' . $venus->javascript->toArray($usergroups_data, false, 'ugid') . $js_inherit . ');
+					var perm = new venus_admin_permissions(permissions,' . $venus->javascript->toArray($usergroups_data, false, 'id') . $js_inherit . ');
 					//]]></script>';
 
 		//output the can change radios

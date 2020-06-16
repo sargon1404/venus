@@ -101,7 +101,7 @@ class Block extends \Venus\Extensions\Extension implements Document
 
 	/**
 	* Builds a block extension object
-	* @param mixed $name The name of the block *or* the block id.
+	* @param int|string $name The name of the block or the block id.
 	*/
 	public function __construct($name)
 	{

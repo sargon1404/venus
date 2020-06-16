@@ -58,7 +58,7 @@ trait PermissionsTrait
 			$permissions = $this->buildPermissions();
 			$permissions = $this->mergePermissions($permissions);
 
-			$this->permissions = App::arrayUnset($permissions, ['id', 'type', 'ugid' , 'inherit']);
+			$this->permissions = App::arrayUnset($permissions, ['document_id', 'type', 'usergroup_id' , 'inherit']);
 		}
 	}
 
@@ -71,7 +71,7 @@ trait PermissionsTrait
 		$default_permissions = null;
 		$type = $this->getType();
 
-		$permissions = $this->app->db->selectArrayWithKey($this->getPermissionsTable(), 'ugid', '*', ['id' => $this->getId(), 'type' => $type, 'ugid' => $this->app->user->ugids]);
+		$permissions = $this->app->db->selectArrayWithKey($this->getPermissionsTable(), 'usergroup_id', '*', ['document_id' => $this->getId(), 'type' => $type, 'usergroup_id' => $this->app->user->usergroup_ids]);
 
 		//are the permissions inherited? If so, use the default permissions
 		foreach ($permissions as $i => $perm) {
@@ -80,7 +80,7 @@ trait PermissionsTrait
 					$default_permissions = $this->app->user->usergroups->getDefaultPermissions($type);
 				}
 
-				$permissions[$i] = $default_permissions[$perm['ugid']];
+				$permissions[$i] = $default_permissions[$perm['usergroup_id']];
 			}
 		}
 
@@ -108,8 +108,8 @@ trait PermissionsTrait
 		$permissions = [];
 
 		if ($this->app->config->usergroup_multiple_permissions) {
-			foreach ($this->app->user->ugids as $ugid) {
-				$perm = $permissions_array[$ugid];
+			foreach ($this->app->user->usergroup_ids as $usergroup_id) {
+				$perm = $permissions_array[$usergroup_id];
 				if (!$permissions) {
 					$permissions = $perm;
 					continue;
@@ -122,7 +122,7 @@ trait PermissionsTrait
 				}
 			}
 		} else {
-			$permissions = $permissions_array[$this->app->user->ugid];
+			$permissions = $permissions_array[$this->app->user->usergroup_id];
 		}
 
 		return $permissions;

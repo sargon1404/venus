@@ -20,6 +20,11 @@ abstract class View extends \Venus\View
 	public Navbar $navbar;
 
 	/**
+	* @var Actions $actions Alias for $this->app->actions
+	*/
+	public Actions $actions;
+
+	/**
 	* @see \Mars\View::prepare()
 	* {@inheritDoc}
 	*/
@@ -28,15 +33,7 @@ abstract class View extends \Venus\View
 		parent::prepare($controller);
 
 		$this->navbar = $this->app->navbar;
-	}
-
-	/**
-	* Builds a an actions list from $links
-	* @see Venus\Admin\Actions::getList()
-	*/
-	public function getActionsList(string $item_id, array $links)
-	{
-		return $this->app->actions->getList($item_id, $links);
+		$this->actions = $this->app->actions;
 	}
 
 	/**
@@ -45,6 +42,6 @@ abstract class View extends \Venus\View
 	*/
 	public function getActionsSelect(string $item_id, array $options, string $url = '')
 	{
-		return $this->app->actions->getSelect($item_id, $this->item_id, $this->item_ids, $options, $url);
+		return $this->actions->getSelect($item_id, $this->item_id, $this->item_ids, $options, $url);
 	}
 }

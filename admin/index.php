@@ -7,9 +7,11 @@ define('VENUS_ADMIN', 1);
 chdir('..');
 require('src/admin/boot.php');
 
+echo $app->html->select('select-name', ['a' => 'b', 'c' => 'd'], 'c');
+die;
+
 try {
 	$block_name = $app->request->value($app->config->block_param);
-
 	if (!$app->session->get('admin')) {
 		$block_name = 'login';
 	} else {
