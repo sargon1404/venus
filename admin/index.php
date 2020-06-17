@@ -7,7 +7,9 @@ define('VENUS_ADMIN', 1);
 chdir('..');
 require('src/admin/boot.php');
 
-echo $app->html->select('select-name', ['a' => 'b', 'c' => 'd'], 'c');
+//echo $app->html->selectOptions([1 => 'raz', 2 => 'at<oth', 3 => 'hermes'], 2);
+echo $app->html->select('some name', [1 => 'raz', 2 => 'at<oth', 3 => 'hermes'], 2);
+
 die;
 
 try {
