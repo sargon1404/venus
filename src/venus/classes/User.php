@@ -135,7 +135,7 @@ class User extends Item
 	}
 
 	/**
-	* {@inheritDocs}
+	* {@inheritdoc}
 	*/
 	protected function getValidationRules() : array
 	{
@@ -153,7 +153,7 @@ class User extends Item
 	}
 
 	/**
-	* {@inheritDocs}
+	* {@inheritdoc}
 	*/
 	protected function validate() : bool
 	{
@@ -196,7 +196,7 @@ class User extends Item
 	}
 
 	/**
-	* {@inheritDocs}
+	* {@inheritdoc}
 	*/
 	protected function getDefaultsArray() : array
 	{
@@ -223,7 +223,7 @@ class User extends Item
 	}
 
 	/**
-	* {@inheritDocs}
+	* {@inheritdoc}
 	*/
 	protected function process()
 	{
@@ -235,7 +235,7 @@ class User extends Item
 	}
 
 	/**
-	* {@inheritDocs}
+	* {@inheritdoc}
 	*/
 	public function insert(bool $process = true, bool $keep_old_id = false) : int
 	{
@@ -248,7 +248,7 @@ class User extends Item
 	}
 
 	/**
-	* {@inheritDocs}
+	* {@inheritdoc}
 	*/
 	public function update(bool $process = true) : bool
 	{
@@ -268,7 +268,7 @@ class User extends Item
 	}
 
 	/**
-	* {@inheritDocs}
+	* {@inheritdoc}
 	*/
 	public function delete() : int
 	{

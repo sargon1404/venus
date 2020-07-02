@@ -35,7 +35,7 @@ class Language extends \Venus\Admin\Language
 
 	/**
 	* @see \Venus\Language::get()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function get()
 	{

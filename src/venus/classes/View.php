@@ -53,7 +53,7 @@ abstract class View extends \Mars\View
 
 	/**
 	* @see \Mars\View::prepare()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepare(Controller $controller)
 	{
@@ -73,7 +73,7 @@ abstract class View extends \Mars\View
 
 	/**
 	* @see \Mars\View::getTemplate()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function getTemplate(string $template = '', string $layout = '') : string
 	{
@@ -91,7 +91,7 @@ abstract class View extends \Mars\View
 
 	/**
 	* @see \Mars\View::renderTemplate()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function renderTemplate(string $template = '', string $layout = '')
 	{

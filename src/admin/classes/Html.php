@@ -6,6 +6,7 @@
 
 namespace Venus\Admin;
 
+use Venus\App;
 use Venus\Helpers\Tree;
 
 /**
@@ -18,6 +19,25 @@ class Html extends \Venus\Html
 	* @var string $root String used as the root/first entry in select controls, if required
 	*/
 	public string $root = '-------------------';
+	
+	/**
+	* Builds the object
+	* @param App $app The app object
+	*/
+	public function __construct(App $app = null)
+	{
+		parent::__construct($app);
+
+		$supported_tags = [
+			'seo_rel' => '\Venus\Admin\Html\Input\SeoRel',
+			'seo_target' => '\Venus\Admin\Html\Input\SeoTarget',
+			'meta_robots' => '\Venus\Admin\Html\Input\MetaRobots',
+			'sitemap_frequency' => '\Venus\Admin\Html\Input\SitemapFrequency',
+			'sitemap_priority' => '\Venus\Admin\Html\Input\SitemapPriority'
+		];
+
+		$this->supported_tags = array_merge($this->supported_tags, $supported_tags);
+	}
 
 	/**
 	* Returns a select control with options : yes/no
@@ -32,9 +52,7 @@ class Html extends \Venus\Html
 			'0' => App::__('no'),
 		];
 
-		$html = $this->select($name, $options, $selected);
-
-		return $this->app->plugins->filter('admin_html_select_yes_no', $html, $name, $options, $selected, $this);
+		return $this->select($name, $options, $selected);
 	}
 
 	/**
@@ -51,9 +69,7 @@ class Html extends \Venus\Html
 			'0' => App::__('no'),
 		];
 
-		$html = $this->select($name, $options, $selected);
-
-		return $this->app->plugins->filter('admin_html_select_global_yes_no', $html, $name, $options, $selected, $this);
+		return $this->select($name, $options, $selected);
 	}
 
 	/**
@@ -70,9 +86,7 @@ class Html extends \Venus\Html
 			'0' => App::__('no'),
 		];
 
-		$html = $this->select($name, $options, $selected);
-
-		return $html = $this->app->plugins->filter('admin_html_select_nochange_yes_no', $html, $name, $options, $selected, $this);
+		return $this->select($name, $options, $selected);
 	}
 
 	/**
@@ -83,11 +97,13 @@ class Html extends \Venus\Html
 	*/
 	public function radioGlobalYesNo(string $name, string $selected = '-1') : string
 	{
-		$html = $this->radio($name, App::__('global'), ($selected == '-1' ? true : false), '-1');
-		$html.= $this->radio($name, App::__('yes'), ($selected == '1' ? true : false), '1');
-		$html.= $this->radio($name, App::__('no'), ($selected == '0' ? true : false), '0');
-
-		return $this->app->plugins->filter('admin_html_radio_global_yes_no', $html, $name, $selected, $this);
+		$values = [
+			'-1' => App::__('global'),
+			'1' => App::__('yes'),
+			'0' => App::__('no')
+		];
+		
+		return $this->radioGroup($name, $values, $selected);
 	}
 
 	/**
@@ -98,11 +114,13 @@ class Html extends \Venus\Html
 	*/
 	public function radioNochangeYesNo(string $name, string $selected = '.') : string
 	{
-		$html = $this->radio($name, App::__('no_change'), ($selected == '.' ? true : false), '.');
-		$html.= $this->radio($name, App::__('yes'), ($selected == '1' ? true : false), '1');
-		$html.= $this->radio($name, App::__('no'), ($selected == '0' ? true : false), '0');
-
-		return $this->app->plugins->filter('admin_html_radio_nochange_yes_no', $html, $name, $selected, $this);
+		$values = [
+			'.' => App::__('no_change'),
+			'1' => App::__('yes'),
+			'0' => App::__('no')
+		];
+		
+		return $this->radioGroup($name, $values, $selected);
 	}
 
 	/**
@@ -113,128 +131,74 @@ class Html extends \Venus\Html
 	*/
 	public function radioNochangeGlobalYesNo(string $name, string $selected = '.') : string
 	{
-		$html = $this->radio($name, App::__('no_change'), ($selected == '.' ? true : false), '.');
-		$html.= $this->radio($name, App::__('global'), ($selected == '-1' ? true : false), '-1');
-		$html.= $this->radio($name, App::__('yes'), ($selected == '1' ? true : false), '1');
-		$html.= $this->radio($name, App::__('no'), ($selected == '0' ? true : false), '0');
-
-		return $this->app->plugins->filter('admin_html_radio_nochange_global_yes_no', $html, $name, $selected, $this);
+		$values = [
+			'.' => App::__('no_change'),
+			'-1' => App::__('global'),
+			'1' => App::__('yes'),
+			'0' => App::__('no')
+		];
+		
+		return $this->radioGroup($name, $values, $selected);
 	}
 
 	/**
-	* Returns a select control from where the seo rel attribute can be selected
+	* Returns a field from where the seo rel attribute can be selected
 	* @param string $name The name of the field
 	* @param string $selected The selected value
 	* @param bool $show_no_change If true, will also display the 'No Change' option
 	* @param bool $show_global If true, will also display the 'Global' option
 	* @return string The html code
 	*/
-	public function selectSeoRel(string $name, string $selected = '', bool $show_no_change = false, bool $show_global = true) : string
+	public function seoRel(string $name, string $selected = '', bool $show_no_change = false, bool $show_global = true) : string
 	{
-		$options = [
-			'' => App::__('seo_rel1'),
-			'nofollow' => App::__('seo_rel2')
-		];
+		$attributes = ['name' => $name];
 
-		if ($show_global) {
-			$options = ['-1' => App::__('global_setting')] + $options;
-		}
-		if ($show_no_change) {
-			$options = ['.' => App::__('no_change')] + $options;
-		}
-
-		$html = $this->select($name, $options, $selected);
-
-		return $this->app->plugins->filter('admin_html_select_seo_rel', $html, $name, $selected, $show_no_change, $show_global, $this);
+		return $this->getTag('seo_rel', $attributes, ['selected' => $selected, 'show_no_change' => $show_no_change, 'show_global' => $show_global])->get();
 	}
 
 	/**
-	* Returns a select control from where the seo target attribute can be selected
+	* Returns a field from where the seo target attribute can be selected
 	* @param string $name The name of the field
 	* @param string $selected The selected value
 	* @param bool $show_no_change If true, will also display the 'No Change' option
 	* @param bool $show_global If true, will also display the 'Global' option
 	* @return string The html code
 	*/
-	public function selectSeoTarget(string $name, string $selected = '', bool $show_no_change = false, bool $show_global = true) : string
+	public function seoTarget(string $name, string $selected = '', bool $show_no_change = false, bool $show_global = true) : string
 	{
-		$options = [
-			'' => App::__('seo_target1'),
-			'_blank' => App::__('seo_target2')
-		];
+		$attributes = ['name' => $name];
 
-		if ($show_global) {
-			$options = ['-1' => App::__('global_setting')] + $options;
-		}
-		if ($show_no_change) {
-			$options = ['.' => App::__('no_change')] + $options;
-		}
-
-		$html = $this->select($name, $options, $selected);
-
-		return $this->app->plugins->filter('admin_html_select_seo_target', $html, $name, $selected, $show_no_change, $show_global, $this);
+		return $this->getTag('seo_target', $attributes, ['selected' => $selected, 'show_no_change' => $show_no_change, 'show_global' => $show_global])->get();
 	}
 
 	/**
-	* Returns a select control from where the meta robots value can be selected
+	* Returns a field from where the meta robots value can be selected
 	* @param string $name The name of the field
 	* @param string $selected The selected value
 	* @param bool $show_no_change If true, will also display the 'No Change' option
 	* @param bool $show_global If true, will also display the 'Global' option
 	* @return string The html code
 	*/
-	public function selectMetaRobots(string $name, string $selected = '', bool $show_no_change = false, bool $show_global = true) : string
+	public function metaRobots(string $name, string $selected = '', bool $show_no_change = false, bool $show_global = true) : string
 	{
-		$options = [
-			'' => '',
-			'index, follow' => App::__('meta_robots1'),
-			'index, nofollow' => App::__('meta_robots2'),
-			'noindex, follow' => App::__('meta_robots3'),
-			'noindex, nofollow' => App::__('meta_robots4')
-		];
+		$attributes = ['name' => $name];
 
-		if ($show_global) {
-			$options = ['-1' => App::__('global_setting')] + $options;
-		}
-		if ($show_no_change) {
-			$options = ['.' => App::__('no_change')] + $options;
-		}
-
-		$html = $this->select($name, $options, $selected);
-
-		return $this->app->plugins->filter('admin_html_select_meta_robots', $html, $name, $selected, $show_no_change, $show_global, $this);
+		return $this->getTag('meta_robots', $attributes, ['selected' => $selected, 'show_no_change' => $show_no_change, 'show_global' => $show_global])->get();
 	}
 
 	/**
-	* Returns a select control from where frequency of a sitemap page can be selected
+	* Returns a field from where frequency of a sitemap page can be selected
 	* @param string $name The name of the field
 	* @param string $selected The selected value
 	* @param bool $show_no_change If true, will also display the 'No Change' option
 	* @param bool $show_global If true, will also display the 'Global' option
 	* @return string The html code
 	*/
-	public function selectSitemapFrequency(string $name, string $selected = '1', bool $show_no_change = false, bool $show_global = true) : string
+	public function sitemapFrequency(string $name, string $selected = '1', bool $show_no_change = false, bool $show_global = true) : string
 	{
-		$options = [
-			'1' => App::__('sitemap_frequency1'),
-			'2' => App::__('sitemap_frequency2'),
-			'3' => App::__('sitemap_frequency3'),
-			'4' => App::__('sitemap_frequency4'),
-			'5' => App::__('sitemap_frequency5'),
-			'6' => App::__('sitemap_frequency6'),
-			'7' => App::__('sitemap_frequency7')
-		];
+		$attributes = ['name' => $name];
 
-		if ($show_global) {
-			$options = ['-1' => App::__('global_setting')] + $options;
-		}
-		if ($show_no_change) {
-			$options = ['.' => App::__('no_change')] + $options;
-		}
-
-		$html = $this->select($name, $options, $selected);
-
-		return $this->app->plugins->filter('admin_html_select_sitemap_frequency', $html, $name, $selected, $show_no_change, $show_global, $this);
+		return $this->getTag('sitemap_frequency', $attributes, ['selected' => $selected, 'show_no_change' => $show_no_change, 'show_global' => $show_global])->get();
 	}
 
 	/**
@@ -245,21 +209,18 @@ class Html extends \Venus\Html
 	* @param bool $show_global If true, will also display the 'Global' option
 	* @return string The html code
 	*/
-	public function selectSitemapPriority(string $name, string $selected = '1', bool $show_no_change = false, bool $show_global = true) : string
+	public function sitemapPriority(string $name, string $selected = '1', bool $show_no_change = false, bool $show_global = true) : string
 	{
-		$options = ['0' => 0, '0.1' => 0.1, '0.2' => 0.2, '0.3' => 0.3, '0.4' => 0.4, '0.5' => 0.5, '0.6' => 0.6, '0.7' => 0.7, '0.8' => 0.8, '0.9' => 0.9, '1' => 1];
+		$attributes = ['name' => $name];
 
-		if ($show_global) {
-			$options = ['-1' => App::__('global_setting')] + $options;
-		}
-		if ($show_no_change) {
-			$options = ['.' => App::__('no_change')] + $options;
-		}
-
-		$html = $this->select($name, $options, $selected);
-
-		return $this->app->plugins->filter('admin_html_select_sitemap_priority', $html, $name, $selected, $show_no_change, $show_global, $class, $this);
+		return $this->getTag('sitemap_priority', $attributes, ['selected' => $selected, 'show_no_change' => $show_no_change, 'show_global' => $show_global])->get();
 	}
+
+
+
+
+
+
 
 	/**
 	* Outputs the select options needed to select a language

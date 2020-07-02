@@ -16,7 +16,7 @@ class Text extends \Venus\Text
 
 	/**
 	* @see \Venus\Text::parse()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function parse(string $text, bool $parse_links = true, bool $parse_nofollow = false, bool $parse_media = true, bool $parse_videos = true, ?string $tags_list = null, string $markup_language = '') : string
 	{
@@ -33,7 +33,7 @@ class Text extends \Venus\Text
 	/**
 	* Always allow all tags to be filtered & maximum allowed attributes
 	* @see \Mars\Text::filter()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function filter(string $text, string $allowed_attributes = '', ?array $allowed_elements = [], string $encoding = '') : string
 	{
@@ -46,7 +46,7 @@ class Text extends \Venus\Text
 
 	/**
 	* @see \Venus\Text::convert()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function convert(string $text, string $from = '', string $to = '') : string
 	{

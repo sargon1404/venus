@@ -16,7 +16,7 @@ class Bbcode extends Markup implements MarkupInterface
 	/**
 	* Parses the text for bbcodes tags
 	* @see \Venus\Markup\MarkupInterface::parse()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function parse(string $text) : string
 	{
@@ -274,7 +274,7 @@ class Bbcode extends Markup implements MarkupInterface
 
 	/**
 	* @see \Venus\Markup\MarkupInterface::convert()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function convert(string $text) : string
 	{
@@ -354,7 +354,7 @@ class Bbcode extends Markup implements MarkupInterface
 
 	/**
 	* @see \Venus\Markup\MarkupInterface::quote()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function quote(string $text, string $cite = '') : string
 	{

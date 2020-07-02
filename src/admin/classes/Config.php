@@ -12,7 +12,6 @@ namespace Venus\Admin;
 */
 class Config extends \Venus\Config
 {
-
 	/**
 	* @internal
 	*/

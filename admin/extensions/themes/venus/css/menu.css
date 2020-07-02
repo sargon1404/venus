@@ -28,9 +28,8 @@ nav a
 {
 	color: #fff;
 	font-weight: bold;
-	width: 90px;
 	height: 25px;
-	padding-top: 4px;
+	padding: 4px 20px;
 	display: block;
 	background: #D02416 linear-gradient(#D02416, #E5160A);
 }

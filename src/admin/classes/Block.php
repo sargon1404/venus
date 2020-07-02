@@ -43,7 +43,7 @@ class Block extends \Venus\Block
 
 	/**
 	* @see \Venus\Block::get()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function get($name)
 	{
@@ -62,7 +62,7 @@ class Block extends \Venus\Block
 
 	/**
 	* @see \Venus\Block::prepare()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepare()
 	{
@@ -78,7 +78,7 @@ class Block extends \Venus\Block
 
 	/**
 	* @see \Venus\Block::getUrl()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function getUrl() : string
 	{
@@ -108,7 +108,7 @@ class Block extends \Venus\Block
 			return;
 		}
 
-		$permissions = $this->app->db->selectRow($this->getPermissionsTable(), '*', ['user_id' => $this->app->user->id, 'bid' => $this->bid], true);
+		$permissions = $this->app->db->selectRow($this->getPermissionsTable(), '*', ['user_id' => $this->app->user->id, 'block_id' => $this->id], true);
 
 		if ($permissions) {
 			unset($permissions['user_id']);
@@ -127,7 +127,7 @@ class Block extends \Venus\Block
 
 	/**
 	* @see \Venus\DocumentBody::canOutput()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function canOutput() : bool
 	{
@@ -144,7 +144,7 @@ class Block extends \Venus\Block
 
 	/**
 	* @see \Venus\DocumentBody::getOutput()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function getOutput() : string
 	{
@@ -153,7 +153,7 @@ class Block extends \Venus\Block
 
 	/**
 	* @see \Venus\DocumentBody::setup()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function setup()
 	{
@@ -163,7 +163,7 @@ class Block extends \Venus\Block
 
 	/**
 	* @see \Venus\DocumentBody::setApp()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function setApp()
 	{
@@ -172,7 +172,7 @@ class Block extends \Venus\Block
 
 	/**
 	* @see \Venus\DocumentBody::setMeta()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function setMeta()
 	{

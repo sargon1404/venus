@@ -23,7 +23,7 @@ class Html extends Markup implements MarkupInterface
 
 	/**
 	* @see \Venus\Markup\MarkupInterface::parse()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function parse(string $text) : string
 	{
@@ -138,7 +138,7 @@ class Html extends Markup implements MarkupInterface
 
 	/**
 	* @see \Venus\Markup\MarkupInterface::convert()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function convert(string $text) : string
 	{
@@ -147,7 +147,7 @@ class Html extends Markup implements MarkupInterface
 
 	/**
 	* @see \Venus\Markup\MarkupInterface::quote()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function quote(string $text, string $cite = '') : string
 	{

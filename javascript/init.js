@@ -34,7 +34,6 @@ Venus.prototype.init = function() {
 	this.warnings_inline = this.alerts_inline.warnings;
 	this.notifications_inline = this.alerts_inline.notifications;
 
-	this.menu = new VenusMenu;
 	this.populate = new VenusPopulate;
 	this.list = new VenusList;
 

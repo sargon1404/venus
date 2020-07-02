@@ -65,7 +65,7 @@ class User extends \Venus\System\User
 
 	/**
 	* @see \Venus\System\User::prepareSession()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareSession()
 	{
@@ -81,7 +81,7 @@ class User extends \Venus\System\User
 
 	/**
 	* @see \Venus\System\User::prepareUser()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareUser()
 	{
@@ -133,7 +133,7 @@ class User extends \Venus\System\User
 
 	/**
 	* @see \Venus\System\User::prepareAdmin()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareAdmin()
 	{
@@ -153,7 +153,7 @@ class User extends \Venus\System\User
 
 	/**
 	* @see \Venus\System\User::prepareConfig()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareConfig()
 	{
@@ -178,7 +178,7 @@ class User extends \Venus\System\User
 
 	/**
 	* @see \Venus\System\User::canLogin()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function canLogin(string $username, string $password, &$user = null) : bool
 	{
@@ -195,7 +195,7 @@ class User extends \Venus\System\User
 
 	/**
 	* @see \Venus\System\User::loginUser()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function loginUser(\Venus\User $user, bool $remember_me = false)
 	{
@@ -214,7 +214,7 @@ class User extends \Venus\System\User
 
 	/**
 	* @see \Venus\System\User::writeLoginKey()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function writeLoginKey(int $id, string $key)
 	{
@@ -228,7 +228,7 @@ class User extends \Venus\System\User
 
 	/**
 	* @see \Venus\System\User::deleteSession()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function deleteSession()
 	{

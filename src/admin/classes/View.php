@@ -26,7 +26,7 @@ abstract class View extends \Venus\View
 
 	/**
 	* @see \Mars\View::prepare()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepare(Controller $controller)
 	{

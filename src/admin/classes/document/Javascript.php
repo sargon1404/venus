@@ -36,7 +36,7 @@ class Javascript extends \Venus\Document\Javascript
 
 	/**
 	* @see \Venus\Document\Javascript::loadMain()
-	* @inheritDocs
+	* @inheritdocs
 	*/
 	public function loadMain(string $location = 'head', int $priority = 50000)
 	{

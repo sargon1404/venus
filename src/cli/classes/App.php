@@ -21,7 +21,7 @@ class App extends \Venus\Admin\App
 
 	/**
 	* @see \Mars\App::loadBooter()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function loadBooter()
 	{
@@ -30,7 +30,7 @@ class App extends \Venus\Admin\App
 
 	/**
 	* @see \Venus\App::checkInstalled
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function checkInstalled()
 	{
@@ -38,7 +38,7 @@ class App extends \Venus\Admin\App
 
 	/**
 	* @see \Venus\App::checkOffline
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function checkOffline()
 	{

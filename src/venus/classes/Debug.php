@@ -14,7 +14,7 @@ class Debug extends \Mars\Debug
 {
 	/**
 	* @see \Mars\Debug::output()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function output()
 	{
@@ -41,7 +41,7 @@ class Debug extends \Mars\Debug
 
 	/**
 	* @see \Mars\Debug::outputExecutionTime()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function outputExecutionTime(float $execution_time)
 	{

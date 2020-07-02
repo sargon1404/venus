@@ -249,7 +249,7 @@ class Theme extends \Venus\Extensions\Extension
 
 	/**
 	* @see \Venus\Extensions\Extension::prepare()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepare()
 	{
@@ -260,7 +260,7 @@ class Theme extends \Venus\Extensions\Extension
 
 	/**
 	* @see \Venus\Extensions\Extension::preparePaths()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function preparePaths()
 	{

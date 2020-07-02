@@ -51,7 +51,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::checkFilename()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function checkFilename(string $filename, string $secure_dir = '')
 	{
@@ -66,7 +66,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::readFile()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function readFile(string $filename, string $secure_dir = '') : string
 	{
@@ -83,7 +83,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::writeFile()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function writeFile(string $filename, string $content, bool $append = false, string $secure_dir = '') : bool
 	{
@@ -100,7 +100,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::deleteFile()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function deleteFile(string $filename, string $secure_dir = '') : bool
 	{
@@ -117,7 +117,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::copyFile()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function copyFile(string $source, string $destination, string $secure_dir = '') : bool
 	{
@@ -134,7 +134,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::moveFile()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function moveFile(string $source, string $destination, string $secure_dir = '') : bool
 	{
@@ -151,7 +151,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::listFile()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function listDir(string $dir, ?array &$dirs, ?array &$files, bool $full_path = false, bool $recursive = false, bool $include_extension = true, array $skip_dirs = [], bool $use_dir_as_file_key = false, bool $is_tree = false, string $tree_prefix = '--', int $tree_level = 0, string $base_dir = '') : bool
 	{
@@ -168,7 +168,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::createDir()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function createDir(string $dir) : bool
 	{
@@ -185,7 +185,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::copyDir()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function copyDir(string $source_dir, string $destination_dir, bool $recursive = true) : bool
 	{
@@ -202,7 +202,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::moveDir()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function moveDir(string $source_dir, string $destination_dir) : bool
 	{
@@ -219,7 +219,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::deleteDir()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function deleteDir(string $dir, bool $recursive = true, string $secure_dir = '') : bool
 	{
@@ -240,7 +240,7 @@ class File extends \Mars\File
 
 	/**
 	* @see \Mars\File::cleanDir()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function cleanDir(string $dir, bool $recursive = true, string $secure_dir = '') : bool
 	{

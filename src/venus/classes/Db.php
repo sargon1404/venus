@@ -14,7 +14,7 @@ class Db extends \Mars\Db
 {
 	/**
 	* @see \Mars\Db:getRowClassName()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function getRowClassName() : string
 	{

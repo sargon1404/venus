@@ -13,7 +13,12 @@ namespace Venus\Admin;
 class App extends \Venus\App
 {
 	/**
-	* @const array DIRS The locations of the used dirs
+	* @const string ADMINISTRATORS_BLOCK The name of the administrators block
+	*/
+	public const ADMINISTRATORS_BLOCK = 'administrators';
+		
+	/**
+	* @const array ADMIN_DIRS The locations of the used dirs
 	*/
 	public const ADMIN_DIRS = [
 		'cache' => 'cache',
@@ -23,7 +28,7 @@ class App extends \Venus\App
 	];
 
 	/**
-	* @const array URLS The locations of the used urls
+	* @const array ADMIN_URLS The locations of the used urls
 	*/
 	public const ADMIN_URLS = [
 		'extensions' => 'extensions',
@@ -64,7 +69,7 @@ class App extends \Venus\App
 
 	/**
 	* @see \Mars\App::loadBooter()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function loadBooter()
 	{
@@ -73,7 +78,7 @@ class App extends \Venus\App
 
 	/**
 	* @see \Mars\App::setProperties()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function setProperties()
 	{
@@ -106,7 +111,7 @@ class App extends \Venus\App
 
 	/**
 	* @see \Mars\App::error()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function error(string $error, string $title = '', bool $escape_html = true)
 	{
@@ -117,7 +122,7 @@ class App extends \Venus\App
 
 	/**
 	* @see \Mars\App::message()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function message(string $message, string $title = '', bool $escape_html = true)
 	{
@@ -128,7 +133,7 @@ class App extends \Venus\App
 
 	/**
 	* @see \Mars\App::permissionDenied()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function permissionDenied()
 	{
@@ -140,7 +145,7 @@ class App extends \Venus\App
 
 	/**
 	* @see \Mars\App::redirect404()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function redirect404()
 	{

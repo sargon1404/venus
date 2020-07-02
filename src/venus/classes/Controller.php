@@ -88,7 +88,7 @@ abstract class Controller extends \Mars\Controller
 
 	/**
 	* @see \Mars\Controller::dispatch()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function dispatch(string $method = '', array $params = [])
 	{

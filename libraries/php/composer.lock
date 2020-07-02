@@ -4,34 +4,40 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f574da91fa45f97a91093626836236f5",
+    "content-hash": "51196bf9e158bda9b9726687ceab94eb",
     "packages": [
         {
-            "name": "masterjoa/htmlpurifier-standalone",
-            "version": "v4.8.0",
+            "name": "ezyang/htmlpurifier",
+            "version": "v4.12.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Masterjoa/HTMLPurifier-standalone.git",
-                "reference": "c725cc095a19c5f1d7c04013b00f7fd5766bdb6a"
+                "url": "https://github.com/ezyang/htmlpurifier.git",
+                "reference": "a617e55bc62a87eec73bd456d146d134ad716f03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Masterjoa/HTMLPurifier-standalone/zipball/c725cc095a19c5f1d7c04013b00f7fd5766bdb6a",
-                "reference": "c725cc095a19c5f1d7c04013b00f7fd5766bdb6a",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/a617e55bc62a87eec73bd456d146d134ad716f03",
+                "reference": "a617e55bc62a87eec73bd456d146d134ad716f03",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
             },
+            "require-dev": {
+                "simpletest/simpletest": "dev-master#72de02a7b80c6bb8864ef9bf66d41d2f58f826bd"
+            },
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "HTMLPurifier": "src/"
-                }
+                    "HTMLPurifier": "library/"
+                },
+                "files": [
+                    "library/HTMLPurifier.composer.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL"
+                "LGPL-2.1-or-later"
             ],
             "authors": [
                 {
@@ -40,12 +46,12 @@
                     "homepage": "http://ezyang.com"
                 }
             ],
-            "description": "Standalone distribution of HTMLPurifier",
+            "description": "Standards compliant HTML filter written in PHP",
             "homepage": "http://htmlpurifier.org/",
             "keywords": [
                 "html"
             ],
-            "time": "2017-02-03T00:23:13+00:00"
+            "time": "2019-10-28T03:44:26+00:00"
         },
         {
             "name": "matthiasmullie/minify",
@@ -207,48 +213,6 @@
                 "php mobile detect"
             ],
             "time": "2019-09-18T18:44:20+00:00"
-        },
-        {
-            "name": "neutron/sphinxsearch-api",
-            "version": "2.0.8.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/romainneutron/Sphinx-Search-API-PHP-Client.git",
-                "reference": "a18fd84951ea1fb006387e2d099d025235b14d34"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/romainneutron/Sphinx-Search-API-PHP-Client/zipball/a18fd84951ea1fb006387e2d099d025235b14d34",
-                "reference": "a18fd84951ea1fb006387e2d099d025235b14d34",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=4"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "sphinxapi.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL"
-            ],
-            "authors": [
-                {
-                    "name": "Andrew Aksyonoff",
-                    "homepage": "http://sphinxsearch.com/"
-                }
-            ],
-            "description": "SphinxSearch PHP API",
-            "homepage": "http://sphinxsearch.com/",
-            "keywords": [
-                "Sphinx Search",
-                "api",
-                "search-engine"
-            ],
-            "time": "2018-07-09T14:18:54+00:00"
         },
         {
             "name": "phpmailer/phpmailer",

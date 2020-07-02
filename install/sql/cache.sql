@@ -26,6 +26,21 @@ INSERT INTO venus_cache VALUES ('libraries_version', '', 'frontend');
 INSERT INTO venus_cache VALUES ('language_default', '', 'frontend');
 INSERT INTO venus_cache VALUES ('theme_default', '', 'frontend');
 
+INSERT INTO venus_cache VALUES ('usergroups', '', 'frontend');
+INSERT INTO venus_cache VALUES ('usergroups_permissions', '', 'frontend');
+INSERT INTO venus_cache VALUES ('usergroups_timestamp', '0', 'frontend');
+INSERT INTO venus_cache VALUES ('usergroup_guests', '', 'frontend');
+
+INSERT INTO venus_cache VALUES ('menus', '', 'frontend');
+INSERT INTO venus_cache VALUES ('menus', '', 'admin');
+INSERT INTO venus_cache VALUES ('menus_count', '0', 'frontend');
+INSERT INTO venus_cache VALUES ('menus_output', '', 'frontend');
+INSERT INTO venus_cache VALUES ('menu_items_count', '0', 'frontend');
+INSERT INTO venus_cache VALUES ('menu_items_count', '0', 'admin');
+
+
+
+
 INSERT INTO venus_cache VALUES ('snippets_count', '0', 'frontend');
 
 INSERT INTO venus_cache VALUES ('widgets_count', '1', 'frontend');
@@ -47,16 +62,6 @@ INSERT INTO venus_cache VALUES ('comments_count', '0', 'frontend');
 INSERT INTO venus_cache VALUES ('comments_unpublished_count', '0', 'frontend');
 INSERT INTO venus_cache VALUES ('comments_spam_count', '0', 'frontend');
 
-INSERT INTO venus_cache VALUES ('usergroups', '', 'frontend');
-INSERT INTO venus_cache VALUES ('usergroups_permissions', '', 'frontend');
-INSERT INTO venus_cache VALUES ('usergroups_timestamp', '0', 'frontend');
-INSERT INTO venus_cache VALUES ('usergroup_guests', '', 'frontend');
-
-INSERT INTO venus_cache VALUES ('menus', '', 'frontend');
-INSERT INTO venus_cache VALUES ('menu', '', 'frontend');
-INSERT INTO venus_cache VALUES ('menu_output', '', 'frontend');
-INSERT INTO venus_cache VALUES ('menu_count', '1', 'frontend');
-INSERT INTO venus_cache VALUES ('menu_entries_count', '0', 'frontend');
 
 
 INSERT INTO venus_cache VALUES ('announcements_count', '0', 'frontend');

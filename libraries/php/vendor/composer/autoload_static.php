@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit4cc680871f1457cb2918c162fc7c3c77
 {
+    public static $files = array (
+        '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'v' => 
         array (
@@ -59,7 +63,7 @@ class ComposerStaticInit4cc680871f1457cb2918c162fc7c3c77
         array (
             'HTMLPurifier' => 
             array (
-                0 => __DIR__ . '/..' . '/masterjoa/htmlpurifier-standalone/src',
+                0 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
             ),
         ),
         'D' => 
@@ -73,7 +77,6 @@ class ComposerStaticInit4cc680871f1457cb2918c162fc7c3c77
 
     public static $classMap = array (
         'Mobile_Detect' => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
-        'SphinxClient' => __DIR__ . '/..' . '/neutron/sphinxsearch-api/sphinxapi.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

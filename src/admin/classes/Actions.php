@@ -35,8 +35,6 @@ class Actions
 			return '';
 		}
 
-		$item_id = $this->app->escape->id($item_id);
-
 		$html = '<div class="actions-list" id="item-actions-list-' . $item_id . '">' . "\n";
 		$html.= '<ul class="list">' . "\n";
 
@@ -99,47 +97,29 @@ class Actions
 		return $html;
 	}
 
-	protected function addSelectForm($item_id, $item_id_name, $item_ids_name, $url, $form_id, $select_id)
-	{
-		$html = $this->app->html->formStart($url, $form_id, ['onsubmit' => ["return venus.ui.form_action('{$item_id}', '{$form_id}', '{$select_id}')"]]);
-		$html.= $this->app->html->getToken();
-		$html.= $this->app->html->requestHidden($item_id_name, $item_id);
-		$html.= $this->app->html->requestHidden($item_ids_name . '[]', $item_id);
-		$html.= $this->app->html->formEnd();
-	}
-
 	/**
 	* Builds a drop down with the options
 	* The supported params for $options are:
 	* 'permission' => The permission, if any, the user must have to have the option displayed
 	* 'text' => text = The text of the option
 	* 'ajax' => Can be bool or array. If true, will perform the action with an ajax call. If array, must contain the ajax options: ['element' => '', 'on_success' => '', 'on_error' => '']
-	* @param int $item_id The id of the item associated with this form action
+	* @param string $item_id The id of the item associated with this form action
+	* @param array $options The options
+	* @param string $url The form's url (action). If empty $this->app->url is used
 	* @param string $item_id_name The name of the hidden input where the $item_id is stored
 	* @param string $item_ids_name The name of the hidden input where the $item_ids is stored
-	* @param array $options The options of the form. Each element of the array must be in the format: [action, ajax, permission, text]
-	* @param string $url The form's url (action). If empty $this->app->url is used
 	* @return string The html code
 	*/
-	public function getSelect($item_id, $item_id_name, $item_ids_name, $options, $url = '') : string
+	public function getForm(string $item_id, array $options, string $url = '', string $item_id_name = 'id', string $item_ids_name = 'ids') : string
 	{
-		if (!$options) {
-			return '';
-		}
-
 		if (!$url) {
 			$url = $this->app->url;
 		}
 
-		$item_id = $this->app->escape->id($item_id);
+		$ajax_options = '';
+		$options_array = [];
 		$form_id = 'actions-form-' . $item_id;
 		$select_id = 'actions-select-' . $item_id;
-
-		$html = '<div class="actions-select">' . "\n";
-		$html.= $this->app->html->selectStart($this->app->config->action_param, $select_id, ['onchange' => ["venus.html.submit_form('{$form_id}')"], 'form' => $form_id]);
-
-		$index = 0;
-		$ajax_options = '';
 
 		foreach ($options as $action => $option) {
 			if (!empty($option['permission'])) {
@@ -148,37 +128,45 @@ class Actions
 				}
 			}
 
-			$index++;
+			$option['text'] = App::__($option['text']);
+			$option['ajax'] = $option['ajax'] ?? false;
+			if ($option['ajax']) {
+				$option['ajax'] = 1;
+			}
 
 			if ($option['ajax']) {
 				if (is_array($option['ajax'])) {
 					$ajax_key = App::ejs($item_id . '-' . $action);
-					$ajax_options.= 'venus.ui.form_action_ajax[\'' . $ajax_key . '\'] = ' . $this->app->javascript->toItem($option['ajax'], true, ['on_success', 'on_error']) . ';' . "\n";
+					$ajax_options.= 'venus.ui.form_action_ajax[\'' . $ajax_key . '\'] = ' . $this->app->javascript->toObject($option['ajax'], true, ['on_success', 'on_error']) . ';' . "\n";
 
 					$option['ajax'] = 1;
-				} else {
-					$option['ajax'] = (int)$option['ajax'];
 				}
 			}
 
-			$html.= '<option value="' . App::__($action) . '" data-ajax="' . $option['ajax'] . '">' . App::estr($option['text']) . '</option>' . "\n";
+			$options_array[$option['text']] = ['value' => App::__($action), 'data-ajax' => $option['ajax']];
 		}
-		if (!$index) {
+
+		if (!$options_array) {
 			return '';
 		}
 
-		$html.= $this->app->html->selectEnd();
-
+		$html = '<div class="actions-form">' . "\n";
+		$html.= $this->app->html->formOpen($url, ['id' => $form_id, 'onsubmit' => ["return venus.ui.formAction('{$item_id}', '{$form_id}', '{$select_id}')"]]);
+		$html.= $this->app->html->getToken();
+		$html.= $this->app->html->inputHidden($item_id_name, $item_id);
+		$html.= $this->app->html->inputHidden($item_ids_name . '[]', $item_id);
+		$html.= $this->app->html->selectOpen($this->app->config->action_param, ['id' => $select_id, 'onchange' => ["venus.html.submitForm('{$form_id}')"], 'form' => $form_id]);
+		$html.= $this->app->html->options($options_array);
+		$html.= $this->app->html->selectClose();
 		$html.= '&nbsp;';
-		$html.= $this->app->html->requestButton('button', App::__('go'));
-
+		$html.= $this->app->html->button(App::__('go'));
+		$html.= $this->app->html->formClose();
+		$html.= '</div>';
 		if ($ajax_options) {
-			$html.= '<script type="text/javascript">';
+			$html.= '<script>';
 			$html.= $ajax_options;
 			$html.= '</script>';
 		}
-
-		$html.= '</div>';
 
 		return $html;
 	}

@@ -43,7 +43,7 @@ class Language extends \Venus\Language
 
 	/**
 	* @see \Venus\Language::prepare()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepare()
 	{
@@ -68,7 +68,7 @@ class Language extends \Venus\Language
 
 	/**
 	* @see \Venus\Language::fileExists()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function fileExists(string $filename) : bool
 	{
@@ -77,7 +77,7 @@ class Language extends \Venus\Language
 
 	/**
 	* @see \Venus\Language::parentFileExists()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function parentFileExists(string $filename) : bool
 	{

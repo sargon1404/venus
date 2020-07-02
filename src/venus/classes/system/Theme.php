@@ -8,7 +8,7 @@ namespace Venus\System;
 
 use Mars\Templates;
 use Venus\App;
-use Venus\Output\Menu;
+use Venus\Menu;
 use Venus\Output\Announcements;
 use Venus\Output\Breadcrumbs;
 use Venus\Output\Banners;
@@ -150,7 +150,7 @@ class Theme extends \Venus\Theme
 
 	/**
 	* @see \Venus\Theme::prepare()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepare()
 	{
@@ -172,7 +172,7 @@ class Theme extends \Venus\Theme
 
 	/**
 	* @see \Mars\Extensions\Body::prepareDevelopment()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareDevelopment()
 	{
@@ -186,7 +186,7 @@ class Theme extends \Venus\Theme
 
 	/**
 	* @see \Mars\Theme::prepareProperties()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareProperties()
 	{
@@ -221,7 +221,7 @@ class Theme extends \Venus\Theme
 
 	/**
 	* @see \Mars\Theme::prepareVars()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareVars()
 	{
@@ -306,7 +306,7 @@ class Theme extends \Venus\Theme
 
 	/**
 	* @see \Mars\Theme::getTemplateFilename()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function getTemplateFilename(string $template) : string
 	{
@@ -358,7 +358,7 @@ class Theme extends \Venus\Theme
 
 	/**
 	* @see \Mars\Theme::getTemplateFromFilename()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function getTemplateFromFilename(string $filename, bool $debug = false) : string
 	{
@@ -414,7 +414,7 @@ class Theme extends \Venus\Theme
 
 	/**
 	* @see \Mars\Theme::includeTemplate()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function includeTemplate(string $filename) : string
 	{
@@ -461,7 +461,7 @@ class Theme extends \Venus\Theme
 			return;
 		}
 
-		$menu = new Menu;
+		$menu = new Menu($this->app);
 		$menu->output($name);
 	}
 
@@ -474,7 +474,7 @@ class Theme extends \Venus\Theme
 			return;
 		}
 
-		$breadcrumbs = new Breadcrumbs;
+		$breadcrumbs = new Breadcrumbs($this->app);
 		$breadcrumbs->output();
 	}
 
@@ -487,7 +487,7 @@ class Theme extends \Venus\Theme
 			return;
 		}
 
-		$announcements = new Announcements;
+		$announcements = new Announcements($this->app);
 		$announcements->output();
 	}
 
@@ -501,7 +501,7 @@ class Theme extends \Venus\Theme
 			return;
 		}
 
-		$banners = new Banners;
+		$banners = new Banners($this->app);
 		$banners->output($position);
 	}
 
@@ -635,7 +635,7 @@ class Theme extends \Venus\Theme
 
 	/**
 	* @see \Mars\Theme::outputHead()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function outputHead()
 	{

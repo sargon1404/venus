@@ -422,6 +422,63 @@ class Cache extends \Venus\Cache
 		return $this;
 	}
 
+	/**
+	* Builds the menus cache
+	* @return $this
+	*/
+	public function buildMenus()
+	{
+		$this->buildMenusFrontend();
+		$this->buildMenusAdmin();
+
+		$this->app->plugins->run('admin_cache_build_menus', $this);
+	}
+
+	/**
+	* Builds the menus frontend cache
+	*/
+	public function buildMenusFrontend()
+	{
+		$menu_ids = [];
+		$menus = $this->app->db->selectWithKey('venus_menus', 'id', '*', ['scope' => 'frontend', 'status' => 1]);
+		foreach ($menus as $menu) {
+			$menu_ids[] = $menu->id;
+		}
+
+		$menus_count = count($menu_ids);
+		$menu_items_count = $this->app->db->count('venus_menu_items', ['menu_id' => $menu_ids, 'status' => 1]);
+
+		$this->update('menus', $menus, 'frontend', true);
+		$this->update('menus_count', $menus_count, 'frontend');
+		$this->update('menus_output', '', 'frontend');
+		$this->update('menu_items_count', $menu_items_count, 'frontend');
+
+		$this->app->plugins->run('admin_cache_build_menus_admnin', $javascript, $this);
+
+		return $this;
+	}
+
+	/**
+	* Builds the menus admin cache
+	*/
+	public function buildMenusAdmin()
+	{
+		$menu_ids = [];
+		$menus = $this->app->db->selectWithKey('venus_menus', 'id', '*', ['scope' => 'admin', 'status' => 1]);
+
+		foreach ($menus as $menu) {
+			$menu_ids[] = $menu->id;
+		}
+
+		$menu_items_count = $this->app->db->count('venus_menu_items', ['menu_id' => $menu_ids, 'status' => 1]);
+
+		$this->update('menus', $menus, 'admin', true);
+		$this->update('menu_items_count', $menu_items_count, 'admin');
+
+		$this->app->plugins->run('admin_cache_build_menus_admnin', $javascript, $this);
+
+		return $this;
+	}
 
 
 

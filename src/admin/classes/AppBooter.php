@@ -44,7 +44,7 @@ class AppBooter extends \Venus\AppBooter
 {
 	/**
 	* @see \Mars\Booter::minimum()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function minimum()
 	{
@@ -61,7 +61,7 @@ class AppBooter extends \Venus\AppBooter
 
 	/**
 	* @see \Mars\Booter::base()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function base()
 	{
@@ -82,7 +82,7 @@ class AppBooter extends \Venus\AppBooter
 
 	/**
 	* @see \Mars\Booter::env()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function env()
 	{
@@ -111,7 +111,7 @@ class AppBooter extends \Venus\AppBooter
 
 	/**
 	* @see \Mars\Booter::document()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function document()
 	{
@@ -131,7 +131,7 @@ class AppBooter extends \Venus\AppBooter
 
 	/**
 	* @see \Mars\Booter::system()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function system()
 	{

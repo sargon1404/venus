@@ -39,7 +39,7 @@ class Parser extends \Mars\Text\Parser
 
 	/**
 	* @see \Mars\Text\Parser::parseLinks()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function parseLinks(string $text, bool $parse_nofollow = false) : string
 	{
@@ -70,7 +70,7 @@ class Parser extends \Mars\Text\Parser
 
 	/**
 	* @see \Mars\Text\Parser::parseNofollow()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function parseNofollow(string $text) : string
 	{

@@ -32,7 +32,7 @@ class Css extends \Venus\Assets\Css
 
 	/**
 	* @see \Venus\Assets\Css::buildCache()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function buildCache()
 	{
@@ -43,7 +43,7 @@ class Css extends \Venus\Assets\Css
 
 	/**
 	* @see \Venus\Assets\Css::cacheThemeInline()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function cacheThemeInline(Theme $theme)
 	{

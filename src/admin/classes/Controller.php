@@ -22,7 +22,7 @@ abstract class Controller extends \Venus\Controller
 
 	/**
 	* @see \Venus\Controller::prepare();
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepare(Document $document = null)
 	{

@@ -8,7 +8,7 @@ namespace Venus\Admin\System;
 
 use Mars\Templates;
 use Venus\Admin\App;
-use Venus\Admin\Output\Menu;
+use Venus\Admin\Menu;
 
 /**
 * The System's Admin Theme Class
@@ -36,7 +36,7 @@ class Theme extends \Venus\Admin\Theme
 
 	/**
 	* @see \Venus\Theme::prepare()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepare()
 	{
@@ -60,7 +60,7 @@ class Theme extends \Venus\Admin\Theme
 
 	/**
 	* @see \Venus\System\Theme::prepareJquery()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareJquery()
 	{
@@ -81,7 +81,7 @@ class Theme extends \Venus\Admin\Theme
 
 	/**
 	* @see \Venus\System\Theme::prepareVars()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareVars()
 	{
@@ -133,7 +133,7 @@ class Theme extends \Venus\Admin\Theme
 
 	/**
 	* @see \Venus\System\Theme::getTitle()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function getTitle() : string
 	{
@@ -146,7 +146,7 @@ class Theme extends \Venus\Admin\Theme
 
 	/**
 	* @see \Mars\Theme::outputHead()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function outputHead()
 	{
@@ -174,7 +174,7 @@ class Theme extends \Venus\Admin\Theme
 
 	/**
 	* @see \Venus\System\Theme::outputBodyExtra()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function outputBodyExtra()
 	{
@@ -192,12 +192,12 @@ class Theme extends \Venus\Admin\Theme
 
 	/**
 	* @see \Venus\System\Theme::outputMenu()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function outputMenu(string $menu_name = 'main')
 	{
-		$menu = new Menu;
-		$menu->output($menu_name);
+		$menu = new Menu($menu_name);
+		$menu->output();
 	}
 
 	/**

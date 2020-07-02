@@ -67,7 +67,7 @@ class Theme extends \Venus\System\Theme
 
 	/**
 	* @see \Venus\Theme::preparePaths()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function preparePaths()
 	{
@@ -80,7 +80,7 @@ class Theme extends \Venus\System\Theme
 
 	/**
 	* @see \Venus\Theme::prepareImagePaths()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareImagePaths()
 	{
@@ -94,7 +94,7 @@ class Theme extends \Venus\System\Theme
 
 	/**
 	* @see \Mars\Theme::prepareProperties()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareProperties()
 	{
@@ -107,7 +107,7 @@ class Theme extends \Venus\System\Theme
 
 	/**
 	* @see \Venus\Theme::prepareTemplates()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepareTemplates()
 	{

@@ -14,7 +14,7 @@ class Output extends \Venus\System\Output
 		
 	/**
 	* @see \Venus\System\Cli::message()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function message(string $text)
 	{
@@ -27,7 +27,7 @@ class Output extends \Venus\System\Output
 	
 	/**
 	* @see \Venus\System\Cli::error()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function error(string $text)
 	{
@@ -40,7 +40,7 @@ class Output extends \Venus\System\Output
 	
 	/**
 	* @see \Venus\System\Cli::warning()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function warning(string $text)
 	{
@@ -53,7 +53,7 @@ class Output extends \Venus\System\Output
 	
 	/**
 	* @see \Venus\System\Cli::info()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function info(string $text)
 	{

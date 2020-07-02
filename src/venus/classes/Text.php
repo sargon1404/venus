@@ -109,7 +109,7 @@ class Text extends \Mars\Text
 
 	/**
 	* @see \Mars\Text::filter()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function filter(string $text, string $allowed_attributes = '', ?array $allowed_elements = [], string $encoding = '') : string
 	{

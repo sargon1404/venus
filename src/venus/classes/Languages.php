@@ -24,7 +24,7 @@ class Languages extends Items
 
 	/**
 	* @see \Mars\Items::load()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function load(array $where = [], string $order_by = '', string $order = '', int $limit = 0, int $limit_offset = 0, string $fields = 'l.*') : array
 	{

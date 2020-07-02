@@ -220,7 +220,7 @@ create table venus_users_autologin
 	`key`										varchar(255)							NOT NULL,
 	`valid_timestamp`						int unsigned							NOT NULL,
 
-	INDEX user_id_index(user_id, `key`(4)),
+	INDEX user_id_index(user_id, `key`(8)),
 	INDEX timestamp_index(`valid_timestamp`)
 );
 
@@ -299,9 +299,6 @@ create table venus_languages
 	`date_format`     					varchar(255)             			NOT NULL,
 	`time_format`     					varchar(255)             			NOT NULL,
 
-	`date_picker_format`					varchar(255)             			NOT NULL,
-	`time_picker_format`					varchar(255)             			NOT NULL,
-
 	`decimal_separator` 	  				varchar(255)             			NOT NULL,
 	`thousands_separator`   			varchar(255)             			NOT NULL,
 
@@ -360,7 +357,7 @@ create table venus_administrators
 create table venus_administrators_permissions
 (
 	`user_id`								int   				unsigned			NOT NULL,
-	`bid`										int   				unsigned			NOT NULL,
+	`block_id`								int   				unsigned			NOT NULL,
 	`view`									tinyint									NOT NULL,
 	`add`										tinyint									NOT NULL,
 	`publish`								tinyint									NOT NULL,
@@ -384,7 +381,7 @@ create table venus_administrators_logins
 
 create table venus_admin_blocks
 (
-	`bid`                   			int	unsigned 	auto_increment	NOT NULL,
+	`id`                   				int	unsigned 	auto_increment	NOT NULL,
 	`title`               				varchar(255) 							NOT NULL,
 	`name`               				varchar(255) 							NOT NULL,
 	`name_crc`								int 			 		unsigned			NOT NULL,
@@ -399,20 +396,86 @@ create table venus_admin_blocks
  	`modified_timestamp`					int					unsigned			NOT NULL,
  	`modified_by`							int					unsigned			NOT NULL,
 
-	primary key(bid),
+	primary key(id),
 	index name_crc_index(`name_crc`)
 );
 
-
-create table venus_admin_menu
+create table venus_menus
 (
-	`mid`     	 							int unsigned	auto_increment  	NOT NULL,
-	`type`									varchar(255)							NOT NULL,
-	`type_id`								int										NOT NULL,
-	`title`				   				varchar(255)							NOT NULL,
-	`url`          						text							   		NOT NULL,
-	`icon`         	   				varchar(255)							NOT NULL,
-	`parent`       						int unsigned							NOT NULL,
-	`block`									varchar(255)							NOT NULL,
-	primary key(mid)
+	`id`           						int	unsigned auto_increment		NOT NULL,
+	`title`        		 				varchar(255)							NOT NULL,
+	`name`         		 				varchar(255)							NOT NULL,
+	`name_crc`								int unsigned					      NOT NULL,
+	`scope`									varchar(255)							NOT NULL,
+	`status`									tinyint									NOT NULL,
+
+	`note`									varchar(2048)							NOT NULL,
+
+	`created_timestamp`					int					unsigned			NOT NULL,
+ 	`created_by`							int					unsigned			NOT NULL,
+ 	`modified_timestamp`					int					unsigned			NOT NULL,
+ 	`modified_by`							int					unsigned			NOT NULL,
+	primary key(id),
+	index name_index(name_crc, scope(4))
+);
+
+create table venus_menu_items
+(
+   `id`           						int	unsigned auto_increment		NOT NULL,
+   `menu_id`								int										NOT NULL,
+   `title`         		 				varchar(255)							NOT NULL,
+   `title_alias`         		 		varchar(255)							NOT NULL,
+   `status`									tinyint									NOT NULL,
+   `parent`       		 				int										NOT NULL,
+   `type`									varchar(255)							NOT NULL,
+   `type_id`								varchar(255)							NOT NULL,
+   `order`      			 				int										NOT NULL,
+
+   `note`									varchar(2048)							NOT NULL,
+
+   `image`									varchar(1024)							NOT NULL,
+	`image_original`						varchar(1024)							NOT NULL,
+	`image_for_tablets`					tinyint									NOT NULL,
+	`image_for_smartphones`				tinyint									NOT NULL,
+	`image_process`						varchar(255)							NOT NULL,
+
+ 	`seo_rel`								varchar(255)							NOT NULL,
+ 	`seo_target`							varchar(255)							NOT NULL,
+
+   `position`								int                           	NOT NULL,
+   `level`									int										NOT NULL,
+   `lineage`								varchar(255)							NOT NULL,
+
+   `created_timestamp`					int					unsigned			NOT NULL,
+ 	`created_by`							int					unsigned			NOT NULL,
+ 	`modified_timestamp`					int					unsigned			NOT NULL,
+ 	`modified_by`							int					unsigned			NOT NULL,
+   primary key(id),
+   index position_index(menu_id, status, position),
+   index title_index(menu_id, status, title)
+);
+
+create table venus_menu_items_data
+(
+	`menu_id`								int										NOT NULL,
+	`language_id`							int										NOT NULL,
+	`title`         		 				varchar(255)							NOT NULL,
+   `title_alias`         		 		varchar(255)							NOT NULL,
+   `url`          			 			text										NOT NULL,
+
+   `image_alt`								varchar(255)							NOT NULL,
+
+   `seo_title`								varchar(255)							NOT NULL,
+
+   index menu_id_index(menu_id, language_id)
+);
+
+create table venus_menu_items_permissions
+(
+	`menu_item_id`							int					unsigned			NOT NULL,
+	`usergroup_id`							int					unsigned			NOT NULL,
+	`view`									tinyint									NOT NULL,
+	`inherit`								tinyint									NOT NULL,
+	index mid_index(menu_item_id),
+	index perm_index(usergroup_id,inherit,view,menu_item_id)
 );

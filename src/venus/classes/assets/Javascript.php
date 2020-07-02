@@ -87,7 +87,7 @@ class Javascript extends Asset
 
 	/**
 	* @see \Venus\Assets\Asset::minify()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function minify(string $content) : string
 	{
@@ -97,7 +97,7 @@ class Javascript extends Asset
 
 	/**
 	* @see \Venus\Assets\Asset::parse()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function parse(string $content, array $params = []) : string
 	{

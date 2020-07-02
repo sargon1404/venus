@@ -38,6 +38,34 @@ class Cache extends \Mars\Cache
 	}
 
 	/**
+	* Returns the cached usergroups
+	* @return array The usergroups
+	*/
+	public function getUsergroups() : array
+	{
+		return $this->get('usergroups', true, []);
+	}
+
+	/**
+	* Returns the cached menus
+	* @return array The menus
+	*/
+	public function getMenus() : array
+	{
+		return $this->get('menus', true, []);
+	}
+
+	/**
+	* Returns the cached libraries
+	* @return array The libraries
+	*/
+	public function getLibraries() : array
+	{
+		return $this->get('libraries', true, []);
+	}
+
+
+	/**
 	* Returns the cached categories
 	* @return array The categories
 	*/
@@ -53,24 +81,6 @@ class Cache extends \Mars\Cache
 	public function getCategoryIds() : array
 	{
 		return $this->get('categories_ids', true, []);
-	}
-
-	/**
-	* Returns the cached usergroups
-	* @return array The usergroups
-	*/
-	public function getUsergroups() : array
-	{
-		return $this->get('usergroups', true, []);
-	}
-
-	/**
-	* Returns the cached libraries
-	* @return array The libraries
-	*/
-	public function getLibraries() : array
-	{
-		return $this->get('libraries', true, []);
 	}
 
 	/**

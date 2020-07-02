@@ -20,6 +20,9 @@ class Cache extends Command
 		'themes' => ['themes', 'Caches the themes data'],
 		'plugins' => ['plugins', 'Caches the plugins data'],
 		'usergroups' => ['usergroups', 'Caches the usergroups data'],
+		'menus' => ['menus', 'Caches the menus data'],
+		'menus-frontend' => ['menusFrontend', 'Caches the frontend menus'],
+		'menus-admin' => ['menusAdmin', 'Caches the admin menus'],
 	];
 
 	/**
@@ -39,6 +42,7 @@ class Cache extends Command
 		$this->newline();
 		$this->plugins();
 		$this->usergroups();
+		$this->menus();
 	}
 
 	/**
@@ -91,7 +95,7 @@ class Cache extends Command
 	}
 
 	/**
-	* Caches the frontend & adminjavascript code
+	* Caches the frontend & admin javascript code
 	*/
 	public function javascript()
 	{
@@ -170,6 +174,42 @@ class Cache extends Command
 		$this->printInfo('Building the usergroups cache...');
 
 		$this->app->cache->buildUsergroups();
+
+		$this->done();
+	}
+
+	/**
+	* Caches the frontend & admin menus
+	*/
+	public function menus()
+	{
+		$this->printInfo('Building the menus cache...');
+
+		$this->app->cache->buildMenus();
+
+		$this->done();
+	}
+
+	/**
+	* Caches the frontend javascript code
+	*/
+	public function menusFrontend()
+	{
+		$this->printInfo('Building the frontend menus cache...');
+
+		$this->app->cache->buildMenusFrontend();
+
+		$this->done();
+	}
+
+	/**
+	* Caches the admin javascript code
+	*/
+	public function menusAdmin()
+	{
+		$this->printInfo('Building the admin menus cache...');
+
+		$this->app->cache->buildMenusAdmin();
 
 		$this->done();
 	}

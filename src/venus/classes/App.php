@@ -12,6 +12,8 @@ namespace Venus;
 */
 class App extends \Mars\App
 {
+	use AppFunctionsTrait;
+	
 	/**
 	* @var float $version The version
 	*/
@@ -297,7 +299,7 @@ class App extends \Mars\App
 
 	/**
 	* @see \Mars\App::setUrls()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function setUrls()
 	{
@@ -312,7 +314,7 @@ class App extends \Mars\App
 
 	/**
 	* @see \Mars\App::setProperties()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function setProperties()
 	{
@@ -341,7 +343,7 @@ class App extends \Mars\App
 
 	/**
 	* @see \Mars\App::loadBooter()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function loadBooter()
 	{
@@ -427,7 +429,7 @@ class App extends \Mars\App
 
 	/**
 	* @see \Mars\App::fatalError()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function fatalError(string $text, bool $escape_html = true)
 	{

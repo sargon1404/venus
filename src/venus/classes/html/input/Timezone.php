@@ -1,7 +1,7 @@
 <?php
 /**
 * The Timezone Class
-* @package Mars
+* @package Venus
 */
 
 namespace Venus\Html\Input;
@@ -13,12 +13,13 @@ use Mars\Html\Input\Select;
 * The Timezone Class
 * Renders a field from where the timezone can be picked
 */
-class Timezone extends \Mars\Html\BaseTag
+class Timezone extends \Mars\Html\Tag
 {
 	/**
 	* @var string $selected The selected timezone, if any
 	*/
 	public string $selected = '';
+
 	/**
 	* @var array $regions Array listing the available regions
 	*/
@@ -27,9 +28,10 @@ class Timezone extends \Mars\Html\BaseTag
 		'Europe' => 'Europe', 'Indian' => 'Indian', 'Pacific' => 'Pacific', 'Atlantic' => 'Atlantic',
 		'Antarctica' => 'Antarctica', 'Arctic' => 'Arctic'
 	];
+
 	/**
 	* @see \Mars\Html\TagInterface::get()
-	* {@inheritDocs}
+	* {@inheritdoc}
 	*/
 	public function get() : string
 	{

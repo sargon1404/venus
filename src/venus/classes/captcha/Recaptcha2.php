@@ -34,7 +34,7 @@ class Recaptcha2 implements DriverInterface
 
 	/**
 	* @see \Venus\Captcha\DriverInterface::check()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function check() : bool
 	{
@@ -55,7 +55,7 @@ class Recaptcha2 implements DriverInterface
 
 	/**
 	* @see \Venus\Captcha\DriverInterface::output()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function output()
 	{

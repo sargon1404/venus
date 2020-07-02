@@ -50,6 +50,55 @@ class Environment
 	}
 
 	/**
+	* Returns the (cached) menus
+	* @return array The menus
+	*/
+	public function getMenus() : array
+	{
+		static $menus = [];
+		if (!$menus) {
+			$menus = $this->app->cache->getMenus();
+		}
+
+		return $menus;
+	}
+
+	/**
+	* Returns a (cached) menu
+	* @param int $id The menu's id
+	* @return object The menu
+	*/
+	public function getMenu(int $id) : ?object
+	{
+		$menu = null;
+		$menus = $this->getMenus();
+
+		if (isset($menus[$id])) {
+			$menu = $menus[$id];
+		}
+
+		return $menu;
+	}
+
+	/**
+	* Returns a (cached) menu, by name
+	* @param string $name The menu's name
+	* @return object The menu
+	*/
+	public function getMenuByName(string $name) : ?object
+	{
+		$menus = $this->getMenus();
+
+		foreach ($menus as $menu) {
+			if ($menu->name == $name) {
+				return $menu;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	* Returns the (cached) categories
 	* @return array The categories
 	*/

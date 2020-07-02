@@ -61,7 +61,7 @@ class Request extends \Mars\Request
 
 	/**
 	* @see \Mars\Request::getResponse()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function getResponse(string $response_param = '') : string
 	{
@@ -89,7 +89,7 @@ class Request extends \Mars\Request
 
 	/**
 	* @see \Mars\Request::getAction()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function getAction(string $action_param = '') : string
 	{
@@ -172,7 +172,7 @@ class Request extends \Mars\Request
 
 	/**
 	* @see \Mars\Request::getOrderBy()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function getOrderBy(array $fields = [], string $default_field = '', string $orderby_param = '') : string
 	{
@@ -185,7 +185,7 @@ class Request extends \Mars\Request
 
 	/**
 	* @see \Mars\Request::getOrder()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function getOrder(string $order_param = '') : string
 	{
@@ -198,7 +198,7 @@ class Request extends \Mars\Request
 
 	/**
 	* @see \Mars\Request::getPage()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function getPage(string $page_param = '') : int
 	{
@@ -220,7 +220,7 @@ class Request extends \Mars\Request
 
 	/**
 	* @see \Mars\Request::uploadExtensionIsAllowed()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function uploadExtensionIsAllowed(string $extension, $allowed_extensions = '*', ?array &$out_allowed_extensions = []) : bool
 	{
@@ -236,7 +236,7 @@ class Request extends \Mars\Request
 
 	/**
 	* @see \Mars\Request::uploadHandleErrorExtensionIsDisallowed()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function uploadHandleErrorExtensionIsDisallowed(string $file)
 	{
@@ -245,7 +245,7 @@ class Request extends \Mars\Request
 
 	/**
 	* @see \Mars\Request::uploadHandleErrorExtensionIsNotAllowed()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function uploadHandleErrorExtensionIsNotAllowed(string $file, array $allowed_extensions)
 	{
@@ -254,7 +254,7 @@ class Request extends \Mars\Request
 
 	/**
 	* @see \Mars\Request::uploadHandleError()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function uploadHandleError(string $error_code, string $file)
 	{

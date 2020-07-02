@@ -80,7 +80,7 @@ abstract class Listing extends Base
 		}
 
 		$item->actions_list = $this->actions->getList($item->id, $this->getActionsListOptions($item));
-		$item->actions_form = $this->getFormActionsList($item->id, $this->getActionsFormOptions($item));
+		$item->actions_form = $this->actions->getForm($item->id, $this->getActionsFormOptions($item));
 
 		$this->plugins->run($this->prefix . 'prepare_item', $item, $this);
 	}
@@ -108,31 +108,6 @@ abstract class Listing extends Base
 	}
 
 	/**
-	* Returns the Quick Action options which can be performed on $item when directly editing it
-	* @param object $item The item
-	* @return array
-	*/
-	protected function get_item_quick_actions_edit($item) : array
-	{
-		global $venus;
-		$id = $item->id;
-
-		$quick_actions =
-		[
-			['disable', $this->get_item_url($id, 'disable', true, 'quick_actions'), ['on_success' => 'venus.ui.update_status_0'], 'publish', 'action_disable'],
-			['uninstall', $this->get_item_url($id, 'uninstall', true, 'index'), false, 'delete', 'action_uninstall']
-		];
-
-		if (!$item->status) {
-			$quick_actions[0] = ['enable', $this->get_item_url($id, 'enable', true, 'quick_actions'), ['on_success' => 'venus.ui.update_status_1'], 'publish', 'action_enable'];
-		}
-
-		$venus->plugins->run($this->prefix . 'get_item_quick_actions_edit', $this, $item, $quick_actions);
-
-		return $quick_actions;
-	}
-
-	/**
 	* Returns the actions form options which can be performed on $item
 	* @param object $item The item
 	* @return array
@@ -153,6 +128,36 @@ abstract class Listing extends Base
 		$this->plugins->run($this->prefix . 'get_actions_form_options', $item, $options, $this);
 
 		return $options;
+	}
+
+
+
+
+
+
+	/**
+	* Returns the Quick Action options which can be performed on $item when directly editing it
+	* @param object $item The item
+	* @return array
+	*/
+	protected function get_item_quick_actions_edit2($item) : array
+	{
+		global $venus;
+		$id = $item->id;
+
+		$quick_actions =
+		[
+			['disable', $this->get_item_url($id, 'disable', true, 'quick_actions'), ['on_success' => 'venus.ui.update_status_0'], 'publish', 'action_disable'],
+			['uninstall', $this->get_item_url($id, 'uninstall', true, 'index'), false, 'delete', 'action_uninstall']
+		];
+
+		if (!$item->status) {
+			$quick_actions[0] = ['enable', $this->get_item_url($id, 'enable', true, 'quick_actions'), ['on_success' => 'venus.ui.update_status_1'], 'publish', 'action_enable'];
+		}
+
+		$venus->plugins->run($this->prefix . 'get_item_quick_actions_edit', $this, $item, $quick_actions);
+
+		return $quick_actions;
 	}
 
 	public function item()

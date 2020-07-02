@@ -21,9 +21,9 @@ class Block extends \Venus\Extensions\Extension implements Document
 	use \Venus\Extensions\MvcTrait;
 
 	/**
-	* @var int $bid The block's id
+	* @var int $id The block's id
 	*/
-	public int $bid = 0;
+	public int $id = 0;
 
 	/**
 	* @var int $id1 The block's sub item 1
@@ -44,11 +44,6 @@ class Block extends \Venus\Extensions\Extension implements Document
 	* @var string $full_url The url of the current block page
 	*/
 	public string $full_url = '';
-
-	/**
-	* @internal
-	*/
-	protected static string $id_name = 'bid';
 
 	/**
 	* @internal
@@ -128,7 +123,7 @@ class Block extends \Venus\Extensions\Extension implements Document
 
 		$where_sql = '';
 		if (is_int($name)) {
-			$where_sql = 'b.bid = :block_name';
+			$where_sql = 'b.id = :block_name';
 		} else {
 			$where_sql = 'b.name_crc = CRC32(:block_name) AND b.name = :block_name';
 		}
@@ -146,7 +141,7 @@ class Block extends \Venus\Extensions\Extension implements Document
 
 	/**
 	* @see \Venus\Extensions\Extension::prepare()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function prepare()
 	{
@@ -170,7 +165,7 @@ class Block extends \Venus\Extensions\Extension implements Document
 
 	/**
 	* @see \Venus\Extensions\Extension::preparePaths()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function preparePaths()
 	{

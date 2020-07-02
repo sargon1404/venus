@@ -87,7 +87,7 @@ class Pagination extends \Mars\Ui\Pagination
 
 	/**
 	* @see \Mars\Ui\Pagination::getUrl()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function getUrl(string $base_url, int $page, bool $replace_seo_page = false, array $url_extra = []) : string
 	{
@@ -132,7 +132,7 @@ class Pagination extends \Mars\Ui\Pagination
 
 	/**
 	* @see \Mars\Ui\Pagination::getJumpToLink()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function getJumpToLink(string $base_url, int $current_page, int $pages_count, bool $replace_seo_page, array $url_extra = []) : array
 	{

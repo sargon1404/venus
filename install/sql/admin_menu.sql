@@ -1,0 +1,1 @@
+INSERT INTO venus_menus VALUES(1, 'Main', 'main', CRC32('main'), 'admin', 1, '', UNIX_TIMESTAMP(), 1, UNIX_TIMESTAMP(), 1);

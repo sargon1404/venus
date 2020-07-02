@@ -21,9 +21,6 @@ class Html extends \Mars\Html
 		parent::__construct($app);
 
 		$supported_tags = [
-			'datetime' => '\Venus\Html\Input\Datetime',
-			'date' => '\Venus\Html\Input\Date',
-			'time' => '\Venus\Html\Input\Time',
 			'timezone' => '\Venus\Html\Input\Timezone'
 		];
 
@@ -115,89 +112,6 @@ class Html extends \Mars\Html
 	}
 
 	/**
-	* Returns controls from where the user will be able to select the date and time
-	* @param string $name The name of the control. The name of the date control will be $name_date, the time= $name_time
-	* @param int $timestamp The timestamp of the datetime control.
-	* @param string $date If specified, the value of the date part will be set to $date
-	* @param string $time If specified, the value of the time part will be set to $date
-	* @param bool $required If true the datetime control will be a required control
-	* @return string The html code
-	*/
-	public function selectDatetime(string $name, int $timestamp = 0, string $date = '0', string $time = '0', bool $required = false) : string
-	{
-		[$date, $time] = $this->getDateTime($timestamp, $date, $time);
-
-		$html = $this->input($name . '-date', $date, $required, $this->app->lang->date_picker_format, 'date') . '&nbsp;';
-		$html.= $this->input($name . '-time', $time, $required, $this->app->lang->time_picker_format, 'date');
-
-		return $this->app->plugins->filter('html_select_datetime', $html, $name, $timestamp, $date, $time, $required, $this);
-	}
-
-	/**
-	* Returns a control from where the user will be able to select the date
-	* @param string $name The name of the control.
-	* @param int $timestamp The timestamp of the date control.
-	* @param string $date If specified, the value of the date part will be set to $date
-	* @param bool $required If true the date control will be a required control
-	* @return string The html code
-	*/
-	public function selectDate(string $name, int $timestamp = 0, string $date = '0', bool $required = false) : string
-	{
-		[$date, $time] = $this->getDateTime($timestamp, $date, 0);
-
-		$html = $this->input($name, $date, $required, $this->app->lang->date_picker_format, 'date');
-
-		return $this->app->plugins->filter('html_select_date', $html, $name, $timestamp, $date, $required, $this);
-	}
-
-	/**
-	* Returns a control from where the user will be able to select the time of the day
-	* @param string $name The name of the control.
-	* @param int $timestamp The timestamp of the date control.
-	* @param string $time If specified, the value of the time part will be set to $date
-	* @param bool $required If true the date control will be a required control
-	* @return string The html code
-	*/
-	public function selectTime(string $name, int $timestamp = 0, string $time = '0', bool $required = false) : string
-	{
-		[$date, $time] = $this->getDateTime($timestamp, 0, $time);
-
-		$html = $this->input($name, $time, $required, '', 'time');
-
-		return $this->app->plugins->filter('html_select_time', $html, $name, $timestamp, $time, $required, $this);
-	}
-
-	/**
-	* Computes the date and time to be shown in a select_datetime control
-	* @param int $timestamp The timestamp
-	* @param string $date The date part
-	* @param string $time The time part
-	* @return array
-	*/
-	protected function getDateTime(int $timestamp, string $date, string $time) : array
-	{
-		if ($timestamp) {
-			$d = getdate($this->app->time->adjust($timestamp));
-
-			if ($date === '0') {
-				$date = str_replace(['dd', 'mm', 'yyyy'], [App::padInt($d['mday']), App::padInt($d['mon']), $d['year']], $this->app->lang->date_picker_format);
-			}
-			if ($time === '0') {
-				$time = str_replace(['hh', 'mm', 'ss'], [App::padInt($d['hours']), App::padInt($d['minutes']), App::padInt($d['seconds'])], $this->app->lang->time_picker_format);
-			}
-		} else {
-			if ($date === '0') {
-				$date = '';
-			}
-			if ($time === '0') {
-				$time = '';
-			}
-		}
-
-		return [$date, $time];
-	}
-
-	/**
 	* Returns a control from where the user will be able to select the timezone
 	* @param string $name The name of the select control
 	* @param string $selected The name of the option that should be selected
@@ -209,6 +123,6 @@ class Html extends \Mars\Html
 	{
 		$attributes = $attributes + ['name' => $name, 'required' => $required];
 
-		return $this->getTag('timezone', $attributes, '', ['selected' => $selected])->get();
+		return $this->getTag('timezone', $attributes, ['selected' => $selected])->get();
 	}
 }

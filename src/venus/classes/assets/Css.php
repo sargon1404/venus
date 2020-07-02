@@ -62,7 +62,7 @@ class Css extends Asset
 
 	/**
 	* @see \Venus\Assets\Asset::minify()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function minify(string $content) : string
 	{
@@ -73,7 +73,7 @@ class Css extends Asset
 
 	/**
 	* @see \Venus\Assets\Asset::parse()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function parse(string $content, array $params = []) : string
 	{
@@ -84,7 +84,7 @@ class Css extends Asset
 
 	/**
 	* @see \Venus\Assets\Asset::parseInline()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function parseInline(string $content, string $device) : string
 	{

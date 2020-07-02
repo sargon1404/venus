@@ -35,16 +35,6 @@ class Language extends \Venus\Extensions\Extension
 	public string $parent_dir = '';
 
 	/**
-	* @var string $date_picker_format The language's date picker format
-	*/
-	public string $date_picker_format = 'dd/mm/yyyy';
-
-	/**
-	* @var string $time_picker_format The language's time picker format
-	*/
-	public string $time_picker_format = 'hh:mm:ss';
-
-	/**
 	* @var array $files Array with the keys listing the available files of the language
 	*/
 	public $files = [];

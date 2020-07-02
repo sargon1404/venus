@@ -19,7 +19,7 @@ class AppBooter extends \Venus\Admin\AppBooter
 {
 	/**
 	* @see \Mars\Booter::system()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function system()
 	{

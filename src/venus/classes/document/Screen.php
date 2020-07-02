@@ -49,7 +49,7 @@ class Screen extends \Mars\Document\Screen
 
 	/**
 	* @see \Mars\Document\Screen::fatalError()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function fatalError(string $text, bool $escape_html = true)
 	{
@@ -73,7 +73,7 @@ class Screen extends \Mars\Document\Screen
 
 	/**
 	* @see \Mars\Document\Screen::error()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function error(string $text, string $title = '', bool $escape_html = true)
 	{
@@ -97,7 +97,7 @@ class Screen extends \Mars\Document\Screen
 
 	/**
 	* @see \Mars\Document\Screen::message()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function message(string $text, string $title = '', bool $escape_html = true)
 	{
@@ -138,7 +138,7 @@ class Screen extends \Mars\Document\Screen
 
 	/**
 	* @see \Mars\Document\Screen::permissionDenied()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function permissionDenied()
 	{

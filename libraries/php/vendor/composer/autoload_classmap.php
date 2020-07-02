@@ -7,5 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Mobile_Detect' => $vendorDir . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
-    'SphinxClient' => $vendorDir . '/neutron/sphinxsearch-api/sphinxapi.php',
 );

@@ -50,7 +50,7 @@ class Javascript extends \Venus\Assets\Javascript
 
 	/**
 	* @see \Venus\Assets\Javascript::buildCache()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	public function buildCache()
 	{
@@ -71,7 +71,7 @@ class Javascript extends \Venus\Assets\Javascript
 
 	/**
 	* @see \Venus\Assets\Javascript::cacheTheme()
-	* @inheritDocs
+	* @inheritdocs
 	*/
 	public function cacheTheme(Theme $theme)
 	{
@@ -108,7 +108,7 @@ class Javascript extends \Venus\Assets\Javascript
 
 	/**
 	* @see \Venus\Assets\Javascript::getInit()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function getInit() : string
 	{
@@ -120,7 +120,7 @@ class Javascript extends \Venus\Assets\Javascript
 
 	/**
 	* @see \Venus\Assets\Javascript::getLanguagesObj()
-	* {@inheritDoc}
+	* {@inheritdoc}
 	*/
 	protected function getLanguagesObj()
 	{

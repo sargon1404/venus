@@ -1,7 +1,7 @@
 <?php
 /**
 * The Merge trait
-* @package Mars
+* @package Venus
 */
 
 namespace Venus\Assets;
