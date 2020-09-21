@@ -1,23 +1,18 @@
-<div id="navbar">
-	<div id="navbar-icon">
+<div id="navbar" class="grid">
+	<div id="navbar-links" class="col-24 col-lg-12 center left-lg">
 		{% if $navbar.icon %}
-		<img src="{{ $navbar.icon }}" alt="navbar-icon" />
+			<img src="{{ $navbar.icon }}" alt="navbar-icon" class="hidden visible-lg" />
 		{% endif %}
+
+		<h1>{{ $navbar.outputTitle() }}</h1>
+
+		{{ $navbar.outputLinks() }}
 	</div>
 
-	<div id="navbar-nav">
-		<div id="navbar-title">
-			<h1>{{ $navbar.outputTitle() }}</h1>
-		</div>
-		<div id="navbar-links">
-			{{ $navbar.outputLinks() }}
-		</div>
-	</div>
-
-	<div id="navbar-buttons">
-		{{ $navbar.outputOuterForm() }}
+	<div id="navbar-buttons" class="col-24 col-lg-12 center right-lg">
 		{{ $navbar.outputButtons() }}
 	</div>
-
-	<div class="clear"></div>
 </div>
+<script>
+venus.navbar.auto();
+</script>

@@ -1,0 +1,48 @@
+@media (max-width: 1200px) {
+	nav ul {
+		display: none;
+	}
+
+	nav .toggle-menu {
+		display: inline-block;
+	}
+
+	nav ul {
+		position: absolute;
+		left: 0;
+		top: 35px;
+		width: 100%;
+	}
+
+	nav li {
+		float: none;
+		display: block;
+		padding: 0;
+		border-bottom: 1px solid #000;
+	}
+
+	nav li.separator {
+		display: none;
+	}
+
+	nav li a {
+		display: block;
+		height: auto;
+		padding: 10px 20px;
+	}
+
+	nav ul ul {
+		position: relative;
+		top: 0;
+		width: 100%;
+	}
+
+	nav li ul > li {
+		float: none;
+	}
+
+	nav li ul > li a {
+		width: auto;
+		padding: 10px 20px;
+	}
+}

@@ -3,7 +3,7 @@
 <input type="hidden" name="action" value="login" />
 <input type="hidden" name="referrer_url" value="{{ $referrer_url }}" />
 
-<section class="half three-fourths-lg full-sm middle">
+<section class="three-fourths-md half-lg middle">
 
 	<fieldset>
 		{{ $plugins.output('fields_1') }}

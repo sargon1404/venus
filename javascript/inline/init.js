@@ -1,1 +1,1 @@
-let venus = new VenusInline();
+var venus = new VenusInline();

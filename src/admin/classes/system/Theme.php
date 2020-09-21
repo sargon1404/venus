@@ -209,7 +209,7 @@ class Theme extends \Venus\Admin\Theme
 			return;
 		}
 
-		$html = '<a href="javascript:venus.dialog.open_url(\'' . App::ejs($this->app->help_url) . '\', \'' . App::ejsstr('help') . '\')" data-tooltip="' . App::e(App::estr('tooltip_help')) . '"><img src="' . App::e($this->images_url . 'help_link.png') . '" alt="' . estr('tooltip_help') . '" /></a>';
+		$html = '<a href="javascript:venus.dialog.open_url(\'' . App::ejs($this->app->help_url) . '\', \'' . App::ejsstr('help') . '\')" data-tooltip="' . App::e(App::estr('tooltip_help')) . '"><img src="' . App::e($this->images_url . 'help-link.png') . '" alt="' . estr('tooltip_help') . '" /></a>';
 
 		return $this->app->plugins->run('admin_system_theme_output_help_link', $html, $this);
 	}
@@ -223,7 +223,7 @@ class Theme extends \Venus\Admin\Theme
 			return;
 		}
 
-		$html = '<a href="' . App::e($this->app->config_url) . '" data-tooltip="' . App::e(App::estr('tooltip_config')) . '"><img src="' . App::e($this->images_url . 'config_link.png') . '" alt="' . App::estr('tooltip_config') . '" /></a>';
+		$html = '<a href="' . App::e($this->app->config_url) . '" data-tooltip="' . App::e(App::estr('tooltip_config')) . '"><img src="' . App::e($this->images_url . 'config-link.png') . '" alt="' . App::estr('tooltip_config') . '" /></a>';
 
 		return $this->app->plugins->run('admin_system_theme_output_config_link', $html, $this);
 	}
@@ -233,9 +233,9 @@ class Theme extends \Venus\Admin\Theme
 	*/
 	public function outputLogoutLink()
 	{
-		$html = '<a href="javascript:venus.logout()" data-tooltip="' . App::e(App::estr('tooltip_logout')) . '" class="logout"><img src="' . App::e($this->images_url . 'logout_link.png') . '" alt="' . App::estr('tooltip_logout') . '" /></a>';
+		$html = '<a href="javascript:venus.logout()" data-tooltip="' . App::e(App::estr('tooltip_logout')) . '" class="logout"><img src="' . App::e($this->images_url . 'logout-link.png') . '" alt="' . App::estr('tooltip_logout') . '" /></a>';
 
-		$html = $this->app->plugins->run('admin_system_theme_output_logout_link', $html, $this);
+		$html = $this->app->plugins->filter('admin_system_theme_output_logout_link', $html, $this);
 
 		$this->outputLogoutForm();
 

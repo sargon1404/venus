@@ -27,15 +27,15 @@ class Listing extends \Venus\Admin\Blocks\Controllers\Extensions\Base
 	{
 		return [
 			'filter' => [
-				'title' => ['title', 'like', 'input', App::__('filter_title')],
-				'name' => ['name', 'like', 'input', App::__('filter_name')],
-				'status' => ['status', '=', 'select', [ -1 => App::__('filter_status'), 1 => App::__('enabled'), 0 => App::__('disabled')], 'i']
+				'title' => ['attributes' => ['placeholder' => App::__('filter_title')]],
+				'name' => ['attributes' => ['placeholder' => App::__('filter_name')]],
+				'status' => ['type' => 'select', 'properties' => ['options' => [ -1 => App::__('filter_status'), 1 => App::__('enabled'), 0 => App::__('disabled')]], 'filter' => 'i']
 			],
 			'order' => [
-				'title' => ['title', App::__('order_title')],
-				'name' => ['name', App::__('order_name')],
-				'id' => [$this->getIdName(), App::__('order_id')],
-				'status' => ['status', App::__('order_status')]
+				'title' => ['name' => App::__('order_title')],
+				'name' => ['name' => App::__('order_name')],
+				'id' => ['name' => App::__('order_id')],
+				'status' => ['name' => App::__('order_status')]
 			],
 			'default_order' => 'title'
 		];

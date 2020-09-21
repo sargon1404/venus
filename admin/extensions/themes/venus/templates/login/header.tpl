@@ -15,6 +15,6 @@
 </header>
 
 <div id="container">
-	<div class="half three-fourths-lg full-sm middle">
+	<div class="three-fourths-md half-lg middle">
 		{{ $this.outputAlerts() }}
 	</div>

@@ -16,18 +16,37 @@ abstract class Listing extends Base
 
 	/**
 	* Returns the navbar links
-	* @return array in the format [title, url, required_permission]
+	* @return array
 	*/
 	protected function getNavbarLinks()
 	{
-		$links_array = [
+		$links = [
 			'listing' =>  ['title' => App::__($this->lang_prefix . 'link1'), 'url' => $this->url, 'permission' => 'view'],
 			'available' => ['title' => App::__($this->lang_prefix . 'link2'), 'url' => $this->getControllerUrl('available'), 'permission' => 'add'],
 		];
 
-		$this->plugins->run($this->prefix . 'get_navbar_links', $links_array, $this);
+		$this->plugins->run($this->prefix . 'get_navbar_links', $links, $this);
 
-		return $links_array;
+		return $links;
+	}
+
+	/**
+	* Returns the navbar buttons
+	* @return array
+	*/
+	protected function getNavbarButtons()
+	{
+		$buttons = [
+			'enable' =>  ['permission' => 'publish', 'ajax' => true],
+			'disable' =>  ['permission' => 'publish', 'ajax' => true],
+			'set' =>  ['permission' => 'edit'],
+			'uninstall' =>  ['permission' => 'delete', 'ajax' => true],
+
+		];
+
+		$this->plugins->run($this->prefix . 'get_navbar_buttons', $buttons, $this);
+
+		return $buttons;
 	}
 
 	/**
@@ -38,12 +57,7 @@ abstract class Listing extends Base
 		$this->navbar->setTitle(App::__($this->lang_prefix . 'link1'), 'languages.png');
 		$this->navbar->setHistory(App::__($this->lang_prefix . 'link1'), $this->url);
 		$this->navbar->setLinks($this->getNavbarLinks(), 'listing');
-		/*$this->navbar->set_outer_form([
-			['enable', 'enable', true, 'publish', true],
-			['disable', 'disable', true, 'publish', true],
-			['set', 'set', false, 'edit', true],
-			['uninstall', 'uninstall', true, 'delete', true]
-		], 'ids');*/
+		$this->navbar->setButtons($this->getNavbarButtons());
 
 		$this->prepareItems();
 

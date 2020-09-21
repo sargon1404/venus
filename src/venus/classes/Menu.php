@@ -194,7 +194,15 @@ class Menu extends Item
 			return '';
 		}
 
-		$html = '<ul id="menu-' . App::e($this->name) . '">' . "\n";
+		$for_mobile = 'false';
+		if ($this->app->device->isMobile()) {
+			$for_mobile = 'true';
+		}
+
+		$name = App::e($this->name);
+
+		$html = '<a href="javascript:void(0)" class="toggle-menu" id="toggle-menu-' . $name . '" data-target="menu-' . $name . '"><span></span><span></span><span></span></a>';
+		$html.= '<ul id="menu-' . $name . '">' . "\n";
 
 		foreach ($this->items as $menu_id => $menu) {
 			$parent = $menu->parent ?? false;
@@ -215,6 +223,7 @@ class Menu extends Item
 		}
 
 		$html.= "</ul>\n";
+		$html.= "<script>venus.menu.build('menu-{$name}', {$for_mobile})</script>";
 
 		return $html;
 	}

@@ -43,7 +43,7 @@ fieldset > div.submit input {
 
 
 
-@media (max-width: 769px) {
+@media (max-width: 768px) {
 	fieldset > div {
 		padding: 10px 0;
 		grid-template-columns: 100%;

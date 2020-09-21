@@ -9,6 +9,7 @@ Venus.prototype.init = function() {
 	this.theme = new VenusTheme;
 	this.ui = new VenusUi;
 
+	this.menu = new VenusMenu;
 	this.dialog = new VenusDialog;
 	this.popup = new VenusPopup;
 	this.tooltips = new VenusTooltips;
@@ -60,5 +61,4 @@ Venus.prototype.init = function() {
 	//this.comments = new venus_comments;
 }
 
-
-let venus = new Venus;
+var venus = new Venus;

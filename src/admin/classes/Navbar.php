@@ -49,6 +49,10 @@ class Navbar
 	*/
 	protected string $buttons_lists = '';
 
+
+
+
+
 	/**
 	* @var string $url The default navbar form url
 	*/
@@ -203,7 +207,7 @@ class Navbar
 	}
 
 	/**
-	* Builds the navbar form
+	* Builds the navbar's buttons
 	* The buttons must be in the format: type => [..params]. The params are:
 	* 'permission' => The required permission for the button to be visible
 	* 'url' => The url of the button, if any
@@ -214,6 +218,28 @@ class Navbar
 	* 'title' => The button's title
 	* 'redirects' => [['name' => <name>, 'title' => <title>, 'icon' => <icon>]] The button's redirects
 	* 'on_click' => On click code to execute; if specified, will override all other ajax settings
+	* @param array $buttons The navbar buttons
+	* @param string $ids_name The name of the ids fields
+	* @param string $url The url to which the form points(the action). If empty $this->url is used
+	* @param array $hidden_fields Array in the format name=>value with hidden fields to add to the navbar form
+	* @return $this
+	*/
+	public function setButtons(array $buttons, string $ids_name = '', string $url = '', array $hidden_fields = [])
+	{
+		if (!$url) {
+			$url = $this->app->url;
+		}
+
+		$this->buttons = $buttons;
+		/*$this->ids_name = $ids_name;*/
+		$this->url = $url;
+		//$this->form_hidden = $hidden_fields;
+
+		return $this;
+	}
+
+	/**
+	* Builds the navbar form
 	* @param array $buttons Array containing the navbar buttons
 	* @param string $default_action The default action, applied when the user presses enter. Eg: save,apply etc..
 	* @param string $url The url to which the form points(the action). If empty $this->url is used
@@ -221,7 +247,7 @@ class Navbar
 	* @param bool $output If true, the form will be automatically outputed. If false, the caller will need to explicitly call $this->app->navbar->outputFormStart(true) and $this->app->navbar->outputFormStart(false)
 	* @return $this
 	*/
-	public function setForm(array $buttons, string $default_action = '', string $url = '', bool $enctype_upload = false, bool $output = true)
+	/*public function setForm(array $buttons, string $default_action = '', string $url = '', bool $enctype_upload = false, bool $output = true)
 	{
 		if (!$url) {
 			$url = $this->app->url;
@@ -257,31 +283,9 @@ class Navbar
 		$this->form_end = $end;
 
 		return $this;
-	}
+	}*/
 
-	/**
-	* Builds the navbar's outer form.
-	* @param array $buttons The navbar buttons. See set_form
-	* @param string $ids_name The name of the ids fields
-	* @param string $url The url to which the form points(the action). If empty $this->url is used
-	* @param array $hidden_fields Array in the format name=>value with hidden fields to add to the navbar form
-	* @return $this
-	*/
-	public function setOuterForm(array $buttons, string $ids_name = '', string $url = '', array $hidden_fields = [])
-	{
-		if (!$url) {
-			$url = $this->app->url;
-		}
 
-		$this->buttons = $buttons;
-		$this->ids_name = $ids_name;
-		$this->url = $url;
-		$this->form_hidden = $hidden_fields;
-		$this->display = true;
-		$this->form_display_outer = true;
-
-		return $this;
-	}
 
 	/**
 	* Builds the start of the navbar form
@@ -291,7 +295,7 @@ class Navbar
 	* @param string $enctype The form's enctype
 	* @return string
 	*/
-	protected function getFormStart(string $url, string $default_action = '', string $default_admin_action = '', string $enctype = '') : string
+	/*protected function getFormStart(string $url, string $default_action = '', string $default_admin_action = '', string $enctype = '') : string
 	{
 		$html = $this->app->html->formStart($url, 'admin-form', ['enctype' => $enctype]);
 		$html.= $this->app->html->requestHidden($this->app->config->action_param, $default_action, 'admin-form-action');
@@ -299,26 +303,26 @@ class Navbar
 		$html.= $this->app->html->getToken();
 
 		return $html;
-	}
+	}*/
 
 	/**
 	* Builds the end of the navbar form
 	* @return string
 	*/
-	protected function getFormEnd() : string
+	/*protected function getFormEnd() : string
 	{
 		$html = $this->app->html->requestSubmit('', '', 'admin-form-submit');
 		$html.= $this->app->html->formEnd();
 		$html.= $this->getMultiForms();
 
 		return $html;
-	}
+	}*/
 
 	/**
 	* Returns the content of the multi forms
 	* @return string
 	*/
-	protected function getMultiForms() : string
+	/*protected function getMultiForms() : string
 	{
 		$html = $this->app->html->formStart('', 'admin-multi-form');
 		$html.= $this->app->html->getToken();
@@ -330,7 +334,7 @@ class Navbar
 		$html.= $this->app->html->formEnd();
 
 		return $html;
-	}
+	}*/
 
 	/**
 	* Outputs the navbar title
@@ -346,7 +350,7 @@ class Navbar
 	* Outputs the navbar form start
 	* @param bool $manual_output Must be set to true if this function is manually called
 	*/
-	public function outputFormStart(bool $manual_output = false)
+	/*public function outputFormStart(bool $manual_output = false)
 	{
 		if (!$this->form_display) {
 			return;
@@ -360,13 +364,13 @@ class Navbar
 		$this->app->plugins->run('admin_navbar_output_form_start', $this);
 
 		$this->form_start = '';
-	}
+	}*/
 
 	/**
 	* Outputs the navbar form end
 	* @param bool $manual_output Must be set to true if this function is manually called
 	*/
-	public function outputFormEnd(bool $manual_output = false)
+	/*public function outputFormEnd(bool $manual_output = false)
 	{
 		if (!$this->form_display) {
 			return;
@@ -380,12 +384,12 @@ class Navbar
 		$this->app->plugins->run('admin_navbar_output_form_end', $this);
 
 		$this->form_end = '';
-	}
+	}*/
 
 	/**
 	* Outputs the navbar outer form
 	*/
-	public function outputOuterForm()
+	/*public function outputOuterForm()
 	{
 		if (!$this->form_display_outer || !$this->buttons || !$this->url) {
 			return;
@@ -402,103 +406,7 @@ class Navbar
 		echo $this->getFormEnd();
 
 		$this->form_hidden = [];
-	}
-
-	/**
-	* Outputs the navbar buttons
-	*/
-	public function outputButtons()
-	{
-		$this->buttons = $this->app->plugins->filter('admin_navbar_output_buttons_buttons', $this->buttons, $this);
-
-		if (!$this->buttons) {
-			return;
-		}
-
-		$html = '<div id="navbar-buttons-loading"></div>' . "\n";
-		$html.= '<div id="navbar-buttons-list">' . "\n";
-		$html.= '<ul>' . "\n";
-
-		$index = 0;
-		foreach ($this->buttons as $type => $button) {
-			if (!empty($button['permission'])) {
-				if (!$this->app->user->hasPermission($button['permission'])) {
-					continue;
-				}
-			}
-
-			$button['id'] = 'navbar-button-' . $type;
-			$button['class'] = $button['class'] ?? '';
-			$button['title'] = $button['title'] ?? l('button_' . $type);
-			$button['icon'] = $button['icon'] ?? $this->app->theme->images_url . 'buttons/' . $type . '.png';
-			$button['tooltip'] = $button['tooltip'] ?? false;
-			$button['ajax'] = $button['ajax'] ?? false;
-			$button['url'] = $button['url'] ?? '';
-			$button['on_click'] = $button['on_click'] ?? '';
-			$button['redirects'] = $button['redirects'] ?? '';
-
-			if ($button['class']) {
-				$button['class'] = ' class="' . $button['class'] . '"';
-			}
-			if ($button['tooltip']) {
-				if ($button['tooltip'] === true) {
-					$button['tooltip'] = App::__('button_select_item');
-				}
-
-				$button['tooltip'] = ' data-tooltip-error="' . $button['tooltip'] . '"';
-			}
-
-			if ($button['redirects']) {
-				$redirects_id = $button['id'] . '-list';
-				$this->addRedirects($button['id'], $redirects_id, $button['redirects']);
-
-				$button['redirects'] = '<span class="navbar-button-redirect" onclick="venus.navbar.openRedirect(\'' . App::ejs($redirects_id) . '\', this, event)"></span>';
-			}
-
-			if ($button['on_click']) {
-				//custom on click specified
-				$params = '';
-				if (!str_contains($button['on_click'], '(')) {
-					$params = "('{$type}', this)";
-				}
-
-				$button['on_click'] = " onclick=\"return {$button['on_click']}{$params}\"";
-			} elseif (!$button['url']) {
-				if (is_array($button['ajax'])) {
-					$button['ajax']= $this->app->javascript->toItem($button['ajax'], true, ['on_success', 'on_error']);
-				} else {
-					$button['ajax'] = (int)$button['ajax'];
-				}
-
-				$button['on_click'] = " onclick=\"venus.navbar.submit('{$type}', {$button['ajax']} , '{$this->ids_name}', this, event)\"";
-			}
-
-			if (!$button['url']) {
-				$button['url'] = $this->app->uri->getEmpty();
-			}
-
-			$index++;
-
-			$html.= '<li><a href="' . App::e($button['url']) . '" id="' . App::e($button['id']) . '"' . $button['class'] . $button['on_click'] . $button['tooltip'] . '><img src="' . App::e($button['icon']) . '" alt="' . App::e($button['title']) . '" /><span class="navbar-button-title">' . App::e($button['title']) . '</span>' . $button['redirects'] . '</a></li>' . "\n";
-		}
-
-		$html.= '</ul>' . "\n";
-		$html.= '</div>' . "\n";
-		$html.= '<div id="navbar-buttons-redirects">' . "\n";
-		$html.= $this->buttons_lists;
-		$html.= '</div>' . "\n";
-		$html.= '<div class="clear"></div>' . "\n";
-
-		if (!$index) {
-			$html = '';
-		}
-
-		$html = $this->app->plugins->filter('admin_navbar_output_buttons_html', $html, $this->buttons, $this);
-
-		echo $html;
-
-		$this->buttons = [];
-	}
+	}*/
 
 	/**
 	* Adds the redirect links
@@ -553,7 +461,7 @@ class Navbar
 					$link['class'] = 'selected';
 				}
 
-				$html.= '<li>' . $this->app->html->a($link['url'], $link['text'], $link['class']) . '</li>';
+				$html.= '<li>' . $this->app->html->a($link['url'], $link['title'], ['class' => $link['class']]) . '</li>';
 			}
 
 			$html = $this->app->plugins->filter('admin_navbar_output_links_html', $html, $this->links, $this);
@@ -591,5 +499,99 @@ class Navbar
 		$html = $this->app->plugins->filter('admin_navbar_output_history_links_html', $html, $history, $this);
 
 		echo $html;
+	}
+
+		/**
+	* Outputs the navbar buttons
+	*/
+	public function outputButtons()
+	{
+		$this->buttons = $this->app->plugins->filter('admin_navbar_output_buttons', $this->buttons, $this);
+
+		if (!$this->buttons) {
+			return;
+		}
+
+		$html = '<div id="navbar-buttons-loading"></div>' . "\n";
+		$html.= '<div id="navbar-buttons-list">' . "\n";
+		$html.= '<ul>' . "\n";
+
+		$index = 0;
+		foreach ($this->buttons as $type => $button) {
+			if (!empty($button['permission'])) {
+				if (!$this->app->user->hasPermission($button['permission'])) {
+					continue;
+				}
+			}
+
+			$index++;
+
+			$id = 'navbar-button-' . $type;
+			$url = $button['url'] ?? '';
+			$title = $button['title'] ?? App::__('button_' . $type);
+			$tooltip = $button['tooltip'] ?? false;
+			$icon_url = $button['icon'] ?? $this->app->theme->images_url . 'buttons/' . $type . '.png';
+			$icon = $this->app->html->img($icon_url, 0, 0, $title);
+			$onclick = $button['on_click'] ?? '';
+			$redirects = $button['redirects'] ?? '';
+
+			if ($tooltip === true) {
+				$tooltip = App::__('button_select_item');
+			}
+
+			if ($onclick) {
+				//add the params for the onclick event, if not specified
+				$params = '';
+				if (!str_contains($onclick, '(')) {
+					$params = "('{$type}', this)";
+				}
+
+				$onclick = "return {$onclick}{$params}";;
+			} elseif (!$url) {
+				//is this an ajax button?
+				$ajax = $button['ajax'] ?? false;
+
+				if ($ajax) {
+					if (is_array($ajax)) {
+						$ajax = $this->app->javascript->toItem($$ajax, true, ['on_success', 'on_error']);
+					}
+
+					$onclick = "venus.navbar.submit('{$type}', {$ajax}, '{$this->ids_name}', this, event)";
+				}
+			}
+
+			if ($redirects) {
+				$redirects_id = $id . '-list';
+				$this->addRedirects($id, $redirects_id, $redirects);
+
+				$redirects = '<span class="navbar-button-redirect" onclick="venus.navbar.openRedirect(\'' . App::ejs($redirects_id) . '\', this, event)"></span>';
+			}
+
+			$attributes = [
+				'id' => $id,
+				'class' => $button['class'] ?? '',
+				'data-tooltip-error' => $tooltip,
+				'onclick' => [$onclick],
+			];
+
+			$html.= '<li>' . $this->app->html->a($url, $icon . $title, $attributes, false) . '</li>';
+		}
+
+		if (!$index) {
+			return '';
+		}
+
+		$html.= '</ul>' . "\n";
+		$html.= '</div>' . "\n";
+		$html.= '<div id="navbar-buttons-redirects">' . "\n";
+		$html.= $this->buttons_lists;
+		$html.= '</div>' . "\n";
+		$html.= '<div class="clear"></div>' . "\n";
+
+		$html = $this->app->plugins->filter('admin_navbar_output_buttons_html', $html, $this->buttons, $this);
+
+		echo $html;
+
+		$this->buttons = [];
 	}
 }

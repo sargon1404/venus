@@ -3,6 +3,8 @@ header {
 	background: #1c1c1c;
 	width: 100%;
 	margin: auto;
+	position: relative;
+	z-index: 10000;
 }
 
 #topbar {
@@ -12,11 +14,18 @@ header {
 }
 
 #topbar-right {
-	padding: 8px 15px 0 0;
-	float: right;
+	padding: 6px 15px 0 0;
 }
 
 #topbar-right a {
 	margin-left: 15px;
 	display: inline-block;
+}
+
+@media (max-width: 1200px) {
+	#topbar {
+		position: fixed;
+		left: 0;
+		top: 0;
+	}
 }

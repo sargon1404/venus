@@ -1,47 +1,56 @@
-nav
-{
-	float: left;
-	padding: 2px 50px 4px 5px;
+nav {
+	padding: 3px 50px 4px 5px;
+	text-align: left;
+	z-index: 10000;
 }
 
-nav ul
-{
-	margin: 0;
-	padding: 0;
-}
-
-nav img
-{
+nav img {
 	margin-right: 10px;
 }
 
-nav li
-{
+nav ul {
+	margin: 0;
+	padding: 0;
+	z-index: 10000;
+}
+
+nav li {
 	position: relative;
 	float: left;
 	margin-left: 1px;
-	padding: 2px 0;
+	padding: 0;
 	list-style: none;
 }
 
-nav a
-{
+nav li.separator {
+	height: 1px;
+	width: 210px;
+	float: left;
+	margin: 4px 0;
+	background: #808080;
+}
+
+nav li.separator span {
+	display: block;
+	height: 1px;
+	background: #adadad;
+	margin-top: 3px;
+}
+
+nav a {
 	color: #fff;
 	font-weight: bold;
-	height: 25px;
-	padding: 4px 20px;
+	padding: 5px 20px;
 	display: block;
 	background: #D02416 linear-gradient(#D02416, #E5160A);
 }
 
-nav a:hover
-{
+nav a:hover {
 	text-decoration: none;
 	background: #393939 linear-gradient(#393939, #838282);
 }
 
-nav ul ul
-{
+nav ul ul {
 	display: none;
 	width: 210px;
 	position: absolute;
@@ -54,59 +63,44 @@ nav ul ul
 	font-size: 0.9em;
 }
 
-nav ul ul ul
-{
-	font-size: 1em;
-}
-
-nav li ul > li
-{
+nav li ul > li {
 	float: left;
  	text-align: left;
  	margin: 0;
  	padding: 0;
 }
 
-nav li.separator
-{
-	height: 1px;
-	width: 210px;
-	float: left;
-	margin: 4px 0;
-	background: #808080;
-}
-
-nav li.separator span
-{
-	display: block;
-	height: 1px;
-	background: #adadad;
-	margin-top: 3px;
-}
-
-nav li ul> li a
-{
+nav li ul > li a {
 	color: #fff;
 	font-weight: bold;
 	width: 210px;
-	height: 30px;
 	padding: 8px 0 5px 10px;
 	background: #393939 linear-gradient(to right, #393939, #878586);
 }
 
-nav li ul> li a:hover
-{
+nav li ul> li a:hover {
    text-decoration: none;
  	background: #d2332c linear-gradient(to right, #d2332c, #d2524c);
 }
 
-nav ul ul ul
-{
-	left: 210px;
-	top: 0;
+nav ul li:hover > ul {
+	display: block;
 }
 
-nav ul li:hover > ul
-{
+nav .toggle-menu {
+	display: none;
+	background: none;
+	margin-top: 2px;
+}
+
+nav .toggle-menu:hover {
+	background: none;
+}
+
+nav .toggle-menu span {
 	display: block;
+	width: 23px;
+	height: 3px;
+	background: #fff;
+	margin-bottom: 4px;
 }

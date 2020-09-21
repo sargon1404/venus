@@ -178,6 +178,11 @@ class Theme extends \Venus\Theme
 	{
 		parent::prepareDevelopment();
 
+		if ($this->app->config->development) {
+			//rebuild the javascript code if the site is running in development mode
+			$this->app->cache->buildMainJavascript();
+		}
+
 		if ($this->development) {
 			//rebuild the theme's css and js cache
 			$this->app->cache->buildForTheme($this);
@@ -602,9 +607,9 @@ class Theme extends \Venus\Theme
 	*/
 	public function outputLogoutForm()
 	{
-		echo $this->app->html->formStart($this->app->uri->getLogout(), 'logout-form');
+		echo $this->app->html->formOpen($this->app->uri->getLogout(), ['id' => 'logout-form']);
 		$this->app->html->token();
-		echo $this->app->html->formEnd();
+		echo $this->app->html->formClose();
 	}
 
 	/**
@@ -788,7 +793,7 @@ class Theme extends \Venus\Theme
 	*/
 	public function outputDialogs()
 	{
-		echo $this->app->dialogs->content;
+		//echo $this->app->dialogs->content;
 	}
 
 	/****************TABS*************************************/

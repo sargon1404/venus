@@ -19,7 +19,7 @@ class VenusTheme {
 
 		if (!image_url.includes(scheme + '://')) {
 			if (dir) {
-				return this.images_url + dir + '/' + image_url;\
+				return this.images_url + dir + '/' + image_url;
 			} else {
 				return this.images_url + image_url;
 			}

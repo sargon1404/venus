@@ -94,6 +94,20 @@ class Cache extends \Venus\Cache
 	}
 
 	/**
+	* Builds the javascript cache from the /javascript folder
+	* @return $this
+	*/
+	public function buildMainJavascript()
+	{
+		parent::buildMainJavascript();
+
+		$javascript = new \Venus\Admin\Assets\Javascript($this->app);
+
+		$javascript->cacheMain();
+		$javascript->cacheInline();
+	}
+
+	/**
 	* Builds the javascript cache
 	* @return $this
 	*/

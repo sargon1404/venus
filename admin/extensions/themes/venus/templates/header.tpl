@@ -8,11 +8,11 @@
 {{ $this.outputBodyExtra() }}
 
 <header>
-	<div id="topbar">
-		<nav>
+	<div id="topbar" class="grid">
+		<nav class="col-10 col-md-20">
 			{{ $this.outputMenu() }}
 		</nav>
-		<div id="topbar-right">
+		<div id="topbar-right" class="col-14 col-md-4 right">
 			{{ $this.outputConfigLink() }}
 			{{ $this.outputHelpLink() }}
 			{{ $this.outputLogoutLink() }}

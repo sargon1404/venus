@@ -23,6 +23,18 @@ class Cache extends \Mars\Cache
 	protected string $key = 'venus_cache';
 
 	/**
+	* Builds the javascript cache from the /javascript folder
+	* @return $this
+	*/
+	public function buildMainJavascript()
+	{
+		$javascript = new \Venus\Assets\Javascript($this->app);
+
+		$javascript->cacheMain();
+		$javascript->cacheInline();
+	}
+
+	/**
 	* Builds the css & javascript cache for a theme
 	* @param Theme $theme The theme to build the css cache for
 	*/

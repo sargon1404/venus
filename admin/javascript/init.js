@@ -15,4 +15,4 @@ VenusAdmin.prototype.initAdmin = function () {
 	this.image = new venus_image();
 };
 
-let venus = new VenusAdmin();
+var venus = new VenusAdmin();

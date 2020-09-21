@@ -36,7 +36,7 @@ class Venus {
 
 		// read the ready_funcs from the inline venus object, if defined
 		this.ready_funcs = [];
-		if (venus) {
+		if (venus !== undefined) {
 			this.ready_funcs = venus.ready_funcs;
 		}
 	}
