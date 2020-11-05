@@ -1,15 +1,15 @@
 <?php
 /**
-* The Admin Languages Middle Controller Class
+* The Admin Languages Controller Shared Trait
 * @package Cms\Admin\Blocks\Languages
 */
 
 namespace Cms\Admin\Blocks\Languages\Controllers;
 
 /**
-* The Admin Languages Middle Controller Class
+* The Admin Languages Controller Shared Trait
 */
-class Middle extends \Venus\Admin\Blocks\Controllers\Extensions\Middle
+trait SharedTrait
 {
 	/**
 	* @internal
@@ -26,7 +26,16 @@ class Middle extends \Venus\Admin\Blocks\Controllers\Extensions\Middle
 	*/
 	public string $lang_prefix = 'languages_';
 
+	/**
+	* @internal
+	*/
+	public string $log_prefix = 'languages_';
 
+
+	/**
+	* Outputs the errors
+	* @param array $errors The errors to output
+	*/
 	public function outputErrors(array $errors)
 	{
 		var_dump($errors);

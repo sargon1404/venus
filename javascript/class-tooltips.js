@@ -53,7 +53,7 @@ class VenusTooltips {
 class VenusTooltip {
 	constructor () {
 		this.obj = null;
-
+		
 		this.init();
 	}
 
@@ -89,11 +89,17 @@ class VenusTooltip {
 		if (!this.obj) {
 			return;
 		}
-
+		
 		let obj = venus.get(element);
+				
+		text = this.getText(obj, text);
+		if (!text) {
+			return;		
+		}
+
 		this.obj.attr('title', '');
 		this.obj.attr('class', this.getClass(obj, class_name));
-		this.obj.html(this.getText(obj, text));
+		this.obj.html(text);
 
 		let pos = venus.getPosition(element, this.obj);
 		this.obj.css({left: pos.x + 'px', top: pos.y + 'px'});

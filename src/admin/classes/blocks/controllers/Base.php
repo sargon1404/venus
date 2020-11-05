@@ -21,22 +21,22 @@ abstract class Base extends \Venus\Admin\Controller
 	/**
 	* @var string $item_name The name of the item. Used when logging etc..
 	*/
-	public string $item_name = '';
+	//public string $item_name = '';
 
 	/**
 	* @var string $items_name The name of the items (plural). Used when logging etc..
 	*/
-	public string $items_name = '';
+	//public string $items_name = '';
 
 	/**
 	* @var string $lang_prefix Prefix to be used when using language strings
 	*/
-	public string $lang_prefix = '';
+	//public string $lang_prefix = '';
 
 	/**
 	* @var string $log_prefix Prefix to be used when logging
 	*/
-	public string $log_prefix = '';
+	//public string $log_prefix = '';
 
 	/**
 	* Builds the controller
@@ -45,6 +45,8 @@ abstract class Base extends \Venus\Admin\Controller
 	public function __construct(Document $document)
 	{
 		parent::__construct($document);
+
+		$this->propertiesExist(['item_name', 'items_name', 'lang_prefix', 'log_prefix']);
 
 		$this->model = $this->getModel();
 		$this->view = $this->getView();

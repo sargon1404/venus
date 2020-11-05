@@ -1,16 +1,16 @@
 <?php
 /**
-* The Middle controller class
+* The Shared trait
 * @package Venus
 */
 
 namespace Venus\Admin\Blocks\Controllers\Extensions;
 
 /**
-* The Middle controller class
+* The Shared trait
 * Provides functionality shared by the Available' and Listing' controllers
 */
-abstract class Middle
+trait SharedTrait
 {
 	use \Venus\AppTrait;
 

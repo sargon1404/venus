@@ -17,6 +17,8 @@ use venus\admin\extensions\Installer;
 */
 abstract class Base extends \Venus\Admin\Blocks\Models\Base
 {
+	use SharedTrait;
+
 	/**
 	* @var \venus\admin\extensions\Info The info object
 	*/
@@ -28,19 +30,9 @@ abstract class Base extends \Venus\Admin\Blocks\Models\Base
 	protected $installer = null;
 
 	/**
-	* @var Middle $middle The middle object, with functionality shared by the Listing and Available models
-	*/
-	protected Middle $middle;
-
-	/**
-	* @var array $middle_properties Array with the properties to copy from the middle model
-	*/
-	protected array $middle_properties = ['table', 'class', 'class_objs', 'root_dir'];
-
-	/**
 	* @var string $table The name of the table where the items are stored
 	*/
-	protected static string $table = '';
+	//protected static string $table = '';
 
 	/**
 	* @var string The class name of the object, if we need to load it
@@ -79,36 +71,8 @@ abstract class Base extends \Venus\Admin\Blocks\Models\Base
 	{
 		parent::__construct();
 
-		$this->middle = $this->geMiddleModel();
-		$this->middle->model = $this;
-
-		$this->copyMiddleModelProperties();
+		$this->staticPropertiesExist(['table', 'root_dir']);
 	}
-
-	/**
-	* Returns the middle model
-	* @return Middle The middle model
-	*/
-	protected function geMiddleModel() : Middle
-	{
-		$class_name = $this->getClassNamespace() . '\\Middle';
-
-		return new $class_name;
-	}
-
-	/**
-	* Copies properties from the middle object
-	*/
-	protected function copyMiddleModelProperties()
-	{
-		foreach ($this->middle_properties as $prop) {
-			if (isset(static::$$prop) && isset($this->middle->$prop)) {
-				static::$$prop = $this->middle->$prop;
-			}
-		}
-	}
-
-
 
 
 
@@ -206,7 +170,7 @@ abstract class Base extends \Venus\Admin\Blocks\Models\Base
 	/**
 	* Custom item processing
 	*/
-	protected function process_item($item)
+	protected function process_item($item, $installer)
 	{
 		return $this->middle->process_item($item, $this->installer);
 	}

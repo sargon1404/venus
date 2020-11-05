@@ -1,19 +1,16 @@
-#tooltip
-{
+#tooltip {
 	position: absolute;
 	display: none;
 	z-index: 1500;
 }
 
-.tooltip
-{
+.tooltip {
 	border-radius: 5px;
 	margin: 5px 0px;
 	padding: 5px 10px;
 	@tooltip-properties
 }
 
-.tooltip-error
-{
+.tooltip-error {
 	@error-properties
 }

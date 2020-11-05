@@ -13,6 +13,8 @@ use Venus\Document;
 */
 class Languages extends \Venus\Admin\Blocks\Controllers\Extensions\Listing
 {
+	use SharedTrait;
+
 	/**
 	* @internal
 	*/

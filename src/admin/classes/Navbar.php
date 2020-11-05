@@ -501,7 +501,7 @@ class Navbar
 		echo $html;
 	}
 
-		/**
+	/**
 	* Outputs the navbar buttons
 	*/
 	public function outputButtons()
@@ -546,7 +546,8 @@ class Navbar
 					$params = "('{$type}', this)";
 				}
 
-				$onclick = "return {$onclick}{$params}";;
+				$onclick = "return {$onclick}{$params}";
+				;
 			} elseif (!$url) {
 				//is this an ajax button?
 				$ajax = $button['ajax'] ?? false;

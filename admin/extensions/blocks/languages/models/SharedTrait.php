@@ -1,7 +1,7 @@
 <?php
 /**
-* The Languages Middle Model
-* @package CMS\Admin\Extensions\Blocks\Languages
+* The Admin Languages Model Shared Trait
+* @package Cms\Admin\Blocks\Languages
 */
 
 namespace Cms\Admin\Blocks\Languages\Models;
@@ -10,21 +10,17 @@ use venus\admin\extensions\Installer;
 use venus\admin\installers\LanguageInstaller;
 
 /**
-* The Languages Middle Model
+* The Admin Languages Model Shared Trait
 */
-class Middle extends \Venus\Admin\Blocks\Models\Extensions\Middle
+trait SharedTrait
 {
 	/**
 	* @internal
 	*/
-	public string $table = 'venus_languages';
-
-	/**
-	* @internal
-	*/
-	public string $root_dir = '';
-	//public string $root_dir = VENUS_LANGUAGES_DIR;
-
+	protected array $properties = [
+		'table' => 'venus_languages',
+		'root_dir' => 'languages'
+	];
 
 	public function get_default_installer($item = null) : Installer
 	{

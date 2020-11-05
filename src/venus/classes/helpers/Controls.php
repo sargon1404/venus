@@ -68,8 +68,6 @@ class Controls
 		$this->session_key = $this->app->session->getPrefix() . $this->session_key;
 
 		$this->sessionInit();
-
-		$this->app->lang->loadFile('controls');
 	}
 
 	/***************SESSION METHODS**********************************/
@@ -184,6 +182,9 @@ class Controls
 		$this->order_default_value = $options['default_order'] ?? '';
 
 		$this->sessionInitKey();
+		$this->save();
+
+		$this->app->lang->loadFile('controls');
 
 		return $this;
 	}
@@ -228,6 +229,15 @@ class Controls
 		return $this;
 	}
 
+	/**
+	* Saves the filter/order/pagination data
+	*/
+	protected function save()
+	{
+		$filters = $this->app->request->get('control-filter', '', true);
+		//var_dump($filters);
+	}
+
 
 	/**
 	* Outputs the filter controls
@@ -252,8 +262,7 @@ class Controls
 		}
 
 		$html = '<div class="controls-filter-fields">' . "\n";
-		foreach ($this->filter_array as $name => $filter)
-		{
+		foreach ($this->filter_array as $name => $filter) {
 			$name = "control-filter[{$name}]";
 			$type = $filter['type'] ?? 'input';
 			$attributes = $filter['attributes'] ?? [];
@@ -278,7 +287,8 @@ class Controls
 	{
 		$html = '<div class="controls-filter-buttons">' . "\n";
 		$html.= '<div id="controls-filters-action">';
-		$html.= '<input type="submit" name="controls-filter-button" id="controls-filter-button" value="' . App::e($this->filter_button) . '"' . $onclick_filter . ' />';
+		$html.= $this->app->html->button(App::__('controls_button_filter'), ['name' => 'controls-filters-button-filter', 'class' => 'filter', 'onclick' => 'venus.controls.filter()']);
+		$html.= $this->app->html->button(App::__('controls_button_reset'), ['name' => 'controls-filters-button-reset', 'class' => 'reset', 'onclick' => 'venus.controls.filtersReset()']);
 		$html.= '</div>' . "\n";
 		$html.= '<div class="loading-small" id="controls-filter-loading"></div>' . "\n";
 		$html.= '<div class="clear"></div>' . "\n";
@@ -356,54 +366,4 @@ class Controls
 
 		return $where_sql;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-	/********************FILTER METHODS*******************************************/
-
-	/**
-	* Builds the filter controls
-	*/
-	protected function buildFilters() : string
-	{
-		if (!$this->filter_array) {
-			return '';
-		}
-
-
-		$onclick_filter = '';
-		$onclick_reset = '';
-
-		if ($this->build_filters_ajax) {
-			$onclick_filter = ' onclick="' . $this->filter_javascript_function . '; return false;"';
-			$onclick_reset = ' onclick="' . $this->filter_reset_javascript_function . '; return false;"';
-		}
-
-		//output the filter submit button, the reset button, the expand button & html
-		$html.= '<div id="controls-filters-buttons">';
-		$html.= '<div id="controls-filters-action">';
-		$html.= '<input type="submit" name="controls-filter-button" id="controls-filter-button" value="' . App::e($this->filter_button) . '"' . $onclick_filter . ' />';
-
-		if ($this->filter_show_reset_button) {
-			$html.= '<input type="submit" name="controls-filter-reset-button" id="controls-filter-reset-button" class="reset" value="' . App::e($this->filter_reset_button) . '"' . $onclick_reset . ' />';
-		}
-
-		$html.= '</div>';
-
-
-		$html.= '</div>' . "\n";
-
-		return $html;
-	}
-
-
 }

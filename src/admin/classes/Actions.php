@@ -53,9 +53,14 @@ class Actions
 			$link['redirect'] = $link['redirect'] ?? 0;
 			$link['on_click'] = $link['on_click'] ?? '';
 
-			if (!$link['icon']) {
-				$link['icon'] = $this->app->theme->images_url . 'buttons/' . $action . '_small.png';
+			if ($link['icon']) {
+				if (!$this->app->uri->isUrl($link['icon'])) {
+					$link['icon'] = $this->app->theme->images_url . 'buttons/' . $link['icon'] . '_small.png';
+				}
+			} else {
+					$link['icon'] = $this->app->theme->images_url . 'buttons/' . $action . '_small.png';
 			}
+
 			if ($link['tooltip']) {
 				$link['tooltip'] = ' data-tooltip="' . App::__(nl2br(App::estr($link['tooltip']))) . '"';
 			}

@@ -41,11 +41,9 @@ Venus.prototype.init = function() {
 	this.controls = new VenusControls;
 	this.tabs = new VenusTabs;
 
-
-
+	this.editor = new VenusEditor;
 
 	//this.iframe = new venus_iframe;
-	//this.editor = new venus_editor;
 	//this.drag = new venus_drag;
 	//this.drop = new venus_drop;
 

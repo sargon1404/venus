@@ -1,6 +1,6 @@
 <?php
 /**
-* The Middle model class
+* The Shared trait
 * @package Venus
 */
 
@@ -9,10 +9,10 @@ namespace Venus\Admin\Blocks\Models\Extensions;
 use venus\admin\extensions\Installer;
 
 /**
-* The Middle model class
+* The Shared trait
 * Provides functionality shared by the Available and Listing models
 */
-abstract class Middle
+trait SharedTrait
 {
 	/**
 	* Returns the installer used to install this item

@@ -11,6 +11,8 @@ namespace Cms\Admin\Blocks\Languages\Models;
 */
 class Languages extends \Venus\Admin\Blocks\Models\Extensions\Listing
 {
+	use SharedTrait;
+
 	/**
 	* @internal
 	*/
@@ -31,6 +33,16 @@ class Languages extends \Venus\Admin\Blocks\Models\Extensions\Listing
 	*/
 	public string $prefix = 'admin_block_languages';
 
+
+	/**
+	* Builds the model
+	*/
+	public function __construct()
+	{
+		$this->copyStaticProperties($this->properties);
+
+		parent::__construct();
+	}
 
 	public function getPackagesTable() : string
 	{

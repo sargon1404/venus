@@ -18,22 +18,12 @@ input:focus, select:focus, option:focus, textarea:focus {
 	outline: 0;
 }
 
-input[type=text], input[type=password], input[type=email], textarea.input {
-	/*width: 92%;
-	height: 30px;*/
-}
-
 textarea.input:focus {
 	height: 100px;
 }
 
 input[type=file] {
 	width: 400px;
-}
-
-select {
-	/*width: 92%;*/
-	/*height: 30px;*/
 }
 
 option {
@@ -50,6 +40,7 @@ input[type=submit], input[type=button], a.button {
 	cursor: pointer;
 	font-weight: bold;
 	color: #fff;
+	width: auto;
 }
 
 input[type=button] {
@@ -65,10 +56,6 @@ input[type=checkbox], input[type=radio] {
 }
 
 /*****************************/
-/*
-input.auto, select.auto {
-	width: auto;
-}*/
 
 input.small, select.small {
 	width: 55px;

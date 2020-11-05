@@ -108,12 +108,12 @@ abstract class Listing extends Base
 	{
 		$options = [
 			'edit' => ['url' => $this->getItemUrl($item->id, 'edit'), 'permission' => 'edit', 'tooltip' => 'action_edit'],
-			'status' => ['url' => $this->getItemUrl($item->id, 'disable', true), 'permission' => 'publish', 'tooltip' => 'action_disable', 'ajax' => true],
+			'status' => ['url' => $this->getItemUrl($item->id, 'disable', true), 'permission' => 'publish', 'tooltip' => 'action_disable', 'ajax' => true, 'icon' => 'disable'],
 			'uninstall' => ['url' => $this->getItemUrl($item->id, 'uninstall', true), 'permission' => 'delete', 'tooltip' => 'action_uninstall', 'ajax' => true]
 		];
 
 		if (!$item->status) {
-			$options['status'] = ['url' => $this->getItemUrl($item->id, 'enable', true), 'permission' => 'publish', 'tooltip' => 'action_enable', 'ajax' => true];
+			$options['status'] = ['url' => $this->getItemUrl($item->id, 'enable', true), 'permission' => 'publish', 'tooltip' => 'action_enable', 'ajax' => true, 'icon' => 'enable'];
 		}
 
 		$this->plugins->run($this->prefix . 'get_actions_list_options', $item, $options, $this);
