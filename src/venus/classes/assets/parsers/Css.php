@@ -67,8 +67,8 @@ class Css
 	*/
 	public function setTheme(Theme $theme)
 	{
-		$this->current_url = $theme->dir_url_static . App::EXTENSIONS_DIRS['css'];
-		$this->up_url = $theme->dir_url_static;
+		$this->current_url = $theme->base_url . App::EXTENSIONS_DIRS['css'];
+		$this->up_url = $theme->base_url;
 		$this->images_url = $theme->images_url;
 		$this->root_images_url = $theme->root_images_url;
 

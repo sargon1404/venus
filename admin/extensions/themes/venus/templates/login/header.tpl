@@ -10,7 +10,7 @@
 <header class="login-header">
 	<div id="topbar"></div>
 	<div id="logo" >
-		<a href="{{ $this.site_index }}"><img src="{{ $this.images_url }}header-logo.jpg" alt="logo" /></a>
+		<a href="{{ $app.index }}"><img src="{{ $this.images_url }}header-logo.jpg" alt="logo" /></a>
 	</div>
 </header>
 

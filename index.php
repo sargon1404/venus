@@ -4,7 +4,7 @@ namespace Venus;
 define('VENUS', 1);
 
 require('src/venus/boot.php');
-
+echo 'Boot complete!';die;
 try {
 	$app->start();
 	echo 'Some content';

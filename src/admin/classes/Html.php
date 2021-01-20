@@ -422,7 +422,7 @@ class Html extends \Venus\Html
 	* @param string $pid_name The name of the hidden field which will be populated with the pid. If empty {$name}_pid is used
 	* @return string The html code
 	*/
-	public function selectPage(string $name = 'page_select', $selected = 0, bool $required = false, string $placeholder = '', bool $onkeyup = true, string $class = 'select-page', string $pid_name = '') : string
+	public function selectPage(string $name = 'page_select', int|string|array $selected = 0, bool $required = false, string $placeholder = '', bool $onkeyup = true, string $class = 'select-page', string $pid_name = '') : string
 	{
 		if (!$name) {
 			$name = 'page_select';

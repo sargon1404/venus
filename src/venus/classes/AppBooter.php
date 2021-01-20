@@ -12,6 +12,7 @@ use Mars\Timer;
 use Mars\Filter;
 use Mars\Escape;
 use Mars\Validator;
+use Mars\Accelerator;
 use Mars\Session;
 use Mars\Device;
 use Mars\Response;
@@ -41,6 +42,8 @@ class AppBooter extends \Mars\AppBooter
 		$this->app->config = new Config($this->app);
 		$this->app->config->read();
 
+		$this->app->setData();
+
 		$this->app->memcache = new Memcache($this->app);
 		$this->app->caching = new Caching($this->app);
 
@@ -55,6 +58,8 @@ class AppBooter extends \Mars\AppBooter
 	{
 		$this->app->db = new Db($this->app);
 		$this->app->sql = new Sql($this->app);
+
+		$this->app->setDataAfterDb();
 
 		return $this;
 	}
@@ -94,6 +99,8 @@ class AppBooter extends \Mars\AppBooter
 	*/
 	public function env()
 	{
+		$this->app->accelerator = new Accelerator($this->app);
+
 		$this->app->session = new Session($this->app);
 		$this->app->session->start();
 
@@ -108,7 +115,7 @@ class AppBooter extends \Mars\AppBooter
 		$this->app->env = new Environment($this->app);
 		$this->app->media = new Media;
 
-
+		$this->app->setDataAfterEnv();
 
 		return $this;
 	}

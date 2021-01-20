@@ -32,6 +32,11 @@ label {
 
 /******************************************************************/
 
+#container-wrapper {
+	width: calc(100% - 100px);
+	float: left;
+}
+
 #container {
 	margin: 0 auto 60px auto;
 	padding: 20px;

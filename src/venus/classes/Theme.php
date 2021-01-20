@@ -17,11 +17,6 @@ class Theme extends \Venus\Extensions\Extension
 	}
 
 	/**
-	* @var string $site_index Alias for $this->app->site_index
-	*/
-	public string $site_index = '';
-
-	/**
 	* @var int $tid The theme's id
 	*/
 	public int $tid = 0;
@@ -44,12 +39,12 @@ class Theme extends \Venus\Extensions\Extension
 	/**
 	* @var string|array $templates Array with the keys listing the available templates of the theme
 	*/
-	public $templates = [];
+	public string|array $templates = [];
 
 	/**
 	* @var string|array $parent_templates Array with the keys listing the available templates of the parent theme
 	*/
-	public $parent_templates = [];
+	public string|array|null $parent_templates = [];
 
 	/**
 	* @var string $root_images_dir The filesystem path for the theme's regular images folder. Unlike images_dir which might point to the tables/smartphones images dir, it will always point to the main/base images dir
@@ -217,7 +212,7 @@ class Theme extends \Venus\Extensions\Extension
 	* Builds the current theme object
 	* @param int|array|object $theme The theme's id/data
 	*/
-	public function __construct($theme = 0)
+	public function __construct(int|array|object $theme = 0)
 	{
 		parent::__construct($theme);
 

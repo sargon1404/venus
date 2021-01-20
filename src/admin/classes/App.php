@@ -16,7 +16,7 @@ class App extends \Venus\App
 	* @const string ADMINISTRATORS_BLOCK The name of the administrators block
 	*/
 	public const ADMINISTRATORS_BLOCK = 'administrators';
-		
+
 	/**
 	* @const array ADMIN_DIRS The locations of the used dirs
 	*/
@@ -63,11 +63,6 @@ class App extends \Venus\App
 	public string $admin_url_static = '';
 
 	/**
-	* @var string $admin_url_rel The relative url of admin
-	*/
-	public string $admin_url_rel = '';
-
-	/**
 	* @see \Mars\App::loadBooter()
 	* {@inheritdoc}
 	*/
@@ -77,15 +72,14 @@ class App extends \Venus\App
 	}
 
 	/**
-	* @see \Mars\App::setProperties()
+	* @see \Mars\App::setDataAfterDb()
 	* {@inheritdoc}
 	*/
-	public function setProperties()
+	public function setDataAfterDb()
 	{
-		parent::setProperties();
+		parent::setDataAfterDb();
 
-		$this->admin_url_static = $this->site_url_static . $this->config->admin_dir;
-		$this->admin_url_rel = $this->site_url_rel . $this->config->admin_dir;
+		$this->admin_url_static = $this->url_static . $this->config->admin_dir;
 
 		$this->assignDirs(static::ADMIN_DIRS, $this->admin_dir, 'admin');
 		$this->assignUrls(static::ADMIN_URLS, $this->admin_url, 'admin');

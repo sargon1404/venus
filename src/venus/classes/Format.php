@@ -71,7 +71,7 @@ class Format extends \Mars\Format
 	* @param bool $replace_strings If true, will replace the english strings with the current language's strings
 	* @return string The formatted date
 	*/
-	public function timestamp($timestamp = 0, string $format = '', bool $adjust = true, bool $replace_strings = true) : string
+	public function timestamp(int|string $timestamp = 0, string $format = '', bool $adjust = true, bool $replace_strings = true) : string
 	{
 		if (!$timestamp) {
 			return App::__('unknown');
@@ -111,7 +111,7 @@ class Format extends \Mars\Format
 	* @param bool $replace_strings If true, will replace the english strings with the current language's strings
 	* @return string The formatted date
 	*/
-	public function datetime($timestamp = 0, string $format = '', bool $adjust = true, bool $replace_strings = true) : string
+	public function datetime(int|string $timestamp = 0, string $format = '', bool $adjust = true, bool $replace_strings = true) : string
 	{
 		return $this->timestamp($timestamp, $format, $adjust, $replace_strings);
 	}
@@ -123,7 +123,7 @@ class Format extends \Mars\Format
 	* @param bool $replace_strings If true, will replace the english strings with the current language's strings
 	* @return string The formatted date
 	*/
-	public function date($timestamp = 0, bool $adjust = true, bool $replace_strings = true) : string
+	public function date(int|string $timestamp = 0, bool $adjust = true, bool $replace_strings = true) : string
 	{
 		return $this->timestamp($timestamp, $this->app->lang->date_format, $adjust, $replace_strings);
 	}
@@ -135,7 +135,7 @@ class Format extends \Mars\Format
 	* @param bool $replace_strings If true, will replace the english strings with the current language's strings
 	* @return string The formatted time
 	*/
-	public function time($timestamp = 0, bool $adjust = true, bool $replace_strings = true) : string
+	public function time(int|string $timestamp = 0, bool $adjust = true, bool $replace_strings = true) : string
 	{
 		return $this->timestamp($timestamp, $this->app->lang->time_format, $adjust, $replace_strings);
 	}

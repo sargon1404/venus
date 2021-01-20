@@ -160,7 +160,7 @@ class Ui extends \Venus\Ui
 		//load the css of the default theme,ckeditor and the editors/wysiwyg.css file if any
 		$css_array =
 		[
-			$venus->uri->build($venus->site_url_static . VENUS_ASSETS_NAME . 'css.php', ['theme' => $theme->name, 'dateline' => $venus->cache->css_dateline]), 	//the theme's css file
+			$venus->uri->build($venus->url_static . VENUS_ASSETS_NAME . 'css.php', ['theme' => $theme->name, 'dateline' => $venus->cache->css_dateline]), 	//the theme's css file
 			VENUS_EDITORS_URL . 'ckeditor/contents.css', 	// ckeditor's content css
 			$venus->theme->dir_url . VENUS_THEMES_CSS_DIR . 'editors/editor.css'	//admin theme's css file
 		];

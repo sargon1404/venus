@@ -35,7 +35,7 @@ abstract class Controller extends \Mars\Controller
 	public string $dir_url = '';
 
 	/**
-	* @var string $base_url The controller's document url. Alias for $this->document->url
+	* @var string $base_url The controller's document url. Alias for $this->document->base_url
 	*/
 	public string $base_url = '';
 
@@ -77,9 +77,9 @@ abstract class Controller extends \Mars\Controller
 		$this->prefix = $this->getPrefix();
 
 		$this->dir = $this->document->dir;
+		$this->url = $this->url;
 		$this->dir_url = $this->document->dir_url;
-		$this->base_url = $this->document->url;
-		$this->url = $this->base_url;
+		$this->base_url = $this->document->base_url;
 
 		if ($this->name != $this->document->name) {
 			$this->url = $this->app->uri->build($this->base_url, [$this->app->config->controller_param => $this->name]);

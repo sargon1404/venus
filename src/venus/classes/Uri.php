@@ -36,7 +36,7 @@ class Uri extends \Mars\Uri
 
 	/**
 	* Builds an url appending $params to $base_url
-	* @param string $base_url The url to which params will be appended. If empty, $this->app->site_index will be used
+	* @param string $base_url The url to which params will be appended. If empty, $this->app->index will be used
 	* @param array $params Array containing the values to be appended. Specified as $name=>$value
 	* @param bool $remove_empty_params If true, will remove from the query params the params with value = ''
 	* @return string The url
@@ -44,7 +44,7 @@ class Uri extends \Mars\Uri
 	public function build(string $base_url = '', array $params = [], bool $remove_empty_params = true) : string
 	{
 		if (!$base_url) {
-			$base_url = $this->app->site_index;
+			$base_url = $this->app->index;
 		}
 		if (!$params) {
 			return $base_url;
@@ -89,7 +89,7 @@ class Uri extends \Mars\Uri
 	public function isLocal(string $url) : bool
 	{
 		$url2 = str_replace(['https:', 'http:'], '', strtolower($url));
-		$site_url = str_replace(['https:', 'http:'], '', strtolower($this->app->site_url));
+		$site_url = str_replace(['https:', 'http:'], '', strtolower($this->app->url));
 
 		if (!str_starts_with($url2, $site_url)) {
 			return false;
@@ -238,9 +238,9 @@ class Uri extends \Mars\Uri
 				$params[$this->app->config->page_param] = $page_no;
 			}
 
-			$url = $this->build($this->app->site_index, [$this->app->config->type_param => $type, $this->app->config->id_param => $id] + $params);
+			$url = $this->build($this->app->index, [$this->app->config->type_param => $type, $this->app->config->id_param => $id] + $params);
 		} else {
-			$url = $this->app->site_url;
+			$url = $this->app->url;
 
 			if ($item->seo_slug) {
 				//does the item has a seo slug set? If so, use it
@@ -317,7 +317,7 @@ class Uri extends \Mars\Uri
 	* @param bool $return_base_url If true, will return the base url, with the page number *not* replaced. Usefull when building pagination urls
 	* @return string The url
 	*/
-	public function getBlock($block, string $action = '', array $params = [], array $seo_extra = [], int $page_no = 0, bool $return_base_url = false) : string
+	public function getBlock(int|string|array|object $block, string $action = '', array $params = [], array $seo_extra = [], int $page_no = 0, bool $return_base_url = false) : string
 	{
 		$block = $this->getBlockData($block);
 		if (!$block) {
@@ -354,7 +354,7 @@ class Uri extends \Mars\Uri
 	* @param int|string|array|object $block The block's id (int) or the block's name (string) or the block's data (array/object).
 	* @return object The block object
 	*/
-	protected function getBlockData($block) : ?object
+	protected function getBlockData(int|string|array|object $block) : ?object
 	{
 		if (!$block) {
 			return null;
@@ -383,7 +383,7 @@ class Uri extends \Mars\Uri
 	* @param bool $return_base_url If true, will return the base url, with the page number *not* replaced. Usefull when building pagination urls
 	* @return string The url
 	*/
-	public function getPage($page, int $page_no = 0, bool $return_base_url = false) : string
+	public function getPage(int|array|object $page, int $page_no = 0, bool $return_base_url = false) : string
 	{
 		$page = $this->getPageData($page);
 		if (!$page) {
@@ -402,7 +402,7 @@ class Uri extends \Mars\Uri
 	* @param int|array|object $page The page's id (int) or the page's data (array, object). If data, must include fields: id,category,seo_alias,seo_slug if array
 	* @return object The page object
 	*/
-	protected function getPageData($page) : ?object
+	protected function getPageData(int|array|object$page) : ?object
 	{
 		if (!$page) {
 			return null;
@@ -437,7 +437,7 @@ class Uri extends \Mars\Uri
 	* @param bool $return_base_url If true, will return the base url, with the page number *not* replaced. Usefull when building pagination urls
 	* @return string The url
 	*/
-	public function getCategory($category, int $page_no = 0, bool $return_base_url = false) : string
+	public function getCategory(int|array|object $category, int $page_no = 0, bool $return_base_url = false) : string
 	{
 		$category = $this->getCategoryData($category);
 		if (!$category) {
@@ -446,7 +446,7 @@ class Uri extends \Mars\Uri
 
 		$url = '';
 		if ($category->cid == App::CATEGORIES['homepage']) {
-			$url = $this->app->site_url;
+			$url = $this->app->url;
 		} else {
 			$url = $this->getDocumentUrl('category', $this->app->config->seo_category_url, $category, $category->cid, [], [], $page_no, $return_base_url, false, true);
 		}
@@ -461,7 +461,7 @@ class Uri extends \Mars\Uri
 	* @param int|array|object $category Either the category's id or the category's data (array, object). If data, must include fields: id,category_seo_alias,category_seo_slug
 	* @return object The category object
 	*/
-	protected function getCategoryData($category) : ?object
+	protected function getCategoryData(int|array|object $category) : ?object
 	{
 		if (!$category) {
 			return null;
@@ -494,7 +494,7 @@ class Uri extends \Mars\Uri
 	* @param bool $return_base_url If true, will return the base url, with the page number *not* replaced. Usefull when building pagination urls
 	* @return string The url
 	*/
-	public function getTag($tag, int $page_no = 0, bool $return_base_url = false) : string
+	public function getTag(int|array|object $tag, int $page_no = 0, bool $return_base_url = false) : string
 	{
 		$tag = $this->getTagData($tag);
 		if (!$tag) {
@@ -513,7 +513,7 @@ class Uri extends \Mars\Uri
 	* @param int|array|object $tag Either the tag's data (array/object) or the tag's ID. If data, must include fields: id,tag_seo_alias,tag_seo_slug
 	* @return object The tag object
 	*/
-	protected function getTagData($tag) : ?object
+	protected function getTagData(int|array|object $tag) : ?object
 	{
 		if (!$tag) {
 			return null;
@@ -545,7 +545,7 @@ class Uri extends \Mars\Uri
 	* @param int|array|object $user Either the users's data (array/object) or the user's ID. If data, these fields must be included: id,username,seo_alias
 	* @return string The url
 	*/
-	public function getUser($user) : string
+	public function getUser(int|array|object $user) : string
 	{
 		$user = $this->getUserData($user);
 		if (!$user || !$user->id) {
@@ -553,9 +553,9 @@ class Uri extends \Mars\Uri
 		}
 
 		if (!$this->app->config->seo_enable) {
-			$url = $this->build($this->app->site_index, [$this->app->config->type_param => 'user', 'id' => $user->id]);
+			$url = $this->build($this->app->index, [$this->app->config->type_param => 'user', 'id' => $user->id]);
 		} else {
-			$url = $this->app->site_url;
+			$url = $this->app->url;
 
 			$search = ['{ALIAS}', '{ID}'];
 			$replace = [$user->seo_alias, $user->id];
@@ -573,7 +573,7 @@ class Uri extends \Mars\Uri
 	* @param int|array|object $user Either the users's data (array/object) or the user's ID. If data, these fields must be included: id,username,seo_alias
 	* @return string The url
 	*/
-	public function getAuthor($user) : string
+	public function getAuthor(int|array|object $user) : string
 	{
 		$user = $this->getUserData($user);
 		if (!$user) {
@@ -588,7 +588,7 @@ class Uri extends \Mars\Uri
 	* @param int|array|object $user Either the users's data (array/object) or the user's ID. If data, these fields must be included: id,username,seo_alias
 	* @return object The user object
 	*/
-	protected function getUserData($user) : ?object
+	protected function getUserData(int|array|object $user) : ?object
 	{
 		if (!$user) {
 			return null;
@@ -661,7 +661,7 @@ class Uri extends \Mars\Uri
 	*/
 	public function getDialog(string $name) : string
 	{
-		return $this->app->site_url . VENUS_ASSETS_NAME . 'dialog.php?dialog_name=' . urlencode($name);
+		return $this->app->url . VENUS_ASSETS_NAME . 'dialog.php?dialog_name=' . urlencode($name);
 	}
 
 	/**

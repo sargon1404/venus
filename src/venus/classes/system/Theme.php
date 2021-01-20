@@ -76,7 +76,7 @@ class Theme extends \Venus\Theme
 	/**
 	* @var string|array $libraries The javascript libraries loaded by this theme
 	*/
-	protected $libraries = [];
+	protected string|array $libraries = [];
 
 	/**
 	* @var bool $init Will include the theme's init file if $init is set to true
@@ -110,7 +110,7 @@ class Theme extends \Venus\Theme
 	*/
 	protected function get()
 	{
-		$tid = $this->getTid();
+		$tid = $this->getThemeId();
 
 		if ($tid == $this->app->config->theme_default) {
 			return $this->getDefault();
@@ -123,7 +123,7 @@ class Theme extends \Venus\Theme
 	* Returns the id of the theme the user is using.
 	* @return int
 	*/
-	protected function getTid() : int
+	protected function getThemeId() : int
 	{
 		if ($this->app->user->id && $this->app->user->theme_id) {
 			return $this->app->user->theme_id;
@@ -232,7 +232,6 @@ class Theme extends \Venus\Theme
 	{
 		parent::prepareVars();
 
-		$this->site_index = $this->app->site_index;
 		$this->admin_url = $this->app->admin_url;
 
 		$this->addVar('admin_url', $this->admin_url);
@@ -558,7 +557,7 @@ class Theme extends \Venus\Theme
 	* @param int|array|object $category Either the category's id or the category's data (array/object).
 	* @param int $page_no The category's page number
 	*/
-	public function outputCategoryUrl($category, int $page_no = 0)
+	public function outputCategoryUrl(int|array|object $category, int $page_no = 0)
 	{
 		echo App::e($this->app->uri->getCategory($category, $page_no));
 	}
@@ -571,7 +570,7 @@ class Theme extends \Venus\Theme
 	* @param array $seo_extra Extra seo parts to be inclued in the url
 	* @param int $page_no The page number, if any
 	*/
-	public function outputBlockUrl($block, string $action = '', array $params = [], array $seo_extra = [], int $page_no = 0)
+	public function outputBlockUrl(int|string|array|object $block, string $action = '', array $params = [], array $seo_extra = [], int $page_no = 0)
 	{
 		echo App::e($this->app->uri->getBlock($block, $action, $params, $seo_extra, $page_no));
 	}
@@ -581,7 +580,7 @@ class Theme extends \Venus\Theme
 	* @param int|array|object $page The page's id (int) or the page's data (array/object)
 	* @param int $page_no The page's page number
 	*/
-	public function outputPageUrl($page, int $page_no = 0)
+	public function outputPageUrl(int|array|object $page, int $page_no = 0)
 	{
 		echo App::e($this->app->uri->getPage($page, $page_no));
 	}
@@ -651,6 +650,9 @@ class Theme extends \Venus\Theme
 
 		$this->outputCssUrls('head');
 		$this->outputJavascriptUrls('head');
+		$this->outputJavascriptInHeader();
+
+		$this->outputHeadExtra();
 
 		if ($this->app->device->isTablet()) {
 			$this->outputTabletsExtra();
@@ -661,8 +663,6 @@ class Theme extends \Venus\Theme
 		}
 
 		$this->app->plugins->run('system_theme_output_head', $this);
-
-		$this->outputHeadExtra();
 	}
 
 	/**
@@ -742,6 +742,41 @@ class Theme extends \Venus\Theme
 	}
 
 	/**
+	* Outputs the required javascript code in the header
+	*/
+	public function outputJavascriptInHeader()
+	{
+		$this->outputJavascriptCodeStart();
+		$this->outputJavascriptInit();
+		$this->ouputJavascriptConfig();
+		$this->outputJavascriptCodeEnd();
+	}
+
+	/**
+	* Outputs the javascript init code
+	*/
+	protected function outputJavascriptInit()
+	{
+		echo 'venus.init();' . "\n";
+
+		$this->app->plugins->run('system_theme_output_javascript_init', $this);
+	}
+
+	/**
+	* Outputs the javascript config code
+	*/
+	protected function ouputJavascriptConfig()
+	{
+		echo 'venus.device = \'' . App::ejs($this->app->device->type) . '\';' . "\n";
+
+		if ($this->app->user->editor != 'bbcode') {
+			echo 'venus.editor.type = \'' . App::ejs($this->app->user->editor) . '\';' . "\n";
+		}
+
+		$this->app->plugins->run('system_theme_output_javascript_config', $this);
+	}
+
+	/**
 	* Outputs the extra head code
 	*/
 	public function outputHeadExtra()
@@ -759,16 +794,6 @@ class Theme extends \Venus\Theme
 	*/
 	public function outputBodyExtra()
 	{
-		$this->outputJavascriptCodeStart();
-
-		echo 'venus.device = \'' . App::ejs($this->app->device->type) . '\';' . "\n";
-
-		if ($this->app->user->editor != 'bbcode') {
-			echo 'venus.editor.type = \'' . App::ejs($this->app->user->editor) . '\';' . "\n";
-		}
-
-		$this->outputJavascriptCodeEnd();
-
 		$this->outputJavascriptCode($this->app->extra_javascript['body']);
 
 		echo $this->app->extra_html['body'];

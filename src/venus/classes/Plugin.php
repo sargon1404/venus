@@ -48,9 +48,9 @@ class Plugin extends \Venus\Extensions\Extension
 
 	/**
 	* Builds the plugin
-	* @param id|array|object $plugin The plugin's data or id
+	* @param int|array|object $plugin The plugin's data or id
 	*/
-	public function __construct($plugin = 0)
+	public function __construct(int|array|object $plugin = 0)
 	{
 		parent::__construct($plugin);
 

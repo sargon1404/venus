@@ -127,7 +127,7 @@ class User extends Item
 	* Builds the user
 	* @param int|array|object $user The user's id/data
 	*/
-	public function __construct($user = 0)
+	public function __construct(int|array|object $user = 0)
 	{
 		parent::__construct($user);
 

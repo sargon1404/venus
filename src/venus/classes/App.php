@@ -13,7 +13,7 @@ namespace Venus;
 class App extends \Mars\App
 {
 	use AppFunctionsTrait;
-	
+
 	/**
 	* @var float $version The version
 	*/
@@ -30,14 +30,9 @@ class App extends \Mars\App
 	public bool $is_admin = false;
 
 	/**
-	* @var string $type True app type (dialog, ajax)
+	* @var string $type The app's type: dialog/ajax etc..
 	*/
 	public string $type = '';
-
-	/**
-	* @var string The url of the main index file
-	*/
-	public string $site_index = '';
 
 	/**
 	* @var array $categories The current categories the current document belongs to
@@ -78,6 +73,11 @@ class App extends \Mars\App
 	* @var string $javascript_dir The folder where the javascript files are stored
 	*/
 	public string $javascript_dir = '';
+
+	/**
+	* @var string $index The index url
+	*/
+	public string $index = '';
 
 	/**
 	* @var string $images_url The url of the images folder. Will dynamically point to the regular/tablets/smartphones images folder, based on the theme type
@@ -279,7 +279,6 @@ class App extends \Mars\App
 		$this->loadBooter();
 
 		$this->boot->minimum();
-		$this->boot->Data();
 		$this->boot->libraries();
 
 		$this->checkInstalled();
@@ -288,7 +287,6 @@ class App extends \Mars\App
 		$this->boot->config();
 		$this->boot->base();
 		$this->boot->env();
-		$this->boot->properties();
 		$this->boot->document();
 		$this->boot->system();
 
@@ -298,34 +296,25 @@ class App extends \Mars\App
 	}
 
 	/**
-	* @see \Mars\App::setUrls()
+	* @see \Mars\App::setDataAfterDb()
 	* {@inheritdoc}
 	*/
-	protected function setUrls()
+	public function setDataAfterDb()
 	{
-		if ($this->is_cli) {
-			return;
-		}
+		parent::setDataAfterDb();
 
-		parent::setUrls();
+		$this->assignUrls(static::URLS_STATIC, $this->url_static);
 
-		$this->site_index = $this->site_url . 'index.php';
+		$this->admin_dir = $this->dir . $this->config->admin_dir;
+		$this->admin_url = $this->url . $this->config->admin_dir;
+		$this->admin_index = $this->admin_url . 'index.php';
 	}
 
 	/**
-	* @see \Mars\App::setProperties()
-	* {@inheritdoc}
+	* Prepares the data, after the environment are available
 	*/
-	public function setProperties()
+	public function setDataAfterEnv()
 	{
-		parent::setProperties();
-
-		$this->assignUrls(static::URLS_STATIC, $this->site_url_static);
-
-		$this->admin_dir = $this->site_dir . $this->config->admin_dir;
-		$this->admin_url = $this->site_url . $this->config->admin_dir;
-		$this->admin_index = $this->admin_url . 'index.php';
-
 		$this->images_url_base = $this->images_url;
 		$this->images_url = $this->images_url . $this->device->getDir();
 
@@ -334,11 +323,14 @@ class App extends \Mars\App
 	}
 
 	/**
-	* Sets extra proprerties
+	* @see \Mars\App::setUrls()
+	* {@inheritdoc}
 	*/
-	public function setExtraProperties()
+	protected function setUrls()
 	{
-		//$this->images_url = $this->images_url . $this->device->getDir();
+		parent::setUrls();
+
+		$this->index = $this->url . 'index.php';
 	}
 
 	/**
@@ -360,7 +352,7 @@ class App extends \Mars\App
 			return;
 		}
 
-		$this->redirect($this->site_url . 'install/');
+		$this->redirect($this->url . 'install/');
 	}
 
 	/******************EXTRA METHODS*******************************************/
@@ -442,7 +434,7 @@ class App extends \Mars\App
 	*/
 	public function redirect404()
 	{
-		$this->redirect($this->site_url . '404.php');
+		$this->redirect($this->url . '404.php');
 	}
 
 	/**********************OUTPUT FUNCTIONS***************************************/
@@ -470,7 +462,7 @@ class App extends \Mars\App
 	* @param array $attachments The attachments, if any,to the mail (string,array)
 	* @return bool Returns true on success, false on failure
 	*/
-	public function mail($to, string $subject, string $message, string $from = '', string $from_name = '', string $reply_to = '', string $reply_to_name = '', bool $is_html = true, array $attachments = []) : bool
+	public function mail(string|array $to, string $subject, string $message, string $from = '', string $from_name = '', string $reply_to = '', string $reply_to_name = '', bool $is_html = true, array $attachments = []) : bool
 	{
 		if (!$to) {
 			return false;

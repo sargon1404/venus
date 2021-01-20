@@ -23,12 +23,12 @@ class File extends \Mars\File
 			return '';
 		}
 
-		$site_url = $this->app->uri->stripScheme($this->app->site_url);
+		$site_url = $this->app->uri->stripScheme($this->app->url);
 		$url = $this->app->uri->stripScheme($url);
 
-		$filename = $this->app->site_dir . str_replace($site_url, '', $url);
+		$filename = $this->app->dir . str_replace($site_url, '', $url);
 
-		$this->checkFilename($filename, $this->app->site_dir);
+		$this->checkFilename($filename, $this->app->dir);
 
 		return $filename;
 	}
@@ -56,7 +56,7 @@ class File extends \Mars\File
 	public function checkFilename(string $filename, string $secure_dir = '')
 	{
 		if (!$secure_dir) {
-			$secure_dir = $this->app->site_dir;
+			$secure_dir = $this->app->dir;
 		}
 
 		parent::checkFilename($filename, $secure_dir);

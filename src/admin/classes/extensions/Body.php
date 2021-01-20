@@ -35,6 +35,6 @@ trait Body
 	*/
 	public function getRootUrlStatic() : string
 	{
-		return $this->app->uri->stripScheme($this->app->admin_extensions_url);
+		return $this->app->admin_extensions_url;
 	}
 }

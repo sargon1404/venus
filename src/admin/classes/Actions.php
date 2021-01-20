@@ -58,7 +58,7 @@ class Actions
 					$link['icon'] = $this->app->theme->images_url . 'buttons/' . $link['icon'] . '_small.png';
 				}
 			} else {
-					$link['icon'] = $this->app->theme->images_url . 'buttons/' . $action . '_small.png';
+				$link['icon'] = $this->app->theme->images_url . 'buttons/' . $action . '_small.png';
 			}
 
 			if ($link['tooltip']) {

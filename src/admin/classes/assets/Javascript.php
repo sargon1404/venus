@@ -25,7 +25,7 @@ class Javascript extends \Venus\Assets\Javascript
 	* @var array $paths_array Array listing the paths to output
 	*/
 	protected array $paths_array = [
-		'admin_url', 'admin_url_rel', 'admin_utils_url'
+		'admin_url', 'admin_utils_url'
 	];
 
 	/**
@@ -76,7 +76,7 @@ class Javascript extends \Venus\Assets\Javascript
 	public function cacheTheme(Theme $theme)
 	{
 		$this->app->output->message("Building javascript code for theme {$theme->title}");
-		
+
 		$javascript_dir = $theme->dir . App::EXTENSIONS_DIRS['javascript'];
 		$has_javascript_dir = is_dir($javascript_dir);
 		$main_code = '';
@@ -104,18 +104,6 @@ class Javascript extends \Venus\Assets\Javascript
 			$cache_file = $this->getThemeFile($theme->name, $device);
 			$this->store($cache_file, $code);
 		}
-	}
-
-	/**
-	* @see \Venus\Assets\Javascript::getInit()
-	* {@inheritdoc}
-	*/
-	protected function getInit() : string
-	{
-		$code = "venus.init();\n";
-		$code.= "venus.initAdmin();\n";
-
-		return $code . "\n\n";
 	}
 
 	/**

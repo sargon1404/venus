@@ -211,7 +211,7 @@ class Login extends \Venus\Admin\Controller
 		$this->app->user->checkToken(false);
 		$this->app->user->logout();
 
-		$redirect_url = $this->app->site_index;
+		$redirect_url = $this->app->index;
 
 		$redirect_url = $this->plugins->filter($this->prefix . 'logout', $redirect_url);
 

@@ -35,7 +35,7 @@ class Cache extends \Venus\Cache
 	{
 		$this->app->file->cleanDir($dir);
 
-		$this->app->file->copyFile($this->app->site_dir . 'src/index.htm', $dir . 'index.htm');
+		$this->app->file->copyFile($this->app->dir . 'src/index.htm', $dir . 'index.htm');
 	}
 
 	/**

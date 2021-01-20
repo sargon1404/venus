@@ -1,10 +1,13 @@
+		</div>
+	</div>
+	<div class="clear"></div>
 </div>
 
 <footer>
 	<div class="footer-links">
 		<ul class="list">
 			<li><a href="{{ $app.admin_index }}">{{ footer_dashboard }}</a></li>
-			<li><a href="{{ $app.site_index }}">{{ footer_homepage }}</a></li>
+			<li><a href="{{ $app.index }}">{{ footer_homepage }}</a></li>
 		</ul>
 	</div>
 

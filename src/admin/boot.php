@@ -2,7 +2,6 @@
 namespace Venus\Admin;
 
 try {
-	require('src/mars/functions.php');
 	require('src/mars/autoload.php');
 	require('src/venus/autoload.php');
 	require('src/venus/autoload-cms.php');

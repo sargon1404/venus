@@ -32,7 +32,7 @@ class Javascript extends Asset
 	* @var array $paths_array Array listing the paths to output
 	*/
 	protected array $paths_array = [
-		'site_url', 'site_url_rel', 'site_url_static',
+		'url', 'url_static',
 		'images_url', 'media_url', 'utils_url'
 	];
 
@@ -137,7 +137,6 @@ class Javascript extends Asset
 		$config_code = $this->getConfig();
 		$properties_code = $this->getProperties();
 		$path_code = $this->getPaths();
-		$init_code = $this->getInit();
 		$strings = $this->getStrings();
 
 		//get javascript code for each device
@@ -168,7 +167,6 @@ class Javascript extends Asset
 			foreach ($strings as $lang => $strings_code) {
 				$cache_code = $code;
 				$cache_code.= $strings_code;
-				$cache_code.= $init_code;
 
 				$cache_file = $this->getMainFile($device, $lang);
 				$this->store($cache_file, $cache_code);
@@ -324,23 +322,12 @@ class Javascript extends Asset
 		$image_paths = $theme->getImagePaths($device);
 
 		$code = "venus.theme.name = '" . App::ejs($theme->name) . "';\n";
-		$code.= "venus.theme.dir_url = '" . App::ejs($theme->dir_url_static) . "';\n";
+		$code.= "venus.theme.url = '" . App::ejs($theme->base_url) . "';\n";
 		$code.= "venus.theme.images_url = '" . App::ejs($image_paths[1]) . "';\n";
 
 		if ($add_params) {
 			$code.= "venus.theme.params = venus.decode('" . $this->app->javascript->encode($theme->getParams($device)) . ")';\n";
 		}
-
-		return $code . "\n\n";
-	}
-
-	/**
-	* Returns the init code
-	* @return string
-	*/
-	protected function getInit() : string
-	{
-		$code = "venus.init();\n";
 
 		return $code . "\n\n";
 	}

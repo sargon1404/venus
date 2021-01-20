@@ -12,7 +12,6 @@
 * @property {object} main_obj The main object
 * @property {string} site_url The site's url
 * @property {string} site_url_static The url from where static content is served
-* @property {string} site_url_rel The relative site url. Unlike site_url it doesn't contain the scheme
 * @property {string} images_url The url to the images dir
 * @property {string} uploads_url The url to the uploads dir
 * @property {string} media_url The url to the media dir

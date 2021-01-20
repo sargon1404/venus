@@ -51,9 +51,9 @@ class Language extends \Venus\Extensions\Extension
 
 	/**
 	* Builds the language object
-	* @param id|array|object $language The language's id/data
+	* @param int|array|object $language The language's id/data
 	*/
-	public function __construct($language = 0)
+	public function __construct(int|array|object $language = 0)
 	{
 		parent::__construct($language);
 

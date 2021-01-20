@@ -36,7 +36,7 @@ class Language extends \Venus\Language
 	*/
 	public function get() : object
 	{
-		$id = $this->getId();
+		$id = $this->getLanguageId();
 
 		$language = null;
 		if ($id == $this->app->config->language_default) {
@@ -50,7 +50,7 @@ class Language extends \Venus\Language
 	* Returns the id of the language the user is using.
 	* @return int
 	*/
-	protected function getId() : int
+	protected function getLanguageId() : int
 	{
 		if ($this->app->user->id && $this->app->user->language_id) {
 			return $this->app->user->language_id;

@@ -12,6 +12,7 @@ use Mars\Timer;
 use Mars\Filter;
 use Mars\Escape;
 use Mars\Validator;
+use Mars\Accelerator;
 use Mars\Session;
 use Mars\Device;
 use Mars\Response;
@@ -53,6 +54,8 @@ class AppBooter extends \Venus\AppBooter
 		$this->app->config = new Config($this->app);
 		$this->app->config->read();
 
+		$this->app->setData();
+
 		$this->app->memcache = new Memcache($this->app);
 		$this->app->caching = new Caching($this->app);
 
@@ -86,6 +89,8 @@ class AppBooter extends \Venus\AppBooter
 	*/
 	public function env()
 	{
+		$this->app->accelerator = new Accelerator($this->app);
+
 		$this->app->session = new Session($this->app);
 		$this->app->session->start();
 
@@ -105,6 +110,8 @@ class AppBooter extends \Venus\AppBooter
 
 		$this->app->tree = new Tree($this->app);
 		$this->app->order = new Order($this->app);
+
+		$this->app->setDataAfterEnv();
 
 		return $this;
 	}

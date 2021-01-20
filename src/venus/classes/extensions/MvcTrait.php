@@ -165,7 +165,7 @@ trait MvcTrait
 	* @param Controller $controller The controller the view belongs to
 	* @return object Returns the instantiated view object
 	*/
-	public function getView(string $view = '', string $name = '', Controller $controller) : View
+	public function getView(string $view = '', string $name = '', ?Controller $controller = null) : View
 	{
 		if (!$name) {
 			$name = $this->name;

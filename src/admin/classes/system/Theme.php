@@ -152,14 +152,37 @@ class Theme extends \Venus\Admin\Theme
 	{
 		$this->outputTitle();
 		$this->outputEncoding();
-		$this->outputFavicon($this->app->admin_url_rel . 'favicon.png');
+		$this->outputFavicon($this->app->admin_url . 'favicon.png');
 
 		$this->outputCssUrls('head');
 		$this->outputJavascriptUrls('head');
-
-		$this->app->plugins->run('admin_system_theme_output_head', $this);
+		$this->outputJavascriptInHeader();
 
 		$this->outputHeadExtra();
+
+		$this->app->plugins->run('admin_system_theme_output_head', $this);
+	}
+
+	/**
+	* Outputs the javascript init code
+	*/
+	protected function outputJavascriptInit()
+	{
+		echo 'venus.init();' . "\n";
+		echo 'venus.initAdmin();' . "\n";
+
+		$this->app->plugins->run('admin_system_theme_output_javascript_init', $this);
+	}
+
+	/**
+	* @see \Venus\System\Theme::ouputJavascriptConfig()
+	* {@inheritdoc}
+	*/
+	protected function ouputJavascriptConfig()
+	{
+		parent::ouputJavascriptConfig();
+
+		echo "venus.html.current_tab = '{$this->tab_id}';\n";
 	}
 
 	/**
@@ -170,22 +193,6 @@ class Theme extends \Venus\Admin\Theme
 		if ($this->javascript_location == 'head') {
 			return;
 		}
-	}
-
-	/**
-	* @see \Venus\System\Theme::outputBodyExtra()
-	* {@inheritdoc}
-	*/
-	public function outputBodyExtra()
-	{
-		parent::outputBodyExtra();
-
-		//save the current tab id
-		$this->outputJavascriptCodeStart();
-
-		echo "venus.html.current_tab = '{$this->tab_id}';\n";
-
-		$this->outputJavascriptCodeEnd();
 	}
 
 	/**************** OUTPUT HTML *************************************/

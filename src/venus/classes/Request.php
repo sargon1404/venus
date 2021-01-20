@@ -148,7 +148,7 @@ class Request extends \Mars\Request
 	* @param bool $adjust_timestamp If true and $return_timestamp is true, will return the timestamp adjusted to UTC
 	* @return int|string The timestamp
 	*/
-	public function getDatetime(string $name, bool $return_timestamp = true, bool $adjust_timestamp = true)
+	public function getDatetime(string $name, bool $return_timestamp = true, bool $adjust_timestamp = true) : int|string
 	{
 		$date = $this->value($name . '-date');
 		$time = $this->value($name . '-time');
@@ -163,7 +163,7 @@ class Request extends \Mars\Request
 	* @param bool $adjust_timestamp If true and $return_timestamp is true will return the timestamp adjusted to UTC
 	* @return int|string The timestamp
 	*/
-	public function getDate(string $name, bool $return_timestamp = true, bool $adjust_timestamp = true)
+	public function getDate(string $name, bool $return_timestamp = true, bool $adjust_timestamp = true) : int|string
 	{
 		$date = $this->value($name . '-date');
 

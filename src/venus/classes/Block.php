@@ -98,7 +98,7 @@ class Block extends \Venus\Extensions\Extension implements Document
 	* Builds a block extension object
 	* @param int|string $name The name of the block or the block id.
 	*/
-	public function __construct($name)
+	public function __construct(int|string $name)
 	{
 		$this->app = $this->getApp();
 		$this->db = $this->app->db;
@@ -117,7 +117,7 @@ class Block extends \Venus\Extensions\Extension implements Document
 	* @param int|string $name The name of the block *or* the block id
 	* @return object The block
 	*/
-	protected function get($name)
+	protected function get(int|string $name)
 	{
 		$table = $this->getTable();
 
