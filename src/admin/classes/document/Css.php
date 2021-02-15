@@ -36,7 +36,7 @@ class Css extends \Venus\Document\Css
 
 	/**
 	* @see \Venus\Document\Css::loadMain()
-	* @inheritdocs
+	* {@inheritdoc}
 	*/
 	public function loadMain(string $name, string $location = 'head', int $priority = 50000)
 	{

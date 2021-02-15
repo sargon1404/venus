@@ -12,6 +12,7 @@ namespace Venus\Admin;
 */
 class Menu extends \Venus\Menu
 {
+
 	/**
 	* @internal
 	*/
@@ -37,6 +38,22 @@ class Menu extends \Venus\Menu
 	];
 
 	/**
+	* @var string $driver The used driver
+	*/
+	protected string $driver = 'admin';
+
+	/**
+	* Builds the menu
+	* @param App $app The app object
+	*/
+	public function __construct(App $app = null)
+	{
+		parent::__construct('', $app);
+
+		$this->addSupportedDriver('admin', '\Venus\Admin\Menus\Admin');
+	}
+
+	/**
 	* Outputs the admin menu
 	* @param string $name The name of the menu to output
 	*/
@@ -44,8 +61,10 @@ class Menu extends \Venus\Menu
 	{
 		$this->app->lang->loadFile('menu');
 
+		$this->handle = $this->getHandle();
+
 		$this->loadBlocks();
-		$this->loadItems();
+		//$this->loadItems();
 		$this->loadFromFile($this->app->admin_dir . 'menu.php');
 		$this->filterItems();
 
@@ -95,6 +114,8 @@ class Menu extends \Venus\Menu
 		$items = [];
 		$menus = include($filename);
 		foreach ($menus as $name => $menu) {
+			$menu['name'] = $name;
+
 			$items[$name] = (object) $menu;
 		}
 

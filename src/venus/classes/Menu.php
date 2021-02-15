@@ -12,15 +12,7 @@ namespace Venus;
 */
 class Menu extends Item
 {
-	/**
-	* @var int $icon_width The icon's width
-	*/
-	public int $icon_width = 0;
-
-	/**
-	* @var int $icon_height The icon's height
-	*/
-	public int $icon_height = 0;
+	use \Mars\DriverTrait;
 
 	/**
 	* @var array $items The menu items
@@ -47,6 +39,44 @@ class Menu extends Item
 	* @internal
 	*/
 	protected static string $items_table = 'venus_menu_items';
+
+	/**
+	* @var string $driver The used driver
+	*/
+	protected string $driver = 'horizontal';
+
+	/**
+	* @var string $driver_key The name of the key from where we'll read additional supported drivers from app->config->drivers
+	*/
+	protected string $driver_key = 'menus';
+
+	/**
+	* @var string $driver_interface The interface the driver must implement
+	*/
+	protected string $driver_interface = '\Venus\Menus\DriverInterface';
+
+	/**
+	* @var array $supported_drivers The supported drivers
+	*/
+	protected array $supported_drivers = [
+		'horizontal' => '\Venus\Menus\Horizontal',
+		'vertical' => '\Venus\Menus\Vertical'
+	];
+
+	/**
+	* Builds the menu
+	* @param int|string $name The menu's name or id
+	* @param App $app The app object
+	*/
+	public function __construct(int|string $name, App $app = null)
+	{
+		if (!$app) {
+			$app = App::get();
+		}
+		$this->app = $app;
+
+		parent::__construct($name);
+	}
 
 	/**
 	* Returns the items table name
@@ -194,6 +224,9 @@ class Menu extends Item
 			return '';
 		}
 
+		return $this->handle->getHtml($this->items);
+
+		///vertical menu
 		$for_mobile = 'false';
 		if ($this->app->device->isMobile()) {
 			$for_mobile = 'true';

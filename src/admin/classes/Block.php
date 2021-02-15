@@ -167,7 +167,6 @@ class Block extends \Venus\Block
 	*/
 	protected function setApp()
 	{
-		$this->app->url = $this->url;
 	}
 
 	/**

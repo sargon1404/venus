@@ -41,11 +41,6 @@ class Block extends \Venus\Extensions\Extension implements Document
 	public int $id3 = 0;
 
 	/**
-	* @var string $full_url The url of the current block page
-	*/
-	public string $full_url = '';
-
-	/**
 	* @internal
 	*/
 	protected static string $table = 'venus_blocks';
@@ -172,7 +167,6 @@ class Block extends \Venus\Extensions\Extension implements Document
 		parent::preparePaths();
 
 		$this->url = $this->getUrl();
-		$this->full_url = $this->app->full_url;
 	}
 
 	/**

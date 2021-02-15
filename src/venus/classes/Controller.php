@@ -77,25 +77,13 @@ abstract class Controller extends \Mars\Controller
 		$this->prefix = $this->getPrefix();
 
 		$this->dir = $this->document->dir;
-		$this->url = $this->url;
+		$this->url = $this->document->url;
 		$this->dir_url = $this->document->dir_url;
 		$this->base_url = $this->document->base_url;
 
 		if ($this->name != $this->document->name) {
 			$this->url = $this->app->uri->build($this->base_url, [$this->app->config->controller_param => $this->name]);
 		}
-	}
-
-	/**
-	* @see \Mars\Controller::dispatch()
-	* {@inheritdoc}
-	*/
-	public function dispatch(string $method = '', array $params = [])
-	{
-		//set the app url to the controller's url
-		$this->app->url = $this->url;
-
-		parent::dispatch($method, $params);
 	}
 
 	/**

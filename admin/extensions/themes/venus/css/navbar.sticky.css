@@ -1,12 +1,13 @@
 #navbar.sticky {
 	position: fixed;
 	top: 0px;
-	left: 1%;
+	left: 110px;
 	z-index: 500;
 	transition: all 0.5s linear;
 	margin-top: 0;
 	border-radius: 0;
 	padding: 5px 20px;
+	width: calc(100% - 110px);
 }
 
 #navbar.sticky ~ #container {

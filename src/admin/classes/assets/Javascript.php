@@ -71,7 +71,7 @@ class Javascript extends \Venus\Assets\Javascript
 
 	/**
 	* @see \Venus\Assets\Javascript::cacheTheme()
-	* @inheritdocs
+	* {@inheritdoc}
 	*/
 	public function cacheTheme(Theme $theme)
 	{

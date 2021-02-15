@@ -31,10 +31,14 @@ label {
 }
 
 /******************************************************************/
+#wrapper {
+}
 
 #container-wrapper {
-	width: calc(100% - 100px);
-	float: left;
+	margin-left: 100px;
+	display: inline-block;
+	vertical-align: top;
+	position: relative;
 }
 
 #container {

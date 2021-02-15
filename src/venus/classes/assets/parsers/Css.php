@@ -151,7 +151,7 @@ class Css
 	*/
 	protected function parsePaths(string $content) : string
 	{
-		$search = ['../', './', '::/', ':/'];
+		$search = ['../', './', '#/', '@/'];
 		$replace = [$this->up_url, $this->current_url, $this->root_images_url,  $this->images_url];
 
 		return str_replace($search, $replace, $content);

@@ -203,7 +203,7 @@ class Theme extends \Venus\Admin\Theme
 	*/
 	public function outputMenu(string $menu_name = 'main')
 	{
-		$menu = new Menu($menu_name);
+		$menu = new Menu($this->app);
 		$menu->output();
 	}
 

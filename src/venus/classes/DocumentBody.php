@@ -352,7 +352,6 @@ trait DocumentBody
 	*/
 	protected function setApp()
 	{
-		$this->app->url = $this->url;
 		$this->app->show_widgets = $this->show_widgets;
 		$this->app->show_breadcrumbs = $this->show_breadcrumbs;
 	}

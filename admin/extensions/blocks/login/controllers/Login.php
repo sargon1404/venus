@@ -130,8 +130,9 @@ class Login extends \Venus\Admin\Controller
 		}
 
 		if ($redirect_url) {
-			$redirect_url = $this->app->uri->addHttp($redirect_url);
-
+			if (!$this->app->validator->isUrl($redirect_url)) {
+				$redirect_url = $this->app->admin_index;
+			}
 			if (!$this->app->uri->isLocal($redirect_url)) {
 				$redirect_url = $this->app->admin_index;
 			}
