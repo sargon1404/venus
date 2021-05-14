@@ -125,8 +125,8 @@ class AppBooter extends \Venus\AppBooter
 		$this->app->title = new Title;
 		$this->app->meta = new Meta;
 
-		$this->app->css = new document\Css($this->app);
-		$this->app->javascript = new document\Javascript($this->app);
+		$this->app->css = new Document\Css($this->app);
+		$this->app->javascript = new Document\Javascript($this->app);
 
 		$this->app->errors = new Errors;
 		$this->app->messages = new Messages;
@@ -147,12 +147,13 @@ class AppBooter extends \Venus\AppBooter
 		$this->app->plugins = new System\Plugins($this->app);
 		$this->app->plugins->load();
 
-		$this->app->user = new system\User($this->app);
-		$this->app->lang = new system\Language($this->app);
+		$this->app->user = new System\User($this->app);
+		$this->app->lang = new System\Language($this->app);
 
 		$this->app->controls = new Controls($this->app);
 
-		$this->app->theme = new system\Theme($this->app);
+		$this->app->theme = new System\Theme($this->app);
+		$this->app->menu = new System\Menu($this->app);
 
 		return $this;
 	}

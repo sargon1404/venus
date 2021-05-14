@@ -66,8 +66,8 @@ class Cache extends \Venus\Cache
 		$this->cacheThemeDefault();
 
 		//clear the list of merged files
-		$this->update('css_merged', '', 'frontend');
-		$this->update('css_version', time(), 'frontend');
+		$this->set('css_merged', '', 'frontend');
+		$this->set('css_version', time(), 'frontend');
 
 		$this->app->plugins->run('admin_cache_build_css_frontend', $css, $this);
 
@@ -86,7 +86,7 @@ class Cache extends \Venus\Cache
 		$css->buildCache();
 
 		//clear the list of merged files
-		$this->update('css_merged', '', 'admin');
+		$this->set('css_merged', '', 'admin');
 
 		$this->app->plugins->run('admin_cache_build_css_admin', $css, $this);
 
@@ -132,8 +132,8 @@ class Cache extends \Venus\Cache
 		$this->cacheThemeDefault();
 
 		//clear the list of merged files
-		$this->update('javascript_merged', '', 'frontend');
-		$this->update('javascript_version', time(), 'frontend');
+		$this->set('javascript_merged', '', 'frontend');
+		$this->set('javascript_version', time(), 'frontend');
 
 		$this->app->plugins->run('admin_cache_build_javascript_frontend', $javascript, $this);
 
@@ -151,7 +151,7 @@ class Cache extends \Venus\Cache
 		$javascript->buildCache();
 
 		//clear the list of merged files
-		$this->update('javascript_merged', '', 'admin');
+		$this->set('javascript_merged', '', 'admin');
 
 		$this->app->plugins->run('admin_cache_build_javascript_admnin', $javascript, $this);
 
@@ -207,15 +207,15 @@ class Cache extends \Venus\Cache
 
 		$this->app->output->message("Updating libraries cache data");
 
-		$this->update('libraries', $libraries, 'frontend', true);
-		$this->update('libraries_version', time(), 'frontend');
+		$this->set('libraries', $libraries, 'frontend', true);
+		$this->set('libraries_version', time(), 'frontend');
 
 		//clear the list of merged files
-		$this->update('css_merged', '', 'frontend');
-		$this->update('css_merged', '', 'admin');
+		$this->set('css_merged', '', 'frontend');
+		$this->set('css_merged', '', 'admin');
 
-		$this->update('javascript_merged', '', 'frontend');
-		$this->update('javascript_merged', '', 'admin');
+		$this->set('javascript_merged', '', 'frontend');
+		$this->set('javascript_merged', '', 'admin');
 
 		$this->app->plugins->run('admin_cache_build_libraries', $libraries, $this);
 
@@ -342,7 +342,7 @@ class Cache extends \Venus\Cache
 		$this->app->output->message("Updating cache data for the default theme");
 
 		$theme = new Theme;
-		$this->update('theme_default', $theme->getRow($this->app->config->theme_default), 'frontend', true);
+		$this->set('theme_default', $theme->getRow($this->app->config->theme_default), 'frontend', true);
 	}
 
 	/**
@@ -377,7 +377,7 @@ class Cache extends \Venus\Cache
 		$this->app->output->message("Updating cache data for the default language");
 
 		$language = new Language;
-		$this->update('language_default', $language->getRow($this->app->config->language_default), 'frontend', true);
+		$this->set('language_default', $language->getRow($this->app->config->language_default), 'frontend', true);
 	}
 
 	/**
@@ -389,17 +389,17 @@ class Cache extends \Venus\Cache
 		$plugins_count = $this->app->db->count('venus_plugins');
 		$plugins_extensions_count = $this->app->db->count('venus_plugins_extensions');
 
-		$this->update('plugins', '', 'frontend');
-		$this->update('plugins', '', 'admin');
+		$this->set('plugins', '', 'frontend');
+		$this->set('plugins', '', 'admin');
 
-		$this->update('plugins_count', $plugins_count, 'frontend');
-		$this->update('plugins_count', $plugins_count, 'admin');
+		$this->set('plugins_count', $plugins_count, 'frontend');
+		$this->set('plugins_count', $plugins_count, 'admin');
 
-		$this->update('plugins_extensions_skip', '', 'frontend');
-		$this->update('plugins_extensions_skip', '', 'admin');
+		$this->set('plugins_extensions_skip', '', 'frontend');
+		$this->set('plugins_extensions_skip', '', 'admin');
 
-		$this->update('plugins_extensions_count', $plugins_extensions_count, 'frontend');
-		$this->update('plugins_extensions_count', $plugins_extensions_count, 'admin');
+		$this->set('plugins_extensions_count', $plugins_extensions_count, 'frontend');
+		$this->set('plugins_extensions_count', $plugins_extensions_count, 'admin');
 
 		return $this;
 	}
@@ -428,10 +428,10 @@ class Cache extends \Venus\Cache
 
 		$this->app->plugins->run('admin_cache_build_usergroups', $usergroups, $this);
 
-		$this->update('usergroups', $usergroups, 'frontend', true);
-		$this->update('usergroup_guests', $guests, 'frontend', true);
-		$this->update('usergroups_permissions', $permissions, 'frontend', true);
-		$this->update('usergroups_timestamp', time(), 'frontend');
+		$this->set('usergroups', $usergroups, 'frontend', true);
+		$this->set('usergroup_guests', $guests, 'frontend', true);
+		$this->set('usergroups_permissions', $permissions, 'frontend', true);
+		$this->set('usergroups_timestamp', time(), 'frontend');
 
 		return $this;
 	}
@@ -462,12 +462,12 @@ class Cache extends \Venus\Cache
 		$menus_count = count($menu_ids);
 		$menu_items_count = $this->app->db->count('venus_menu_items', ['menu_id' => $menu_ids, 'status' => 1]);
 
-		$this->update('menus', $menus, 'frontend', true);
-		$this->update('menus_count', $menus_count, 'frontend');
-		$this->update('menus_output', '', 'frontend');
-		$this->update('menu_items_count', $menu_items_count, 'frontend');
+		$this->set('menus', $menus, 'frontend', true);
+		$this->set('menus_count', $menus_count, 'frontend');
+		$this->set('menus_output', '', 'frontend');
+		$this->set('menu_items_count', $menu_items_count, 'frontend');
 
-		$this->app->plugins->run('admin_cache_build_menus_admnin', $javascript, $this);
+		$this->app->plugins->run('admin_cache_build_menus_admnin', $this);
 
 		return $this;
 	}
@@ -477,19 +477,9 @@ class Cache extends \Venus\Cache
 	*/
 	public function buildMenusAdmin()
 	{
-		$menu_ids = [];
-		$menus = $this->app->db->selectWithKey('venus_menus', 'id', '*', ['scope' => 'admin', 'status' => 1]);
+		$this->set('menus', '', 'admin');
 
-		foreach ($menus as $menu) {
-			$menu_ids[] = $menu->id;
-		}
-
-		$menu_items_count = $this->app->db->count('venus_menu_items', ['menu_id' => $menu_ids, 'status' => 1]);
-
-		$this->update('menus', $menus, 'admin', true);
-		$this->update('menu_items_count', $menu_items_count, 'admin');
-
-		$this->app->plugins->run('admin_cache_build_menus_admnin', $javascript, $this);
+		$this->app->plugins->run('admin_cache_build_menus_admnin', $this);
 
 		return $this;
 	}

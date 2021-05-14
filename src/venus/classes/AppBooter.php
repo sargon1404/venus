@@ -129,8 +129,8 @@ class AppBooter extends \Mars\AppBooter
 		$this->app->title = new Title;
 		$this->app->meta = new Meta;
 
-		$this->app->css = new document\Css($this->app);
-		$this->app->javascript = new document\Javascript($this->app);
+		$this->app->css = new Document\Css($this->app);
+		$this->app->javascript = new Document\Javascript($this->app);
 
 		$this->app->rss = new Rss;
 
@@ -139,7 +139,7 @@ class AppBooter extends \Mars\AppBooter
 		$this->app->warnings = new Warnings;
 		$this->app->notifications = new Notifications;
 
-		$this->app->breadcrums = new document\Breadcrumbs;
+		$this->app->breadcrums = new Document\Breadcrumbs;
 	}
 
 	/**
@@ -153,9 +153,9 @@ class AppBooter extends \Mars\AppBooter
 		$this->app->plugins = new System\Plugins($this->app);
 		$this->app->plugins->load();
 
-		$this->app->user = new system\User($this->app);
-		$this->app->lang = new system\Language($this->app);
-		$this->app->theme = new system\Theme($this->app);
+		$this->app->user = new System\User($this->app);
+		$this->app->lang = new System\Language($this->app);
+		$this->app->theme = new System\Theme($this->app);
 
 		return $this;
 	}

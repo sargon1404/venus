@@ -20,22 +20,67 @@ class Admin extends \Venus\Menus\Vertical
 	*/
 	protected function getItem(object $item) : string
 	{
-		$title = App::e($item->title);
-		$url = App::e($item->url ?? $this->app->uri->getEmpty());
 		$image = $item->image ?? '';
-		if (!$image) {
+		if ($image) {
+			$image = $this->app->url_static . $image;
+		} else {
 			$image = $this->app->theme->images_url . 'menu/' . $item->name . '.png';
 		}
-		$image = App::e($image);
+		//var_dump($item);die;
+		return '<a href="' . App::e($item->url ?? $this->app->uri->getEmpty()) . '"><img src="' . App::e($image) . '" alt="' . App::e($item->title) . '">' . App::e($item->title) . '</a>' . "\n";
+	}
 
-		return '<a href="' . $url . '"><img src="' . $image . '" alt="' . $title . '">' . $title . '</a>' . "\n";
+	/**
+	* @see \Venus\Menus\Menu::getDropdownHtml()
+	* {@inheritdoc}
+	*/
+	protected function getDropdownHtml(array $sections) : string
+	{
+		if (!$sections) {
+			return '';
+		}
+
+		$html = '';
+		foreach ($sections as $name => $section) {
+			$html.= '<section id="nav-dropdown-section-' . App::e($name) . '">' . "\n";
+			if (!empty($section->title)) {
+				$html.= '<h3>' . App::e($section->title) . '</h3>' . "\n";
+			}
+
+			//$html.= $this->getDropdownSectionHtml($section);
+
+			$html.= "</section>\n";
+		}
+
+		return $html;
+	}
+
+	/**
+	* Returns the html code of a dropdown section
+	* @param array $section The section
+	* @return string The html code
+	*/
+	protected function getDropdownSectionHtml(array $section) : string
+	{
+		if (!empty($section->html)) {
+			return $section->html;
+		}
+		var_dump($items);
+		die;
+
+		$html = "<ul>\n";
+		foreach ($items as $items) {
+		}
+		$html.= "</ul>\n";
+
+		return $html;
 	}
 
 	/**
 	* @see \Venus\Menus\Menu::getSubitems()
 	* {@inheritdoc}
 	*/
-	protected function getSubitems(object $item, array $items) : string
+	/*protected function getSubitems(object $item, array $items) : string
 	{
 		$url = $item->url ?? '';
 		if ($url) {
@@ -43,7 +88,7 @@ class Admin extends \Venus\Menus\Vertical
 		}
 
 		return parent::getSubitems($item, $items);
-	}
+	}*/
 
 	/**
 	* Returns the item's html code

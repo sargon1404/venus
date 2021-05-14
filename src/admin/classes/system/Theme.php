@@ -201,10 +201,9 @@ class Theme extends \Venus\Admin\Theme
 	* @see \Venus\System\Theme::outputMenu()
 	* {@inheritdoc}
 	*/
-	public function outputMenu(string $menu_name = 'main')
+	public function outputMenu(string $menu_name = '')
 	{
-		$menu = new Menu($this->app);
-		$menu->output();
+		$this->app->menu->output();
 	}
 
 	/**

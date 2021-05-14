@@ -116,14 +116,40 @@ class Menu extends Item
 	}
 
 	/**
+	* Sorts the items, by the order field
+	* @param array $items The menu items to sort
+	* @return array The sorted items
+	*/
+	protected function sortItems(array $items) : array
+	{
+		uasort($items, function ($a, $b) {
+			$o_a = $a->order ?? 1000000;
+			$o_b = $b->order ?? 1000000;
+
+			if ($o_a > $o_b) {
+				return 1;
+			} elseif ($o_a < $o_b) {
+				return -1;
+			} else {
+				return 0;
+			}
+		});
+
+		return $items;
+	}
+
+	/**
 	* Generates the url of an item
 	* @param object $item The item
 	* @return string The url
 	*/
 	protected function getItemUrl(object $item) : string
 	{
-		$type = $item->type;
-		if (!isset($this->supported_urls[$type])) {
+		if ($item->url) {
+			return $item->url;
+		}
+
+		if (!$item->type || !isset($this->supported_urls[$item->type])) {
 			return $this->app->uri->getEmpty();
 		}
 
@@ -186,7 +212,7 @@ class Menu extends Item
 
 		$menu_output[$menu_id][$usergroup_id] = $output;
 
-		$this->app->cache->update('menu_output', $menu_output, null, true);
+		$this->app->cache->set('menu_output', $menu_output, null, true);
 
 		$this->outputMenu($menu_name, $output);
 	}
@@ -197,7 +223,7 @@ class Menu extends Item
 	* @param array $blocks Array with the blocks the user has permissions to access
 	* @return bool
 	*/
-	protected function canAccess(array $menu, ?iterable $blocks = null) :bool
+	/*protected function canAccess(array $menu, ?iterable $blocks = null) : bool
 	{
 		if ($blocks === null) {
 			return true;
@@ -212,7 +238,7 @@ class Menu extends Item
 		}
 
 		return true;
-	}
+	}*/
 
 	/**
 	* Generates the html code necesarilly to display a menu
@@ -227,7 +253,7 @@ class Menu extends Item
 		return $this->handle->getHtml($this->items);
 
 		///vertical menu
-		$for_mobile = 'false';
+		/*$for_mobile = 'false';
 		if ($this->app->device->isMobile()) {
 			$for_mobile = 'true';
 		}
@@ -258,7 +284,7 @@ class Menu extends Item
 		$html.= "</ul>\n";
 		$html.= "<script>venus.menu.build('menu-{$name}', {$for_mobile})</script>";
 
-		return $html;
+		return $html;*/
 	}
 
 	/**

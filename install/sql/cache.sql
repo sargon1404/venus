@@ -32,11 +32,11 @@ INSERT INTO venus_cache VALUES ('usergroups_timestamp', '0', 'frontend');
 INSERT INTO venus_cache VALUES ('usergroup_guests', '', 'frontend');
 
 INSERT INTO venus_cache VALUES ('menus', '', 'frontend');
-INSERT INTO venus_cache VALUES ('menus', '', 'admin');
 INSERT INTO venus_cache VALUES ('menus_count', '0', 'frontend');
-INSERT INTO venus_cache VALUES ('menus_output', '', 'frontend');
+INSERT INTO venus_cache VALUES ('menus_html', '', 'frontend');
 INSERT INTO venus_cache VALUES ('menu_items_count', '0', 'frontend');
-INSERT INTO venus_cache VALUES ('menu_items_count', '0', 'admin');
+
+INSERT INTO venus_cache VALUES ('menu_items', '', 'admin');
 
 
 

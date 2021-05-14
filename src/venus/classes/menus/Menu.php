@@ -28,13 +28,9 @@ abstract class Menu
 		$html = '<nav class="' . $this->class . '">' . "\n";
 		$html.= "<ul>\n";
 		foreach ($items as $name => $item) {
-			if (!empty($item->parent)) {
-				continue;
-			}
-
 			$html.= "<li>\n";
 			$html.= $this->getItem($item);
-			$html.= $this->getSubitems($item, $items);
+			$html.= $this->getDropdown($item);
 			$html.= "</li>\n";
 		}
 		$html.= "</ul>\n";
@@ -44,56 +40,33 @@ abstract class Menu
 	}
 
 	/**
-	* Returns the child menus of a menu
-	* @param object $item The item to return the children for
-	* @param array $items The menu items
-	* @return array The child menus
-	*/
-	protected function getChildren(object $item, array $items) : array
-	{
-		$subitems = [];
-		foreach ($items as $name => $subitem) {
-			if (empty($subitem->parent)) {
-				continue;
-			}
-
-			if ($item->name == $subitem->parent) {
-				$subitems[$name] = $subitem;
-			}
-		}
-
-		return $subitems;
-	}
-
-	/**
 	* Returns the item's html code
 	* @param object $item The menu item
 	* @return string
 	*/
 	protected function getItem(object $item) : string
 	{
-		$title = App::e($item->title);
-		$url = App::e($item->url ?? $this->app->uri->getEmpty());
-
-		return '<a href="' . $url . '">' . $title . '</a>' . "\n";
+		return '<a href="' . App::e($item->url ?? $this->app->uri->getEmpty()) . '">' . App::e($item->title) . '</a>' . "\n";
 	}
 
 	/**
-	* Returns the an item's subitems html code
-	* @param object $item The item to return the subitems for
+	* Returns the an item's drowdown code
+	* @param object $item The item to return the dropdown for
 	* @param array $items The menu items
 	* @return string
 	*/
-	protected function getSubitems(object $item, array $items) : string
+	protected function getDropdown(object $item) : string
 	{
+		if (empty($item->html) && empty($item->items)) {
+			return '';
+		}
+
 		$html = '<div id="nav-dropdown-' . App::e($item->name) . '" class="nav-dropdown">' . "\n";
 
 		if (!empty($item->html)) {
 			$html.= $item->html . "\n";
 		} else {
-			$children = $this->getChildren($item, $items);
-
-			$html.= $this->getSubmenusList($children);
+			$html.= $this->getDropdownHtml($item->items) . "\n";
 		}
 
 		$html.= '</div>';
@@ -102,15 +75,17 @@ abstract class Menu
 	}
 
 	/**
-	* Returns a submenus list
+	* Returns the html code of a dropdown
 	* @param array $items The menu items
 	* @return string
 	*/
-	protected function getSubmenusList(array $items) : string
+	protected function getDropdownHtml(array $items) : string
 	{
 		if (!$items) {
 			return '';
 		}
+
+		$items = $this->sortItems($items);
 
 		$html= "<ul>\n";
 
@@ -123,6 +98,30 @@ abstract class Menu
 		$html.= "</ul>\n";
 
 		return $html;
+	}
+
+	/**
+	* Returns the child menus of a menu
+	* @param object $item The item to return the children for
+	* @param array $items The menu items
+	* @return array The child menus
+	*/
+	protected function getSubitems(object $item, array $items) : array
+	{
+		var_dump($items);
+		die;
+		$subitems = [];
+		foreach ($items as $name => $subitem) {
+			if (empty($subitem->parent)) {
+				continue;
+			}
+
+			if ($item->name == $subitem->parent) {
+				$subitems[$name] = $subitem;
+			}
+		}
+
+		return $subitems;
 	}
 
 	/**

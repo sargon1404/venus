@@ -237,7 +237,7 @@ class Javascript extends Asset
 
 		$inline_code = $this->getInline($this->dir, $this->minify);
 
-		$this->app->cache->update('js_inline', $inline_code, $this->scope, true);
+		$this->app->cache->set('js_inline', $inline_code, $this->scope, true);
 	}
 
 	/**
