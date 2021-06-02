@@ -113,7 +113,7 @@ trait LanguagesTrait
 			return [];
 		}
 
-		$languages = App::unserialize($this->languages);
+		$languages = $this->app->serializer->unserialize($this->languages);
 		if (!$languages) {
 			$languages = $this->readLanguages();
 			$this->cacheLanguages($languages);
@@ -143,7 +143,7 @@ trait LanguagesTrait
 		$id_name = $this->getIdName();
 		$table = $this->getTable();
 
-		$this->app->db->writeQuery("UPDATE {$table} SET languages = :languages WHERE {$id_name} = :id", ['languages' => App::serialize($languages, '-'), 'id' => $this->getId()]);
+		$this->app->db->writeQuery("UPDATE {$table} SET languages = :languages WHERE {$id_name} = :id", ['languages' => $this->app->serializer->serialize($languages ? $languages : '-'), 'id' => $this->getId()]);
 
 		return $languages;
 	}

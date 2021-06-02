@@ -35,9 +35,9 @@ class Language extends \Venus\Extensions\Extension
 	public string $parent_dir = '';
 
 	/**
-	* @var array $files Array with the keys listing the available files of the language
+	* @var string|array $files Array with the keys listing the available files of the language
 	*/
-	public $files = [];
+	public string|array $files = [];
 
 	/**
 	* @var array $parent_files Array with the keys listing the available files of the parent language
@@ -125,8 +125,8 @@ class Language extends \Venus\Extensions\Extension
 	*/
 	protected function prepareFiles()
 	{
-		$this->files = App::unserialize($this->files);
-		$this->parent_files = App::unserialize($this->parent_files);
+		$this->files = $this->app->serializer->unserialize($this->files);
+		$this->parent_files = $this->app->serializer->unserialize($this->parent_files);
 	}
 
 	/**

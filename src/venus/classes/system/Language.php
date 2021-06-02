@@ -65,7 +65,7 @@ class Language extends \Venus\Language
 	*/
 	public function getDefault() : ?object
 	{
-		return $this->app->cache->get('language_default', true);
+		return $this->app->cache->get('language_default');
 	}
 
 	/**

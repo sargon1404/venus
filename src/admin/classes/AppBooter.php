@@ -6,9 +6,12 @@
 
 namespace Venus\Admin;
 
+use Mars\Serializer;
 use Mars\Memcache;
 use Mars\Caching;
 use Mars\Timer;
+use Mars\Encoder;
+use Mars\Random;
 use Mars\Filter;
 use Mars\Escape;
 use Mars\Validator;
@@ -56,6 +59,7 @@ class AppBooter extends \Venus\AppBooter
 
 		$this->app->setData();
 
+		$this->app->serializer = new Serializer($this->app);
 		$this->app->memcache = new Memcache($this->app);
 		$this->app->caching = new Caching($this->app);
 
@@ -70,6 +74,8 @@ class AppBooter extends \Venus\AppBooter
 	{
 		$this->app->log = new Log($this->app);
 		$this->app->time = new Time($this->app);
+		$this->app->encoder = new Encoder($this->app);
+		$this->app->random = new Random($this->app);
 		$this->app->filter = new Filter($this->app);
 		$this->app->escape = new Escape($this->app);
 		$this->app->validator = new Validator($this->app);

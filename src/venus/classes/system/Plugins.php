@@ -69,9 +69,9 @@ class Plugins extends \Venus\Plugins
 		}
 
 		$plugins = [];
-
+App::print_r($this->app->cache);die;
 		if ($this->app->cache->plugins) {
-			$plugins = $this->app->cache->get('plugins', true, []);
+			$plugins = $this->app->cache->get('plugins');
 		} else {
 			$table = $this->getTable();
 
@@ -83,7 +83,7 @@ class Plugins extends \Venus\Plugins
 
 			$plugins = $this->app->db->get();
 
-			$this->app->cache->set('plugins', $plugins, null, true);
+			$this->app->cache->set('plugins', $plugins);
 		}
 
 		$this->loadPlugins($plugins);

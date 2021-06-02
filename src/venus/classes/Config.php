@@ -21,7 +21,7 @@ class Config extends \Mars\Config
 	/**
 	* @var string $key The memcache key used to store the config settings data, if any
 	*/
-	protected string $key = 'venus_config';
+	protected string $memcache_key = 'venus-config';
 
 	/**
 	* Builds the config object

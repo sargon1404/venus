@@ -20,7 +20,7 @@ class Cache extends \Mars\Cache
 	/**
 	* @var string $key The memcache key used to store the cached data, if any
 	*/
-	protected string $key = 'venus_cache';
+	protected string $memcache_key = 'venus-cache';
 
 	/**
 	* Builds the javascript cache from the /javascript folder
@@ -55,7 +55,7 @@ class Cache extends \Mars\Cache
 	*/
 	public function getUsergroups() : array
 	{
-		return $this->get('usergroups', true, []);
+		return $this->get('usergroups');
 	}
 
 	/**
@@ -64,7 +64,7 @@ class Cache extends \Mars\Cache
 	*/
 	public function getMenus() : array
 	{
-		return $this->get('menus', true, []);
+		return $this->get('menus');
 	}
 
 	/**
@@ -73,7 +73,7 @@ class Cache extends \Mars\Cache
 	*/
 	public function getLibraries() : array
 	{
-		return $this->get('libraries', true, []);
+		return $this->get('libraries');
 	}
 
 
@@ -83,7 +83,7 @@ class Cache extends \Mars\Cache
 	*/
 	public function getCategories() : array
 	{
-		return $this->get('categories', true, []);
+		return $this->get('categories');
 	}
 
 	/**
@@ -92,7 +92,7 @@ class Cache extends \Mars\Cache
 	*/
 	public function getCategoryIds() : array
 	{
-		return $this->get('categories_ids', true, []);
+		return $this->get('categories_ids');
 	}
 
 	/**

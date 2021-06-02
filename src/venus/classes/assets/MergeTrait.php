@@ -64,7 +64,7 @@ trait MergeTrait
 
 		$merged_files[$hash] = true;
 
-		$this->app->cache->set($this->merge_key, $merged_files, null, true);
+		$this->app->cache->set($this->merge_key, $merged_files);
 
 		return $file;
 	}

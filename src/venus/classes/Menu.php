@@ -212,7 +212,7 @@ class Menu extends Item
 
 		$menu_output[$menu_id][$usergroup_id] = $output;
 
-		$this->app->cache->set('menu_output', $menu_output, null, true);
+		$this->app->cache->set('menu_output', $menu_output);
 
 		$this->outputMenu($menu_name, $output);
 	}

@@ -34,7 +34,7 @@ trait PluginsTrait
 		//is the extension on the list of extensions marked as not having plugins?
 		static $skip = null;
 		if ($skip === null) {
-			$skip = $this->app->cache->get('plugins_extensions_skip', true, []);
+			$skip = $this->app->cache->get('plugins_extensions_skip');
 		}
 
 		$type = $this->getType();
@@ -52,7 +52,7 @@ trait PluginsTrait
 			if (!in_array($this->name, $skip[$type])) {
 				$skip[$type][] = $this->name;
 
-				$this->app->cache->set('plugins_extensions_skip', $skip, null, true);
+				$this->app->cache->set('plugins_extensions_skip', $skip);
 			}
 		}
 	}

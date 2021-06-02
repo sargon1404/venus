@@ -779,7 +779,7 @@ class Uri extends \Mars\Uri
 			return;
 		}
 
-		$this->cached_data[$type] = $this->app->cache->get($key, true, []);
+		$this->cached_data[$type] = $this->app->cache->get($key);
 	}
 
 	/**

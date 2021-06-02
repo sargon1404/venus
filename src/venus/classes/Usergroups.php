@@ -88,7 +88,7 @@ class Usergroups extends Items
 		static $usergroup_guests = [];
 
 		if (!$usergroup_guests) {
-			$usergroup_guests = $this->app->cache->get('usergroup_guests', true);
+			$usergroup_guests = $this->app->cache->get('usergroup_guests');
 		}
 
 		return $this->getObject($usergroup_guests);
@@ -147,7 +147,7 @@ class Usergroups extends Items
 		static $default_permissions = null;
 
 		if ($default_permissions === null) {
-			$default_permissions = $this->app->cache->get('usergroups_permissions', true);
+			$default_permissions = $this->app->cache->get('usergroups_permissions');
 		}
 
 		return $default_permissions[$type];

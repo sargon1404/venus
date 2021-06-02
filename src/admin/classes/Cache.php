@@ -87,6 +87,7 @@ class Cache extends \Venus\Cache
 
 		//clear the list of merged files
 		$this->set('css_merged', '', 'admin');
+		$this->set('css_version', time(), 'admin');
 
 		$this->app->plugins->run('admin_cache_build_css_admin', $css, $this);
 
@@ -133,7 +134,7 @@ class Cache extends \Venus\Cache
 
 		//clear the list of merged files
 		$this->set('javascript_merged', '', 'frontend');
-		$this->set('javascript_version', time(), 'frontend');
+		$this->set('javascript_version', time(), 'frontend', false);
 
 		$this->app->plugins->run('admin_cache_build_javascript_frontend', $javascript, $this);
 
@@ -152,6 +153,7 @@ class Cache extends \Venus\Cache
 
 		//clear the list of merged files
 		$this->set('javascript_merged', '', 'admin');
+		$this->set('javascript_version', time(), 'admin', false);
 
 		$this->app->plugins->run('admin_cache_build_javascript_admnin', $javascript, $this);
 
@@ -207,8 +209,8 @@ class Cache extends \Venus\Cache
 
 		$this->app->output->message("Updating libraries cache data");
 
-		$this->set('libraries', $libraries, 'frontend', true);
-		$this->set('libraries_version', time(), 'frontend');
+		$this->set('libraries', $libraries, 'frontend');
+		$this->set('libraries_version', time(), 'frontend', false);
 
 		//clear the list of merged files
 		$this->set('css_merged', '', 'frontend');
@@ -322,7 +324,7 @@ class Cache extends \Venus\Cache
 		foreach ($themes as $theme) {
 			$this->app->output->message("Updating cache data for theme {$theme->title}");
 
-			$templates = App::serialize($theme->getTemplates());
+			$templates = $this->app->serializer->serialize($theme->getTemplates(), true);
 
 			$this->app->db->updateById('venus_themes', ['templates' => $templates], $theme->tid);
 		}
@@ -357,7 +359,7 @@ class Cache extends \Venus\Cache
 		foreach ($languages as $language) {
 			$this->app->output->message("Updating cache data for language {$language->title}");
 
-			$files = App::serialize($language->getFiles());
+			$files = $this->app->serializer->serialize($language->getFiles());
 
 			$this->app->db->updateById('venus_languages', ['files' => $files], $language->id);
 		}
@@ -389,14 +391,14 @@ class Cache extends \Venus\Cache
 		$plugins_count = $this->app->db->count('venus_plugins');
 		$plugins_extensions_count = $this->app->db->count('venus_plugins_extensions');
 
-		$this->set('plugins', '', 'frontend');
-		$this->set('plugins', '', 'admin');
+		$this->set('plugins', [], 'frontend');
+		$this->set('plugins', [], 'admin');
 
 		$this->set('plugins_count', $plugins_count, 'frontend');
 		$this->set('plugins_count', $plugins_count, 'admin');
 
-		$this->set('plugins_extensions_skip', '', 'frontend');
-		$this->set('plugins_extensions_skip', '', 'admin');
+		$this->set('plugins_extensions_skip', [], 'frontend');
+		$this->set('plugins_extensions_skip', [], 'admin');
 
 		$this->set('plugins_extensions_count', $plugins_extensions_count, 'frontend');
 		$this->set('plugins_extensions_count', $plugins_extensions_count, 'admin');
@@ -477,7 +479,7 @@ class Cache extends \Venus\Cache
 	*/
 	public function buildMenusAdmin()
 	{
-		$this->set('menus', '', 'admin');
+		$this->set('menus', [], 'admin');
 
 		$this->app->plugins->run('admin_cache_build_menus_admnin', $this);
 

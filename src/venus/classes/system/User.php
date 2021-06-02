@@ -180,7 +180,7 @@ class User extends \Venus\User
 	protected function prepareToken()
 	{
 		if (!$this->session->get('token')) {
-			$this->session->set('token', App::randStr());
+			$this->session->set('token', $this->app->random->getString(64));
 		}
 
 		$this->token = $this->session->get('token');
@@ -483,7 +483,7 @@ class User extends \Venus\User
 	*/
 	protected function getLoginKey() : string
 	{
-		$key = App::randStr(64);
+		$key = $this->app->random->getString(64);
 
 		return $key;
 	}

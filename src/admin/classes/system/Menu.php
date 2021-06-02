@@ -144,7 +144,7 @@ class Menu extends \Venus\Menu
 	{
 		$lang_name = $this->app->lang->name;
 
-		$menus = $this->app->cache->get('menus', true);
+		$menus = $this->app->cache->get('menus');
 		if (isset($menus[$lang_name])) {
 			$this->items = $menus[$this->app->lang->name];
 		} else {
@@ -153,7 +153,7 @@ class Menu extends \Venus\Menu
 
 			$menus[$lang_name] = $this->items;
 
-			//$this->app->cache->set('menus', $menus, 'admin', true);
+			$this->app->cache->set('menus', $menus);
 		}
 	}
 

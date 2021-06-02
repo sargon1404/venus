@@ -179,9 +179,9 @@ class Theme extends \Venus\Extensions\Extension
 	];
 
 	/**
-	* @var object $params The theme's params
+	* @var mixed $params The theme's params
 	*/
-	public $params = null;
+	public $params = '';
 
 	/**
 	* @var array $parent_params The theme's parent params
@@ -348,8 +348,8 @@ class Theme extends \Venus\Extensions\Extension
 	*/
 	protected function prepareParams()
 	{
-		$this->params_data = App::unserialize($this->params);
-		$this->parent_params_data = App::unserialize($this->parent_params);
+		$this->params_data = $this->app->serializer->unserialize($this->params);
+		$this->parent_params_data = $this->app->serializer->unserialize($this->parent_params);
 
 		$this->params = App::toObject($this->getParams($this->app->device->type));
 
@@ -394,8 +394,8 @@ class Theme extends \Venus\Extensions\Extension
 			$this->parent_templates_dir = $this->getDir($this->parent_name) . App::EXTENSIONS_DIRS['templates'];
 		}
 
-		$this->templates = App::unserialize($this->templates);
-		$this->parent_templates = App::unserialize($this->parent_templates);
+		$this->templates = $this->app->serializer->unserialize($this->templates);
+		$this->parent_templates = $this->app->serializer->unserialize($this->parent_templates);
 	}
 
 	/*****************IMAGES DIMENSIONS METHODS*********************************/
@@ -516,7 +516,7 @@ class Theme extends \Venus\Extensions\Extension
 	{
 		$code = $this->app->filter->trim($code);
 
-		$this->app->db->updateById($this->getTable(), ['inline_js' => App::serialize($code)], $this->getId(), $this->getIdName());
+		$this->app->db->updateById($this->getTable(), ['inline_js' => $this->app->serializer->serialize($code)], $this->getId(), $this->getIdName());
 	}
 
 	/**
@@ -527,6 +527,6 @@ class Theme extends \Venus\Extensions\Extension
 	{
 		$code = $this->app->filter->trim($code);
 
-		$this->app->db->updateById($this->getTable(), ['inline_css' => App::serialize($code)], $this->getId(), $this->getIdName());
+		$this->app->db->updateById($this->getTable(), ['inline_css' => $this->app->serializer->serialize($code)], $this->getId(), $this->getIdName());
 	}
 }

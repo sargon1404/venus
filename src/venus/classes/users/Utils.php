@@ -36,7 +36,7 @@ class Utils
 	*/
 	public function getAutologinUrl(User $user, string $redirect_url = '', int $valid_timestamp = 0) : string
 	{
-		$key = App::randStr(30);
+		$key = $this->app->random->getString(64);
 
 		if (!$valid_timestamp) {
 			$valid_timestamp = time() + ($this->app->user_autologin_expires * 3600 *24);

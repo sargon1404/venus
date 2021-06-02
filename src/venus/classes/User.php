@@ -45,12 +45,12 @@ class User extends Item
 	/**
 	* @var Usergroup $usergroup The primary usergroup of the user
 	*/
-	public Usergroup $usergroup;
+	public ?Usergroup $usergroup = null;
 
 	/**
 	* @var Usergroups $usergroups The usergroups the user belongs to
 	*/
-	public Usergroups $usergroups;
+	public ?Usergroups $usergroups = null;
 
 	/**
 	* @var array $usergroup_ids The ids of the usergroups the user belongs to
@@ -202,7 +202,7 @@ class User extends Item
 	{
 		return [
 			'usergroup_id' => App::USERGROUPS['registered'],
-			'secret_key' => App::randStr(),
+			'secret_key' => $this->app->random->getString(64),
 
 			'status' => 1,
 			'activated' => 1,
@@ -431,8 +431,7 @@ class User extends Item
 	*/
 	public function loadUsergroups(bool $include_primary_usergroup_id = true)
 	{
-		static $loaded = false;
-		if ($loaded) {
+		if ($this->usergroups) {
 			return $this;
 		}
 
@@ -478,6 +477,7 @@ class User extends Item
 	{
 		//load the usergroups, if not already loaded
 		$this->loadUsergroups();
+
 		if (!$this->usergroups) {
 			return false;
 		}

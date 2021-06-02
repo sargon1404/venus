@@ -111,7 +111,7 @@ class Theme extends \Venus\System\Theme
 	*/
 	protected function prepareTemplates()
 	{
-		$this->templates = $this->app->cache->get('theme_templates', true, []);
+		$this->templates = $this->app->cache->get('theme_templates');
 		if ($this->templates) {
 			return;
 		}
@@ -120,6 +120,6 @@ class Theme extends \Venus\System\Theme
 
 		$this->templates = array_fill_keys($templates, '');
 
-		$this->app->cache->set('theme_templates', $this->templates, null, true);
+		$this->app->cache->set('theme_templates', $this->templates);
 	}
 }

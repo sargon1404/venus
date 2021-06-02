@@ -20,9 +20,9 @@ abstract class Extension extends \Mars\Extensions\Extension
 	public string $title = '';
 
 	/**
-	* @var array $params The extension's params
+	* @var mixed $params The extension's params
 	*/
-	public $params = [];
+	public $params = '';
 
 	/**
 	* Prepares the extension
@@ -39,7 +39,7 @@ abstract class Extension extends \Mars\Extensions\Extension
 	*/
 	protected function prepareParams()
 	{
-		$this->params = App::unserialize($this->params);
+			$this->params = $this->app->serializer->unserialize($this->params);
 	}
 
 	/**
@@ -52,7 +52,7 @@ abstract class Extension extends \Mars\Extensions\Extension
 		if (is_file($info_file)) {
 			return include($info_file);
 		}
-		
+
 		return [
 			'title' => $this->name, 'author' => '', 'email' => '', 'date'=> '', 'version' => '', 'url' => '', 'description' => '', 'homepage' => ''
 		];

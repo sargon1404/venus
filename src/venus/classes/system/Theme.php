@@ -76,7 +76,7 @@ class Theme extends \Venus\Theme
 	/**
 	* @var string|array $libraries The javascript libraries loaded by this theme
 	*/
-	protected string|array $libraries = [];
+	protected string|array $libraries = '';
 
 	/**
 	* @var bool $init Will include the theme's init file if $init is set to true
@@ -140,7 +140,7 @@ class Theme extends \Venus\Theme
 	{
 		static $default_theme = null;
 		if ($default_theme === null) {
-			$default_theme = $this->app->cache->get('theme_default', true);
+			$default_theme = $this->app->cache->get('theme_default');
 		}
 
 		return $default_theme;
@@ -178,14 +178,16 @@ class Theme extends \Venus\Theme
 	{
 		parent::prepareDevelopment();
 
-		if ($this->app->config->development) {
-			//rebuild the javascript code if the site is running in development mode
-			$this->app->cache->buildMainJavascript();
-		}
+		if (!$this->app->is_cli) {
+			if ($this->app->config->development) {
+				//rebuild the javascript code if the site is running in development mode
+				$this->app->cache->buildMainJavascript();
+			}
 
-		if ($this->development) {
-			//rebuild the theme's css and js cache
-			$this->app->cache->buildForTheme($this);
+			if ($this->development) {
+				//rebuild the theme's css and js cache
+				$this->app->cache->buildForTheme($this);
+			}
 		}
 	}
 
@@ -248,7 +250,7 @@ class Theme extends \Venus\Theme
 		$this->prepareJquery();
 
 		//load the libraries this theme is using
-		$this->libraries = App::unserialize($this->libraries);
+		$this->libraries = $this->app->serializer->unserialize($this->libraries);
 
 		foreach ($this->libraries as $library) {
 			$this->app->javascript->loadLibrary($library);
