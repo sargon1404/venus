@@ -39,7 +39,7 @@ abstract class Extension extends \Mars\Extensions\Extension
 	*/
 	protected function prepareParams()
 	{
-			$this->params = $this->app->serializer->unserialize($this->params);
+		$this->params = $this->app->serializer->unserialize($this->params);
 	}
 
 	/**

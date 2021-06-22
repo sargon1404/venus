@@ -15,6 +15,11 @@ class Menu extends Item
 	use \Mars\DriverTrait;
 
 	/**
+	* @var string $name The name of the menu
+	*/
+	protected string $name = '';
+
+	/**
 	* @var array $items The menu items
 	*/
 	protected array $items = [];
@@ -22,8 +27,7 @@ class Menu extends Item
 	/**
 	* @var array $supported_urls Array listing the supported url types
 	*/
-	protected array $supported_urls = [
-	];
+	protected array $supported_urls = [];
 
 	/**
 	* @internal
@@ -250,41 +254,7 @@ class Menu extends Item
 			return '';
 		}
 
-		return $this->handle->getHtml($this->items);
-
-		///vertical menu
-		/*$for_mobile = 'false';
-		if ($this->app->device->isMobile()) {
-			$for_mobile = 'true';
-		}
-
-		$name = App::e($this->name);
-
-		$html = '<a href="javascript:void(0)" class="toggle-menu" id="toggle-menu-' . $name . '" data-target="menu-' . $name . '"><span></span><span></span><span></span></a>';
-		$html.= '<ul id="menu-' . $name . '">' . "\n";
-
-		foreach ($this->items as $menu_id => $menu) {
-			$parent = $menu->parent ?? false;
-			if ($parent) {
-				continue;
-			}
-
-			$is_separator = $menu->separator ?? false;
-			if ($is_separator) {
-				$html.= '<li class="separator"></li>' . "\n";
-				continue;
-			}
-
-			$html.= "<li>\n";
-			$html.= $this->getMenu($menu);
-			$html.= $this->getSubmenu($menu_id);
-			$html.= "</li>\n";
-		}
-
-		$html.= "</ul>\n";
-		$html.= "<script>venus.menu.build('menu-{$name}', {$for_mobile})</script>";
-
-		return $html;*/
+		return $this->handle->getHtml($this->name, $this->items);
 	}
 
 	/**

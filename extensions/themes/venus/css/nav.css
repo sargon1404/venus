@@ -35,6 +35,24 @@ nav ul li a:hover {
 	text-decoration: none;
 }
 
+nav .toggle-menu {
+	/*display: none;*/
+	background: none;
+	margin-top: 2px;
+}
+
+nav .toggle-menu:hover {
+	background: none;
+}
+
+nav .toggle-menu span {
+	display: block;
+	width: 23px;
+	height: 3px;
+	background: #fff;
+	margin-bottom: 4px;
+}
+
 /*nav {
 	padding: 3px 50px 4px 5px;
 	text-align: left;
@@ -124,20 +142,4 @@ nav ul li:hover > ul {
 	display: block;
 }
 
-nav .toggle-menu {
-	display: none;
-	background: none;
-	margin-top: 2px;
-}
-
-nav .toggle-menu:hover {
-	background: none;
-}
-
-nav .toggle-menu span {
-	display: block;
-	width: 23px;
-	height: 3px;
-	background: #fff;
-	margin-bottom: 4px;
-}*/
+*/

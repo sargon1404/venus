@@ -6,10 +6,9 @@ class VenusMenu {
 	/**
 	* Builds a menu as a mobile menu
 	* @param {string} menu_id The id of the menu
-	* @param {bool} for_mobile If true, will build the menu for mobile devices
 	* @return {this}
 	*/
-	build (menu_id, for_mobile) {
+	build (menu_id) {
 		let self = this;
 
 		jQuery('.toggle-menu').click(function(e) {
@@ -20,20 +19,23 @@ class VenusMenu {
 			e.stopPropagation();
 		});
 
-		if (!for_mobile) {
-			return;
-		}
-
-		venus.get(menu_id).find('li').each(function () {
+		venus.get(menu_id).find('li.has-dropdown > a').each(function () {
 			jQuery(this).click(function (e) {
-				let href = jQuery(this).children('a').first().attr('href');
+				var open = jQuery(this).parent().hasClass('open-dropdown');
 
-				if (href == '' || href == '#' || href == 'javascript:void(0)') {
-					// open the menu only if we're having a real url
-					jQuery(this).children('ul').each(function () {
-						self.toggleSubmenu(jQuery(this));
-					});
+				self.closeDropdowns(menu_id);
+
+				if (!open) {
+					jQuery(this).parent().addClass('open-dropdown');
 				}
+
+				e.stopPropagation();
+			});
+		});
+
+		venus.get(menu_id).find('.nav-dropdown-close').each(function (){
+			jQuery(this).click(function (e) {
+				self.closeDropdowns(menu_id);
 
 				e.stopPropagation();
 			});
@@ -43,16 +45,29 @@ class VenusMenu {
 	}
 
 	/**
+	* Determines if an element has an open dropdown
+	* @param {object} The element
 	* @private
 	*/
-	toggleMenu (obj) {
-		obj.toggle();
+	hasOpenDropdowns(element) {
+		return jQuery(element).find('.nav-dropdown.nav-dropdown-open').length;
+	}
+
+	/**
+	* Closes all the open dropdowns of a menu
+	* @param {string} menu_id The id of the menu
+	* @return {this}
+	*/
+	closeDropdowns(menu_id) {
+		venus.get(menu_id).find('.open-dropdown').each(function () {
+			jQuery(this).removeClass('open-dropdown');
+		});
 	}
 
 	/**
 	* @private
 	*/
-	toggleSubmenu (obj) {
+	toggleMenu (obj) {
 		obj.toggle();
 	}
 }

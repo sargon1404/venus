@@ -15,6 +15,11 @@ use Venus\Admin\App;
 class Menu extends \Venus\Menu
 {
 	/**
+	* {@inheritdoc}
+	*/
+	protected string $name = 'admin';
+
+	/**
 	* @var array $blocks The blocks the user has access to
 	*/
 	protected array $blocks = [];
@@ -188,12 +193,12 @@ class Menu extends \Venus\Menu
 	*/
 	protected function loadCustomItems()
 	{
-		$this->addMenu('some-link', 'Some Link', 'https://www.google.com', '', 650);
+		/*$this->addMenu('some-link', 'Some Link', 'https://www.google.com', '', 650);
 		$this->addSection('some-link-section1', 'some-link', 'Custom Section 1');
 		$this->addSection('some-link-section2', 'dashboard', 'Custom Section 1');
 		$this->addSection('some-link-section3', 'site', 'Custom Section 1', 10);
 
-		$this->addSubmenu('some-submenu', 'site', 'Custom Section 1', 'https://www.google.com', 'some-link-section3');
+		$this->addSubmenu('some-submenu', 'site', 'Custom Section 1', 'https://www.google.com', 'some-link-section3');*/
 	}
 
 	/**
@@ -209,8 +214,12 @@ class Menu extends \Venus\Menu
 			if (isset($item->items)) {
 				foreach ($item->items as &$section) {
 					if (isset($section['items'])) {
-						foreach ($section['items'] as &$section_item) {
-							$section_item = App::toObject($section_item);
+						foreach ($section['items'] as &$menu) {
+							foreach ($menu['menus'] as &$menu_items) {
+								$menu_items = App::toObject($menu_items);
+							}
+
+							$menu = App::toObject($menu);
 						}
 					}
 
@@ -237,6 +246,10 @@ class Menu extends \Venus\Menu
 
 				foreach ($item->items as &$section) {
 					if (isset($section->items)) {
+						foreach ($section->items as &$menu) {
+							$menu->menus = $this->sortItems($menu->menus);
+						}
+
 						$section->items = $this->sortItems($section->items);
 					}
 				}

@@ -69,7 +69,8 @@ class Plugins extends \Venus\Plugins
 		}
 
 		$plugins = [];
-App::print_r($this->app->cache);die;
+		App::print_r($this->app->cache);
+		die;
 		if ($this->app->cache->plugins) {
 			$plugins = $this->app->cache->get('plugins');
 		} else {

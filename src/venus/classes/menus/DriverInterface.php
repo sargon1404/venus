@@ -13,8 +13,9 @@ interface DriverInterface
 {
 	/**
 	* Returns the menu's html code
-	* @param array $items The menu items
+	* @param string $name The menu's name
+	* @param array $items The menu's items
 	* @return string The html code
 	*/
-	public function getHtml(array $items) : string;
+	public function getHtml(string $name, array $items) : string;
 }

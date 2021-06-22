@@ -1,13 +1,13 @@
-/*@media (max-width: 1200px) {
-	nav ul {
+@media (max-width: 1200px) {
+	/*nav ul {
 		display: none;
-	}
+	}*/
 
 	nav .toggle-menu {
 		display: inline-block;
 	}
 
-	nav ul {
+	/*nav ul {
 		position: absolute;
 		left: 0;
 		top: 35px;
@@ -44,5 +44,5 @@
 	nav li ul > li a {
 		width: auto;
 		padding: 10px 20px;
-	}
-}*/
+	}*/
+}

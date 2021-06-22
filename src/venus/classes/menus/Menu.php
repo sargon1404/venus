@@ -16,6 +16,11 @@ abstract class Menu
 	use \Venus\AppTrait;
 
 	/**
+	* @var $class The menu's id attribute
+	*/
+	protected string $id = '';
+
+	/**
 	* @var $class The menu's class attribute
 	*/
 	protected string $class = '';
@@ -23,18 +28,33 @@ abstract class Menu
 	/**
 	* @see \Venus\Menus\DriverInterface::getHtml()
 	*/
-	public function getHtml(array $items) : string
+	public function getHtml(string $name, array $items) : string
 	{
-		$html = '<nav class="' . $this->class . '">' . "\n";
-		$html.= "<ul>\n";
-		foreach ($items as $name => $item) {
-			$html.= "<li>\n";
+		$name = App::e($name);
+
+		$html = '<div class="nav-wrapper">';
+		$html.= '<nav id="menu-' . $name . '" class="' . $this->class . '">' . "\n";
+		$html.= '<a href="javascript:void(0)" class="toggle-menu" id="toggle-menu-' . $name . '" data-target="menu-items-' . $name . '"><span></span><span></span><span></span></a>';
+		$html.= '<ul id="menu-items-' . $name . '">' . "\n";
+
+		foreach ($items as $item_name => $item) {
+			$dropdown = $this->getDropdown($item);
+
+			$class = '';
+			if ($dropdown) {
+				$class = ' class="has-dropdown"';
+			}
+
+			$html.= "<li{$class}>\n";
 			$html.= $this->getItem($item);
-			$html.= $this->getDropdown($item);
+			$html.= $dropdown;
 			$html.= "</li>\n";
 		}
+
 		$html.= "</ul>\n";
 		$html.= '</nav>' . "\n";
+		$html.= "<script>venus.menu.build('menu-items-{$name}')</script>";
+		$html.= '</div>' . "\n";
 
 		return $html;
 	}
@@ -66,7 +86,7 @@ abstract class Menu
 		if (!empty($item->html)) {
 			$html.= $item->html . "\n";
 		} else {
-			$html.= $this->getDropdownHtml($item->items) . "\n";
+			$html.= $this->getDropdownHtml($item) . "\n";
 		}
 
 		$html.= '</div>';
@@ -79,13 +99,13 @@ abstract class Menu
 	* @param array $items The menu items
 	* @return string
 	*/
-	protected function getDropdownHtml(array $items) : string
+	protected function getDropdownHtml(object $item) : string
 	{
-		if (!$items) {
+		if (!$item->items) {
 			return '';
 		}
 
-		$items = $this->sortItems($items);
+		$items = $this->sortItems($item->items);
 
 		$html= "<ul>\n";
 
