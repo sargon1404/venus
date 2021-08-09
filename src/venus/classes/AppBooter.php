@@ -18,6 +18,7 @@ use Mars\Validator;
 use Mars\Accelerator;
 use Mars\Session;
 use Mars\Device;
+use Mars\Registry;
 use Mars\Response;
 use Mars\Document\Title;
 use Mars\Document\Meta;
@@ -84,6 +85,7 @@ class AppBooter extends \Mars\AppBooter
 		$this->app->validator = new Validator($this->app);
 		$this->app->format = new Format($this->app);
 		$this->app->file = new File($this->app);
+		$this->app->dir = new Dir($this->app);
 		$this->app->html = new Html($this->app);
 		$this->app->ui = new Ui($this->app);
 		$this->app->text = new Text($this->app);
@@ -117,6 +119,7 @@ class AppBooter extends \Mars\AppBooter
 		$this->app->cache = new Cache($this->app);
 		$this->app->cache->load();
 
+		$this->app->registry = new Registry($this->app);
 		$this->app->library = new Library($this->app);
 		$this->app->env = new Environment($this->app);
 		$this->app->media = new Media;

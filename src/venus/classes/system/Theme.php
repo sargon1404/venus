@@ -44,11 +44,6 @@ class Theme extends \Venus\Theme
 	public string $css_location = '';
 
 	/**
-	* @var int $css_priority The priority of the main css file or the merged file, if css_merge = true
-	*/
-	public int $css_priority = 50000;
-
-	/**
 	* @var bool $javascript_merge If true, the js scripts will be merged into one file
 	*/
 	public bool $javascript_merge = true;
@@ -57,21 +52,6 @@ class Theme extends \Venus\Theme
 	* @var string $javascript_location The location where the merged js scripts will be outputted in the document [head|footer]
 	*/
 	public string $javascript_location = '';
-
-	/**
-	* @var int $javascript_priority The priority of the main js file or the merged file, if javascript_merge = true
-	*/
-	public int $javascript_priority = 50000;
-
-	/**
-	* @var string $theme_javascript_location The location where theme's javascript will be outputted in the document [head|footer]
-	*/
-	public string $theme_javascript_location = 'head';
-
-	/**
-	* @var int $javascript_priority The priority of theme's javascript file
-	*/
-	public int $theme_javascript_priority = 5000;
 
 	/**
 	* @var string|array $libraries The javascript libraries loaded by this theme
@@ -164,7 +144,7 @@ class Theme extends \Venus\Theme
 
 		//include the init.php file if one exists
 		if ($this->init) {
-			include($this->dir . $this->init_file);
+			include($this->path . $this->init_file);
 		}
 
 		$this->cleanup();
@@ -199,11 +179,9 @@ class Theme extends \Venus\Theme
 	{
 		$this->css_merge = $this->params->css_merge ?? $this->app->config->css_merge;
 		$this->css_location = $this->params->css_location ?? $this->app->config->css_location;
-		$this->css_priority = $this->params->css_priority ?? $this->css_priority;
 
 		$this->javascript_merge = $this->params->javascript_merge ?? $this->app->config->javascript_merge;
 		$this->javascript_location = $this->params->javascript_location ?? $this->app->config->javascript_location;
-		$this->javascript_priority = $this->params->javascript_priority ?? $this->css_priority;
 
 		//don't merge css/js files in development mode
 		if ($this->development) {
@@ -270,9 +248,12 @@ class Theme extends \Venus\Theme
 	*/
 	protected function prepareMainUrls()
 	{
+		App::pp($this->app->javascript);die;
 		//load the main and theme's js code
-		$this->app->javascript->loadMain($this->javascript_location, $this->javascript_priority);
-		$this->app->javascript->loadTheme($this->name, $this->theme_javascript_location, $this->theme_javascript_priority, $this->development ? time() : true);
+		$this->app->javascript->loadMain($this->javascript_location, 50000);
+		//$this->app->javascript->loadProperties($this->javascript_location, 49000);
+		//$this->app->javascript->loadLanguageStrings($this->javascript_location, 48000);
+		$this->app->javascript->loadTheme($this->name, $this->javascript_location, 47000, $this->development ? time() : true);
 
 		//load the theme's css code
 		$this->app->css->loadMain($this->name);
@@ -298,12 +279,12 @@ class Theme extends \Venus\Theme
 	protected function findTemplateFilename(string $filename) : string
 	{
 		if ($this->templateExists($filename)) {
-			return $this->templates_dir . $filename . '.' . App::FILE_EXTENSIONS['templates'];
+			return $this->templates_path . $filename . '.' . App::FILE_EXTENSIONS['templates'];
 		}
 
 		if ($this->parent) {
 			if ($this->parentTemplateExists($filename)) {
-				return $this->parent_templates_dir . $filename . '.' . App::FILE_EXTENSIONS['templates'];
+				return $this->parent_templates_path . $filename . '.' . App::FILE_EXTENSIONS['templates'];
 			}
 		}
 
@@ -359,7 +340,7 @@ class Theme extends \Venus\Theme
 			throw new \Exception("Template {$template} not found");
 		}
 
-		return $this->templates_dir . $filename;
+		return $this->templates_path . $filename;
 	}
 
 	/**
@@ -749,19 +730,8 @@ class Theme extends \Venus\Theme
 	public function outputJavascriptInHeader()
 	{
 		$this->outputJavascriptCodeStart();
-		$this->outputJavascriptInit();
 		$this->ouputJavascriptConfig();
 		$this->outputJavascriptCodeEnd();
-	}
-
-	/**
-	* Outputs the javascript init code
-	*/
-	protected function outputJavascriptInit()
-	{
-		echo 'venus.init();' . "\n";
-
-		$this->app->plugins->run('system_theme_output_javascript_init', $this);
 	}
 
 	/**

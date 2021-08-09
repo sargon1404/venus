@@ -35,6 +35,22 @@ class Uri extends \Mars\Uri
 	protected array $preloaded_data = ['users' => [], 'pages' => [], 'tags' => []];
 
 	/**
+	* Returns true, if $url is actually a javascript action
+	* @param string $url The url
+	* @return bool
+	*/
+	public function isJavascript(string $url) : bool
+	{
+		$url = trim($url);
+
+		if (str_starts_with($url, 'javascript:') === 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	* Builds an url appending $params to $base_url
 	* @param string $base_url The url to which params will be appended. If empty, $this->app->index will be used
 	* @param array $params Array containing the values to be appended. Specified as $name=>$value
@@ -79,55 +95,6 @@ class Uri extends \Mars\Uri
 		}
 
 		return parent::addAjax($base_url, $response_param);
-	}
-
-	/**
-	* Determines if $url is a local url
-	* @param string $url The url
-	* @return bool True if the url is local
-	*/
-	public function isLocal(string $url) : bool
-	{
-		$url2 = str_replace(['https:', 'http:'], '', strtolower($url));
-		$site_url = str_replace(['https:', 'http:'], '', strtolower($this->app->url));
-
-		if (!str_starts_with($url2, $site_url)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	* Returns true, if $url is actually an url (starts with http:// https://)
-	* @param string $url The url
-	* @return bool
-	*/
-	public function isUrl(string $url) : bool
-	{
-		$url = trim($url);
-
-		if (str_starts_with($url, 'http//:') || str_starts_with($url, 'https//:')) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	* Returns true, if $url is actually a javascript action
-	* @param string $url The url
-	* @return bool
-	*/
-	public function isJavascript(string $url) : bool
-	{
-		$url = trim($url);
-
-		if (str_starts_with($url, 'javascript:') === 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**

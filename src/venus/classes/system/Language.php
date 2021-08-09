@@ -75,6 +75,6 @@ class Language extends \Venus\Language
 	*/
 	public function getFlagUrl(string $name = '') : string
 	{
-		return $this->getDir($name) . 'flag.png';
+		return $this->getPath($name) . 'flag.png';
 	}
 }

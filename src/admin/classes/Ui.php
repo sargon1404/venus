@@ -102,7 +102,7 @@ class Ui extends \Venus\Ui
 
 		if ($venus->user->editor == 'wysiwyg') {
 			$theme = $venus->theme->getDefaultTheme();
-			$templates_path = $venus->theme->getDir($theme->name) . VENUS_THEMES_EDITOR_TEMPLATES;
+			$templates_path = $venus->theme->getPath($theme->name) . VENUS_THEMES_EDITOR_TEMPLATES;
 
 			if (is_dir($templates_path)) {
 				$show_templates = true;

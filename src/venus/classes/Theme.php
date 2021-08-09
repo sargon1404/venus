@@ -32,9 +32,9 @@ class Theme extends \Venus\Extensions\Extension
 	public ?string $parent_name = '';
 
 	/**
-	* @var string $parent_templates_dir The filesystem path for the theme's parent templates folder
+	* @var string $parent_templates_path The filesystem path for the theme's parent templates folder
 	*/
-	public string $parent_templates_dir = '';
+	public string $parent_templates_path = '';
 
 	/**
 	* @var string|array $templates Array with the keys listing the available templates of the theme
@@ -47,64 +47,14 @@ class Theme extends \Venus\Extensions\Extension
 	public string|array|null $parent_templates = [];
 
 	/**
-	* @var string $root_images_dir The filesystem path for the theme's regular images folder. Unlike images_dir which might point to the tables/smartphones images dir, it will always point to the main/base images dir
-	*/
-	public string $root_images_dir = '';
-
-	/**
-	* @var string $root_images_url The url of the theme's images folder. Unlike images_url which might point to the tables/smartphones images dir, it will always point to the main/base images dir
-	*/
-	public string $root_images_url = '';
-
-	/**
 	* @var bool $has_javascript_dir True if the theme has a javascript dir
 	*/
 	public bool $has_javascript_dir = false;
 
 	/**
-	* @var bool $has_images_dir True if the theme has an image folder
-	*/
-	public bool $has_images_dir = false;
-
-	/**
-	* @var bool $has_mobile_images_dir True if the mobile version has an image folder
-	*/
-	public bool $has_mobile_images_dir = false;
-
-	/**
-	* @var bool $has_tablets_images_dir True if the tablets version has an image folder
-	*/
-	public bool $has_tablets_images_dir = false;
-
-	/**
-	* @var bool $has_smartphones_images_dir True if the smartphones version has an image folder
-	*/
-	public bool $has_smartphones_images_dir = false;
-
-	/**
 	* @var bool $parent_has_javascript_dir True if the parent theme has a javascript dir
 	*/
 	public ?bool $parent_has_javascript_dir = false;
-
-	/**
-	* @var bool $parent_has_images_dir True if the parent theme has an image folder
-	*/
-	public ?bool $parent_has_images_dir = false;
-
-	/**
-	* @var bool $parent_has_mobile_images_dir True if the parent theme has a mobile image folder
-	*/
-	public ?bool $parent_has_mobile_images_dir = false;
-
-	/**
-	* @var bool $parent_has_tablets_images_dir True if the parent theme has a tablets image folder
-	*/
-	public ?bool $parent_has_tablets_images_dir = false;
-
-	/**
-	* @var bool $parent_has_smartphones_images_dir True if the parent theme has a smartphones image folder
-	*/
-	public ?bool $parent_has_smartphones_images_dir = false;
 
 	/**
 	* @var array $base_params The theme's base params
@@ -232,8 +182,6 @@ class Theme extends \Venus\Extensions\Extension
 			SELECT
 			t.*, p.name as parent_name, p.templates as parent_templates,
 			p.has_javascript_dir as parent_has_javascript_dir,
-			p.has_images_dir as parent_has_images_dir, p.has_mobile_images_dir as parent_has_mobile_images_dir,
-			p.has_tablets_images_dir as parent_has_tablets_images_dir, p.has_smartphones_images_dir as parent_has_smartphones_images_dir,
 			p.params as parent_params
 			FROM {$table} as t
 			LEFT JOIN {$table} as p ON t.parent = p.tid
@@ -260,87 +208,6 @@ class Theme extends \Venus\Extensions\Extension
 	protected function preparePaths()
 	{
 		$this->prepareBasePaths();
-		$this->prepareImagePaths();
-	}
-
-	/**
-	* Prepares the image paths
-	*/
-	protected function prepareImagePaths()
-	{
-		$this->root_images_dir = $this->images_dir;
-		$this->root_images_url = $this->images_url;
-
-		[$this->images_dir, $this->images_url] = $this->getImagePaths($this->app->device->type);
-	}
-
-	/**
-	* Returns the image paths of a device
-	* @param string $device the device type
-	* @return array The images path & url
-	*/
-	public function getImagePaths(string $device = '') : array
-	{
-		$images_dir = '';
-		$images_url = '';
-		$parent_images_dir = '';
-		$parent_images_url = '';
-
-		if ($this->parent) {
-			$parent_images_dir = $this->getDir($this->parent_name) . App::EXTENSIONS_DIRS['images'];
-			$parent_images_url = $this->getDirUrlStatic($this->parent_name) . App::EXTENSIONS_DIRS['images'];
-		}
-
-		if ($device != 'desktop') {
-			$device_dir = $this->app->device->getSubdir($device);
-
-			if ($device == 'tablet') {
-				if ($this->has_tablets_images_dir) {
-					$images_dir = $this->images_dir . $device_dir;
-					$images_url = $this->images_url . $device_dir;
-				} elseif ($this->parent && $this->parent_has_tablets_images_dir) {
-					$images_dir = $parent_images_dir . $device_dir;
-					$images_url = $parent_images_url . $device_dir;
-				}
-			} elseif ($device == 'smartphone') {
-				if ($this->has_smartphones_images_dir) {
-					$images_dir = $theme->images_dir . $device_dir;
-					$images_url = $theme->images_url . $device_dir;
-				} elseif ($this->parent && $this->parent_has_smartphones_images_dir) {
-					$images_dir = $parent_images_dir . $device_dir;
-					$images_url = $parent_images_url . $device_dir;
-				}
-			}
-
-			if (!$images_dir) {
-				//load the images from the mobile folder
-				$device_dir = $this->app->device->getSubdir('mobile');
-
-				if ($this->has_mobile_images_dir) {
-					$images_dir = $this->images_dir . $device_dir;
-					$images_url = $this->images_url . $device_dir;
-				} elseif ($this->parent && $this->parent_has_mobile_images_dir) {
-					$images_dir = $parent_images_dir . $device_dir;
-					$images_url = $parent_images_url . $device_dir;
-				}
-			}
-		}
-
-		if (!$images_dir) {
-			if ($this->has_images_dir) {
-				$images_dir = $this->images_dir;
-				$images_url = $this->images_url;
-			} elseif ($this->parent && $theme->parent_has_images_dir) {
-				$images_dir = $parent_images_dir;
-				$images_url = $parent_images_url;
-			}
-		}
-
-		if (!$images_dir && !$images_url) {
-			throw new \Exception("Theme {$theme->name} must have an images folder");
-		}
-
-		return [$images_dir, $images_url];
 	}
 
 	/**
@@ -391,7 +258,7 @@ class Theme extends \Venus\Extensions\Extension
 	protected function prepareTemplates()
 	{
 		if ($this->parent) {
-			$this->parent_templates_dir = $this->getDir($this->parent_name) . App::EXTENSIONS_DIRS['templates'];
+			$this->parent_templates_path = $this->getPath($this->parent_name) . App::EXTENSIONS_DIRS['templates'];
 		}
 
 		$this->templates = $this->app->serializer->unserialize($this->templates);
@@ -462,7 +329,7 @@ class Theme extends \Venus\Extensions\Extension
 		$filename.= '.' . App::FILE_EXTENSIONS['templates'];
 
 		if ($this->development) {
-			return is_file($this->templates_dir . $filename);
+			return is_file($this->templates_path . $filename);
 		}
 
 		if (isset($this->templates[$filename])) {
@@ -482,7 +349,7 @@ class Theme extends \Venus\Extensions\Extension
 		$filename.= '.' . App::FILE_EXTENSIONS['templates'];
 
 		if ($this->development) {
-			return is_file($this->parent_templates_dir . $filename);
+			return is_file($this->parent_templates_path . $filename);
 		}
 
 		if (isset($this->parent_templates[$filename])) {
@@ -499,7 +366,7 @@ class Theme extends \Venus\Extensions\Extension
 	public function getTemplates() : array
 	{
 		$templates = [];
-		$this->app->file->listDir($this->templates_dir, $dirs, $templates, false, true);
+		$this->app->file->listDir($this->templates_path, $dirs, $templates, false, true);
 
 		if ($templates) {
 			$templates = array_fill_keys($templates, true);

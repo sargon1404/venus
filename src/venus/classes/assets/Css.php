@@ -7,6 +7,7 @@
 namespace Venus\Assets;
 
 use Venus\App;
+use Venus\Assets\Generators\Css\Sources;
 use Venus\Themes;
 use Venus\Theme;
 use Venus\Helpers\Minifier;
@@ -25,12 +26,7 @@ class Css extends Asset
 	/**
 	* @internal
 	*/
-	protected $parser;
-
-	/**
-	* @internal
-	*/
-	protected array $vars = [];
+	//protected $parser;
 
 	/**
 	* @var string $merge_separator The separator between merged files
@@ -43,11 +39,11 @@ class Css extends Asset
 	public function __construct(App $app)
 	{
 		$this->app = $app;
-		$this->parser = new Parsers\Css($this->app);
+		//$this->parser = new Css\Parser($this->app);
 
 		$this->extension = App::FILE_EXTENSIONS['css'];
-		$this->base_cache_dir = $this->app->cache_dir . App::CACHE_DIRS['css'];
-		$this->cache_dir = $this->base_cache_dir;
+		$this->base_cache_path = $this->app->cache_path . App::CACHE_DIRS['css'];
+		$this->cache_path = $this->base_cache_path;
 		$this->minify = $this->app->config->getFromScope('css_minify', 'frontend');
 	}
 
@@ -58,6 +54,15 @@ class Css extends Asset
 	public function getDependenciesHandler() : Asset
 	{
 		return new Javascript($this->app);
+	}
+
+	/**
+	* Returns the sources handler
+	* @return
+	*/
+	public function getSourcesHandler()
+	{
+		return new Sources($this->app);
 	}
 
 	/**
@@ -99,72 +104,102 @@ class Css extends Asset
 	* @param string $device The device
 	* @return string
 	*/
-	public function getThemeVarsFile(string $name, string $device) : string
+	public function getThemeVarsFile(string $name, string $device = '') : string
 	{
-		return $this->getFile('theme', [$name], $device) . '.vars';
-	}
-
-	/**
-	* Combines & minifies & caches the javascript code
-	*/
-	public function buildCache()
-	{
-		$themes = new Themes;
-		$themes->load([], 'parent');
-
-		foreach ($themes as $theme) {
-			$this->cacheTheme($theme);
-		}
+		return $this->getFile('theme', [$name, $device]) . '.vars';
 	}
 
 	/**
 	* Caches the css code of a theme
 	* @param Theme $theme The theme
 	*/
-	public function cacheTheme(Theme $theme)
+	/*public function cacheTheme(Theme $theme)
 	{
 		$this->app->output->message("Building css code for theme {$theme->title}");
 
+		$this->vars = [];
 		$this->parser->setTheme($theme);
 
 		$dir = $theme->dir . App::EXTENSIONS_DIRS['css'];
-		$main_code = $this->readFromDir($dir);
+		$code = $this->readFromDir($dir);
 
-		$this->vars = [];
+		$this->storeCode($theme, $code);
 
+		//store the mobile css code, if any
 		$devices = $this->app->device->getDevices();
 		foreach ($devices as $device) {
-			$code = $main_code;
-			if ($device != 'desktop') {
-				$code.= $this->readFromDeviceDir($dir, $device);
+			if ($device == 'desktop') {
+				continue;
 			}
 
-			$code.= $this->getExtra($theme, $device);
+			$code = $this->readFromDeviceDir($dir, $device);
 
-			//read the parent's theme vars
-			$parent_vars = [];
-			if ($theme->parent) {
-				//read the parent theme's vars
-				$vars_file = $this->cache_dir . $this->getThemeVarsFile($theme->parent_name, $device);
-				if (is_file($vars_file)) {
-					$parent_vars = serialize(file_get_contents($vars_file));
-				}
-			}
-
-			$this->parser->setVars($parent_vars);
-
-			$cache_file = $this->getThemeFile($theme->name, $device);
-			$this->store($cache_file, $code);
-
-			//store the parsed vars so we can use it when parsing inline code
-			$this->vars[$device] = $this->parser->getVars();
-
-			//store the vars in a cache file for fast access
-			$vars_file = $this->cache_dir . $this->getThemeVarsFile($theme->name, $device);
-			file_put_contents($vars_file, serialize($this->parser->getVars()));
+			$this->storeCode($theme, $code, $device);
 		}
 
 		$this->cacheThemeInline($theme);
+	}*/
+
+	/**
+	* Stores the css code
+	* @param Theme $theme The current theme
+	* @param string $code The css code to store
+	* @param string $device The device to store the code for
+	*/
+	protected function storeCode(Theme $theme, string $code, string $device = '')
+	{
+		$vars = $this->getParentVars($theme, $device);
+		if ($device) {
+			$vars = array_merge($vars, $this->vars['desktop']);
+		}
+
+		$this->parser->setVars($vars);
+
+		//store the main css code
+		$cache_file = $this->getFile('theme', [$theme->name, $device]);
+		$this->store($cache_file, $code);
+
+		//store the vars
+		$this->storeVars($theme, $device);
+
+		//store the parsed vars so we can use it when parsing inline code
+		if (!$device) {
+			$device = 'desktop';
+		}
+
+		$this->vars[$device] = $this->parser->getVars();
+	}
+
+	/**
+	* Returns the parent's theme vars
+	* @param Theme $theme The current theme
+	* @param string $device The device to return the vars for
+	* @return array The vars
+	*/
+	protected function getParentVars(Theme $theme, string $device = '') : array
+	{
+		$vars = [];
+		if (!$theme->parent) {
+			return $vars;
+		}
+
+		$vars_file = $this->cache_path . $this->getThemeVarsFile($theme->parent_name, $device);
+		if (is_file($vars_file)) {
+			$vars = serialize(file_get_contents($vars_file));
+		}
+
+		return $vars;
+	}
+
+	/**
+	* Stores the vars
+	* @param Theme $theme The current theme
+	* @param string $device The device to store the vars for
+	*/
+	protected function storeVars(Theme $theme, string $device = '')
+	{
+		$vars_file = $this->cache_path . $this->getThemeVarsFile($theme->name, $device);
+		file_put_contents($vars_file, serialize($this->parser->getVars()));
 	}
 
 	/**
@@ -178,18 +213,5 @@ class Css extends Asset
 		$inline_code = $this->getInline($theme->dir . App::EXTENSIONS_DIRS['css'], $minify);
 
 		$theme->updateInlineCss($inline_code);
-	}
-
-	/**
-	* Returns extra code, if any
-	* @param Theme The theme
-	* @param string $device The device
-	* @return string
-	*/
-	protected function getExtra(Theme $theme, string $device) : string
-	{
-		$code = '';
-
-		return $this->app->plugins->filter('assets_css_get_extra', $code, $this);
 	}
 }

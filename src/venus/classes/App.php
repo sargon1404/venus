@@ -55,24 +55,24 @@ class App extends \Mars\App
 	public string $extensions_namespace = "Cms\\Extensions\\";
 
 	/**
-	* @var string $images_dir The folder where the images are stored
+	* @var string $images_path The folder where the images are stored
 	*/
-	public string $images_dir = '';
+	public string $images_path = '';
 
 	/**
-	* @var string $media_dir The folder where the media files are stored
+	* @var string $media_path The folder where the media files are stored
 	*/
-	public string $media_dir = '';
+	public string $media_path = '';
 
 	/**
-	* @var string $uploads_dir The folder where the uploaded files are stored
+	* @var string $uploads_path The folder where the uploaded files are stored
 	*/
-	public string $uploads_dir = '';
+	public string $uploads_path = '';
 
 	/**
-	* @var string $javascript_dir The folder where the javascript files are stored
+	* @var string $javascript_path The folder where the javascript files are stored
 	*/
-	public string $javascript_dir = '';
+	public string $javascript_path = '';
 
 	/**
 	* @var string $index The index url
@@ -80,14 +80,9 @@ class App extends \Mars\App
 	public string $index = '';
 
 	/**
-	* @var string $images_url The url of the images folder. Will dynamically point to the regular/tablets/smartphones images folder, based on the theme type
+	* @var string $images_url The url of the images folder
 	*/
 	public string $images_url = '';
-
-	/**
-	* @var string $images_url_base The url of the images folder. Will always point to the regular folder
-	*/
-	public string $images_url_base = '';
 
 	/**
 	* @var string $media_url The url of the media folder
@@ -115,9 +110,9 @@ class App extends \Mars\App
 	public string $admin_url = '';
 
 	/**
-	* @var string	$admin_dir The path for the admin area
+	* @var string $admin_path The path for the admin area
 	*/
-	public string $admin_dir = '';
+	public string $admin_path = '';
 
 	/**
 	* @var bool $is_homepage Set to true if the homepage is currently displayed
@@ -305,7 +300,7 @@ class App extends \Mars\App
 
 		$this->assignUrls(static::URLS_STATIC, $this->url_static);
 
-		$this->admin_dir = $this->dir . $this->config->admin_dir;
+		$this->admin_path = $this->path . $this->config->admin_dir;
 		$this->admin_url = $this->url . $this->config->admin_dir;
 		$this->admin_index = $this->admin_url . 'index.php';
 	}
@@ -315,9 +310,6 @@ class App extends \Mars\App
 	*/
 	public function setDataAfterEnv()
 	{
-		$this->images_url_base = $this->images_url;
-		$this->images_url = $this->images_url . $this->device->getDir();
-
 		$this->show_menu = (bool)$this->config->menu_show;
 		$this->show_breadcrumbs = (bool)$this->config->breadcrumbs_show;
 	}

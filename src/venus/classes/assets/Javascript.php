@@ -70,8 +70,8 @@ class Javascript extends Asset
 
 		$this->dir = $this->app->javascript_dir;
 		$this->extension = App::FILE_EXTENSIONS['javascript'];
-		$this->base_cache_dir = $this->app->cache_dir . App::CACHE_DIRS['javascript'];
-		$this->cache_dir = $this->base_cache_dir;
+		$this->base_cache_path = $this->app->cache_path . App::CACHE_DIRS['javascript'];
+		$this->cache_path = $this->base_cache_path;
 
 		$this->minify = $this->app->config->getFromScope('javascript_minify', 'frontend');
 	}
@@ -105,72 +105,56 @@ class Javascript extends Asset
 	}
 
 	/**
-	* Returns the name under which the main javascript code will be cached
-	* @param string $device The device
-	* @param string $language The language's name
-	* @return string
-	*/
-	public function getMainFile(string $device, string $language = '') : string
-	{
-		return $this->getFile('main', [$language], $device);
-	}
-
-	/**
 	* Combines & minifies & caches the javascript code
 	*/
 	public function buildCache()
 	{
 		$this->cacheMain();
+		$this->cacheProperties();
+		$this->cacheLanguages();
 		$this->cacheThemes();
 		$this->cacheInline();
 	}
 
 	/**
-	* Combines & minifies & caches the javascript code from the /javascript folder, the plugins, the config options, the paths and the strings
+	* Caches the javascript code from the /javascript folder and the plugins
 	*/
 	public function cacheMain()
 	{
 		$this->app->output->message("Building main javascript code");
 
-		$main_code = $this->readFromDir($this->dir);
-		$plugins_code = $this->readFromDir($this->dir . App::EXTENSIONS_DIRS['plugins']);
-		$config_code = $this->getConfig();
-		$properties_code = $this->getProperties();
-		$path_code = $this->getPaths();
+		$code = $this->readFromDir($this->dir);
+		$code.= $this->readFromDir($this->dir . App::EXTENSIONS_DIRS['plugins']);
+
+		$cache_file = $this->getFile('main');
+		$this->store($cache_file, $code);
+	}
+
+	/**
+	* Caches init, config, theme, paths properties
+	*/
+	public function cacheProperties()
+	{
+		$code = $this->getInit();
+		$code.= $this->getConfig();
+		$code.= $this->getProperties();
+		$code.= $this->getPaths();
+
+		$cache_file = $this->getFile('properties');
+		$this->store($cache_file, $code);
+	}
+
+	/**
+	* Caches, for each language, the javascript language strings
+	*/
+	public function cacheLanguages()
+	{
 		$strings = $this->getStrings();
 
-		//get javascript code for each device
-		$devices = $this->app->device->getDevices();
-		foreach ($devices as $device) {
-			//build the main code
-			$code = $main_code;
-			if ($device != 'desktop') {
-				$code.= $this->readFromDeviceDir($this->dir, $device);
-			}
+		foreach ($strings as $lang => $code) {
 
-			//build the plugins code
-			$code.= $plugins_code;
-			if ($device != 'desktop') {
-				$code.= $this->readFromDeviceDir($this->dir . App::EXTENSIONS_DIRS['plugins'], $device);
-			}
-
-			//build the config & paths
-			$code.= $config_code;
-			$code.= $properties_code;
-			$code.= $path_code;
-			$code.= $this->getExtra($device);
-
-			//cache the js code, without any strings. We'll need it in the admin
-			$cache_file = $this->getMainFile($device);
+			$cache_file = $this->getFile('language', [$lang]);
 			$this->store($cache_file, $code);
-
-			foreach ($strings as $lang => $strings_code) {
-				$cache_code = $code;
-				$cache_code.= $strings_code;
-
-				$cache_file = $this->getMainFile($device, $lang);
-				$this->store($cache_file, $cache_code);
-			}
 		}
 	}
 
@@ -202,23 +186,14 @@ class Javascript extends Asset
 			return;
 		}
 
-		//read the theme's main javascript code
 		$dir = $theme->dir . App::EXTENSIONS_DIRS['javascript'];
-		$main_code = $this->readFromDir($dir);
 
-		//generate the theme's javascript code for each device
-		$devices = $this->app->device->getDevices();
-		foreach ($devices as $device) {
-			$code = $this->getTheme($theme, $device);
-			$code.= $main_code;
+		//get the theme's config and javascript code
+		$code = $this->getTheme($theme);
+		$code.= $this->readFromDir($dir);
 
-			if ($device != 'desktop') {
-				$code.= $this->readFromDeviceDir($dir, $device);
-			}
-
-			$cache_file = $this->getThemeFile($theme->name, $device);
-			$this->store($cache_file, $code, $minify);
-		}
+		$cache_file = $this->getFile('theme', [$theme->name]);
+		$this->store($cache_file, $code, $minify);
 
 		//cache the theme's inline javascript code
 		$minify = $theme->params->javascript_inline_minify ?? ($theme->params->javascript_minify ?? $this->minify);
@@ -238,6 +213,17 @@ class Javascript extends Asset
 		$inline_code = $this->getInline($this->dir, $this->minify);
 
 		$this->app->cache->set('js_inline', $inline_code, $this->scope);
+	}
+
+	/**
+	* Returns the init code
+	*/
+	protected function getInit() : string
+	{
+		$code = "var venus = new Venus;\n";
+		$code.= "venus.init();\n\n";
+
+		return $code;
 	}
 
 	/**
@@ -313,21 +299,13 @@ class Javascript extends Asset
 	/**
 	* Returns the theme's name & path & params
 	* @param Theme The theme
-	* @param string $device The device for which to return the info
-	* @param bool $add_params If true, will also return the params
 	* @return string
 	*/
-	protected function getTheme(Theme $theme, string $device, bool $add_params = true) : string
+	protected function getTheme(Theme $theme) : string
 	{
-		$image_paths = $theme->getImagePaths($device);
-
 		$code = "venus.theme.name = '" . App::ejs($theme->name) . "';\n";
 		$code.= "venus.theme.url = '" . App::ejs($theme->base_url) . "';\n";
-		$code.= "venus.theme.images_url = '" . App::ejs($image_paths[1]) . "';\n";
-
-		if ($add_params) {
-			$code.= "venus.theme.params = venus.decode('" . $this->app->javascript->encode($theme->getParams($device)) . ")';\n";
-		}
+		$code.= "venus.theme.images_url = '" . App::ejs($theme->images_url) . "';\n";
 
 		return $code . "\n\n";
 	}
@@ -374,17 +352,5 @@ class Javascript extends Asset
 		}
 
 		return $code . "\n";
-	}
-
-	/**
-	* Returns extra code, if any
-	* @param string $device The device to get the extra params for
-	* @return string
-	*/
-	protected function getExtra(string $device) : string
-	{
-		$code = '';
-
-		return $this->app->plugins->filter('assets_javascript_get_extra', $code, $device, $this);
 	}
 }

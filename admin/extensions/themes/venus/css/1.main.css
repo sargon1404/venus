@@ -49,15 +49,6 @@ label {
 	background: #F5F5F5 linear-gradient(#F5F5F5, #F3F3F3);
 }
 
-/*
-#content-inner {
-	clear: both;
-}
-
-#content-inner main {
-	border-top-left-radius: 0;
-}*/
-
 main {
 	background: #fff;
 	border: 1px solid #b7b7b7;
@@ -83,6 +74,7 @@ aside {
 	background: #fff;
 	border: 1px solid #b7b7b7;
 	border-radius: 5px;
+	white-space: nowrap;
 }
 
 aside.closed {

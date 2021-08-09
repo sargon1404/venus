@@ -109,17 +109,17 @@ trait TemplatesTrait
 			}
 		}
 
-		$templates_dir = $this->dir . App::EXTENSIONS_DIRS['templates'];
+		$templates_path = $this->path . App::EXTENSIONS_DIRS['templates'];
 		$filename = $layout . $this->app->device->getSubdir($device) . $template;
 
 		if ($this->templateExists($filename)) {
-			return $templates_dir . $filename;
+			return $templates_path . $filename;
 		}
 
 		if ($device != 'desktop') {
 			return '';
 		} else {
-			throw new \Exception("Missing template: " . $templates_dir . $filename);
+			throw new \Exception("Missing template: " . $templates_path . $filename);
 		}
 	}
 
@@ -130,7 +130,7 @@ trait TemplatesTrait
 	*/
 	protected function templateExists(string $filename) : bool
 	{
-		return is_file($this->dir . App::EXTENSIONS_DIRS['templates'] . $filename);
+		return is_file($this->path . App::EXTENSIONS_DIRS['templates'] . $filename);
 	}
 
 	/**

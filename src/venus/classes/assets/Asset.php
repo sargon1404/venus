@@ -18,11 +18,6 @@ abstract class Asset
 	use CacheTrait;
 
 	/**
-	* @var array $skip_dirs Array with the dirs to skip when reading files
-	*/
-	protected array $skip_dirs = [App::EXTENSIONS_DIRS['inline'], App::EXTENSIONS_DIRS['plugins'], App::MOBILE_DIRS['mobile'], App::MOBILE_DIRS['tablets'], App::MOBILE_DIRS['smartphones']];
-
-	/**
 	* @var string $dir The dir from where the assets will be loaded
 	*/
 	protected string $dir = '';
@@ -33,14 +28,14 @@ abstract class Asset
 	protected string $extension = '';
 
 	/**
-	* @var string $base_cache_dir The folder where the assets will be cached, for the frontend
+	* @var string $base_cache_path The folder where the assets will be cached, for the frontend
 	*/
-	protected string $base_cache_dir = '';
+	protected string $base_cache_path = '';
 
 	/**
-	* @var string $cache_dir The folder where this assets will be cached
+	* @var string $cache_path The folder where this assets will be cached
 	*/
-	protected string $cache_dir = '';
+	protected string $cache_path = '';
 
 	/**
 	* @var string $libraries_dir The folder where the libraries of this type are located
@@ -59,14 +54,20 @@ abstract class Asset
 	abstract public function getDependenciesHandler() : Asset;
 
 	/**
-	* Reads content from a dir
-	* @param string $dir The folder
-	* @return string The content
+	* Returns the sources handler
+	* @return
 	*/
-	protected function readFromDir(string $dir) : string
+	abstract public function getSourcesHandler();
+
+	/**
+	* Combines & minifies & caches the css/javascript code
+	*/
+	public function buildCache()
 	{
-		return $this->get($dir, true, $this->getDirsToSkip($dir));
+		$sources = $this->getSourcesHandler();
+		$sources->cache();
 	}
+
 
 	/**
 	* Returns content from the device dir
@@ -94,91 +95,9 @@ abstract class Asset
 		return $content;
 	}
 
-	/**
-	* Returns the code from the files found in a folder
-	* @param string $dir The folder to read
-	* @param bool $recursive If true, will read the files from $dir recursive
-	* @param array $skip_dirs Array with the dirs to skip if $recursive = true
-	* @return string The combined code
-	*/
-	public function get(string $dir, bool $recursive = true, array $skip_dirs = []) : string
-	{
-		$files_array = $this->getFiles($dir, $recursive, $skip_dirs);
-		if (!$files_array) {
-			return '';
-		}
 
-		return $this->getFromFiles($files_array);
-	}
 
-	/**
-	* Returns the files list found in a folder
-	* @param string $dir The folder to read
-	* @param bool $recursive If true, will read the files from $dir recursive
-	* @param array $skip_dirs Array with the dirs to skip if $recursive = true
-	* @param bool If true, will return the full path of the files
-	* @return array The files list
-	*/
-	protected function getFiles(string $dir, bool $recursive = true, array $skip_dirs = [], bool $full_path = true) : array
-	{
-		if (!is_dir($dir)) {
-			return [];
-		}
 
-		$this->app->file->listDir($dir, $dirs, $files, $full_path, $recursive, true, $skip_dirs, true);
-		if (!$files) {
-			return [];
-		}
-
-		$files_array = [];
-		foreach ($files as $dir => $files_list) {
-			$desktop_files = [];
-			$mobile_files = [];
-
-			//split the files into desktop and mobile
-			foreach ($files_list as $filename) {
-				if (str_contains($filename, 'mobile')) {
-					$mobile_files[] = $filename;
-				} else {
-					$desktop_files[] = $filename;
-				}
-			}
-
-			natsort($desktop_files);
-			natsort($mobile_files);
-
-			$files_list = array_merge($desktop_files, $mobile_files);
-
-			foreach ($files_list as $filename) {
-				$ext = $this->app->file->getExtension($filename);
-				if ($ext != $this->extension) {
-					continue;
-				}
-
-				$files_array[] = $filename;
-			}
-		}
-
-		return $files_array;
-	}
-
-	/**
-	* Returns the code from a list of files
-	* @param array $files The files to load the code from
-	* @param string $dir If specified will prefix each filename with the dir name
-	* @return string The combined code
-	*/
-	public function getFromFiles(array $files, string $dir = '') : string
-	{
-		$content = '';
-		foreach ($files as $file) {
-			$file_cnt = file_get_contents($dir . $file);
-
-			$content.= $file_cnt . "\n\n";
-		}
-
-		return $content;
-	}
 
 	/**
 	* Stores content in the cache folder
@@ -190,7 +109,7 @@ abstract class Asset
 	*/
 	public function store(string $file, string $content, ?bool $minify = null, bool $parse = true) : bool
 	{
-		return $this->storeFile($this->cache_dir, $file, $content, false, $minify, $parse);
+		return $this->storeFile($this->cache_path, $file, $content, false, $minify, $parse);
 	}
 
 	/**
@@ -203,7 +122,7 @@ abstract class Asset
 	*/
 	public function storeLibrary(string $file, string $content, ?bool $minify = null)
 	{
-		return $this->storeFile($this->app->cache_dir . App::CACHE_DIRS['libraries'], $file, $content, false, $minify, false);
+		return $this->storeFile($this->app->cache_path . App::CACHE_DIRS['libraries'], $file, $content, false, $minify, false);
 	}
 
 	/**
@@ -215,7 +134,7 @@ abstract class Asset
 	*/
 	public function storeFiles(string $file, array $files, ?bool $minify = null, bool $parse = true)
 	{
-		$filename = $this->cache_dir . $file;
+		$filename = $this->cache_path . $file;
 		if (is_file($filename)) {
 			unlink($filename);
 		}
@@ -235,7 +154,7 @@ abstract class Asset
 				$file_parse_params = ['url' => $file_data['url']];
 			}
 
-			$this->storeFile($this->cache_dir, $file, $content, true, $file_minify, $file_parse, $file_parse_params);
+			$this->storeFile($this->cache_path, $file, $content, true, $file_minify, $file_parse, $file_parse_params);
 		}
 	}
 
@@ -307,20 +226,6 @@ abstract class Asset
 		return $content;
 	}
 
-	/**
-	* Returns a list with the dirs to skip when building the asset
-	* @param string $dir The dir
-	* @return array The dirs list
-	*/
-	protected function getDirsToSkip(string $dir) : array
-	{
-		$dirs = [];
-		foreach ($this->skip_dirs as $skip_dir) {
-			$dirs[] = $dir . $skip_dir;
-		}
-
-		return $dirs;
-	}
 
 	/**
 	* Returns the inline code of a theme
@@ -398,7 +303,7 @@ abstract class Asset
 	{
 		$code = '';
 		foreach ($files as $file) {
-			$filename = $this->app->libraries_dir . App::sl($this->libraries_dir) . App::sl($name) . $file;
+			$filename = $this->app->libraries_path . App::sl($this->libraries_dir) . App::sl($name) . $file;
 			$code.= file_get_contents($filename) . "\n\n";
 		}
 
@@ -414,7 +319,7 @@ abstract class Asset
 	{
 		$code = '';
 		foreach ($libraries as $library) {
-			$code.= file_get_contents($this->base_cache_dir . $this->app->cache->getLibraryFile($library, $this->extension)) . "\n\n";
+			$code.= file_get_contents($this->base_cache_path . $this->app->cache->getLibraryFile($library, $this->extension)) . "\n\n";
 		}
 
 		return $code;
@@ -429,7 +334,7 @@ abstract class Asset
 	{
 		$code = '';
 		foreach ($libraries as $library) {
-			$code.= file_get_contents($this->base_cache_dir . $this->app->cache->getLibraryDependencyFile($library, $this->extension)) . "\n\n";
+			$code.= file_get_contents($this->base_cache_path . $this->app->cache->getLibraryDependencyFile($library, $this->extension)) . "\n\n";
 		}
 
 		return $code;

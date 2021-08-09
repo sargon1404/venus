@@ -51,11 +51,65 @@ class Theme extends \Venus\Admin\Theme
 		$this->prepareTab();
 
 		//include the init.php file if one exists
-		if (is_file($this->dir . $this->init_file)) {
-			include($this->dir . $this->init_file);
+		if (is_file($this->path . $this->init_file)) {
+			include($this->path . $this->init_file);
 		}
 
 		$this->cleanup();
+	}
+
+	/**
+	* Loads the main js/css urls
+	*/
+	protected function prepareMainUrls()
+	{
+		$javascript_urls = $this->getMainJavascriptUrls();
+		$css_urls = $this->getMainCssUrls();
+		App::pp($css_urls);die;
+		App::pp($this->app->javascript->getBaseCacheUrl('main'));
+		App::pp($this->app->javascript);die;
+		//load the main and theme's js code
+		$this->app->javascript->loadMain($this->javascript_location, 50000);
+		//$this->app->javascript->loadProperties($this->javascript_location, 49000);
+		//$this->app->javascript->loadLanguageStrings($this->javascript_location, 48000);
+		$this->app->javascript->loadTheme($this->name, $this->javascript_location, 47000, $this->development ? time() : true);
+
+		//load the theme's css code
+		$this->app->css->loadMain($this->name);
+	}
+
+	/**
+	* Returns the list of main javascript urls to load
+	* @return array The list of urls
+	*/
+	protected function getMainJavascriptUrls() : array
+	{
+		$urls = [
+			'main' => ['url' => $this->app->javascript->getBaseCacheUrl('main'), 'location' => $this->javascript_location, 'priority' => 50000],
+			'main_admin' => ['url' => $this->app->javascript->getCacheUrl('main'), 'location' => $this->javascript_location, 'priority' => 49900],
+			'properties' => ['url' => $this->app->javascript->getCacheUrl('properties'), 'location' => $this->javascript_location, 'priority' => 49800],
+			'language' => ['url' => $this->app->javascript->getCacheUrl('language', [$this->app->lang->name]), 'location' => $this->javascript_location, 'priority' => 49700],
+			'theme' => ['url' => $this->app->javascript->getCacheUrl('theme', [$this->name]), 'location' => $this->javascript_location, 'priority' => 49600]
+		];
+
+		$urls = $this->app->plugins->filter('admin_system_theme_get_main_javascript_urls', $urls);
+
+		return $urls;
+	}
+
+	/**
+	* Returns the list of main css urls to load
+	* @return array The list of urls
+	*/
+	protected function getMainCssUrls() : array
+	{
+		$urls = [
+			'main' => ['url' => $this->app->css->getCacheUrl('theme', [$this->name, $this->app->device->type]), 'location' => $this->css_location, 'priority' => 50000]
+		];
+
+		$urls = $this->app->plugins->filter('admin_system_theme_get_main_css_urls', $urls);
+
+		return $urls;
 	}
 
 	/**
@@ -65,7 +119,6 @@ class Theme extends \Venus\Admin\Theme
 	protected function prepareJquery()
 	{
 		$this->app->javascript->loadLibrary('jquery');
-		//$this->app->javascript->loadLibrary('jquery-ui-admin');
 	}
 
 	/**
@@ -161,17 +214,6 @@ class Theme extends \Venus\Admin\Theme
 		$this->outputHeadExtra();
 
 		$this->app->plugins->run('admin_system_theme_output_head', $this);
-	}
-
-	/**
-	* Outputs the javascript init code
-	*/
-	protected function outputJavascriptInit()
-	{
-		echo 'venus.init();' . "\n";
-		echo 'venus.initAdmin();' . "\n";
-
-		$this->app->plugins->run('admin_system_theme_output_javascript_init', $this);
 	}
 
 	/**

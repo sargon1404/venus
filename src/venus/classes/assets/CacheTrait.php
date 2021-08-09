@@ -34,17 +34,16 @@ trait CacheTrait
 	* Returns the name under which a file will be cached
 	* @param string $name The name of the file
 	* @param array $params Extra params
-	* @param string $device The device used
 	* @return string
 	*/
-	public function getFile(string $name, array $params = [], string $device = '') : string
+	/*public function getFile(string $name, array $params = []) : string
 	{
-		$parts = array_merge([$name, $device], $params);
+		$parts = array_merge([$name], $params);
 
 		$parts = array_filter($parts);
 
 		return implode('-', $parts) . '.' . $this->extension;
-	}
+	}*/
 
 	/**
 	* Returns the name under which a library's code is cached
@@ -87,13 +86,34 @@ trait CacheTrait
 	}
 
 	/**
+	* Returns the url of a cached file
+	* @param string $name The name of the file
+	* @param array $params Extra params
+	* @return string The url
+	*/
+	public function getCacheUrl(string $name, array $params = []) : string
+	{
+		return $this->cache_url . $this->getFile($name, $params);
+	}
+
+	/**
+	* Returns the base/frontend url of a cached file
+	* @param string $name The name of the file
+	* @param array $params Extra params
+	* @return string The url
+	*/
+	public function getBaseCacheUrl(string $name, array $params = []) : string
+	{
+		return $this->base_cache_url . $this->getFile($name, $params);
+	}
+
+	/**
 	* Returns the name of the file where a theme's css/js code will be cached
 	* @param string $name The name of the theme
-	* @param string $device The device
 	* @return string
 	*/
-	public function getThemeFile(string $name, string $device) : string
+	/*public function getThemeFile(string $name) : string
 	{
-		return $this->getFile('theme', [$name], $device);
-	}
+		return $this->getFile('theme', [$name]);
+	}*/
 }

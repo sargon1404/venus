@@ -17,9 +17,9 @@ use Mars\Alerts\Alert;
 class Screen extends \Mars\Document\Screen
 {
 	/**
-	* @param string $extensions_dir The folder where the extensions are located
+	* @param string $extensions_path The folder where the extensions are located
 	*/
-	protected string $extensions_dir = '';
+	protected string $extensions_path = '';
 
 	/**
 	* Builds the screen object
@@ -27,7 +27,7 @@ class Screen extends \Mars\Document\Screen
 	public function __construct(App $app)
 	{
 		$this->app = $app;
-		$this->extensions_dir = $this->app->extensions_dir;
+		$this->extensions_path = $this->app->extensions_path;
 	}
 
 
@@ -44,7 +44,7 @@ class Screen extends \Mars\Document\Screen
 			}
 		}
 
-		return $this->extensions_dir . Theme::getBaseDir() . '/' . $template . '.tpl';
+		return $this->extensions_path . Theme::getBaseDir() . '/' . $template . '.tpl';
 	}
 
 	/**

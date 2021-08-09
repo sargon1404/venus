@@ -111,7 +111,7 @@ class Login extends \Venus\Admin\Controller
 	protected function getLanguage() : string
 	{
 		$language = $this->request->post('language');
-		if (!is_dir($this->app->admin_extensions_dir . App::EXTENSIONS_DIRS['languages'] . $language)) {
+		if (!is_dir($this->app->admin_extensions_path . App::EXTENSIONS_DIRS['languages'] . $language)) {
 			$language = '';
 		}
 

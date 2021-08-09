@@ -185,7 +185,7 @@ class Menu extends \Venus\Menu
 	*/
 	protected function loadFromFile()
 	{
-		$this->items = include($this->app->admin_dir . 'menu.php');
+		$this->items = include($this->app->admin_path . 'menu.php');
 	}
 
 	/**

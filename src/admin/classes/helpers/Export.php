@@ -216,7 +216,7 @@ class Export
 			unlink($this->zip_dir);
 		}
 
-		if (!$this->app->file->createDir($this->zip_dir)) {
+		if (!$this->app->dir->create($this->zip_dir)) {
 			return false;
 		}
 		if (!$this->handle->open($filename)) {
@@ -247,12 +247,12 @@ class Export
 
 		$this->app->file->deleteFile($this->zip_dir . $this->header_file);
 
-		if (!$this->app->file->createDir($destination_dir)) {
+		if (!$this->app->dir->create($destination_dir)) {
 			$this->deleteZipDir();
 			return false;
 		}
 
-		$return = $this->app->file->copyDir($this->zip_dir, $destination_dir);
+		$return = $this->app->dir->copy($this->zip_dir, $destination_dir);
 
 		$this->deleteZipDir();
 
@@ -265,7 +265,7 @@ class Export
 	*/
 	public function deleteZipDir()
 	{
-		$this->app->file->deleteDir($this->zip_dir, true);
+		$this->app->dir->delete($this->zip_dir);
 
 		return $this;
 	}

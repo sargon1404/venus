@@ -80,9 +80,9 @@ trait MvcTrait
 	*/
 	protected function getMvcClass(string $dir, string $class_name) : string
 	{
-		$namespace_dir = str_replace("/", "\\", ucfirst($dir));
+		$namespace_path = str_replace("/", "\\", ucfirst($dir));
 
-		return $namespace_dir . ucfirst(App::strToClass($class_name));
+		return $namespace_path . ucfirst(App::strToClass($class_name));
 	}
 
 	/**

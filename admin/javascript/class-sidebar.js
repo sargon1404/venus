@@ -6,7 +6,6 @@ class VenusSidebar {
 	constructor () {
 		this.main_obj = null;
 		this.aside_obj = null;
-		this.top_obj = null;
 		this.content_obj = null;
 		this.cookie_name = 'venus-sidebar-closed';
 
@@ -87,7 +86,7 @@ class VenusSidebar {
 	openObj () {
 		let self = this;
 
-		self.aside_obj.removeClass('closed close-effect');
+		self.aside_obj.removeClass('closed');
 		this.main_obj.removeClass('open');
 	}
 

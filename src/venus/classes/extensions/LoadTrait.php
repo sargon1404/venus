@@ -26,7 +26,7 @@ trait LoadTrait
 			$name = $this->name;
 		}
 
-		$filename = $this->getDirUrl($name) . App::EXTENSIONS_DIRS['css'] . $file . '.css';
+		$filename = $this->getPathUrl($name) . App::EXTENSIONS_DIRS['css'] . $file . '.css';
 
 		$this->app->css->load($filename);
 
@@ -45,7 +45,7 @@ trait LoadTrait
 			$name = $this->name;
 		}
 
-		$filename = $this->getDirUrl($name) . App::EXTENSIONS_DIRS['javascript'] . $file . '.js';
+		$filename = $this->getPathUrl($name) . App::EXTENSIONS_DIRS['javascript'] . $file . '.js';
 
 		$this->app->javascript->load($filename);
 
@@ -64,7 +64,7 @@ trait LoadTrait
 			$name = $this->name;
 		}
 
-		$filename = $this->getDir($name) . App::EXTENSIONS_DIRS['functions'] . $functions_file . '.php';
+		$filename = $this->getPath($name) . App::EXTENSIONS_DIRS['functions'] . $functions_file . '.php';
 
 		require_once($filename);
 
@@ -83,7 +83,7 @@ trait LoadTrait
 			$name = $this->name;
 		}
 
-		$filename = $this->getDir($name) . App::EXTENSIONS_DIRS['objects'] . $file . '.php';
+		$filename = $this->getPath($name) . App::EXTENSIONS_DIRS['objects'] . $file . '.php';
 
 		require_once($filename);
 

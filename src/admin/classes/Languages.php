@@ -29,7 +29,7 @@ class Languages extends \Venus\Entities
 	*/
 	public function load() : array
 	{
-		$this->app->file->listDir($this->app->admin_dir . App::DIRS['extensions'] . '/' . static::$base_dir, $dirs, $files);
+		$this->app->file->listDir($this->app->admin_path . App::DIRS['extensions'] . '/' . static::$base_dir, $dirs, $files);
 
 		$languages = [];
 		foreach ($dirs as $dir) {

@@ -1,9 +1,74 @@
-main.open-effect
-{
+aside #sidebar-top {
+	cursor: pointer;
+	min-width: 20px;
+	min-height: 14px;
+	background: url('../images/sidebar-open.png') no-repeat right center;
+}
+
+aside.closed #sidebar-top {
+	background: url('../images/sidebar-closed.png') no-repeat right center;
+}
+
+aside.closed #sidebar-content {
+	display: none;
+}
+
+main.open-effect {
 	transition: all 0.3s linear;
 }
 
-aside.close-effect
-{
+aside.close-effect {
 	transition: all 0.3s linear;
+}
+
+aside h2 {
+	display: none;
+	color: #030305;
+	font-size: 1.15em;
+	font-weight: bold;
+}
+
+aside h3 {
+	margin-bottom: 15px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #b7b7b7;
+	font-size: 1.15em;
+}
+
+aside section {
+	margin-bottom: 35px;
+}
+
+aside section:last-child {
+	margin-bottom: 0;
+}
+
+aside label {
+	display: block;
+	margin: 10px 0 5px 0;
+	font-weight: bold;
+	font-size: 1.09em;
+}
+
+aside label:first-child {
+	margin-top: 0;
+}
+
+/************************************/
+
+aside input[type=text], aside input[type=password], aside input[type=email],
+aside select,
+aside textarea {
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+aside input:last-child,
+aside select:last-child,
+aside textarea:last-child {
+	margin-bottom: 0;
+}
+
+aside textarea {
+	height: 75px;
 }

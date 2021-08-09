@@ -43,9 +43,9 @@ trait LanguagesTrait
 	*/
 	protected function hasLanguage(string $language, string $name) : bool
 	{
-		$language_dir = $this->getDir($name) . App::EXTENSIONS_DIRS['languages'] . App::sl($language);
+		$language_path = $this->getPath($name) . App::EXTENSIONS_DIRS['languages'] . App::sl($language);
 		if (!$this->canUseLanguageCache() || $this->app->lang->development || $this->development) {
-			return is_dir($language_dir);
+			return is_dir($language_path);
 		}
 
 		//check the list of cached languages, if any
@@ -62,7 +62,7 @@ trait LanguagesTrait
 			return false;
 		}
 
-		return is_dir($language_dir);
+		return is_dir($language_path);
 	}
 
 	/**
@@ -128,8 +128,8 @@ trait LanguagesTrait
 	*/
 	protected function readLanguages() : array
 	{
-		$language_dir = $this->dir . App::EXTENSIONS_DIRS['languages'];
-		$this->app->file->listDir($language_dir, $languages, $files);
+		$language_path = $this->path . App::EXTENSIONS_DIRS['languages'];
+		$this->app->file->listDir($language_path, $languages, $files);
 
 		return $languages;
 	}
@@ -156,7 +156,7 @@ trait LanguagesTrait
 	*/
 	protected function loadLanguageFile(string $language, string $file, string $name)
 	{
-		$filename = $this->getDir($name) . App::EXTENSIONS_DIRS['languages'] . App::sl($language) . $file . '.php';
+		$filename = $this->getPath($name) . App::EXTENSIONS_DIRS['languages'] . App::sl($language) . $file . '.php';
 
 		$this->app->lang->loadFilename($filename);
 	}

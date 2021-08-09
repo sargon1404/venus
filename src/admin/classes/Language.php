@@ -57,7 +57,7 @@ class Language extends \Venus\Language
 	protected function prepareParams()
 	{
 		$params = [];
-		$filename = $this->dir . 'params.php';
+		$filename = $this->path . 'params.php';
 
 		if (is_file($filename)) {
 			include($filename);
@@ -72,7 +72,7 @@ class Language extends \Venus\Language
 	*/
 	public function fileExists(string $filename) : bool
 	{
-		return is_file($this->dir . $filename);
+		return is_file($this->path . $filename);
 	}
 
 	/**
@@ -81,6 +81,6 @@ class Language extends \Venus\Language
 	*/
 	public function parentFileExists(string $filename) : bool
 	{
-		return is_file($this->parent_dir . $filename);
+		return is_file($this->parent_path . $filename);
 	}
 }

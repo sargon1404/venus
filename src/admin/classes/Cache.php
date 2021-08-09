@@ -28,17 +28,6 @@ class Cache extends \Venus\Cache
 	protected string $default_scope = 'admin';
 
 	/**
-	* Clears a folder and copies the empty index.htm file
-	* @param string $dir The folder's name
-	*/
-	protected function clearDir($dir)
-	{
-		$this->app->file->cleanDir($dir);
-
-		$this->app->file->copyFile($this->app->dir . 'src/index.htm', $dir . 'index.htm');
-	}
-
-	/**
 	* Builds the css cache
 	* @return $this
 	*/
@@ -58,7 +47,7 @@ class Cache extends \Venus\Cache
 	*/
 	public function buildCssFrontend()
 	{
-		$this->clearDir($this->app->cache_dir . App::CACHE_DIRS['css']);
+		$this->clearDir($this->app->cache_path . App::CACHE_DIRS['css']);
 
 		$css = new \Venus\Assets\Css($this->app);
 		$css->buildCache();
@@ -80,7 +69,7 @@ class Cache extends \Venus\Cache
 	*/
 	public function buildCssAdmin()
 	{
-		$this->clearDir($this->app->admin_cache_dir . App::CACHE_DIRS['css']);
+		$this->clearDir($this->app->admin_cache_path . App::CACHE_DIRS['css']);
 
 		$css = new \Venus\Admin\Assets\Css($this->app);
 		$css->buildCache();
@@ -125,7 +114,7 @@ class Cache extends \Venus\Cache
 	*/
 	public function buildJavascriptFrontend()
 	{
-		$this->clearDir($this->app->cache_dir . App::CACHE_DIRS['javascript']);
+		$this->clearDir($this->app->cache_path . App::CACHE_DIRS['javascript']);
 
 		$javascript = new \Venus\Assets\Javascript($this->app);
 		$javascript->buildCache();
@@ -146,7 +135,7 @@ class Cache extends \Venus\Cache
 	*/
 	public function buildJavascriptAdmin()
 	{
-		$this->clearDir($this->app->admin_cache_dir . App::CACHE_DIRS['javascript']);
+		$this->clearDir($this->app->admin_cache_path . App::CACHE_DIRS['javascript']);
 
 		$javascript = new \Venus\Admin\Assets\Javascript($this->app);
 		$javascript->buildCache();
@@ -181,11 +170,11 @@ class Cache extends \Venus\Cache
 	*/
 	public function buildLibraries()
 	{
-		$this->clearDir($this->app->cache_dir . App::CACHE_DIRS['libraries']);
+		$this->clearDir($this->app->cache_path . App::CACHE_DIRS['libraries']);
 
 		$libraries = ['css' => [], 'javascript' => []];
 
-		$this->app->file->listDir($this->app->libraries_dir . 'css', $css_dirs, $files);
+		$this->app->file->listDir($this->app->libraries_path . 'css', $css_dirs, $files);
 		foreach ($css_dirs as $name) {
 			$this->app->output->message("Building css library: {$name}");
 
@@ -196,7 +185,7 @@ class Cache extends \Venus\Cache
 			$libraries['css'][$name] = $this->getLibraryData($data);
 		}
 
-		$this->app->file->listDir($this->app->libraries_dir . 'javascript', $js_dirs, $files);
+		$this->app->file->listDir($this->app->libraries_path . 'javascript', $js_dirs, $files);
 		foreach ($js_dirs as $name) {
 			$this->app->output->message("Building javascript library: {$name}");
 
@@ -232,7 +221,7 @@ class Cache extends \Venus\Cache
 	*/
 	protected function readLibraryData(string $dir, string $name) : array
 	{
-		return include($this->app->libraries_dir . App::sl($dir) . App::sl($name) . 'data.php');
+		return include($this->app->libraries_path . App::sl($dir) . App::sl($name) . 'data.php');
 	}
 
 	/**

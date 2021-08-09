@@ -60,8 +60,8 @@ class Theme extends \Venus\System\Theme
 		$this->prepareTemplates();
 
 		//include the init.php file if one exists
-		if (is_file($this->dir . $this->init_file)) {
-			include($this->dir . $this->init_file);
+		if (is_file($this->path . $this->init_file)) {
+			include($this->path . $this->init_file);
 		}
 	}
 
@@ -73,9 +73,9 @@ class Theme extends \Venus\System\Theme
 	{
 		parent::preparePaths();
 
-		$this->cache_dir = $this->app->admin_cache_dir;
+		$this->cache_path = $this->app->admin_cache_path;
 		$this->cache_url = $this->app->admin_cache_url;
-		$this->templates_cache_dir = $this->cache_dir . App::CACHE_DIRS['templates'];
+		$this->templates_cache_path = $this->cache_path . App::CACHE_DIRS['templates'];
 	}
 
 	/**
@@ -85,9 +85,9 @@ class Theme extends \Venus\System\Theme
 	protected function prepareImagePaths()
 	{
 		$this->has_images_dir = true;
-		$this->has_tablets_images_dir = is_dir($this->images_dir . $this->app->device->getSubdir('tablet'));
-		$this->has_smartphones_images_dir = is_dir($this->images_dir . $this->app->device->getSubdir('smartphone'));
-		$this->has_mobile_images_dir = is_dir($this->images_dir . $this->app->device->getSubdir('mobile'));
+		$this->has_tablets_images_dir = is_dir($this->images_path . $this->app->device->getSubdir('tablet'));
+		$this->has_smartphones_images_dir = is_dir($this->images_path . $this->app->device->getSubdir('smartphone'));
+		$this->has_mobile_images_dir = is_dir($this->images_path . $this->app->device->getSubdir('mobile'));
 
 		parent::prepareImagePaths();
 	}
@@ -116,7 +116,7 @@ class Theme extends \Venus\System\Theme
 			return;
 		}
 
-		$this->app->file->listDir($this->templates_dir, $dirs, $templates, false, true);
+		$this->app->file->listDir($this->templates_path, $dirs, $templates, false, true);
 
 		$this->templates = array_fill_keys($templates, '');
 

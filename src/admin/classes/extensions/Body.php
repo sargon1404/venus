@@ -15,11 +15,11 @@ use Venus\Admin\App;
 trait Body
 {
 	/**
-	* Returns the root dir where extensions of this type are located
+	* Returns the root path where extensions of this type are located
 	*/
-	public function getRootDir() : string
+	public function getRootPath() : string
 	{
-		return $this->app->admin_extensions_dir;
+		return $this->app->admin_extensions_path;
 	}
 
 	/**

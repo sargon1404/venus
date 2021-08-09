@@ -24,7 +24,7 @@ class Javascript extends \Venus\Assets\Javascript
 	/**
 	* @var array $paths_array Array listing the paths to output
 	*/
-	protected array $paths_array = [
+	protected array $admin_paths_array = [
 		'admin_url', 'admin_utils_url'
 	];
 
@@ -43,9 +43,11 @@ class Javascript extends \Venus\Assets\Javascript
 		$this->dir = $this->app->admin_javascript_dir;
 		$this->extension = App::FILE_EXTENSIONS['javascript'];
 
-		$this->base_cache_dir = $this->app->cache_dir . App::CACHE_DIRS['javascript'];
-		$this->cache_dir = $this->app->admin_cache_dir . App::CACHE_DIRS['javascript'];
+		$this->base_cache_path = $this->app->cache_path . App::CACHE_DIRS['javascript'];
+		$this->cache_path = $this->app->admin_cache_path . App::CACHE_DIRS['javascript'];
 		$this->minify = $this->app->config->getFromScope('javascript_minify', 'admin');
+
+		$this->paths_array = array_merge($this->paths_array, $this->admin_paths_array);
 	}
 
 	/**
@@ -55,6 +57,8 @@ class Javascript extends \Venus\Assets\Javascript
 	public function buildCache()
 	{
 		$this->cacheMain();
+		$this->cacheProperties();
+		$this->cacheLanguages();
 		$this->cacheThemes();
 		$this->cacheInline();
 	}
@@ -99,11 +103,20 @@ class Javascript extends \Venus\Assets\Javascript
 				}
 			}
 
-			$code.= $this->getExtra($device);
-
-			$cache_file = $this->getThemeFile($theme->name, $device);
+			$cache_file = $this->getFile('theme', [$theme->name]);
 			$this->store($cache_file, $code);
 		}
+	}
+
+	/**
+	* Returns the init code
+	*/
+	protected function getInit() : string
+	{
+		$code = "var venus = new VenusAdmin;\n";
+		$code.= "venus.init();\n\n";
+
+		return $code;
 	}
 
 	/**
@@ -113,15 +126,5 @@ class Javascript extends \Venus\Assets\Javascript
 	protected function getLanguagesObj()
 	{
 		return new Languages;
-	}
-
-	/**
-	* @see \Venus\Assets\Javascript::getExtra()
-	*/
-	protected function getExtra(string $device) : string
-	{
-		$code = '';
-
-		return $this->app->plugins->filter('admin_assets_javascript_get_extra', $code, $device, $this);
 	}
 }

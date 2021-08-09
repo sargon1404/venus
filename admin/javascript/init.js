@@ -1,6 +1,4 @@
 VenusAdmin.prototype.initAdmin = function () {
-	jQuery.noConflict();
-
 	this.prepareAdmin();
 
 	this.admin = new VenusAdmin();
@@ -14,5 +12,3 @@ VenusAdmin.prototype.initAdmin = function () {
 
 	this.image = new venus_image();
 };
-
-var venus = new VenusAdmin();

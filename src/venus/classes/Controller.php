@@ -25,14 +25,14 @@ abstract class Controller extends \Mars\Controller
 	public string $class = '';
 
 	/**
-	* @var string $dir The controller's document's dir. Alias for $this->document->dir
+	* @var string $path The controller's document's path. Alias for $this->document->path
 	*/
-	public string $dir = '';
+	public string $path = '';
 
 	/**
-	* @var string $dir_url The controller's document dir's url. Alias for $this->document->dir_url
+	* @var string $path_url The controller's document path's url. Alias for $this->document->path_url
 	*/
-	public string $dir_url = '';
+	public string $path_url = '';
 
 	/**
 	* @var string $base_url The controller's document url. Alias for $this->document->base_url
@@ -76,9 +76,9 @@ abstract class Controller extends \Mars\Controller
 		$this->params = $this->document->params;
 		$this->prefix = $this->getPrefix();
 
-		$this->dir = $this->document->dir;
+		$this->path = $this->document->path;
 		$this->url = $this->document->url;
-		$this->dir_url = $this->document->dir_url;
+		$this->path_url = $this->document->path_url;
 		$this->base_url = $this->document->base_url;
 
 		if ($this->name != $this->document->name) {

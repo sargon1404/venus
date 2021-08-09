@@ -172,19 +172,19 @@ class Parser extends \Mars\Text\Parser
 			$file = $name;
 		}
 
-		$media_file = $this->app->media_dir . $file;
+		$media_file = $this->app->media_path . $file;
 
 		if (!is_file($media_file)) {
 			return '';
 		}
 
-		$this->app->file->checkFilename($media_file, $this->app->media_dir);
+		$this->app->file->checkFilename($media_file, $this->app->media_path);
 
 		if ($this->escape_html) {
 			$name = App::e($name);
 		}
 
-		$download_link = $this->app->utils_dir . 'download_media.php?file=' . urlencode($file);
+		$download_link = $this->app->utils_path . 'download_media.php?file=' . urlencode($file);
 
 		$html = '<a href="' . App::e($download_link) . '"><img src="' . App::e($this->app->theme->images_url) . 'media_download.png" alt="' . App::estr('download') . '" />' . $name . '</a>';
 

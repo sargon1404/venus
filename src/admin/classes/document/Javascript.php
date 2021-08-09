@@ -38,14 +38,14 @@ class Javascript extends \Venus\Document\Javascript
 	* @see \Venus\Document\Javascript::loadMain()
 	* {@inheritdoc}
 	*/
-	public function loadMain(string $location = 'head', int $priority = 50000)
+	/*public function loadMain(string $location = 'head', int $priority = 50000)
 	{
 		$async = false;
 		$defer = false;
 
 		//load the frontend &admin javascript code
-		$frontend_url = $this->base_cache_url . $this->getMainFile($this->app->device->get(), $this->app->lang->name);
-		$admin_url = $this->cache_url . $this->getMainFile($this->app->device->get(), $this->app->lang->name);
+		$frontend_url = $this->base_cache_url . $this->getMainFile();
+		$admin_url = $this->cache_url . $this->getMainFile();
 
 		$this->app->plugins->run('admin_document_javascript_load_main', $frontend_url, $admin_url, $location, $priority, $async, $defer);
 
@@ -53,5 +53,5 @@ class Javascript extends \Venus\Document\Javascript
 		$this->load($admin_url, $location, $priority, $async, $defer);
 
 		return $this;
-	}
+	}*/
 }

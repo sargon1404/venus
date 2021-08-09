@@ -25,8 +25,8 @@ class Css extends \Venus\Assets\Css
 		$this->parser = new \Venus\Assets\Parsers\Css;
 
 		$this->extension = App::FILE_EXTENSIONS['css'];
-		$this->base_cache_dir = $this->app->cache_dir . App::CACHE_DIRS['css'];
-		$this->cache_dir = $this->app->admin_cache_dir . App::CACHE_DIRS['css'];
+		$this->base_cache_path = $this->app->cache_path . App::CACHE_DIRS['css'];
+		$this->cache_path = $this->app->admin_cache_path . App::CACHE_DIRS['css'];
 		$this->minify = $this->app->config->getFromScope('css_minify', 'admin');
 	}
 
@@ -52,15 +52,5 @@ class Css extends \Venus\Assets\Css
 		$inline_code = $this->getInline($theme->dir . App::EXTENSIONS_DIRS['css'], $minify);
 
 		$this->app->cache->set('css_inline', $inline_code);
-	}
-
-	/**
-	* @see \Venus\Assets\Css::getExtra()
-	*/
-	protected function getExtra(Theme $theme, string $device) : string
-	{
-		$code = '';
-
-		return $this->app->plugins->filter('admin_assets_css_get_extra', $code, $this);
 	}
 }

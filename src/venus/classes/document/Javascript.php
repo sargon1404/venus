@@ -76,14 +76,12 @@ class Javascript extends \Mars\Document\Javascript
 
 	/**
 	* Returns the name under which the main javascript code will be cached
-	* @param string $device The device
-	* @param string $language The language's name
 	* @return string
 	*/
-	public function getMainFile(string $device, string $language = '') : string
+	/*public function getMainFile() : string
 	{
-		return $this->getFile('main', [$language], $device);
-	}
+		return $this->getFile('main');
+	}*/
 
 	/**
 	* Loads the 'main' javascript code (code found in the /javascript folder)
@@ -91,19 +89,19 @@ class Javascript extends \Mars\Document\Javascript
 	* @param int $priority The url's output priority. The higher, the better
 	* @return $this
 	*/
-	public function loadMain(string $location = 'head', int $priority = 50000)
+	/*public function loadMain(string $location = 'head', int $priority = 50000)
 	{
 		$async = false;
 		$defer = false;
 
-		$url = $this->cache_url . $this->getMainFile($this->app->device->get(), $this->app->lang->name);
+		$url = $this->cache_url . $this->getMainFile();
 
 		$this->app->plugins->run('document_javascript_load_main', $url, $location, $priority, $async, $defer);
 
 		$this->load($url, $location, $priority, $async, $defer);
 
 		return $this;
-	}
+	}*/
 
 	/**
 	* Merges and outputs the merged urls
@@ -127,14 +125,14 @@ class Javascript extends \Mars\Document\Javascript
 	* @param bool|string $version If string, will add the specified version. If true, will add the configured version param to the url
 	* @return $this
 	*/
-	public function loadTheme(string $name, string $location = 'head', int $priority = 5000, $version = true)
+	/*public function loadTheme(string $name, string $location = 'head', int $priority = 5000, $version = true)
 	{
 		$url = $this->cache_url . $this->getThemeFile($name, $this->app->device->get());
 
 		$this->load($url, $location, $priority, $version);
 
 		return $this;
-	}
+	}*/
 
 	/**
 	* Stores the content as as inline dialog for faster display

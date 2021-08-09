@@ -6,7 +6,7 @@ define('VENUS_ADMIN', 1);
 
 chdir('..');
 require('src/admin/boot.php');
-
+die("boot!!!!");
 try {
 	$block_name = $app->request->value($app->config->block_param);
 	if (!$app->session->get('admin')) {

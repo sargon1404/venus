@@ -20,10 +20,10 @@ class Screen extends \Venus\Document\Screen
 	public function __construct(App $app)
 	{
 		$this->app = $app;
-		$this->extensions_dir = $this->app->extensions_dir;
+		$this->extensions_path = $this->app->extensions_path;
 
-		if (isset($this->app->admin_extensions_dir)) {
-			$this->extensions_dir = $this->app->admin_extensions_dir;
+		if (isset($this->app->admin_extensions_path)) {
+			$this->extensions_path = $this->app->admin_extensions_path;
 		}
 	}
 }

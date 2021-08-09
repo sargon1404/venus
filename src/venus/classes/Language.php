@@ -30,9 +30,9 @@ class Language extends \Venus\Extensions\Extension
 	public ?string $parent_name = '';
 
 	/**
-	* @var string $parent_dir The dir of the language's parent language, if any
+	* @var string $parent_path The path of the language's parent language, if any
 	*/
-	public string $parent_dir = '';
+	public string $parent_path = '';
 
 	/**
 	* @var string|array $files Array with the keys listing the available files of the language
@@ -116,7 +116,7 @@ class Language extends \Venus\Extensions\Extension
 		parent::preparePaths();
 
 		if ($this->parent_name) {
-			$this->parent_dir = $this->getDir($this->parent_name);
+			$this->parent_path = $this->getPath($this->parent_name);
 		}
 	}
 
@@ -152,12 +152,12 @@ class Language extends \Venus\Extensions\Extension
 		if ($this->parent_id) {
 			//load the file of the parent language
 			if ($this->parentFileExists($file)) {
-				$this->loadFilename($this->parent_dir . $file);
+				$this->loadFilename($this->parent_path . $file);
 			}
 		}
 
 		if ($this->fileExists($file)) {
-			return $this->loadFilename($this->dir . $file);
+			return $this->loadFilename($this->path . $file);
 		}
 
 		return $this;
@@ -175,12 +175,12 @@ class Language extends \Venus\Extensions\Extension
 		$strings = [];
 		if ($this->parent_id) {
 			if ($this->parentFileExists($file)) {
-				$strings = include($this->parent_dir . $file);
+				$strings = include($this->parent_path . $file);
 			}
 		}
 
 		if ($this->fileExists($file)) {
-			$strings = array_merge($strings, include($this->dir . $file));
+			$strings = array_merge($strings, include($this->path . $file));
 		}
 
 		return $strings;
@@ -201,7 +201,7 @@ class Language extends \Venus\Extensions\Extension
 		if ($this->parent_id) {
 			//check if the parent language has the file we're looking for
 			if ($this->parentFileExists($file)) {
-				$this->loadFilename($this->parent_dir . $file);
+				$this->loadFilename($this->parent_path . $file);
 
 				$loaded = true;
 			}
@@ -209,7 +209,7 @@ class Language extends \Venus\Extensions\Extension
 
 		//check if the current language has the file
 		if ($this->fileExists($file)) {
-			$this->loadFilename($this->dir . $file);
+			$this->loadFilename($this->path . $file);
 
 			$loaded = true;
 		}
@@ -225,7 +225,7 @@ class Language extends \Venus\Extensions\Extension
 	public function fileExists(string $file) : bool
 	{
 		if ($this->development) {
-			return is_file($this->dir . $file);
+			return is_file($this->path . $file);
 		}
 
 		if (isset($this->files[$file])) {
@@ -243,7 +243,7 @@ class Language extends \Venus\Extensions\Extension
 	public function parentFileExists(string $file) : bool
 	{
 		if ($this->development) {
-			return is_file($this->parent_dir . $file);
+			return is_file($this->parent_path . $file);
 		}
 
 		if (isset($this->parent_files[$file])) {
@@ -260,7 +260,7 @@ class Language extends \Venus\Extensions\Extension
 	public function getFiles() : array
 	{
 		$files = [];
-		$this->app->file->listDir($this->dir, $dirs, $files);
+		$this->app->file->listDir($this->path, $dirs, $files);
 
 		if ($files) {
 			$files = array_fill_keys($files, true);

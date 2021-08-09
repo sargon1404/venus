@@ -1,4 +1,6 @@
 Venus.prototype.init = function() {
+	jQuery.noConflict();
+alert("venus init");
 	this.prepare();
 
 	this.loading = new VenusLoading;
@@ -58,5 +60,3 @@ Venus.prototype.init = function() {
 	//this.rating = new venus_rating;
 	//this.comments = new venus_comments;
 }
-
-var venus = new Venus;

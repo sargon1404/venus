@@ -130,7 +130,7 @@ abstract class Base extends \Venus\Admin\Blocks\Models\Base
 			$obj->name = $name;
 		}
 
-		$installer_obj = new Installer($this->dir, $name);
+		$installer_obj = new Installer($this->path, $name);
 		$this->installer = $installer_obj->get_installer($obj);
 
 		if (!$this->installer) {
