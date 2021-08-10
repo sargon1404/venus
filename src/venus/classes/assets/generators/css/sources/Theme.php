@@ -49,9 +49,11 @@ class Theme extends Base
 		$this->vars = [];
 		//$this->parser->setTheme($theme);
 
-		$dir = $theme->dir . App::EXTENSIONS_DIRS['css'];
-		$code = $this->reader->get($dir);
-die("xxxxaaaa");
+		$path = $theme->path . App::EXTENSIONS_DIRS['css'];
+		print_r($this->app->dir->getFilesTree($path));
+		die("xxxx");
+		$code = $this->reader->get($path);
+		die("xxxxaaaa");
 		$this->storeCode($theme, $code);
 
 		//store the mobile css code, if any
@@ -61,7 +63,7 @@ die("xxxxaaaa");
 				continue;
 			}
 
-			$code = $this->readFromDeviceDir($dir, $device);
+			$code = $this->readFromDeviceDir($path, $device);
 
 			$this->storeCode($theme, $code, $device);
 		}
@@ -79,6 +81,4 @@ die("xxxxaaaa");
 		die("get urls");
 		return $urls;
 	}
-
-
 }

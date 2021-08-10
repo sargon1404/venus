@@ -11,5 +11,4 @@ namespace Venus\Assets\Generators\Css;
 */
 class Writer extends \Venus\Assets\Generators\Writer
 {
-
 }

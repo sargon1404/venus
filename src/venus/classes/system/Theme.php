@@ -248,7 +248,8 @@ class Theme extends \Venus\Theme
 	*/
 	protected function prepareMainUrls()
 	{
-		App::pp($this->app->javascript);die;
+		App::pp($this->app->javascript);
+		die;
 		//load the main and theme's js code
 		$this->app->javascript->loadMain($this->javascript_location, 50000);
 		//$this->app->javascript->loadProperties($this->javascript_location, 49000);

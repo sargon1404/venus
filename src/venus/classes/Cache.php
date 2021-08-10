@@ -105,10 +105,10 @@ class Cache extends \Mars\Cache
 		$filename_gzip = $filename . '.gz';
 
 		if (is_file($filename)) {
-			$this->app->file->deleteFile($filename);
+			$this->app->file->delete($filename);
 		}
 		if (is_file($filename_gzip)) {
-			$this->app->file->deleteFile($filename_gzip);
+			$this->app->file->delete($filename_gzip);
 		}
 
 		return $this;

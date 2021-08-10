@@ -47,9 +47,11 @@ abstract class Reader extends File
 		}
 
 		$files = $this->app->dir->getFiles($dir, $recursive, $full_path, $skip_dirs);
-App::pp($files);die;
+		App::pp($files);
+		die;
 		//$this->app->file->listDir($dir, $dirs, $files, $full_path, $recursive, true, $skip_dirs, true);
-		App::pp(print_r($files));die;
+		App::pp(print_r($files));
+		die;
 		if (!$files) {
 			return [];
 		}
@@ -86,7 +88,7 @@ App::pp($files);die;
 		return $files_array;
 	}
 
-		/**
+	/**
 	* Returns the code from a list of files
 	* @param array $files The files to load the code from
 	* @param string $dir If specified will prefix each filename with the dir name

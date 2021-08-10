@@ -27,5 +27,4 @@ abstract class Base
 		$this->reader = new Reader($this->app);
 		$this->writer = new Writer($this->app);
 	}
-
 }

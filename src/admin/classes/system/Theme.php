@@ -65,9 +65,11 @@ class Theme extends \Venus\Admin\Theme
 	{
 		$javascript_urls = $this->getMainJavascriptUrls();
 		$css_urls = $this->getMainCssUrls();
-		App::pp($css_urls);die;
+		App::pp($css_urls);
+		die;
 		App::pp($this->app->javascript->getBaseCacheUrl('main'));
-		App::pp($this->app->javascript);die;
+		App::pp($this->app->javascript);
+		die;
 		//load the main and theme's js code
 		$this->app->javascript->loadMain($this->javascript_location, 50000);
 		//$this->app->javascript->loadProperties($this->javascript_location, 49000);

@@ -11,5 +11,4 @@ namespace Venus\Assets\Generators\Css;
 */
 class Reader extends \Venus\Assets\Generators\Reader
 {
-
 }

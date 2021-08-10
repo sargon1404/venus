@@ -11,5 +11,4 @@ namespace Venus\Assets\Generators;
 */
 abstract class Writer extends File
 {
-
 }

@@ -152,7 +152,6 @@ class Javascript extends Asset
 		$strings = $this->getStrings();
 
 		foreach ($strings as $lang => $code) {
-
 			$cache_file = $this->getFile('language', [$lang]);
 			$this->store($cache_file, $code);
 		}

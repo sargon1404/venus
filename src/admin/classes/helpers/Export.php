@@ -102,7 +102,7 @@ class Export
 
 		if ($this->app->ok()) {
 			$ret = $this->app->file->promptForDownload($tmpfile, $filename . '.zip');
-			$this->app->file->deleteFile($tmpfile);
+			$this->app->file->delete($tmpfile);
 
 			if (!$ret) {
 				return false;
@@ -193,7 +193,7 @@ class Export
 			return;
 		}
 
-		$this->header = App::decode($this->app->file->readFile($header_file));
+		$this->header = App::decode($this->app->file->read($header_file));
 	}
 
 	/**
@@ -245,7 +245,7 @@ class Export
 
 		$this->zip_dir = App::sl($this->zip_dir);
 
-		$this->app->file->deleteFile($this->zip_dir . $this->header_file);
+		$this->app->file->delete($this->zip_dir . $this->header_file);
 
 		if (!$this->app->dir->create($destination_dir)) {
 			$this->deleteZipDir();

@@ -26,9 +26,9 @@ class File extends \Mars\File
 		$site_url = $this->app->uri->stripScheme($this->app->url);
 		$url = $this->app->uri->stripScheme($url);
 
-		$filename = $this->app->dir . str_replace($site_url, '', $url);
+		$filename = $this->app->path . str_replace($site_url, '', $url);
 
-		$this->checkFilename($filename, $this->app->dir);
+		$this->checkFilename($filename, $this->app->path);
 
 		return $filename;
 	}
@@ -56,7 +56,7 @@ class File extends \Mars\File
 	public function checkFilename(string $filename, string $secure_dir = '')
 	{
 		if (!$secure_dir) {
-			$secure_dir = $this->app->dir;
+			$secure_dir = $this->app->path;
 		}
 
 		parent::checkFilename($filename, $secure_dir);
@@ -65,31 +65,29 @@ class File extends \Mars\File
 	}
 
 	/**
-	* @see \Mars\File::readFile()
+	* @see \Mars\File::read()
 	* {@inheritdoc}
 	*/
-	public function readFile(string $filename, string $secure_dir = '') : string
+	public function read(string $filename, string $secure_dir = '')
 	{
-		$content = parent::readFile($filename, $secure_dir);
+		$content = parent::read($filename, $secure_dir);
 
 		if ($content === false) {
 			$this->app->errors->add(App::__('file_read_error', '{FILE}', ['{FILE}' => basename($filename)]));
 
-			return '';
+			return false;
 		}
 
 		return $content;
 	}
 
 	/**
-	* @see \Mars\File::writeFile()
+	* @see \Mars\File::write()
 	* {@inheritdoc}
 	*/
-	public function writeFile(string $filename, string $content, bool $append = false, string $secure_dir = '') : bool
+	public function write(string $filename, string $content, bool $append = false, string $secure_dir = '') : bool
 	{
-		$ret = parent::writeFile($filename, $content, $append, $secure_dir);
-
-		if (!$ret) {
+		if (!parent::write($filename, $content, $append, $secure_dir)) {
 			$this->app->errors->add(App::__('file_write_error', '{FILE}', ['{FILE}' => basename($filename)]));
 
 			return false;
@@ -99,14 +97,12 @@ class File extends \Mars\File
 	}
 
 	/**
-	* @see \Mars\File::deleteFile()
+	* @see \Mars\File::delete()
 	* {@inheritdoc}
 	*/
-	public function deleteFile(string $filename, string $secure_dir = '') : bool
+	public function delete(string $filename, string $secure_dir = '') : bool
 	{
-		$ret = parent::deleteFile($filename, $secure_dir);
-
-		if (!$ret) {
+		if (!parent::delete($filename, $secure_dir)) {
 			$this->app->errors->add(App::__('file_delete_error', ['{FILE}' => basename($filename)]));
 
 			return false;
@@ -116,14 +112,12 @@ class File extends \Mars\File
 	}
 
 	/**
-	* @see \Mars\File::copyFile()
+	* @see \Mars\File::copy()
 	* {@inheritdoc}
 	*/
-	public function copyFile(string $source, string $destination, string $secure_dir = '') : bool
+	public function copy(string $source, string $destination, string $secure_dir = '') : bool
 	{
-		$ret = parent::copyFile($source, $destination, $secure_dir);
-
-		if (!$ret) {
+		if (!parent::copy($source, $destination, $secure_dir)) {
 			$this->app->errors->add(App::__('file_copy_error', ['{FILE}' => basename($source)]));
 
 			return false;
@@ -133,121 +127,13 @@ class File extends \Mars\File
 	}
 
 	/**
-	* @see \Mars\File::moveFile()
+	* @see \Mars\File::move()
 	* {@inheritdoc}
 	*/
-	public function moveFile(string $source, string $destination, string $secure_dir = '') : bool
+	public function move(string $source, string $destination, string $secure_dir = '') : bool
 	{
-		$ret = parent::moveFile($source, $destination, $secure_dir);
-
-		if (!$ret) {
+		if (!parent::move($source, $destination, $secure_dir)) {
 			$this->app->errors->add(App::__('file_move_error', ['{FILE}' => basename($source)]));
-
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	* @see \Mars\File::listFile()
-	* {@inheritdoc}
-	*/
-	public function listDir(string $dir, ?array &$dirs, ?array &$files, bool $full_path = false, bool $recursive = false, bool $include_extension = true, array $skip_dirs = [], bool $use_dir_as_file_key = false, bool $is_tree = false, string $tree_prefix = '--', int $tree_level = 0, string $base_dir = '') : bool
-	{
-		$ret = parent::listDir($dir, $dirs, $files, $full_path, $recursive, $include_extension, $skip_dirs, $use_dir_as_file_key, $is_tree, $tree_prefix, $tree_level, $base_dir);
-
-		if (!$ret) {
-			$this->app->errors->add(App::__('dir_open_error', ['{DIR}' => $dir]));
-
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	* @see \Mars\File::createDir()
-	* {@inheritdoc}
-	*/
-	public function createDir(string $dir) : bool
-	{
-		$ret = parent::createDir($dir);
-
-		if (!$ret) {
-			$this->app->errors->add(App::__('dir_create_error', ['{DIR}' => $dir]));
-
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	* @see \Mars\File::copyDir()
-	* {@inheritdoc}
-	*/
-	public function copyDir(string $source_dir, string $destination_dir, bool $recursive = true) : bool
-	{
-		$ret = parent::copyDir($source_dir, $destination_dir, $recursive);
-
-		if (!$ret) {
-			$this->app->errors->add(App::__('dir_open_error', ['{DIR}' => $dir]));
-
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	* @see \Mars\File::moveDir()
-	* {@inheritdoc}
-	*/
-	public function moveDir(string $source_dir, string $destination_dir) : bool
-	{
-		$ret = parent::moveDir($source_dir, $destination_dir);
-
-		if (!$ret) {
-			$this->app->errors->add(App::__('dir_move_error', ['{DIR}' => $dir]));
-
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	* @see \Mars\File::deleteDir()
-	* {@inheritdoc}
-	*/
-	public function deleteDir(string $dir, bool $recursive = true, string $secure_dir = '') : bool
-	{
-		$ret = parent::deleteDir($dir, $recursive, $secure_dir);
-
-		if (!$ret) {
-			if ($this->error_code == 1) {
-				$this->app->errors->add(App::__('dir_open_error', ['{DIR}' => $dir]));
-			} elseif ($this->error_code == 2) {
-				$this->app->errors->add(App::__('dir_delete_error', ['{DIR}' => $dir]));
-			}
-
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	* @see \Mars\File::cleanDir()
-	* {@inheritdoc}
-	*/
-	public function cleanDir(string $dir, bool $recursive = true, string $secure_dir = '') : bool
-	{
-		$ret = parent::cleanDir($dir, $recursive, $secure_dir);
-
-		if (!$ret) {
-			$this->app->errors->add(App::__('dir_open_error', ['{DIR}' => $dir]));
 
 			return false;
 		}

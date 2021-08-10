@@ -36,11 +36,10 @@ abstract class Sources
 
 		$sources = $this->getSources();
 		foreach ($sources as $source) {
-			$urls = array_merge($urls, $source->getUrls());;
+			$urls = array_merge($urls, $source->getUrls());
+			;
 		}
 
 		return $urls;
 	}
-
-
 }

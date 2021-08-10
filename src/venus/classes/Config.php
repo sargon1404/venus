@@ -47,7 +47,7 @@ class Config extends \Mars\Config
 	{
 		parent::read();
 
-		$this->readFilename(App::DIRS['cache'] . '/config.php');
+		$this->readFile(App::DIRS['cache'] . '/config.php');
 
 		return $this;
 	}
