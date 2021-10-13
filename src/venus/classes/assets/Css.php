@@ -7,7 +7,7 @@
 namespace Venus\Assets;
 
 use Venus\App;
-use Venus\Assets\Generators\Css\Sources;
+use Venus\Assets\Generators\Css\Generators;
 use Venus\Themes;
 use Venus\Theme;
 use Venus\Helpers\Minifier;
@@ -34,9 +34,24 @@ class Css extends Asset
 	protected string $merge_separator = "\n";
 
 	/**
+	* Returns the generators handler
+	* @return
+	*/
+	public function getGeneratorsHandler()
+	{
+		return new Generators($this->app);
+	}
+
+
+
+
+
+
+
+	/**
 	* Builds the css cache object
 	*/
-	public function __construct(App $app)
+	/*public function __construct(App $app)
 	{
 		$this->app = $app;
 		//$this->parser = new Css\Parser($this->app);
@@ -45,7 +60,7 @@ class Css extends Asset
 		$this->base_cache_path = $this->app->cache_path . App::CACHE_DIRS['css'];
 		$this->cache_path = $this->base_cache_path;
 		$this->minify = $this->app->config->getFromScope('css_minify', 'frontend');
-	}
+	}*/
 
 	/**
 	* Returns the asset responsible for handling the dependencies for libraries of this type
@@ -56,47 +71,40 @@ class Css extends Asset
 		return new Javascript($this->app);
 	}
 
-	/**
-	* Returns the sources handler
-	* @return
-	*/
-	public function getSourcesHandler()
-	{
-		return new Sources($this->app);
-	}
+
 
 	/**
 	* @see \Venus\Assets\Asset::minify()
 	* {@inheritdoc}
 	*/
-	public function minify(string $content) : string
+	/*public function minify(string $content) : string
 	{
 		$minifier = new Minifier;
 
 		return $minifier->minifyCss($content);
-	}
+	}*/
 
 	/**
 	* @see \Venus\Assets\Asset::parse()
 	* {@inheritdoc}
 	*/
-	public function parse(string $content, array $params = []) : string
+	/*public function parse(string $content, array $params = []) : string
 	{
 		$content = $this->parser->parse($content, $params);
 
 		return $this->app->plugins->filter('asset_css_parse', $content, $params, $this);
-	}
+	}*/
 
 	/**
 	* @see \Venus\Assets\Asset::parseInline()
 	* {@inheritdoc}
 	*/
-	public function parseInline(string $content, string $device) : string
+	/*public function parseInline(string $content, string $device) : string
 	{
 		$this->parser->setVars($this->vars[$device] ?? []);
 
 		return $content;
-	}
+	}*/
 
 	/**
 	* Returns the name of the file where a theme's css vars will be cached
@@ -146,7 +154,7 @@ class Css extends Asset
 	* @param string $code The css code to store
 	* @param string $device The device to store the code for
 	*/
-	protected function storeCode(Theme $theme, string $code, string $device = '')
+	/*protected function storeCode(Theme $theme, string $code, string $device = '')
 	{
 		$vars = $this->getParentVars($theme, $device);
 		if ($device) {
@@ -168,7 +176,7 @@ class Css extends Asset
 		}
 
 		$this->vars[$device] = $this->parser->getVars();
-	}
+	}*/
 
 	/**
 	* Returns the parent's theme vars
@@ -206,12 +214,12 @@ class Css extends Asset
 	* Caches the inline css code of a theme
 	* @param Theme $theme The theme
 	*/
-	protected function cacheThemeInline(Theme $theme)
+	/*protected function cacheThemeInline(Theme $theme)
 	{
 		$minify = $theme->params->css_inline_minify ?? ($theme->params->css_minify ?? $this->minify);
 
 		$inline_code = $this->getInline($theme->dir . App::EXTENSIONS_DIRS['css'], $minify);
 
 		$theme->updateInlineCss($inline_code);
-	}
+	}*/
 }

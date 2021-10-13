@@ -33,6 +33,32 @@ abstract class Reader extends File
 	}
 
 	/**
+	* Returns content from the device dir
+	* @param string $device The device
+	* @param string $dir The folder from where to read
+	* @return string The content
+	*/
+	public function getForDevice(string $device, string $dir) : string
+	{
+		if ($device == 'desktop') {
+			return '';
+		}
+
+		//read content from the mobile dir
+		$mobile_dir = $dir . $this->app->device->getSubdir('mobile');
+		$content = $this->get($mobile_dir);
+
+		//read the content from the tablets/smartphones dir
+		if ($device == 'tablet' || $device == 'smartphone') {
+			$device_dir = $dir . $this->app->device->getSubdir($device);
+
+			$content.= $this->get($device_dir);
+		}
+
+		return $content;
+	}
+
+	/**
 	* Returns the files list found in a folder
 	* @param string $dir The folder to read
 	* @param bool $recursive If true, will read the files from $dir recursive
@@ -46,18 +72,14 @@ abstract class Reader extends File
 			return [];
 		}
 
-		$files = $this->app->dir->getFiles($dir, $recursive, $full_path, $skip_dirs);
-		App::pp($files);
-		die;
-		//$this->app->file->listDir($dir, $dirs, $files, $full_path, $recursive, true, $skip_dirs, true);
-		App::pp(print_r($files));
-		die;
-		if (!$files) {
+		$files_array = $this->app->dir->getFiles($dir, $recursive, $full_path, $skip_dirs, [$this->extension], true);
+		if (!$files_array) {
 			return [];
 		}
 
-		$files_array = [];
-		foreach ($files as $dir => $files_list) {
+
+		$files = [];
+		foreach ($files_array as $dir => $files_list) {
 			$desktop_files = [];
 			$mobile_files = [];
 
@@ -75,17 +97,10 @@ abstract class Reader extends File
 
 			$files_list = array_merge($desktop_files, $mobile_files);
 
-			foreach ($files_list as $filename) {
-				$ext = $this->app->file->getExtension($filename);
-				if ($ext != $this->extension) {
-					continue;
-				}
-
-				$files_array[] = $filename;
-			}
+			$files = array_merge($files, $files_list);
 		}
 
-		return $files_array;
+		return $files;
 	}
 
 	/**

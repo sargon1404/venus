@@ -1,6 +1,6 @@
 <?php
 
-namespace Cli;
+namespace Bin;
 
 class Cache extends Command
 {

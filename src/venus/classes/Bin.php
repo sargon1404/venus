@@ -1,23 +1,23 @@
 <?php
 /**
-* The Cli Class
+* The Bin Class
 * @package Venus
 */
 
 namespace Venus;
 
 /**
-* The Cli Class
+* The Bin Class
 */
-class Cli extends \Mars\Cli
+class Bin extends \Mars\Bin
 {
 	/**
 	* @internal
 	*/
-	protected static string $table = 'venus_cli';
+	protected static string $table = 'venus_bin';
 
 	/**
-	* Returns all defined cli classes
+	* Returns all defined bin classes
 	* @return array
 	*/
 	public function getCommandClasses() : array
@@ -36,7 +36,7 @@ class Cli extends \Mars\Cli
 	}
 
 	/**
-	* Adds a command to the list of cli commands
+	* Adds a command to the list of bin commands
 	* @param string $command The command to add
 	* @param string $class The class handling the command
 	* @return $this
@@ -58,7 +58,7 @@ class Cli extends \Mars\Cli
 	}
 
 	/**
-	* Removes a command from the list of cli commands
+	* Removes a command from the list of bin commands
 	* @param string $command The command to remove
 	* @return $this
 	*/

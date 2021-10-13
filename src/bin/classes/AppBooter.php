@@ -4,12 +4,12 @@
 * @package Venus
 */
 
-namespace Venus\Cli;
+namespace Venus\Bin;
 
-use Venus\Cli;
+use Venus\Bin;
 use Venus\Admin\System\Language;
 use Venus\Admin\System\Plugins;
-use Venus\Cli\System\Output;
+use Venus\Bin\System\Output;
 
 /**
 * The Booter Class
@@ -30,7 +30,7 @@ class AppBooter extends \Venus\Admin\AppBooter
 
 		$this->app->lang = new Language($this->app);
 
-		$this->app->cli = new Cli($this->app);
+		$this->app->bin = new Bin($this->app);
 
 		return $this;
 	}

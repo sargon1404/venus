@@ -15,27 +15,27 @@ use Venus\App;
 abstract class Asset
 {
 	use \Venus\AppTrait;
-	use CacheTrait;
+	//use CacheTrait;
 
 	/**
 	* @var string $dir The dir from where the assets will be loaded
 	*/
-	protected string $dir = '';
+	//protected string $dir = '';
 
 	/**
 	* @var string $extension The extension of the files for this type of asset
 	*/
-	protected string $extension = '';
+	//protected string $extension = '';
 
 	/**
 	* @var string $base_cache_path The folder where the assets will be cached, for the frontend
 	*/
-	protected string $base_cache_path = '';
+	//protected string $base_cache_path = '';
 
 	/**
 	* @var string $cache_path The folder where this assets will be cached
 	*/
-	protected string $cache_path = '';
+	//protected string $cache_path = '';
 
 	/**
 	* @var string $libraries_dir The folder where the libraries of this type are located
@@ -45,7 +45,7 @@ abstract class Asset
 	/**
 	* @var bool $minify True, if the output can be minified
 	*/
-	protected bool $minify = true;
+	//protected bool $minify = true;
 
 	/**
 	* Returns the asset responsible for handling the dependencies for libraries of this type
@@ -57,43 +57,34 @@ abstract class Asset
 	* Returns the sources handler
 	* @return
 	*/
-	abstract public function getSourcesHandler();
+	abstract public function getGeneratorsHandler();
 
 	/**
 	* Combines & minifies & caches the css/javascript code
 	*/
 	public function buildCache()
 	{
-		$sources = $this->getSourcesHandler();
-		$sources->cache();
+		$generators = $this->getGeneratorsHandler();
+		$generators->cache();
 	}
 
 
-	/**
-	* Returns content from the device dir
-	* @param string $dir The folder
-	* @param string $device The device
-	* @return string The content
-	*/
-	protected function readFromDeviceDir(string $dir, string $device) : string
-	{
-		if ($device == 'desktop') {
-			return '';
-		}
 
-		//read content from the mobile dir
-		$mobile_dir = $dir . $this->app->device->getSubdir('mobile');
-		$content = $this->get($mobile_dir, true, $this->getDirsToSkip($mobile_dir));
 
-		//read the content from the tablets/smartphones dir
-		if ($device == 'tablet' || $device == 'smartphone') {
-			$device_dir = $dir . $this->app->device->getSubdir($device);
 
-			$content.= $this->get($device_dir, true, $this->getDirsToSkip($device_dir));
-		}
 
-		return $content;
-	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -291,6 +282,14 @@ abstract class Asset
 			$obj->storeLibrary($cache_file, $dependencies_code);
 		}
 	}
+
+
+
+
+
+
+
+
 
 	/**
 	* Merges multiple library files into one

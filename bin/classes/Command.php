@@ -1,6 +1,6 @@
 <?php
 
-namespace Cli;
+namespace Bin;
 
 use Venus\App;
 
@@ -80,7 +80,7 @@ class Command extends Base
 			$help->listActions($this->name, $this->actions);
 		} else {
 			if (!isset($this->actions[$this->action])) {
-				$this->app->cli->error("Unknown action: {$this->action}");
+				$this->app->bin->error("Unknown action: {$this->action}");
 			}
 
 			$data = $this->actions[$this->action];

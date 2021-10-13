@@ -4,7 +4,7 @@
 * @package Venus
 */
 
-namespace Venus\Cli;
+namespace Venus\Bin;
 
 /**
 * The Main Venus Class
@@ -12,12 +12,12 @@ namespace Venus\Cli;
 */
 class App extends \Venus\Admin\App
 {
-	use \Mars\Cli\CliFunctionsTrait;
+	use \Mars\Bin\BinFunctionsTrait;
 
 	/**
-	* @var bool $is_api True if the app is run as as an api call
+	* @var bool $is_bin True if the app is run as a bin script
 	*/
-	public bool $is_cli = true;
+	public bool $is_bin = true;
 
 	/**
 	* @see \Mars\App::loadBooter()

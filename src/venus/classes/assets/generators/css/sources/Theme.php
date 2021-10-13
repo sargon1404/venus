@@ -8,6 +8,7 @@ namespace Venus\Assets\Generators\Css\Sources;
 
 use Venus\App;
 use Venus\Themes;
+use Venus\Assets\Parsers\Css\Parsers;
 
 /**
 * The Theme Source Class
@@ -16,14 +17,15 @@ use Venus\Themes;
 class Theme extends Base
 {
 	/**
-	* @internal
+	* Returns the list of urls which have been generated
+	* @return array
 	*/
-	protected array $vars = [];
-
-	/**
-	* @internal
-	*/
-	protected $parser;
+	public function getUrls() : array
+	{
+		$urls = [];
+		die("get urls");
+		return $urls;
+	}
 
 	/**
 	* Generates the cache for each source
@@ -46,15 +48,12 @@ class Theme extends Base
 	{
 		$this->app->output->message("Building css code for theme {$theme->title}");
 
-		$this->vars = [];
-		//$this->parser->setTheme($theme);
+		$parsers = new Parsers($this->app);
 
 		$path = $theme->path . App::EXTENSIONS_DIRS['css'];
-		print_r($this->app->dir->getFilesTree($path));
-		die("xxxx");
-		$code = $this->reader->get($path);
-		die("xxxxaaaa");
-		$this->storeCode($theme, $code);
+		$base_code = $this->reader->get($path);
+		$code = $parsers->parse($base_code, ['theme' => $theme]);
+		$this->writer->store(['theme', $theme->name], $code);
 
 		//store the mobile css code, if any
 		$devices = $this->app->device->getDevices();
@@ -63,22 +62,31 @@ class Theme extends Base
 				continue;
 			}
 
-			$code = $this->readFromDeviceDir($path, $device);
-
-			$this->storeCode($theme, $code, $device);
+			$code = $this->reader->getForDevice($device, $path);
+			$code = $base_code . "\n\n" . $code;
+			$code = $parsers->parse($code, ['theme' => $theme]);
+			$this->writer->store(['theme', $theme->name, $device], $code);
 		}
 
-		$this->cacheThemeInline($theme);
+		//$this->cacheThemeInline($theme);
+
+		echo "Done";
+		die;
 	}
 
 	/**
-	* Returns the list of urls which have been generated
-	* @return array
+	* Caches the inline css code of a theme
+	* @param Theme $theme The theme
 	*/
-	public function getUrls() : array
+	protected function cacheThemeInline(\Venus\Theme $theme)
 	{
-		$urls = [];
-		die("get urls");
-		return $urls;
+		$parsers = new Parsers($this->app);
+
+		$path = $theme->path . App::EXTENSIONS_DIRS['css'] . 'inline';
+
+		$code = $this->reader->get($path);
+		//$code = $parsers->parse($code, ['theme' => $theme]);
+
+		$theme->updateInlineCss($code);
 	}
 }

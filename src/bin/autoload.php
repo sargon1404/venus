@@ -4,20 +4,16 @@ namespace Venus\Autoload;
 use function Mars\Autoload\get_filename;
 
 /**
-* Autoloader for the CLI classes
+* Autoloader for the BIN classes
 */
 \spl_autoload_register(function ($name) {
-	if (!str_contains($name, 'Cli\\')) {
+	if (!str_contains($name, 'Venus\\Bin\\')) {
 		return;
 	}
 
 	$parts = explode('\\', $name);
 
-	$filename = dirname(__DIR__, 2) . '/bin/classes/' . get_filename($parts, 1);
-
-	if (!is_file($filename)) {
-		return;
-	}
+	$filename = __DIR__ . '/classes/' . get_filename($parts, 2);
 
 	require($filename);
 });

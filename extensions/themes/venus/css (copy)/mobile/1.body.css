@@ -1,0 +1,42 @@
+@back = red;
+
+body
+{
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+	background: @back;
+	background: url(':/red.png');
+	background: url('::/red.png');
+	background: url('../images/red.png');
+	background: url('./images/red.png');
+}
+
+#document
+{
+	width: 98%;
+	max-width: none;
+	margin: 0 auto;
+}
+
+#content
+{
+	float: none;
+	width: 100%;
+}
+
+#dialog-body
+{
+	min-width: 0;
+	max-width: 100%;
+}
+
+.menu-mobile
+{
+	display: none;
+}
+
+.menu-mobile-container
+{
+	display: block;
+}

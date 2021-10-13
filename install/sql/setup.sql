@@ -46,7 +46,7 @@ create table venus_log
  	index timestamp_index(`timestamp`)
 );
 
-create table venus_cli
+create table venus_bin
 (
 	`command`								varchar(255)					   	NOT NULL,
 	`class`									varchar(255)					   	NOT NULL,

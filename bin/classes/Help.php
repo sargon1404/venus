@@ -1,6 +1,6 @@
 <?php
 
-namespace Cli;
+namespace Bin;
 
 class Help extends Command
 {
@@ -14,7 +14,7 @@ class Help extends Command
 	*/
 	public function index()
 	{
-		$commands = $this->app->cli->getCommandClasses();
+		$commands = $this->app->bin->getCommandClasses();
 
 		$list = [];
 		foreach ($commands as $name => $class) {

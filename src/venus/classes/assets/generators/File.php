@@ -20,13 +20,14 @@ abstract class File
 
 	/**
 	* Returns the name under which a file will be cached
-	* @param string $name The name of the file
-	* @param array $params Extra params
+	* @param string|array $parts The parts of the file name
 	* @return string
 	*/
-	public function getFile(string $name, array $params = []) : string
+	public function getFile(string|array $parts) : string
 	{
-		$parts = array_merge([$name], $params);
+		if (!is_array($parts)) {
+			$parts = [$parts];
+		}
 
 		$parts = array_filter($parts);
 

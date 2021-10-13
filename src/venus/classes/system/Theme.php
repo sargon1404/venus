@@ -158,7 +158,7 @@ class Theme extends \Venus\Theme
 	{
 		parent::prepareDevelopment();
 
-		if (!$this->app->is_cli) {
+		if (!$this->app->is_bin) {
 			if ($this->app->config->development) {
 				//rebuild the javascript code if the site is running in development mode
 				$this->app->cache->buildMainJavascript();

@@ -1,16 +1,16 @@
 <?php
 /**
-* The Sources Class
+* The Css/Js Generators Class
 * @package Venus
 */
 
 namespace Venus\Assets;
 
 /**
-* The Sources Class
+* The Css/Js Generators Class
 * Class caching css code and generating the urls
 */
-abstract class Sources
+abstract class Generators
 {
 	use \Venus\AppTrait;
 	use \Venus\SourcesTrait;

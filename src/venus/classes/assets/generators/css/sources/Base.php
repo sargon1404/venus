@@ -17,10 +17,20 @@ abstract class Base
 {
 	use \Venus\AppTrait;
 
+	/**
+	* @var Reader $reader The reader object
+	*/
 	protected Reader $reader;
 
+	/**
+	* @var Writer $writer The writer object
+	*/
 	protected Writer $writer;
 
+	/**
+	* Base constructor for the Source objects
+	* @var App $app The app object
+	*/
 	public function __construct(App $app)
 	{
 		$this->app = $app;

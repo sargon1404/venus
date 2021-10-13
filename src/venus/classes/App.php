@@ -480,7 +480,7 @@ class App extends \Mars\App
 
 		$result = $mailer->send();
 		if (!$result) {
-			if (!$this->is_cli && !$this->is_api) {
+			if (!$this->is_bin && !$this->is_api) {
 				$error = static::__('mail_error');
 				if ($this->config->debug) {
 					$error.= $mailer->getError();

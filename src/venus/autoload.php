@@ -16,8 +16,8 @@ use function Mars\Autoload\get_filename;
 		return;
 	}
 
-	//don't load cli classes
-	if (str_contains($name, 'Venus\\Cli\\')) {
+	//don't load bin classes
+	if (str_contains($name, 'Venus\\Bin\\')) {
 		return;
 	}
 

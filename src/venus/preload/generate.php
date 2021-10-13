@@ -9,7 +9,7 @@ use function Mars\Preload\write_file;
 chdir(dirname(__DIR__, 3));
 
 require('src/mars/preload/functions.php');
-require('src/mars/boot-cli.php');
+require('src/mars/boot-bin.php');
 
 $app->file->listDir('src/venus/classes', $dirs, $files, true, true);
 
@@ -20,4 +20,4 @@ $classes = get_classes($files);
 $classes = sort_classes($classes);
 write_file(__DIR__ . '/classes.php', $classes);
 
-$app->cli->print('Preload list generated');
+$app->bin->print('Preload list generated');

@@ -1,9 +1,9 @@
 <?php
 
-namespace Cli;
+namespace Bin;
 
 abstract class Base
 {
 	use \Venus\AppTrait;
-	use \Mars\Cli\CliFunctionsTrait;
+	use \Mars\Bin\BinFunctionsTrait;
 }

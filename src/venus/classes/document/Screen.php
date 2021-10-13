@@ -53,7 +53,7 @@ class Screen extends \Mars\Document\Screen
 	*/
 	public function fatalError(string $text, bool $escape_html = true)
 	{
-		if ($this->app->is_cli) {
+		if ($this->app->is_bin) {
 			parent::fatalError($text, false);
 			return;
 		}
@@ -77,7 +77,7 @@ class Screen extends \Mars\Document\Screen
 	*/
 	public function error(string $text, string $title = '', bool $escape_html = true)
 	{
-		if ($this->app->is_cli) {
+		if ($this->app->is_bin) {
 			parent::error($text);
 		}
 		if ($this->app->response->isAjax()) {
@@ -101,7 +101,7 @@ class Screen extends \Mars\Document\Screen
 	*/
 	public function message(string $text, string $title = '', bool $escape_html = true)
 	{
-		if ($this->app->is_cli) {
+		if ($this->app->is_bin) {
 			parent::message($text);
 		}
 		if ($this->app->response->isAjax()) {
@@ -146,7 +146,7 @@ class Screen extends \Mars\Document\Screen
 		$title = App::__('permission_denied');
 		$text = App::__('permission_denied_text');
 
-		if ($this->app->is_cli) {
+		if ($this->app->is_bin) {
 			parent::permissionDenied();
 		}
 		if ($this->app->response->isAjax()) {
