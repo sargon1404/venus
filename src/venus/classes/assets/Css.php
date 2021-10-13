@@ -112,10 +112,10 @@ class Css extends Asset
 	* @param string $device The device
 	* @return string
 	*/
-	public function getThemeVarsFile(string $name, string $device = '') : string
+	/*public function getThemeVarsFile(string $name, string $device = '') : string
 	{
 		return $this->getFile('theme', [$name, $device]) . '.vars';
-	}
+	}*/
 
 	/**
 	* Caches the css code of a theme
@@ -184,7 +184,7 @@ class Css extends Asset
 	* @param string $device The device to return the vars for
 	* @return array The vars
 	*/
-	protected function getParentVars(Theme $theme, string $device = '') : array
+	/*protected function getParentVars(Theme $theme, string $device = '') : array
 	{
 		$vars = [];
 		if (!$theme->parent) {
@@ -197,18 +197,18 @@ class Css extends Asset
 		}
 
 		return $vars;
-	}
+	}*/
 
 	/**
 	* Stores the vars
 	* @param Theme $theme The current theme
 	* @param string $device The device to store the vars for
 	*/
-	protected function storeVars(Theme $theme, string $device = '')
+	/*protected function storeVars(Theme $theme, string $device = '')
 	{
 		$vars_file = $this->cache_path . $this->getThemeVarsFile($theme->name, $device);
 		file_put_contents($vars_file, serialize($this->parser->getVars()));
-	}
+	}*/
 
 	/**
 	* Caches the inline css code of a theme

@@ -224,7 +224,7 @@ abstract class Asset
 	* @param bool $minify If true, the code will be minified
 	* @return array The inline code for each device
 	*/
-	protected function getInline(string $dir, bool $minify = true) : array
+	/*protected function getInline(string $dir, bool $minify = true) : array
 	{
 		$inline_code = [];
 
@@ -256,7 +256,7 @@ abstract class Asset
 		}
 
 		return $inline_code;
-	}
+	}*/
 
 	/**
 	* Caches the files of a library

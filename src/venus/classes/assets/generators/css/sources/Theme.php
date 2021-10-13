@@ -68,10 +68,7 @@ class Theme extends Base
 			$this->writer->store(['theme', $theme->name, $device], $code);
 		}
 
-		//$this->cacheThemeInline($theme);
-
-		echo "Done";
-		die;
+		$this->cacheThemeInline($theme);
 	}
 
 	/**
@@ -80,13 +77,27 @@ class Theme extends Base
 	*/
 	protected function cacheThemeInline(\Venus\Theme $theme)
 	{
+		$inline_code = [];
+
 		$parsers = new Parsers($this->app);
 
 		$path = $theme->path . App::EXTENSIONS_DIRS['css'] . 'inline';
+		$base_code = $this->reader->get($path);
+		$inline_code['desktop'] = $parsers->parse($base_code, ['theme' => $theme]);
 
-		$code = $this->reader->get($path);
-		//$code = $parsers->parse($code, ['theme' => $theme]);
+		$devices = $this->app->device->getDevices();
+		foreach ($devices as $device) {
+			if ($device == 'desktop') {
+				continue;
+			}
 
-		$theme->updateInlineCss($code);
+			$code = $this->reader->getForDevice($device, $path);
+			$code = $base_code . "\n\n" . $code;
+			$code = $parsers->parse($code, ['theme' => $theme]);
+
+			$inline_code[$device] = $code;
+		}
+
+		$theme->updateInlineCss($inline_code);
 	}
 }
