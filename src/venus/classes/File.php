@@ -50,27 +50,12 @@ class File extends \Mars\File
 	}
 
 	/**
-	* @see \Mars\File::checkFilename()
-	* {@inheritdoc}
-	*/
-	public function checkFilename(string $filename, string $secure_dir = '')
-	{
-		if (!$secure_dir) {
-			$secure_dir = $this->app->path;
-		}
-
-		parent::checkFilename($filename, $secure_dir);
-
-		return $this;
-	}
-
-	/**
 	* @see \Mars\File::read()
 	* {@inheritdoc}
 	*/
-	public function read(string $filename, string $secure_dir = '')
+	public function read(string $filename)
 	{
-		$content = parent::read($filename, $secure_dir);
+		$content = parent::read($filename);
 
 		if ($content === false) {
 			$this->app->errors->add(App::__('file_read_error', '{FILE}', ['{FILE}' => basename($filename)]));
@@ -85,9 +70,9 @@ class File extends \Mars\File
 	* @see \Mars\File::write()
 	* {@inheritdoc}
 	*/
-	public function write(string $filename, string $content, bool $append = false, string $secure_dir = '') : bool
+	public function write(string $filename, string $content, bool $append = false) : bool
 	{
-		if (!parent::write($filename, $content, $append, $secure_dir)) {
+		if (!parent::write($filename, $content, $append)) {
 			$this->app->errors->add(App::__('file_write_error', '{FILE}', ['{FILE}' => basename($filename)]));
 
 			return false;
@@ -100,9 +85,9 @@ class File extends \Mars\File
 	* @see \Mars\File::delete()
 	* {@inheritdoc}
 	*/
-	public function delete(string $filename, string $secure_dir = '') : bool
+	public function delete(string $filename) : bool
 	{
-		if (!parent::delete($filename, $secure_dir)) {
+		if (!parent::delete($filename)) {
 			$this->app->errors->add(App::__('file_delete_error', ['{FILE}' => basename($filename)]));
 
 			return false;
@@ -115,9 +100,9 @@ class File extends \Mars\File
 	* @see \Mars\File::copy()
 	* {@inheritdoc}
 	*/
-	public function copy(string $source, string $destination, string $secure_dir = '') : bool
+	public function copy(string $source, string $destination) : bool
 	{
-		if (!parent::copy($source, $destination, $secure_dir)) {
+		if (!parent::copy($source, $destination)) {
 			$this->app->errors->add(App::__('file_copy_error', ['{FILE}' => basename($source)]));
 
 			return false;
@@ -130,9 +115,9 @@ class File extends \Mars\File
 	* @see \Mars\File::move()
 	* {@inheritdoc}
 	*/
-	public function move(string $source, string $destination, string $secure_dir = '') : bool
+	public function move(string $source, string $destination) : bool
 	{
-		if (!parent::move($source, $destination, $secure_dir)) {
+		if (!parent::move($source, $destination)) {
 			$this->app->errors->add(App::__('file_move_error', ['{FILE}' => basename($source)]));
 
 			return false;

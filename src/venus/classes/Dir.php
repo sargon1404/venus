@@ -31,10 +31,10 @@ class Dir extends \Mars\Dir
 	* @see \Mars\Dir::copy()
 	* {@inheritdoc}
 	*/
-	public function copy(string $source_dir, string $destination_dir, bool $recursive = true) : bool
+	public function copy(string $source_dir, string $destination_dir) : bool
 	{
-		if (!parent::copy($source_dir, $destination_dir, $recursive)) {
-			$this->app->errors->add(App::__('dir_open_error', ['{DIR}' => $dir]));
+		if (!parent::copy($source_dir, $destination_dir)) {
+			$this->app->errors->add(App::__('dir_open_error', ['{DIR}' => $source_dir]));
 
 			return false;
 		}
@@ -49,7 +49,7 @@ class Dir extends \Mars\Dir
 	public function move(string $source_dir, string $destination_dir) : bool
 	{
 		if (!parent::move($source_dir, $destination_dir)) {
-			$this->app->errors->add(App::__('dir_move_error', ['{DIR}' => $dir]));
+			$this->app->errors->add(App::__('dir_move_error', ['{DIR}' => $source_dir]));
 
 			return false;
 		}
@@ -61,9 +61,9 @@ class Dir extends \Mars\Dir
 	* @see \Mars\Dir::delete()
 	* {@inheritdoc}
 	*/
-	public function delete(string $dir, bool $recursive = true, bool $delete_dir = true, string $secure_dir = '') : bool
+	public function delete(string $dir, bool $delete_dir = true) : bool
 	{
-		if (!parent::delete($dir, $recursive, $delete_dir, $secure_dir)) {
+		if (!parent::delete($dir, $delete_dir)) {
 			$this->app->errors->add(App::__('dir_delete_error', ['{DIR}' => $dir]));
 
 			return false;
@@ -76,9 +76,9 @@ class Dir extends \Mars\Dir
 	* @see \Mars\Dir::clean()
 	* {@inheritdoc}
 	*/
-	public function clean(string $dir, bool $recursive = true, string $secure_dir = '') : bool
+	public function clean(string $dir) : bool
 	{
-		if (!parent::clean($dir, $recursive, $secure_dir)) {
+		if (!parent::clean($dir)) {
 			$this->app->errors->add(App::__('dir_open_error', ['{DIR}' => $dir]));
 
 			return false;

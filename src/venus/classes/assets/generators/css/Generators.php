@@ -15,6 +15,7 @@ use Venus\App;
 class Generators extends \Venus\Assets\Generators
 {
 	protected array $supported_sources = [
+		'\Venus\Assets\Generators\Css\Sources\Libraries',
 		'\Venus\Assets\Generators\Css\Sources\Theme'
 	];
 

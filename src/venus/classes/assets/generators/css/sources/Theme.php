@@ -1,6 +1,6 @@
 <?php
 /**
-* The Theme Source Class
+* The Css Theme Generator Class
 * @package Venus
 */
 
@@ -11,7 +11,7 @@ use Venus\Themes;
 use Venus\Assets\Parsers\Css\Parsers;
 
 /**
-* The Theme Source Class
+* The Css Theme Generator Class
 * Class generating the cache code for each theme
 */
 class Theme extends Base
@@ -28,7 +28,7 @@ class Theme extends Base
 	}
 
 	/**
-	* Generates the cache for each source
+	* Generates the cache for each theme
 	*/
 	public function cache()
 	{

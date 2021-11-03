@@ -37,10 +37,7 @@ abstract class Asset
 	*/
 	//protected string $cache_path = '';
 
-	/**
-	* @var string $libraries_dir The folder where the libraries of this type are located
-	*/
-	protected string $libraries_dir = '';
+
 
 	/**
 	* @var bool $minify True, if the output can be minified
@@ -258,30 +255,7 @@ abstract class Asset
 		return $inline_code;
 	}*/
 
-	/**
-	* Caches the files of a library
-	* @param string $name The name of the library
-	* @param string $files The library's files
-	* @param return $dependencies_files The library's dependency files
-	*/
-	public function cacheLibrary(string $name, array $files, array $dependencies_files = [])
-	{
-		$code = $this->mergeLibraryFiles($name, $files);
 
-		$cache_file = $this->getLibraryFile($name, $this->extension);
-
-		$this->storeLibrary($cache_file, $code);
-
-		if ($dependencies_files) {
-			$dependencies_code = $this->mergeLibraryFiles($name, $dependencies_files);
-
-			$obj = $this->getDependenciesHandler();
-
-			$cache_file = $obj->getLibraryDependencyFile($name);
-
-			$obj->storeLibrary($cache_file, $dependencies_code);
-		}
-	}
 
 
 

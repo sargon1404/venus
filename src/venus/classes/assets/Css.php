@@ -18,15 +18,7 @@ use Venus\Helpers\Minifier;
 */
 class Css extends Asset
 {
-	/**
-	* @internal
-	*/
-	protected string $libraries_dir = 'css';
 
-	/**
-	* @internal
-	*/
-	//protected $parser;
 
 	/**
 	* @var string $merge_separator The separator between merged files
