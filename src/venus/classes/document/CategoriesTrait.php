@@ -54,7 +54,7 @@ trait CategoriesTrait
 		if ($this->all_categories) {
 			$this->categories = $this->app->env->getCategoryIds();
 		} else {
-			$this->categories = $this->app->db->selectField($this->getCategoriesTable(), 'cid', ['id' => $this->getId(), 'type' => $this->getType()]);
+			$this->categories = $this->app->db->selectIds($this->getCategoriesTable(), ['id' => $this->getId(), 'type' => $this->getType(]);
 		}
 
 		return $this->categories;

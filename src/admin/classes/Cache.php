@@ -402,7 +402,7 @@ class Cache extends \Venus\Cache
 	public function buildUsergroups()
 	{
 		$permissions = [];
-		$permissions_array = $this->app->db->select('venus_usergroups_permissions');
+		$permissions_array = $this->app->db->select('venus_usergroups_permissions')->all();
 		$permissions_list = ['view', 'comment', 'rate', 'add', 'publish', 'publish_own', 'edit', 'edit_own', 'delete', 'delete_own'];
 
 		foreach ($permissions_array as $perm) {
@@ -414,8 +414,8 @@ class Cache extends \Venus\Cache
 			$permissions[$perm->type][$perm->usergroup_id] = $perm_array;
 		}
 
-		$guests = $this->app->db->selectRow('venus_usergroups', '*', ['id' => APP::USERGROUPS['guests']]);
-		$usergroups = $this->app->db->selectWithKey('venus_usergroups', 'id');
+		$guests = $this->app->db->selectById('venus_usergroups', APP::USERGROUPS['guests']);
+		$usergroups = $this->app->db->select('venus_usergroups')->get('id');
 
 		$this->app->plugins->run('admin_cache_build_usergroups', $usergroups, $this);
 
@@ -445,7 +445,7 @@ class Cache extends \Venus\Cache
 	public function buildMenusFrontend()
 	{
 		$menu_ids = [];
-		$menus = $this->app->db->selectWithKey('venus_menus', 'id', '*', ['scope' => 'frontend', 'status' => 1]);
+		$menus = $this->app->db->select('venus_menus', ['scope' => 'frontend', 'status' => 1])->get('id');
 		foreach ($menus as $menu) {
 			$menu_ids[] = $menu->id;
 		}
@@ -633,7 +633,7 @@ class Cache extends \Venus\Cache
 				}
 
 				//delete the pages
-				$cat_data = $this->app->db->selectByIds('venus_categories', $cids, 'id, memcache_pages_pages');
+				$cat_data = $this->app->db->selectByIds('venus_categories', $cids, 'cols': 'id, memcache_pages_pages');
 
 				foreach ($cat_data as $cid => $memcache_pages_pages) {
 					$pages = $memcache_pages_pages;

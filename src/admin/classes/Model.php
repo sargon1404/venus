@@ -53,7 +53,7 @@ abstract class Model extends \Venus\Model
 	{
 		$table = $this->getCategoriesTable();
 
-		$categories_array = $this->db->selectWithKey($table, 'id', 'id, title, level', [], 'position');
+		$categories_array = $this->db->select($table, [], 'position', cols: 'id, title, level')->get('id');
 		if ($add_uncategorized) {
 			$categories_array = [0 => ['cid' => 0, 'title' => l('uncategorized'), 'level' => 0]] + $categories_array;
 		}

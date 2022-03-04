@@ -218,7 +218,7 @@ class Theme extends \Venus\Extensions\Extension
 		$this->params_data = $this->app->serializer->unserialize($this->params);
 		$this->parent_params_data = $this->app->serializer->unserialize($this->parent_params);
 
-		$this->params = App::toObject($this->getParams($this->app->device->type));
+		$this->params = (object)$this->getParams($this->app->device->type);
 
 		unset($this->parent_params);
 	}

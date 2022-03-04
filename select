@@ -1,0 +1,239 @@
+admin/extensions/blocks/languages/objects/languages.php:		$languages = $this->db->select_by_ids($this->get_table(), 'lid', $ids);
+admin/extensions/blocks/languages/objects/languages.php:		$this->db->insert_multiple($this->get_uninstalled_table(), $uninstalled_inserts_array);
+admin/extensions/blocks/languages/objects/languages.php:		$this->db->delete_by_ids($this->get_table(), 'lid', $ids);
+admin/extensions/blocks/languages/objects/languages.php:		$this->db->delete_by_ids($this->get_packages_table(), 'lid', $ids);
+admin/extensions/blocks/languages/objects/languages.php:		$this->db->delete_by_ids($this->get_strings_table(), 'lid', $ids);
+admin/extensions/blocks/languages/objects/languages.php:		$in = $this->db->get_in($ids);
+admin/extensions/blocks/languages/objects/languages.php:		$this->db->write_query("UPDATE venus_users SET lang = {$default_lang} WHERE lang IN({$in})");
+admin/extensions/blocks/languages/objects/language.php:		$old_language = $this->db->select_row($this->get_uninstalled_table(), '*', ['name' => $this->name]);
+admin/extensions/blocks/languages/objects/language.php:			$this->db->update_by_id($this->get_table(), ['lid' => $old_language->lid], 'lid', $lid);
+admin/extensions/blocks/languages/objects/language.php:			$this->db->delete($this->get_uninstalled_table(), ['name' => $this->name]);
+admin/extensions/blocks/languages/objects/language.php:			$this->db->write_query("UPDATE {$table} SET packages = :language_packages WHERE lid = {$lid}", ['language_packages' => serialize_field($packages_array)]);
+admin/extensions/blocks/languages/objects/language.php:		$this->db->read_query("SELECT pid, name FROM {$packages_table} WHERE lid = {$lid}");
+admin/extensions/blocks/languages/objects/language.php:		$packages_array = $venus->db->get_list('name', 'pid');
+admin/extensions/blocks/languages/objects/language.php:			$venus->db->read_query("SELECT string, lid FROM {$strings_table} WHERE lid = {$lid} AND pid = {$pid}");
+admin/extensions/blocks/languages/objects/language.php:			$strings_array = $venus->db->get_list('string', 'lid');
+admin/extensions/blocks/languages/objects/language.php:				$this->db->insert($this->get_strings_table(), $insert_array);
+admin/extensions/blocks/languages/objects/language.php:		return $this->db->insert($this->get_packages_table(), $insert_array);
+admin/extensions/blocks/languages/objects/language.php:			$this->db->insert($this->get_strings_table(), $insert_array);
+admin/extensions/blocks/languages/models/available.php:		return $this->db->fill($this->get_table(), [
+admin/extensions/blocks/languages/models/Languages.php:		return $this->db->select_list($this->get_packages_table(), 'title', 'pid', "WHERE lid = {$lid}");
+admin/extensions/blocks/languages/models/Languages.php:		$this->db->read_query("SELECT * FROM {$strings_table} WHERE pid = {$pid} ORDER BY `order`");
+admin/extensions/blocks/languages/models/Languages.php:		return $this->db->get();
+admin/extensions/blocks/languages/models/Languages.php:		$this->db->write_query("UPDATE venus_users SET lang = {$id}");
+admin/extensions/blocks/languages/models/Languages.php:		$this->db->write_query("DELETE FROM {$strings_table} WHERE pid = {$pid} AND lid = {$lid}");
+admin/extensions/blocks/languages/models/Languages.php:			$this->db->insert($this->get_strings_table(), $insert_array);
+admin/extensions/blocks/login/models/Login.php:				'timestamp' => $this->app->db->unixTimestamp()
+admin/extensions/blocks/login/models/Login.php:			$this->app->db->insert('venus_administrators_logins', $log_insert_array);
+src/admin/classes/Html.php:		$languages = $this->app->db->selectList('venus_languages', 'lid', 'title', ['status' => 1]);
+src/admin/classes/Html.php:		$categories = $this->app->db->selectArrayWithKey('venus_categories', 'id', 'id, title, parent, level', [], 'position');
+src/admin/classes/Html.php:		$menus = $this->app->db->selectArrayWithKey('venus_menu_entries', 'mid', 'mid, title, parent, level', ['menu' => $menu_id], 'position');
+src/admin/classes/Html.php:				$page_title = (string)$this->app->db->selectResult('venus_pages', 'title', ['pid' => $pid]);
+src/admin/classes/Model.php:		$this->db->readQuery("
+src/admin/classes/Model.php:		return $this->db->getList('uid', 'username');
+src/admin/classes/Model.php:		$this->db->readQuery("SELECT id, title FROM {$table} WHERE id <> " . App::USERGROUPRS['guests'] . " ORDER BY title");
+src/admin/classes/Model.php:		return $this->db->getList('id', 'title');
+src/admin/classes/Model.php:		$categories_array = $this->db->selectWithKey($table, 'id', 'id, title, level', [], 'position');
+src/admin/classes/Model.php:		$this->db->readQuery("SELECT {$this->_id}, {$this->_title}, `{$this->_order}` FROM {$table} ORDER BY `{$this->_order}` DESC");
+src/admin/classes/Model.php:		return $this->db->get($this->_id);
+src/admin/classes/Cache.php:			$this->app->db->updateById('venus_themes', ['templates' => $templates], $theme->tid);
+src/admin/classes/Cache.php:			$this->app->db->updateById('venus_languages', ['files' => $files], $language->id);
+src/admin/classes/Cache.php:		$plugins_count = $this->app->db->count('venus_plugins');
+src/admin/classes/Cache.php:		$plugins_extensions_count = $this->app->db->count('venus_plugins_extensions');
+src/admin/classes/Cache.php:		$permissions_array = $this->app->db->select('venus_usergroups_permissions');
+src/admin/classes/Cache.php:		$guests = $this->app->db->selectRow('venus_usergroups', '*', ['id' => APP::USERGROUPS['guests']]);
+src/admin/classes/Cache.php:		$usergroups = $this->app->db->selectWithKey('venus_usergroups', 'id');
+src/admin/classes/Cache.php:		$menus = $this->app->db->selectWithKey('venus_menus', 'id', '*', ['scope' => 'frontend', 'status' => 1]);
+src/admin/classes/Cache.php:		$menu_items_count = $this->app->db->count('venus_menu_items', ['menu_id' => $menu_ids, 'status' => 1]);
+src/admin/classes/Cache.php:		$this->app->db->readQuery('SELECT bid, status, category, name, seo_alias, seo_slug FROM venus_blocks');
+src/admin/classes/Cache.php:		$blocks = $this->app->db->get('name');
+src/admin/classes/Cache.php:		$this->app->db->writeQuery("UPDATE venus_blocks SET languages = ''");
+src/admin/classes/Cache.php:		$this->app->db->writeQuery("UPDATE venus_admin_blocks SET languages = ''");
+src/admin/classes/Cache.php:		$notifications_count = $this->app->db->count('venus_users_notifications');
+src/admin/classes/Cache.php:		$snippets_count = $this->app->db->count('venus_snippets', ['status' => 1]);
+src/admin/classes/Cache.php:		$this->app->db->readQuery('SELECT * FROM venus_categories');
+src/admin/classes/Cache.php:		$categories = $this->app->db->get('cid');
+src/admin/classes/Cache.php:		$this->app->db->writeQuery('UPDATE venus_categories SET cached_subcategories_count = -1, cached_blocks_count = -1, cached_news_count = -1, cached_links_count = -1');
+src/admin/classes/Cache.php:			$this->app->db->deleteByIds('venus_categories_cache', $cids);
+src/admin/classes/Cache.php:				$this->app->db->readQuery("SELECT ugid from venus_usergroups");
+src/admin/classes/Cache.php:				$ugids = $this->app->db->getFields();
+src/admin/classes/Cache.php:				$cat_data = $this->app->db->selectByIds('venus_categories', $cids, 'id, memcache_pages_pages');
+src/admin/classes/Cache.php:			$this->app->db->writeQuery("TRUNCATE venus_categories_cache");
+src/admin/classes/Block.php:		$this->app->db->readQuery($sql, ['block_name' => $name]);
+src/admin/classes/Block.php:		$block = $this->app->db->getRow();
+src/admin/classes/Block.php:		$permissions = $this->app->db->selectRow($this->getPermissionsTable(), '*', ['user_id' => $this->app->user->id, 'block_id' => $this->id], true);
+src/admin/classes/blocks/models/extensions/Listing.php:		$this->db->read_query("
+src/admin/classes/blocks/models/extensions/Listing.php:		return $this->db->get_row();
+src/admin/classes/blocks/models/extensions/Listing.php:		$data = $this->db->fill($this->get_table(), [], '.', '.');
+src/admin/classes/blocks/models/extensions/Listing.php:		$items = $this->db->select_by_ids($this->get_table(), $this->get_id_name(), $ids);
+src/admin/classes/blocks/models/extensions/class-available.php:		if ($this->db->count($this->get_table(), ['name' => $name])) {
+src/admin/classes/blocks/models/extensions/class-available.php:		$installed_items = $this->db->select_array($this->get_table(), 'name');
+src/admin/classes/blocks/models/extensions/class-available.php:		return $this->db->fill($this->get_table(), ['name' => $name, 'status' => 1, 'note' => '', 'debug' => 0], -1);
+src/admin/classes/system/User.php:			$this->config = $this->app->db->selectById($this->getAdministratorsTable(), $this->id, '*', 'user_id');
+src/admin/classes/system/User.php:		$this->app->db->delete($this->getLoginKeysTable(), ['user_id' => $id, 'scope' => static::$login_keys_scope], 1);
+src/admin/classes/system/User.php:				'timestamp' => $this->app->db->unixTimestamp()
+src/admin/classes/system/User.php:			$this->app->db->replace($this->getNotificationsTable(), $replace_array);
+src/admin/classes/system/Menu.php:		$this->app->db->readQuery($sql);
+src/admin/classes/system/Menu.php:		$this->blocks = $this->app->db->getFields();
+src/admin/classes/Ui.php:		$categories_array = $venus->db->selectArray('venus_categories', 'cid, title, parent, level', 'ORDER BY position');
+src/admin/classes/users/PermissionsTrait.php:		return $this->app->db->sql->select($id_field)->from($table)->whereIn($id_field, $item_ids)->where([$created_by_field => $this->app->user->id])->getFields();
+src/venus/classes/DocumentBody.php:		$this->app->db->writeQuery("UPDATE {$table} SET hits = hits + 1 WHERE {$id_name} = {$id}");
+src/venus/classes/helpers/Bruteforce.php:		$this->app->db->readQuery(
+src/venus/classes/helpers/Bruteforce.php:		return $this->app->db->getRow();
+src/venus/classes/helpers/Bruteforce.php:		$this->app->db->readQuery(
+src/venus/classes/helpers/Bruteforce.php:		return $this->app->db->getRow();
+src/venus/classes/helpers/Bruteforce.php:		$this->app->db->readQuery("SELECT COUNT(*) FROM {$ips_table} WHERE ip_crc = CRC32(:ip) AND ip = :ip AND scope = :scope", ['ip' => $ip, 'scope' => $this->scope]);
+src/venus/classes/helpers/Bruteforce.php:		$ips_count = $this->app->db->getCount();
+src/venus/classes/helpers/Bruteforce.php:			$this->app->db->writeQuery("UPDATE {$ips_table} SET attempts = attempts + 1, `timestamp` = UNIX_TIMESTAMP() WHERE ip_crc = CRC32(:ip) AND ip = :ip AND scope = :scope", ['ip' => $ip, 'scope' => $this->scope]);
+src/venus/classes/helpers/Bruteforce.php:			$this->app->db->writeQuery("INSERT INTO {$ips_table} VALUES(:ip, CRC32(:ip), 1, UNIX_TIMESTAMP(), :scope)", ['ip' => $ip, 'scope' => $this->scope]);
+src/venus/classes/helpers/Bruteforce.php:		if ($this->app->db->count($users_table, ['user_id' => $user_id, 'scope' => $this->scope])) {
+src/venus/classes/helpers/Bruteforce.php:			$this->app->db->writeQuery("UPDATE {$users_table} SET attempts = attempts + 1, `timestamp` = UNIX_TIMESTAMP() WHERE user_id = {$user_id} AND scope = :scope", ['scope' => $this->scope]);
+src/venus/classes/helpers/Bruteforce.php:			$this->app->db->writeQuery("INSERT INTO {$users_table} VALUES({$user_id}, 1, UNIX_TIMESTAMP(), :scope)", ['scope' => $this->scope]);
+src/venus/classes/helpers/Bruteforce.php:		$this->app->db->writeQuery("DELETE FROM {$table} WHERE `timestamp` < UNIX_TIMESTAMP() - {$block_seconds} AND scope = :scope", ['scope' => $this->scope]);
+src/venus/classes/helpers/Bruteforce.php:		$this->app->db->writeQuery(
+src/venus/classes/helpers/Bruteforce.php:		$this->app->db->writeQuery(
+src/venus/classes/helpers/Controls.php:			$where_sql = trim($this->app->db->getWhere($sql_array, $this->filter_ignore_value, true, $this->filter_delimitator));
+src/venus/classes/helpers/Tree.php:			$item_order = (int)$this->app->db->selectResult($table, "MAX(`{$item_order_field}`)", $parent_where) + 1;
+src/venus/classes/helpers/Tree.php:			$this->app->db->writeQuery("UPDATE {$table} SET `{$item_order_field}` = `{$item_order_field}` + 1 {$parent_where}");
+src/venus/classes/helpers/Tree.php:			$this->app->db->writeQuery($sql);
+src/venus/classes/extensions/LanguagesTrait.php:		$this->app->db->writeQuery("UPDATE {$table} SET languages = :languages WHERE {$id_name} = :id", ['languages' => $this->app->serializer->serialize($languages ? $languages : '-'), 'id' => $this->getId()]);
+src/venus/classes/Debug.php:		$db_time = $this->app->db->queries_time;
+src/venus/classes/Language.php:		$this->app->db->readQuery("
+src/venus/classes/Language.php:		return $this->app->db->getRow();
+src/venus/classes/document/CacheTrait.php:			'cache_refreshed' => $this->app->db->unixTimestamp(),
+src/venus/classes/document/CacheTrait.php:		$this->app->db->updateById($this->getTable(), $update_array, $this->getId(), $this->getIdName());
+src/venus/classes/document/PermissionsTrait.php:		$permissions = $this->app->db->selectArrayWithKey($this->getPermissionsTable(), 'usergroup_id', '*', ['document_id' => $this->getId(), 'type' => $type, 'usergroup_id' => $this->app->user->usergroup_ids]);
+src/venus/classes/document/CategoriesTrait.php:			$this->categories = $this->app->db->selectField($this->getCategoriesTable(), 'cid', ['id' => $this->getId(), 'type' => $this->getType()]);
+src/venus/classes/Log.php:			'timestamp' => $this->app->db->unixTimestamp()
+src/venus/classes/Log.php:		$this->app->db->insert('venus_log', $insert_data);
+src/venus/classes/Log.php:			$this->app->db->sql->select([$id_field, $title_field])->from($table)->whereIn($id_field, $ids);
+src/venus/classes/Log.php:			$this->app->db->readQuery();
+src/venus/classes/Log.php:			while ($item = $this->app->db->fetchRow()) {
+src/venus/classes/Log.php:			$this->app->db->free();
+src/venus/classes/Bin.php:		return $this->app->db->selectList(static::$table, 'command', 'class', [], 'command');
+src/venus/classes/Bin.php:		return (string)$this->app->db->selectResult(static::$table, 'class', ['command' => $command]);
+src/venus/classes/Bin.php:		if ($this->app->db->count(static::$table, ['command' => $command])) {
+src/venus/classes/Bin.php:		$this->app->db->insert(static::$table, $insert_array);
+src/venus/classes/Bin.php:		$this->app->db->delete(static::$table, ['command' => $command]);
+src/venus/classes/Themes.php:		$sql = $this->db->sql->select($fields)->from($table, 't')->leftJoin($table . ' AS p', '', 't.parent = p.tid')->where($where)->orderBy($order_by, $order)->limit($limit, $limit_offset);
+src/venus/classes/Cache.php:		$users_count = $this->app->db->count('venus_users');
+src/venus/classes/Cache.php:		$users_disabled_count = $this->app->db->count('venus_users', ['status' => 0]);
+src/venus/classes/Cache.php:		$users_deactivated_count = $this->app->db->count('venus_users', ['activated' => 0]);
+src/venus/classes/Cache.php:		$users_banned_count = $this->app->db->count('venus_banned_users', ['status' => 1]);
+src/venus/classes/Cache.php:		$banners_count = $this->app->db->count('venus_banners', ['status' => 1]);
+src/venus/classes/Cache.php:		$in = $this->app->db->getIn($tids);
+src/venus/classes/Cache.php:		$this->app->db->writeQuery("DELETE FROM venus_tags_cache WHERE tid IN({$in})");
+src/venus/classes/Cache.php:			$this->app->db->readQuery("SELECT ugid from venus_usergroups");
+src/venus/classes/Cache.php:			$ugids = $this->app->db->getFields();
+src/venus/classes/Cache.php:			$this->app->db->readQuery("SELECT tid, memcache_pages_pages FROM venus_tags WHERE tid IN({$in})");
+src/venus/classes/Cache.php:			$tags_data = $this->app->db->getList('tid', 'memcache_pages_pages', true);
+src/venus/classes/Cache.php:		$widgets_count = $this->app->db->count('venus_widgets', 'WHERE status = 1');
+src/venus/classes/Cache.php:		$this->app->db->writeQuery("UPDATE venus_widgets SET languages = ''");
+src/venus/classes/Cache.php:		$menu_count = $this->app->db->count('venus_menu', 'WHERE status = 1');
+src/venus/classes/Cache.php:		$menu_entries_count = $this->app->db->count('venus_menu_entries', 'WHERE status = 1');
+src/venus/classes/Cache.php:		$this->app->db->readQuery("SELECT mid, name FROM venus_menu WHERE status = 1");
+src/venus/classes/Cache.php:		$menu = $this->app->db->getList('name', 'mid');
+src/venus/classes/Cache.php:		$this->app->db->readQuery("
+src/venus/classes/Cache.php:		$menu_data = $this->app->db->getList('name', 'count');
+src/venus/classes/Cache.php:		$announcements_count = $this->app->db->count('venus_announcements', 'WHERE status = 1');
+src/venus/classes/Cache.php:		$links_count = $this->app->db->count('venus_links', 'WHERE status = 1');
+src/venus/classes/Cache.php:		$news_count = $this->app->db->count('venus_news', 'WHERE status = 1');
+src/venus/classes/Cache.php:		$comments_count = $this->app->db->count('venus_comments', 'WHERE visible = 1');
+src/venus/classes/Cache.php:		$comments_unpublished_count = $this->app->db->count('venus_comments', 'WHERE status = 0 AND visible = 1');
+src/venus/classes/Cache.php:		$comments_spam_count = $this->app->db->count('venus_comments', 'WHERE is_spam = 1 AND visible = 1');
+src/venus/classes/Block.php:		$this->app->db->readQuery($sql, ['block_name' => $name]);
+src/venus/classes/Block.php:		$block = $this->app->db->getRow();
+src/venus/classes/Usergroups.php:		$usergroup_ids = $this->db->selectField($usergroups_table, 'usergroup_id', ['user_id' => $user->id]);
+src/venus/classes/Theme.php:		$this->app->db->readQuery("
+src/venus/classes/Theme.php:		return $this->app->db->getRow();
+src/venus/classes/Theme.php:		$this->app->db->updateById($this->getTable(), ['inline_js' => $this->app->serializer->serialize($code)], $this->getId(), $this->getIdName());
+src/venus/classes/Theme.php:		$this->app->db->updateById($this->getTable(), ['inline_css' => $this->app->serializer->serialize($code)], $this->getId(), $this->getIdName());
+src/venus/classes/system/Plugins.php:			$this->app->db->readQuery("
+src/venus/classes/system/Plugins.php:			$plugins = $this->app->db->get();
+src/venus/classes/system/Plugins.php:		$this->app->db->readQuery(
+src/venus/classes/system/Plugins.php:		$plugins = $this->app->db->get();
+src/venus/classes/system/User.php:		$permissions_array = $this->app->db->select($this->getModeratorPermissionsTable(), '*', ['user_id' => $this->id]);
+src/venus/classes/system/User.php:		$this->app->db->readQuery($sql, ['id' => $id, 'key' => $key, 'scope' => static::$login_keys_scope]);
+src/venus/classes/system/User.php:		$count = $this->app->db->getCount();
+src/venus/classes/system/User.php:			'key_crc' => $this->app->db->crc32($key),
+src/venus/classes/system/User.php:			'timestamp' => $this->app->db->unixTimestamp(),
+src/venus/classes/system/User.php:		$this->app->db->insert($this->getLoginKeysTable(), $insert_array);
+src/venus/classes/system/User.php:			'key_crc' => $this->app->db->crc32($new_key),
+src/venus/classes/system/User.php:			'timestamp' => $this->app->db->unixTimestamp(),
+src/venus/classes/system/User.php:		$this->app->db->update($this->getLoginKeysTable(), $update_array, ['user_id' => $id, 'key_crc' => $this->app->db->crc32($old_key), 'key' => $old_key, 'scope' => static::$login_keys_scope], 1);
+src/venus/classes/system/User.php:		$this->app->db->delete($this->getLoginKeysTable(), ['user_id' => $id, 'key_crc' => $this->app->db->crc32($key), 'key' => $key, 'scope' => static::$login_keys_scope], 1);
+src/venus/classes/system/User.php:		$notifications_array = $this->app->db->selectField($this->getNotificationsTable(), 'type', ['user_id' => $this->id]);
+src/venus/classes/system/User.php:		$this->app->db->deleteByIds($this->getNotificationsTable(), $this->id, 'user_id');
+src/venus/classes/User.php:		$count = $this->app->db->count($this->getTable(), ['registration_ip' => $ip, 'registration_ip_crc' => $this->app->db->crc32($ip)]);
+src/venus/classes/User.php:			'registration_ip_crc' => $this->app->db->crc32($this->app->ip)
+src/venus/classes/User.php:		$this->db->sql->select($this->fields)->from($this->getTable())->where($where)->limit(1);
+src/venus/classes/Uri.php:				$page = $this->app->db->selectById('venus_pages', $pid, 'pid, category, seo_alias, seo_slug');
+src/venus/classes/Uri.php:				$tag = $this->app->db->selectById('venus_tags', $tid, 'tid, seo_alias, seo_slug');
+src/venus/classes/Uri.php:				$user = $this->app->db->selectById('venus_users', $user_id, 'id, seo_alias');
+src/venus/classes/Uri.php:		$pages_data = $this->app->db->selectByIds('venus_pages', $pids, '', '', 'pid, category, seo_alias, seo_slug');
+src/venus/classes/Uri.php:		$tags_data = $this->app->db->selectByIds('venus_tags', $tids, '', '', 'tid, seo_alias, seo_slug');
+src/venus/classes/Uri.php:		$users_data = $this->app->db->selectByIds('venus_users', $user_ids, '', '', 'id, seo_alias');
+src/venus/classes/Menu.php:		$this->items = $this->app->db->selectWithKey($this->getItemsTable(), 'id', '*', ['menu_id' => $this->id, 'status' => 1], 'position');
+src/venus/classes/users/Admins.php:		$this->app->db->readQuery("
+src/venus/classes/users/Admins.php:		return $this->app->db->getList('username', 'email');
+src/venus/classes/users/Utils.php:		$this->app->db->insert('venus_users_autologin', $insert_array);
+src/venus/classes/Languages.php:		$sql = $this->db->sql->select($fields)->from($table, 'l')->leftJoin($table . ' AS p', '', 'l.parent_id = p.id')->where($where)->orderBy($order_by, $order)->limit($limit, $limit_offset);
+src/mars/classes/Items.php:		return $this->db->selectById($this->getTable(), $id, $this->fields, $this->getIdName());
+src/mars/classes/Items.php:		return $this->db->count($this->getTable());
+src/mars/classes/Items.php:		$sql = $this->db->sql->select($this->fields)->from($this->getTable())->where($where)->orderBy($order_by, $order)->limit($limit, $limit_offset);
+src/mars/classes/Items.php:			$sql = $this->db->sql;
+src/mars/classes/Items.php:		$q = $this->db->readQuery($sql);
+src/mars/classes/Items.php:		while ($data = $this->db->fetchArray($q)) {
+src/mars/classes/Items.php:		$this->db->free($q);
+src/mars/classes/Items.php:		$sql = $this->db->sql->select($this->fields)->from($this->getTable())->whereIn($this->getIdName(), $ids);
+src/mars/classes/Items.php:		$sql = $this->db->sql->select($this->fields)->from($this->getTable());
+src/mars/classes/Items.php:		return $this->db->selectList($this->getTable(), $this->getIdName(), static::$title_name, $where, $order_by, $order, $limit, $limit_offset);
+src/mars/classes/Items.php:		return $this->db->updateByIds($this->getTable(), $data, $ids, $this->getIdName());
+src/mars/classes/Items.php:		return $this->db->updateByIds($this->getTable(), [$status_name => $val], $ids, $this->getIdName());
+src/mars/classes/Items.php:		return $this->db->deleteByIds($this->getTable(), $ids, $this->getIdName());
+src/mars/classes/validators/Unique.php:		if ($this->app->db->exists($this->table, [$this->field => $value])) {
+src/mars/classes/session/Db.php:		$data = $this->app->db->selectResult($this->table, 'data', ['id' => $id]);
+src/mars/classes/session/Db.php:		$this->app->db->replace($this->table, $values);
+src/mars/classes/session/Db.php:		$this->app->db->deleteById($this->table, $id);
+src/mars/classes/session/Db.php:		return $this->app->db->exists($this->table, ['id' => $id], 'id');
+src/mars/classes/session/Db.php:		$this->app->db->update($this->table, ['timestamp' => time()], ['id' => $id]);
+src/mars/classes/Debug.php:		echo '<tr><td><strong>DB Queries</strong></td><td>' . count($this->app->db->queries) . '</td></tr>';
+src/mars/classes/Debug.php:		$db_time = $this->app->db->queries_time;
+src/mars/classes/Debug.php:		$db_time = $this->app->db->queries_time;
+src/mars/classes/Debug.php:		echo '<table class="grid debug-grid debug-db-grid" style="width:100%; text-align:left">';
+src/mars/classes/Debug.php:		foreach ($this->app->db->queries as $query) {
+src/mars/classes/Debug.php:			echo '<table class="grid debug-grid debug-db-grid" style="width:100%;text-align:left">';
+src/mars/classes/Sql.php:		$this->app->db->readQuery($this);
+src/mars/classes/Sql.php:		return $this->app->db->get($key_field, $field, $load_array, $class_name);
+src/mars/classes/Sql.php:		$this->app->db->readQuery($this);
+src/mars/classes/Sql.php:		return $this->app->db->getArray($key_field, $field);
+src/mars/classes/Sql.php:		$this->app->db->readQuery($this);
+src/mars/classes/Sql.php:		return $this->app->db->getObjects($class_name);
+src/mars/classes/Sql.php:		$this->app->db->readQuery($this);
+src/mars/classes/Sql.php:		return $this->app->db->getFields();
+src/mars/classes/Sql.php:		$this->app->db->readQuery($this);
+src/mars/classes/Sql.php:		return $this->app->db->getList($key_field, $field);
+src/mars/classes/Sql.php:		$this->app->db->readQuery($this);
+src/mars/classes/Sql.php:		return $this->app->db->getRow($load_array, $class_name);
+src/mars/classes/Sql.php:		$this->app->db->readQuery($this);
+src/mars/classes/Sql.php:		return $this->app->db->getObject($class_name);
+src/mars/classes/Sql.php:		$this->app->db->readQuery($this);
+src/mars/classes/Sql.php:		return $this->app->db->getResult();
+src/mars/classes/Sql.php:		$this->app->db->readQuery($this);
+src/mars/classes/Sql.php:		return $this->app->db->getCount();
+src/mars/classes/Item.php:		return $this->db->selectById($this->getTable(), $id, $this->getIdName());
+src/mars/classes/Item.php:		return $this->db->selectRow($this->getTable(), '*', ['name' => $name]);
+src/mars/classes/Item.php:		$this->db->readQuery($sql);
+src/mars/classes/Item.php:		$data = $this->db->getRow();
+src/mars/classes/Item.php:		$insert_id = $this->db->insert($this->getTable(), $data);
+src/mars/classes/Item.php:		$this->db->updateById($this->getTable(), $data, $this->getId(), $this->getIdName());
+src/mars/classes/Item.php:		return $this->db->deleteById($this->getTable(), $this->getId(), $this->getIdName());
+src/mars/classes/Item.php:		$data = $this->db->bind($this->getTable(), $data, $ignore_columns_array, $ignore_value);
+src/mars/classes/Item.php:		$data = $this->db->bindList($this->getTable(), $data, $columns_array, $ignore_value);
+src/mars/classes/Item.php:		return $this->db->fill($this->getTable(), [], $default_int, $default_char, true);
+src/mars/classes/Item.php:		$data = $this->db->selectById($this->getTable(), $id, '*', $this->getIdName(), true);
+src/mars/classes/Data.php:			$data = $this->app->db->select($this->getTable(), 'name, value, scope', ['scope' => $this->scope]);
+src/mars/classes/Data.php:		$this->app->db->insert($this->getTable(), $insert_array);
+src/mars/classes/Data.php:		$this->app->db->writeQuery("UPDATE {$table} SET value = :value WHERE name = :name AND scope = :scope", ['name' => $name, 'scope' => $scope, 'value' => $value]);
+src/mars/classes/Data.php:		$this->app->db->writeQuery("DELETE FROM {$table} WHERE name = :name AND scope = :scope", ['name' => $name, 'scope' => $scope]);
+Binary file .git/objects/8c/d1933527bdd2c2200a644cfe8794d6570f9fc8 matches

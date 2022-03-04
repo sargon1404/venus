@@ -22,7 +22,7 @@ class Bin extends \Mars\Bin
 	*/
 	public function getCommandClasses() : array
 	{
-		return $this->app->db->selectList(static::$table, 'command', 'class', [], 'command');
+		return $this->app->db->select(static::$table, [], 'command')->get('command', 'class');
 	}
 
 	/**

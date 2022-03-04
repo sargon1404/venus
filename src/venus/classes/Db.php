@@ -13,11 +13,8 @@ namespace Venus;
 class Db extends \Mars\Db
 {
 	/**
-	* @see \Mars\Db:getRowClassName()
+	* @see \Mars\Db:$class_name
 	* {@inheritdoc}
 	*/
-	protected function getRowClassName() : string
-	{
-		return '\Venus\Row';
-	}
+	protected string $class_name = '\Venus\Row';
 }

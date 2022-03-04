@@ -14,18 +14,8 @@ class Time extends \Mars\Time
 {
 	use AppTrait;
 
-	/**
-	* Builds the time object
-	* Sets the default timezone to UTC
-	* @param App $app The app object
-	*/
-	public function __construct(App $app)
-	{
-		$this->app = $app;
 
-		date_default_timezone_set('UTC');
-	}
-	
+
 	/**
 	* Returns the current time(), adjusted to the user's timezone
 	* @return int

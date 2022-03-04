@@ -103,7 +103,7 @@ class Plugins extends \Venus\Plugins
 		}
 
 		foreach ($plugins as $plugin) {
-			$class = static::$namespace . App::strToClass($plugin->name) . "\\" . App::strToClass($plugin->name);
+			$class = static::$namespace . App::getClass($plugin->name) . "\\" . App::getClass($plugin->name);
 
 			$plugin = new $class($plugin);
 

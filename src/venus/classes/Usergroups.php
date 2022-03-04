@@ -118,7 +118,7 @@ class Usergroups extends Items
 			return;
 		}
 
-		$usergroup_ids = $this->db->selectField($usergroups_table, 'usergroup_id', ['user_id' => $user->id]);
+		$usergroup_ids = $this->db->selectIds($usergroups_table, ['user_id' => $user->id]);
 		if ($include_primary_usergroup_id) {
 			$usergroup_ids = array_merge([$user->usergroup_id], $usergroup_ids);
 		}

@@ -82,7 +82,7 @@ trait OutputTrait
 	*/
 	public function outputReadMoreLink(string $extra = '')
 	{
-		echo '<a href="' . App::e($this->url) . '"' . $this->link_attributes . App::pad($extra) . '>' . App::__('read_more') . '</a>';
+		echo '<a href="' . App::e($this->url) . '"' . $this->link_attributes . $extra . '>' . App::__('read_more') . '</a>';
 	}
 
 	/**
@@ -94,7 +94,7 @@ trait OutputTrait
 	*/
 	public function outputLink(bool $show_image = false, bool $show_title = true, ?string $image_type = null, string $extra = '')
 	{
-		echo '<a href="' . App::e($this->url) . '"' . $this->link_attributes . App::pad($extra) . '>';
+		echo '<a href="' . App::e($this->url) . '"' . $this->link_attributes . $extra . '>';
 
 		if ($show_image) {
 			$this->outputImage($image_type);

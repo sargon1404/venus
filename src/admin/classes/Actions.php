@@ -62,7 +62,7 @@ class Actions
 			}
 
 			if ($link['tooltip']) {
-				$link['tooltip'] = ' data-tooltip="' . App::__(nl2br(App::estr($link['tooltip']))) . '"';
+				$link['tooltip'] = ' data-tooltip="' . App::__(nl2br(App::__e($link['tooltip']))) . '"';
 			}
 
 			$action = App::ejs($action);

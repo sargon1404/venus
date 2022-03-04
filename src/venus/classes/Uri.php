@@ -35,22 +35,6 @@ class Uri extends \Mars\Uri
 	protected array $preloaded_data = ['users' => [], 'pages' => [], 'tags' => []];
 
 	/**
-	* Returns true, if $url is actually a javascript action
-	* @param string $url The url
-	* @return bool
-	*/
-	public function isJavascript(string $url) : bool
-	{
-		$url = trim($url);
-
-		if (str_starts_with($url, 'javascript:') === 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	* Builds an url appending $params to $base_url
 	* @param string $base_url The url to which params will be appended. If empty, $this->app->index will be used
 	* @param array $params Array containing the values to be appended. Specified as $name=>$value
@@ -390,7 +374,7 @@ class Uri extends \Mars\Uri
 			//was the page data preloaded? If not, load it from the db
 			$page = $this->getPreloadedData('pages', $pid);
 			if (!$page) {
-				$page = $this->app->db->selectById('venus_pages', $pid, 'pid, category, seo_alias, seo_slug');
+				$page = $this->app->db->selectById('venus_pages', $pid, cols: 'pid, category, seo_alias, seo_slug');
 			}
 		}
 
@@ -500,7 +484,7 @@ class Uri extends \Mars\Uri
 
 			$tag = $this->getPreloadedData('tags', $tid);
 			if (!$tag) {
-				$tag = $this->app->db->selectById('venus_tags', $tid, 'tid, seo_alias, seo_slug');
+				$tag = $this->app->db->selectById('venus_tags', $tid, cols: 'tid, seo_alias, seo_slug');
 			}
 		}
 
@@ -575,7 +559,7 @@ class Uri extends \Mars\Uri
 
 			$user = $this->getPreloadedData('users', $user_id);
 			if (!$user) {
-				$user = $this->app->db->selectById('venus_users', $user_id, 'id, seo_alias');
+				$user = $this->app->db->selectById('venus_users', $user_id, cols: 'id, seo_alias');
 			}
 		}
 
@@ -692,7 +676,7 @@ class Uri extends \Mars\Uri
 			return [];
 		}
 
-		$pages_data = $this->app->db->selectByIds('venus_pages', $pids, '', '', 'pid, category, seo_alias, seo_slug');
+		$pages_data = $this->app->db->selectByIds('venus_pages', $pids, cols: 'pid, category, seo_alias, seo_slug');
 
 		$this->preloaded_data['pages'] = $this->preloaded_data['pages'] + $pages_data;
 
@@ -710,7 +694,7 @@ class Uri extends \Mars\Uri
 			return [];
 		}
 
-		$tags_data = $this->app->db->selectByIds('venus_tags', $tids, '', '', 'tid, seo_alias, seo_slug');
+		$tags_data = $this->app->db->selectByIds('venus_tags', $tids, cols: 'tid, seo_alias, seo_slug');
 
 		$this->preloaded_data['tags'] = $this->preloaded_data['tags'] + $tags_data;
 
@@ -728,7 +712,7 @@ class Uri extends \Mars\Uri
 			return [];
 		}
 
-		$users_data = $this->app->db->selectByIds('venus_users', $user_ids, '', '', 'id, seo_alias');
+		$users_data = $this->app->db->selectByIds('venus_users', $user_ids, cols: 'id, seo_alias');
 
 		$this->preloaded_data['users'] = $this->preloaded_data['users'] + $users_data;
 

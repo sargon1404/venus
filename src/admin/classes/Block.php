@@ -108,7 +108,7 @@ class Block extends \Venus\Block
 			return;
 		}
 
-		$permissions = $this->app->db->selectRow($this->getPermissionsTable(), '*', ['user_id' => $this->app->user->id, 'block_id' => $this->id], true);
+		$permissions = $this->app->db->select($this->getPermissionsTable(), ['user_id' => $this->app->user->id, 'block_id' => $this->id]);
 
 		if ($permissions) {
 			unset($permissions['user_id']);

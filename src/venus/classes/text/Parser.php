@@ -186,7 +186,7 @@ class Parser extends \Mars\Text\Parser
 
 		$download_link = $this->app->utils_path . 'download_media.php?file=' . urlencode($file);
 
-		$html = '<a href="' . App::e($download_link) . '"><img src="' . App::e($this->app->theme->images_url) . 'media_download.png" alt="' . App::estr('download') . '" />' . $name . '</a>';
+		$html = '<a href="' . App::e($download_link) . '"><img src="' . App::e($this->app->theme->images_url) . 'media_download.png" alt="' . App::__e('download') . '" />' . $name . '</a>';
 
 		return $this->app->plugins->filter('text_parser_parse_media_callback', $html, $download_link, $match, $this);
 	}

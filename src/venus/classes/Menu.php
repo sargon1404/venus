@@ -116,7 +116,7 @@ class Menu extends Item
 			return;
 		}
 
-		$this->items = $this->app->db->selectWithKey($this->getItemsTable(), 'id', '*', ['menu_id' => $this->id, 'status' => 1], 'position');
+		$this->items = $this->app->db->select($this->getItemsTable(), ['menu_id' => $this->id, 'status' => 1], 'position')->get('id');
 	}
 
 	/**

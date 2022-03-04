@@ -164,7 +164,7 @@ class User extends \Venus\System\User
 
 		$this->config = null;
 		if ($this->id) {
-			$this->config = $this->app->db->selectById($this->getAdministratorsTable(), $this->id, '*', 'user_id');
+			$this->config = $this->app->db->selectById($this->getAdministratorsTable(), $this->id, 'user_id');
 		}
 
 		if ($this->config) {

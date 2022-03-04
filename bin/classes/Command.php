@@ -90,7 +90,7 @@ class Command extends Base
 			echo "\n";
 			$help->printDescription($data[1]);
 			$help->listOptions($this->action, $data[2] ?? []);
-			$help->printUsage(App::getArray($data[3] ?? []));
+			$help->printUsage((array)$data[3]);
 
 			echo "\n";
 		}

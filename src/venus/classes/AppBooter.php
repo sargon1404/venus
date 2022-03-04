@@ -14,6 +14,7 @@ use Mars\Encoder;
 use Mars\Random;
 use Mars\Filter;
 use Mars\Escape;
+use Mars\Dir;
 use Mars\Validator;
 use Mars\Accelerator;
 use Mars\Session;

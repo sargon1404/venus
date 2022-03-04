@@ -209,21 +209,21 @@ class Menu extends \Venus\Menu
 		foreach ($this->items as $name => &$item) {
 			$item['name'] = $name;
 
-			$item = App::toObject($item);
+			$item = (object)$item;
 
 			if (isset($item->items)) {
 				foreach ($item->items as &$section) {
 					if (isset($section['items'])) {
 						foreach ($section['items'] as &$menu) {
 							foreach ($menu['menus'] as &$menu_items) {
-								$menu_items = App::toObject($menu_items);
+								$menu_items = (object)$menu_items;
 							}
 
-							$menu = App::toObject($menu);
+							$menu = (object)$menu;
 						}
 					}
 
-					$section = App::toObject($section);
+					$section = (object)$section;
 				}
 			}
 		}

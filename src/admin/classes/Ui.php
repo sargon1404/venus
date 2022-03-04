@@ -421,7 +421,7 @@ class Ui extends \Venus\Ui
 		}
 
 		//get the defined category from the db; add the show_uncategoriezed option, if required
-		$categories_array = $venus->db->selectArray('venus_categories', 'cid, title, parent, level', 'ORDER BY position');
+		$categories_array = $venus->db->select('venus_categories', order_by: 'position', cols: 'cid, title, parent, level')->all(true);
 		$categories_array = to_array($categories_array);
 		if ($show_uncategoriezed) {
 			array_unshift($categories_array, ['cid' => -1, 'title' => l('uncategorized'), 'parent' => 0, 'level' => 0]);

@@ -345,7 +345,7 @@ class User extends \Venus\User
 			return;
 		}
 
-		$permissions_array = $this->app->db->select($this->getModeratorPermissionsTable(), '*', ['user_id' => $this->id]);
+		$permissions_array = $this->app->db->select($this->getModeratorPermissionsTable(), ['user_id' => $this->id])->all();
 		foreach ($permissions_array as $perm) {
 			$data = ['publish' => $perm->publish, 'edit' => $perm->edit, 'delete' => $perm->delete];
 			if ($perm->bid) {
@@ -674,7 +674,7 @@ class User extends \Venus\User
 			return;
 		}
 
-		$notifications_array = $this->app->db->selectField($this->getNotificationsTable(), 'type', ['user_id' => $this->id]);
+		$notifications_array = $this->app->db->selectCol($this->getNotificationsTable(), 'type', ['user_id' => $this->id]);
 		if (!$notifications_array) {
 			return;
 		}

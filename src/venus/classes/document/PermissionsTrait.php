@@ -58,7 +58,7 @@ trait PermissionsTrait
 			$permissions = $this->buildPermissions();
 			$permissions = $this->mergePermissions($permissions);
 
-			$this->permissions = App::arrayUnset($permissions, ['document_id', 'type', 'usergroup_id' , 'inherit']);
+			$this->permissions = App::unset($permissions, ['document_id', 'type', 'usergroup_id' , 'inherit']);
 		}
 	}
 

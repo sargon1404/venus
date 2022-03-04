@@ -245,7 +245,7 @@ class Controls
 	public function outputFilters()
 	{
 		echo '<section id="controls-filters">' . "\n";
-		echo '<h3>' . App::estr('controls_filter') . '</h3>' . "\n";
+		echo '<h3>' . App::__e('controls_filter') . '</h3>' . "\n";
 		echo $this->getFilters();
 		echo $this->getFiltersButtons();
 		echo '</section>' . "\n";

@@ -367,7 +367,7 @@ class Theme extends \Venus\Theme
 	public function getExtensionTemplate(string $filename, string $cache_filename, bool $debug = false) : string
 	{
 		if ($this->app->config->debug) {
-			$this->templates_loaded[] = $this->app->file->getRel($filename, false);
+			$this->templates_loaded[] = $this->app->file->getRel($filename);
 		}
 
 		$content = $this->getTemplateContent($filename, $cache_filename, $debug);

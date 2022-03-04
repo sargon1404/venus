@@ -82,7 +82,7 @@ trait MvcTrait
 	{
 		$namespace_path = str_replace("/", "\\", ucfirst($dir));
 
-		return $namespace_path . ucfirst(App::strToClass($class_name));
+		return $namespace_path . App::getClass($class_name);
 	}
 
 	/**
@@ -105,7 +105,7 @@ trait MvcTrait
 		$this->controller_name = $controller;
 		$this->controller_class = $controller_class;
 
-		$class_name = static::$namespace . App::strToClass($name) . "\\" . $controller_class;
+		$class_name = static::$namespace . App::getClass($name) . "\\" . $controller_class;
 
 		$this->controller = new $class_name($this);
 
